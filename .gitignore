@@ -1,3 +1,14 @@
 .tools/pdftext.py
 /.tools
 /LLM-tmp/04-工具
+/.go-toolchain-temp
+/LLM-tmp/服务端/*.exe
+/LLM-tmp/服务端/*-test*.json
+/LLM-tmp/客户端/.godot/
+/LLM-tmp/服务端/server.exe
+/LLM-tmp/服务端/bin/
+/LLM-tmp/服务端/data/*.json
+/LLM-tmp/服务端/LLM-tmp/
+/LLM-tmp/服务端/*.out.log
+/LLM-tmp/服务端/*.err.log
+/LLM-tmp/客户端/**/*.uid

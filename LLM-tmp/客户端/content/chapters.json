@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "game_id": "yanxia-qianqiu",
+  "art": {
+    "prologue_bridge": {"backdrop_color": "#172b35"},
+    "temple_incense": {"backdrop_color": "#2b2724"},
+    "temple_guest": {"backdrop_color": "#26333a"},
+    "temple_drum": {"backdrop_color": "#35272a"}
+  },
+  "chapters": [
+    {
+      "id": "prologue",
+      "order": 0,
+      "title": "序章·风雨廊桥",
+      "summary": "暴雨初歇，拓印师在半塌的风雨廊桥醒来。",
+      "unlock_cost": 0,
+      "next_chapter": "temple",
+      "events": [
+        {
+          "id": "prologue_bridge",
+          "order": 1,
+          "title": "桥上平安",
+          "scene": "风雨廊桥",
+          "intro": "桥心刻着正在褪色的‘平安’二字。古建呓语从雨幕深处传来：桥记着送别，也记着归来。",
+          "objectives": ["调查桥心刻字", "完成墨线拓印", "以斗拱承重驱散白蚀"],
+          "puzzle": {
+            "type": "trace",
+            "max_attempts": 3,
+            "steps": [
+              {"id": "bridge_trace", "kind": "trace", "prompt": "沿完整墨线拓印桥心刻字。", "answer": "平安", "points": 100}
+            ]
+          },
+          "battle": {"waves": 1, "enemy_hp": 30, "duration_sec": 30, "max_hits_taken": 2, "required_skills": ["斗拱"]},
+          "reward": {
+            "memory": {"id": "yan_ping_an", "title": "檐·平安", "summary": "桥记着每一次送别与归来。", "skill": "斗拱", "capacity": 1, "choices": ["keep", "forget"]},
+            "base_ink_marks": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "temple",
+      "order": 1,
+      "title": "第一章·社庙",
+      "summary": "山间社庙香火断绝，三处古建记忆等待修复。",
+      "unlock_cost": 0,
+      "next_chapter": "opera",
+      "events": [
+        {
+          "id": "temple_incense",
+          "order": 1,
+          "title": "香火断",
+          "scene": "社庙正殿",
+          "intro": "香炉倾倒，主梁断裂半悬。呓语说：春社那天，全村的人都来。后来香断了，村子也慢慢空了。",
+          "objectives": ["调查香炉、断梁与牌位", "将三块斗拱构件归位", "击退一波白蚀"],
+          "puzzle": {
+            "type": "join",
+            "max_attempts": 3,
+            "steps": [
+              {"id": "beam_left", "kind": "join", "prompt": "将左燕尾榫放入主梁榫口。", "options": ["left", "right", "center"], "answer": "left", "points": 30},
+              {"id": "beam_center", "kind": "join", "prompt": "将承重斗放入主梁中央。", "options": ["left", "right", "center"], "answer": "center", "points": 30},
+              {"id": "beam_right", "kind": "join", "prompt": "将右燕尾榫归位。", "options": ["left", "right", "center"], "answer": "right", "points": 40}
+            ]
+          },
+          "battle": {"waves": 1, "enemy_hp": 45, "duration_sec": 30, "max_hits_taken": 3, "required_skills": ["斗拱"]},
+          "reward": {
+            "memory": {"id": "she_cheng_xiang", "title": "社·承香", "summary": "一炷香把一村人的愿望托给屋梁。", "skill": "斗拱", "capacity": 1, "choices": ["keep", "forget"]},
+            "base_ink_marks": 1
+          }
+        },
+        {
+          "id": "temple_guest",
+          "order": 2,
+          "title": "檐下客",
+          "scene": "社庙侧厢",
+          "intro": "门楣匾额缺了一字，供桌上的冷饭和旧蓑衣仍在等候过路人。",
+          "objectives": ["调查匾额、冷饭碗与旧蓑衣", "推理匾额缺字", "沿完整字形完成拓印"],
+          "puzzle": {
+            "type": "trace",
+            "max_attempts": 3,
+            "steps": [
+              {"id": "guest_word", "kind": "choice", "prompt": "‘□安’缺少哪个字？", "options": ["平", "宁", "保"], "answer": "宁", "points": 50},
+              {"id": "guest_trace", "kind": "trace", "prompt": "沿‘宁安’的墨线完成拓印。", "answer": "宁安", "points": 50}
+            ]
+          },
+          "reward": {
+            "memory": {"id": "she_ning_an", "title": "社·宁安", "summary": "檐下不拒客，一碗冷饭也分半碗。", "skill": "斗拱", "capacity": 1, "choices": ["keep", "forget"]},
+            "base_ink_marks": 1
+          }
+        },
+        {
+          "id": "temple_drum",
+          "order": 3,
+          "title": "社鼓声",
+          "scene": "社庙前坪",
+          "intro": "社鼓蒙灰，鼓面白蚀斑驳。鼓一响，社就开了；鼓声停了，连孩子的声音也听不见了。",
+          "objectives": ["用藻井净化鼓面", "按鼓纹墨线拓印", "击退强化白蚀", "为双格记忆作出选择"],
+          "puzzle": {
+            "type": "purify_trace",
+            "max_attempts": 3,
+            "steps": [
+              {"id": "drum_purify", "kind": "skill", "prompt": "使用藻井净化鼓面白蚀斑。", "answer": "藻井", "points": 40},
+              {"id": "drum_trace", "kind": "trace", "prompt": "沿显影出的鼓纹完成拓印。", "answer": "回春", "points": 60}
+            ]
+          },
+          "battle": {"waves": 1, "enemy_hp": 80, "duration_sec": 45, "max_hits_taken": 4, "required_skills": ["藻井"]},
+          "reward": {
+            "memory": {"id": "she_hui_chun", "title": "社·回春", "summary": "鼓声唤回春社，也唤回孩子们的脚步。", "skill": "藻井", "capacity": 2, "choices": ["yan_ping_an", "she_cheng_xiang", "she_ning_an"]},
+            "base_ink_marks": 2,
+            "capacity_increase": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "opera",
+      "order": 2,
+      "title": "第二章·戏楼",
+      "summary": "戏班绝响散在空场，飞檐记忆等待重新入腔。",
+      "unlock_cost": 3,
+      "next_chapter": "archway",
+      "events": [
+        {
+          "id": "opera_opening",
+          "order": 1,
+          "title": "开场锣",
+          "scene": "戏楼后台",
+          "intro": "行头箱错位，锣鼓声被白蚀吞去半拍。",
+          "objectives": ["按纹样归类戏袍行当", "拓印开场锣的节拍"],
+          "puzzle": {"type": "pattern", "max_attempts": 3, "steps": [
+            {"id": "opera_role", "kind": "choice", "prompt": "水袖与凤冠属于哪个行当？", "options": ["旦", "生", "净"], "answer": "旦", "points": 50},
+            {"id": "opera_trace", "kind": "trace", "prompt": "沿锣面纹样拓印开场节拍。", "answer": "行腔", "points": 50}
+          ]},
+          "battle": {"waves": 1, "enemy_hp": 90, "duration_sec": 40, "max_hits_taken": 4, "required_skills": ["飞檐"]},
+          "reward": {"memory": {"id": "xi_xing_qiang", "title": "戏·行腔", "summary": "一腔唱尽台上台下的悲欢。", "skill": "飞檐", "capacity": 1, "choices": ["keep", "forget"]}, "base_ink_marks": 2}
+        },
+        {
+          "id": "opera_master",
+          "order": 2,
+          "title": "名角儿",
+          "scene": "戏楼舞台",
+          "intro": "台步点位和布景板散成一片，名角儿的绝唱只剩半句。",
+          "objectives": ["复原台步点位", "对齐布景板", "选择要守护的戏曲记忆"],
+          "puzzle": {"type": "join", "max_attempts": 3, "steps": [
+            {"id": "stage_step", "kind": "join", "prompt": "将第一步落在正确的台步点。", "options": ["梅", "兰", "竹"], "answer": "梅", "points": 50},
+            {"id": "stage_backdrop", "kind": "join", "prompt": "将水袖纹布景板对齐。", "options": ["左", "中", "右"], "answer": "中", "points": 50}
+          ]},
+          "battle": {"waves": 1, "enemy_hp": 110, "duration_sec": 45, "max_hits_taken": 5, "required_skills": ["飞檐"]},
+          "reward": {"memory": {"id": "xi_jue_chang", "title": "戏·绝唱", "summary": "记住绝唱，就要面对被抹去的童年社戏。", "skill": "飞檐", "capacity": 2, "choices": ["forget_childhood", "keep_childhood"]}, "base_ink_marks": 2}
+        }
+      ]
+    },
+    {
+      "id": "archway",
+      "order": 3,
+      "title": "第三章·牌坊",
+      "summary": "名与实刻在四柱三间之间，无名匠人的墨线仍未干。",
+      "unlock_cost": 5,
+      "next_chapter": "tower",
+      "events": [
+        {
+          "id": "archway_form",
+          "order": 1,
+          "title": "四柱三间",
+          "scene": "官道牌坊",
+          "intro": "牌坊正面褪色，四柱三间的规制只剩轮廓。",
+          "objectives": ["识别牌坊形制", "归位残缺构件"],
+          "puzzle": {"type": "pattern", "max_attempts": 3, "steps": [
+            {"id": "archway_grade", "kind": "choice", "prompt": "这座牌坊的形制是？", "options": ["四柱三间", "两柱一间", "三柱两间"], "answer": "四柱三间", "points": 50},
+            {"id": "archway_join", "kind": "join", "prompt": "将匾额托斗归位。", "options": ["左", "中", "右"], "answer": "中", "points": 50}
+          ]},
+          "battle": {"waves": 2, "enemy_hp": 120, "duration_sec": 50, "max_hits_taken": 5, "required_skills": ["飞檐"]},
+          "reward": {"memory": {"id": "fang_wu_ming", "title": "坊·无名", "summary": "无名匠人的手艺也值得被记住。", "skill": "飞檐", "capacity": 1, "choices": ["keep", "forget"]}, "base_ink_marks": 2}
+        },
+        {
+          "id": "archway_craftsman",
+          "order": 2,
+          "title": "无名匠",
+          "scene": "牌坊背面",
+          "intro": "营造记录没有署名，只有一条条与木石共鸣的墨线。",
+          "objectives": ["以斗拱压住构件", "以飞檐触发远端机关", "决定名与实的归属"],
+          "puzzle": {"type": "combo", "max_attempts": 3, "steps": [
+            {"id": "craftsman_anchor", "kind": "skill", "prompt": "用斗拱承住摇晃的牌坊。", "answer": "斗拱", "points": 50},
+            {"id": "craftsman_trigger", "kind": "skill", "prompt": "用飞檐触发远端墨印。", "answer": "飞檐", "points": 50}
+          ]},
+          "battle": {"waves": 2, "enemy_hp": 135, "duration_sec": 55, "max_hits_taken": 6, "required_skills": ["斗拱", "飞檐"]},
+          "reward": {"memory": {"id": "fang_jiang_hun", "title": "坊·匠魂", "summary": "名字可以被风吹散，手艺留下的结构不会。", "skill": "斗拱", "capacity": 2, "choices": ["keep", "forget"]}, "base_ink_marks": 3}
+        }
+      ]
+    },
+    {
+      "id": "tower",
+      "order": 4,
+      "title": "第四章·通天塔",
+      "summary": "白蚀源头在塔顶，初代拓印师封存的终极记忆等待选择。",
+      "unlock_cost": 8,
+      "events": [
+        {
+          "id": "tower_ascent",
+          "order": 1,
+          "title": "登塔",
+          "scene": "通天塔七层",
+          "intro": "每一层都保存着一次被遗忘的修复，七层墨线交叠成白蚀的源头。",
+          "objectives": ["完成综合拓印", "在限次内修复塔心"],
+          "puzzle": {"type": "combo", "max_attempts": 5, "steps": [
+            {"id": "tower_trace", "kind": "trace", "prompt": "拓印塔心第一道墨线。", "answer": "记", "points": 30},
+            {"id": "tower_anchor", "kind": "skill", "prompt": "用斗拱承住第七层。", "answer": "斗拱", "points": 30},
+            {"id": "tower_purify", "kind": "skill", "prompt": "用藻井净化逆结晶。", "answer": "藻井", "points": 40}
+          ]},
+          "battle": {"waves": 3, "enemy_hp": 180, "duration_sec": 60, "max_hits_taken": 7, "required_skills": ["斗拱", "飞檐", "藻井"]},
+          "reward": {"memory": {"id": "tower_origin", "title": "塔·初代之忆", "summary": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。", "skill": "藻井", "capacity": 2, "choices": ["restore_all", "preserve_forgetfulness", "restore_chosen"]}, "base_ink_marks": 3}
+        },
+        {
+          "id": "tower_ledger",
+          "order": 2,
+          "title": "千层墨",
+          "scene": "通天塔记忆长廊",
+          "intro": "长廊回放拓印师一路记住与遗忘的选择，账册中的每一道灰痕都发出回声。",
+          "objectives": ["回看记忆账册", "选择要拓印回世界的记忆"],
+          "puzzle": {"type": "choice", "max_attempts": 3, "steps": [
+            {"id": "tower_choice", "kind": "choice", "prompt": "你愿意将哪些记忆拓印回世界？", "options": ["all", "none", "kept"], "answer": "kept", "points": 100}
+          ]},
+          "reward": {"memory": {"id": "tower_epilogue", "title": "塔·檐下折中", "summary": "只记住值得记住的，让世界自己选择颜色。", "skill": "", "capacity": 1, "choices": ["all", "none", "kept"]}, "base_ink_marks": 3}
+        }
+      ]
+    }
+  ]
+}

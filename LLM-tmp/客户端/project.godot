@@ -1,0 +1,60 @@
+; Engine configuration file.
+; 《檐下千秋》 Godot 4 client
+
+config_version=5
+
+[application]
+
+config/name="檐下千秋"
+config/description="Data-driven online puzzle adventure demo"
+run/main_scene="res://scenes/main.tscn"
+
+[autoload]
+
+GameState="*res://scripts/game_state.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+
+[input]
+
+move_up={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":87,"unicode":119), Object(InputEventKey,"physical_keycode":4194320)]
+}
+move_down={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":83,"unicode":115), Object(InputEventKey,"physical_keycode":4194322)]
+}
+move_left={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":65,"unicode":97), Object(InputEventKey,"physical_keycode":4194319)]
+}
+move_right={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":68,"unicode":100), Object(InputEventKey,"physical_keycode":4194321)]
+}
+advance={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":32,"unicode":32), Object(InputEventKey,"physical_keycode":13,"unicode":13)]
+}
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
+environment/defaults/default_clear_color=Color(0.035, 0.055, 0.075, 1)
+
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+
+[yanxia]
+
+server_url="http://127.0.0.1:8090"
