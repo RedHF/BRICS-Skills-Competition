@@ -12,3 +12,5 @@
 /LLM-tmp/服务端/*.out.log
 /LLM-tmp/服务端/*.err.log
 /LLM-tmp/客户端/**/*.uid
+/LLM-tmp/.review/
+/LLM-tmp/交付/

@@ -22,9 +22,10 @@ const (
 )
 
 type PuzzleAttempt struct {
-	StepID string
-	Answer string
-	Action string
+	StepID  string
+	Answer  string
+	Action  string
+	Strokes [][][2]float64
 }
 
 type PuzzleEvaluation struct {
@@ -97,12 +98,16 @@ func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attem
 	}
 
 	expected := event.Puzzle.Steps[len(session.AcceptedSteps)]
+	if expected.Kind == "trace" {
+		record.Action = "trace"
+		record.AnswerHash = hashAnswer(fmt.Sprint(attempt.Strokes))
+	}
 	session.AttemptCount++
 	result.AttemptCount = session.AttemptCount
 	if attempt.StepID != expected.ID {
 		return rejectPuzzle(event, session, result, record, "step_out_of_order")
 	}
-	if normalize(attempt.Answer) != normalize(expected.Answer) {
+	if (expected.Kind == "trace" && !MatchTrace(expected.Trace, attempt.Strokes)) || (expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer)) {
 		return rejectPuzzle(event, session, result, record, "answer_incorrect")
 	}
 
@@ -131,7 +136,7 @@ func rejectPuzzle(event *content.Event, session *model.EventSession, result Puzz
 	result.ErosionDelta = PuzzleFailureErosion
 	result.Reason = reason
 	record.Reason = reason
-	if event.Puzzle.MaxAttempts > 0 && session.AttemptCount >= event.Puzzle.MaxAttempts {
+	if event.Puzzle.MaxAttempts > 0 && session.InvalidAttempts >= event.Puzzle.MaxAttempts {
 		session.Status = "failed"
 		session.FailureReason = "puzzle_attempt_limit"
 		result.Reason = session.FailureReason

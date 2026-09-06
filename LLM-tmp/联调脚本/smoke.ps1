@@ -1,33 +1,33 @@
-param(
-    [string]$BaseUrl = "http://127.0.0.1:8090"
-)
-
+param([string]$BaseUrl = "http://127.0.0.1:8090")
 $ErrorActionPreference = "Stop"
-$headers = @{ "Content-Type" = "application/json" }
 $playerId = "smoke_$(Get-Random)"
-
 function Post-Json([string]$Path, [hashtable]$Body) {
-    return Invoke-RestMethod -Method Post -Uri ($BaseUrl + $Path) -Headers $headers -Body ($Body | ConvertTo-Json -Depth 8)
+    Invoke-RestMethod -Method Post -Uri ($BaseUrl + $Path) -ContentType 'application/json; charset=utf-8' -Body ($Body | ConvertTo-Json -Depth 12)
 }
-
-$health = Invoke-RestMethod -Method Get -Uri ($BaseUrl + "/healthz")
-if ($health.status -ne "ok") { throw "health check failed" }
-$player = Post-Json "/api/v1/players" @{ player_id = $playerId; display_name = "联调玩家" }
-$session = Post-Json "/api/v1/events/prologue/prologue_bridge/start" @{ player_id = $playerId }
+$health = Invoke-RestMethod ($BaseUrl + '/healthz')
+if ($health.status -ne 'ok') { throw 'health check failed' }
+$player = Post-Json '/api/v1/players' @{ player_id = $playerId; display_name = '联调玩家' }
+$session = Post-Json '/api/v1/events/prologue/prologue_bridge/start' @{ player_id = $playerId }
 $sid = $session.session_id
-$puzzle = Post-Json "/api/v1/sessions/$sid/puzzle" @{ step_id = "bridge_trace"; answer = "平安"; action = "trace" }
-$battle = Post-Json "/api/v1/sessions/$sid/battle" @{ duration_ms = 1000; waves_cleared = 1; hits_taken = 0; actions = @(@{ skill = "斗拱"; at_ms = 100 }) }
-$choice = Post-Json "/api/v1/sessions/$sid/choice" @{ action = "keep" }
-$settled = Post-Json "/api/v1/sessions/$sid/settle" @{}
+$strokes = @()
+foreach ($stroke in $session.puzzle.steps[0].trace.strokes) {
+    $points = [System.Collections.Generic.List[object]]::new()
+    $points.Add(@($stroke[0][0], $stroke[0][1]))
+    for ($j = 1; $j -lt $stroke.Count; $j++) {
+        for ($k = 1; $k -le 50; $k++) {
+            $fraction = $k / 50.0
+            $x = $stroke[$j - 1][0] + $fraction * ($stroke[$j][0] - $stroke[$j - 1][0])
+            $y = $stroke[$j - 1][1] + $fraction * ($stroke[$j][1] - $stroke[$j - 1][1])
+            $points.Add(@($x, $y))
+        }
+    }
+    $strokes += ,$points.ToArray()
+}
+$puzzle = Post-Json "/api/v1/sessions/$sid/puzzle" @{ step_id = 'bridge_trace'; strokes = $strokes }
+if (-not $puzzle.complete) { throw 'trace validation failed' }
+$choice = Post-Json "/api/v1/sessions/$sid/choice" @{ action = 'keep' }
+$battle = Post-Json "/api/v1/sessions/$sid/battle" @{ duration_ms = 30000; waves_cleared = 1; hits_taken = 0; actions = @(@{ skill = '斗拱'; at_ms = 1000 }) }
+$settled = Post-Json "/api/v1/sessions/$sid/finish" @{}
 $repeat = Post-Json "/api/v1/sessions/$sid/finish" @{}
-
-[pscustomobject]@{
-    health = $health.status
-    puzzle_complete = $puzzle.complete
-    battle_won = $battle.won
-    choice_accepted = $choice.accepted
-    settled = $settled.settled
-    stars = $settled.result.stars
-    ink_marks = $settled.player.ink_marks
-    repeat_reason = $repeat.reason
-} | ConvertTo-Json
+if (-not $battle.won -or -not $settled.settled -or $repeat.reason -ne 'already_settled') { throw 'settlement verification failed' }
+[pscustomobject]@{ player = $playerId; trace = $puzzle.complete; choice = $choice.accepted; battle = $battle.won; stars = $settled.result.stars; repeat = $repeat.reason } | ConvertTo-Json

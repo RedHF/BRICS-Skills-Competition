@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -115,10 +116,11 @@ func (s *Server) handleCatalog(w http.ResponseWriter, r *http.Request) {
 }
 
 type publicCatalogResponse struct {
-	Version  int                        `json:"version"`
-	GameID   string                     `json:"game_id"`
-	Art      map[string]content.ArtSpec `json:"art,omitempty"`
-	Chapters []publicChapter            `json:"chapters"`
+	Memories map[string]content.MemorySpec `json:"memories"`
+	Version  int                           `json:"version"`
+	GameID   string                        `json:"game_id"`
+	Art      map[string]content.ArtSpec    `json:"art,omitempty"`
+	Chapters []publicChapter               `json:"chapters"`
 }
 
 type publicChapter struct {
@@ -132,6 +134,9 @@ type publicChapter struct {
 }
 
 type publicEvent struct {
+	Story      content.StorySpec   `json:"story"`
+	Draft      bool                `json:"draft"`
+	Reward     content.RewardSpec  `json:"reward"`
 	ID         string              `json:"id"`
 	Order      int                 `json:"order"`
 	Title      string              `json:"title"`
@@ -150,11 +155,12 @@ type publicPuzzle struct {
 }
 
 type publicPuzzleStep struct {
-	ID      string   `json:"id"`
-	Kind    string   `json:"kind"`
-	Prompt  string   `json:"prompt"`
-	Options []string `json:"options,omitempty"`
-	Points  int      `json:"points"`
+	Trace   *content.TraceSpec `json:"trace,omitempty"`
+	ID      string             `json:"id"`
+	Kind    string             `json:"kind"`
+	Prompt  string             `json:"prompt"`
+	Options []string           `json:"options,omitempty"`
+	Points  int                `json:"points"`
 }
 
 type publicMemory struct {
@@ -167,13 +173,13 @@ type publicMemory struct {
 }
 
 func publicCatalog(c *content.Catalog) publicCatalogResponse {
-	response := publicCatalogResponse{Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
+	response := publicCatalogResponse{Memories: c.Memories, Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
 	for _, chapter := range c.Chapters {
 		pc := publicChapter{ID: chapter.ID, Order: chapter.Order, Title: chapter.Title, Summary: chapter.Summary, UnlockCost: chapter.UnlockCost, NextChapter: chapter.NextChapter, Events: make([]publicEvent, 0, len(chapter.Events))}
 		for _, event := range chapter.Events {
-			pe := publicEvent{ID: event.ID, Order: event.Order, Title: event.Title, Scene: event.Scene, Intro: event.Intro, Objectives: append([]string(nil), event.Objectives...), Puzzle: publicPuzzle{Type: event.Puzzle.Type, MaxAttempts: event.Puzzle.MaxAttempts, Steps: make([]publicPuzzleStep, 0, len(event.Puzzle.Steps))}, Memory: publicMemory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Choices: append([]string(nil), event.Reward.Memory.Choices...)}}
+			pe := publicEvent{Story: event.Story, Draft: event.Draft, Reward: event.Reward, ID: event.ID, Order: event.Order, Title: event.Title, Scene: event.Scene, Intro: event.Intro, Objectives: append([]string(nil), event.Objectives...), Puzzle: publicPuzzle{Type: event.Puzzle.Type, MaxAttempts: event.Puzzle.MaxAttempts, Steps: make([]publicPuzzleStep, 0, len(event.Puzzle.Steps))}, Memory: publicMemory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Choices: append([]string(nil), event.Reward.Choices...)}}
 			for _, step := range event.Puzzle.Steps {
-				pe.Puzzle.Steps = append(pe.Puzzle.Steps, publicPuzzleStep{ID: step.ID, Kind: step.Kind, Prompt: step.Prompt, Options: append([]string(nil), step.Options...), Points: step.Points})
+				pe.Puzzle.Steps = append(pe.Puzzle.Steps, publicPuzzleStep{Trace: step.Trace, ID: step.ID, Kind: step.Kind, Prompt: step.Prompt, Options: append([]string(nil), step.Options...), Points: step.Points})
 			}
 			if event.Battle != nil {
 				battle := *event.Battle
@@ -341,12 +347,24 @@ func (s *Server) startSession(w http.ResponseWriter, request startSessionRequest
 		writeError(w, http.StatusNotFound, "event_not_found", "event not found")
 		return
 	}
+	if event.Draft {
+		writeError(w, http.StatusConflict, "draft_event", "this chapter is a narrative draft")
+		return
+	}
 	if !chapterUnlocked(player, chapter) {
 		writeError(w, http.StatusForbidden, "chapter_locked", "chapter is not unlocked")
 		return
 	}
 	if event.Puzzle.MaxAttempts <= 0 {
 		event.Puzzle.MaxAttempts = 3
+	}
+	for _, previous := range chapter.Events {
+		if previous.Order < event.Order {
+			if _, done := player.CompletedEvents[eventKey(chapter.ID, previous.ID)]; !done {
+				writeError(w, http.StatusConflict, "event_locked", "complete previous events first")
+				return
+			}
+		}
 	}
 	id, err := newID("s")
 	if err != nil {
@@ -456,10 +474,11 @@ func (s *Server) sessionStartResponse(session model.EventSession, event *content
 }
 
 type puzzleRequest struct {
-	PlayerID string `json:"player_id"`
-	StepID   string `json:"step_id"`
-	Answer   string `json:"answer"`
-	Action   string `json:"action"`
+	Strokes  [][][2]float64 `json:"strokes"`
+	PlayerID string         `json:"player_id"`
+	StepID   string         `json:"step_id"`
+	Answer   string         `json:"answer"`
+	Action   string         `json:"action"`
 }
 
 func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID string) {
@@ -489,18 +508,30 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	if expired(session) {
-		_, _, _ = s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
+		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
 			current.Status = "failed"
 			current.FailureReason = "session_expired"
 			player.Erosion = maxInt(player.Erosion, maxErosion)
 			return nil
 		})
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
+			return
+		}
 		writeError(w, http.StatusConflict, "session_expired", "session has expired")
 		return
 	}
+	if len(session.AcceptedSteps) < len(event.Puzzle.Steps) {
+		step := event.Puzzle.Steps[len(session.AcceptedSteps)]
+		player, _ := s.store.GetPlayer(session.PlayerID)
+		if step.Kind == "skill" && !s.playerSkills(player)[request.Answer] {
+			writeError(w, http.StatusBadRequest, "skill_unavailable", "skill has not been acquired")
+			return
+		}
+	}
 	var evaluation rules.PuzzleEvaluation
 	updated, player, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-		evaluation = rules.EvaluatePuzzleStep(event, current, rules.PuzzleAttempt{StepID: strings.TrimSpace(request.StepID), Answer: request.Answer, Action: request.Action})
+		evaluation = rules.EvaluatePuzzleStep(event, current, rules.PuzzleAttempt{Strokes: request.Strokes, StepID: strings.TrimSpace(request.StepID), Answer: request.Answer, Action: request.Action})
 		current.Actions = append(current.Actions, evaluation.ActionRecord)
 		if evaluation.ErosionDelta > 0 {
 			player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
@@ -569,11 +600,15 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	if expired(session) {
-		_, _, _ = s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
+		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
 			current.Status = "failed"
 			current.FailureReason = "session_expired"
 			return nil
 		})
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
+			return
+		}
 		writeError(w, http.StatusConflict, "session_expired", "session has expired")
 		return
 	}
@@ -586,7 +621,7 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusNotFound, "player_not_found", "player not found")
 		return
 	}
-	availableSkills := playerSkills(player)
+	availableSkills := s.playerSkills(player)
 	if session.PendingMemory != nil && session.PendingMemory.Skill != "" {
 		availableSkills[session.PendingMemory.Skill] = true
 	}
@@ -606,6 +641,9 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	updated, player, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
+		if current.BattleChecked {
+			return nil
+		}
 		current.BattleChecked = true
 		current.BattleWon = evaluation.Won
 		current.BattleWaves = evaluation.Waves
@@ -666,13 +704,17 @@ func (s *Server) handleChoice(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	if expired(session) {
-		_, _, _ = s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
+		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
 			if current.Status != "completed" {
 				current.Status = "failed"
 				current.FailureReason = "session_expired"
 			}
 			return nil
 		})
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
+			return
+		}
 		writeError(w, http.StatusConflict, "session_expired", "session has expired")
 		return
 	}
@@ -688,14 +730,6 @@ func (s *Server) handleChoice(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusConflict, "puzzle_incomplete", "complete the puzzle before choosing a memory")
 		return
 	}
-	if event.Battle != nil && !session.BattleChecked {
-		writeError(w, http.StatusConflict, "battle_incomplete", "submit battle telemetry before choosing a memory")
-		return
-	}
-	if event.Battle != nil && !session.BattleWon {
-		writeError(w, http.StatusConflict, "battle_failed", "a failed battle cannot apply a memory choice")
-		return
-	}
 	action := strings.ToLower(strings.TrimSpace(request.Action))
 	if action == "" {
 		writeError(w, http.StatusBadRequest, "choice_required", "action is required")
@@ -705,13 +739,30 @@ func (s *Server) handleChoice(w http.ResponseWriter, r *http.Request, sessionID 
 		if current.ChoiceDone {
 			return nil
 		}
-		valid, forgotten, reason := validateChoice(action, request.ForgetMemoryID, current.PendingMemory, player, event.Reward.Memory.Choices)
+		valid, forgotten, reason := validateChoice(action, request.ForgetMemoryID, current.PendingMemory, player, event.Reward.Choices)
 		if !valid {
 			return &choiceValidationError{reason: reason}
 		}
 		current.ChoiceDone = true
 		current.ChoiceAction = action
 		current.ForgottenMemory = forgotten
+		if _, completed := player.CompletedEvents[eventKey(current.ChapterID, current.EventID)]; !completed {
+			if current.ForgottenMemory != "" {
+				forgotten, ok := removeMemory(player, current.ForgottenMemory)
+				if !ok {
+					return errors.New("forgotten memory is no longer present")
+				}
+				player.MemoryLedger = append(player.MemoryLedger, model.LedgerEntry{MemoryID: forgotten.ID, Title: forgotten.Title, Action: "forgotten", ChapterID: current.ChapterID, EventID: current.EventID, OccurredAt: time.Now().UTC()})
+			}
+			if current.PendingMemory != nil && !containsMemory(player.Memories, current.PendingMemory.ID) {
+				memory := *current.PendingMemory
+				memory.AddedAt = time.Now().UTC()
+				memory.Source = current.ChapterID + "/" + current.EventID
+				player.Memories = append(player.Memories, memory)
+				player.MemoryLedger = append(player.MemoryLedger, model.LedgerEntry{MemoryID: memory.ID, Title: memory.Title, Action: "kept", ChapterID: current.ChapterID, EventID: current.EventID, OccurredAt: memory.AddedAt})
+			}
+
+		}
 		return nil
 	})
 	if err != nil {
@@ -723,7 +774,7 @@ func (s *Server) handleChoice(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusInternalServerError, "store_error", err.Error())
 		return
 	}
-	writeJSON(w, http.StatusOK, map[string]any{"accepted": updated.ChoiceDone, "action": updated.ChoiceAction, "forgotten_memory_id": updated.ForgottenMemory, "memory": publicMemoryFromModel(updated.PendingMemory), "capacity": player.Capacity, "used_capacity": usedCapacity(player), "status": updated.Status})
+	writeJSON(w, http.StatusOK, map[string]any{"player": playerPayload(player), "accepted": updated.ChoiceDone, "action": updated.ChoiceAction, "forgotten_memory_id": updated.ForgottenMemory, "memory": publicMemoryFromModel(updated.PendingMemory), "capacity": player.Capacity, "used_capacity": usedCapacity(player), "status": updated.Status})
 }
 
 type choiceValidationError struct{ reason string }
@@ -768,6 +819,9 @@ func validateChoice(action, forgetID string, pending *model.Memory, player *mode
 		}
 	}
 	available := player.Capacity - usedCapacity(*player)
+	if forgotten == pending.ID {
+		return false, "", "cannot erase and acquire the same memory"
+	}
 	if forgotten != "" {
 		for _, memory := range player.Memories {
 			if memory.ID == forgotten {
@@ -776,7 +830,7 @@ func validateChoice(action, forgetID string, pending *model.Memory, player *mode
 			}
 		}
 	}
-	if pending.Capacity > available {
+	if !containsMemory(player.Memories, pending.ID) && pending.Capacity > available {
 		return false, "", "not enough memory capacity; forget an existing memory first"
 	}
 	return true, forgotten, ""
@@ -813,13 +867,17 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	if expired(session) {
-		_, _, _ = s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
+		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
 			if current.Status != "completed" {
 				current.Status = "failed"
 				current.FailureReason = "session_expired"
 			}
 			return nil
 		})
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
+			return
+		}
 		writeError(w, http.StatusConflict, "session_expired", "session has expired")
 		return
 	}
@@ -864,20 +922,6 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 		player.InkMarks += result.InkMarksEarned
 		if event.Reward.CapacityIncrease > 0 {
 			player.Capacity = clamp(player.Capacity+event.Reward.CapacityIncrease, 1, maxCapacity)
-		}
-		if current.ForgottenMemory != "" {
-			forgotten, ok := removeMemory(player, current.ForgottenMemory)
-			if !ok {
-				return errors.New("forgotten memory is no longer present")
-			}
-			player.MemoryLedger = append(player.MemoryLedger, model.LedgerEntry{MemoryID: forgotten.ID, Title: forgotten.Title, Action: "forgotten", ChapterID: current.ChapterID, EventID: current.EventID, OccurredAt: time.Now().UTC()})
-		}
-		if current.PendingMemory != nil && !containsMemory(player.Memories, current.PendingMemory.ID) {
-			memory := *current.PendingMemory
-			memory.AddedAt = time.Now().UTC()
-			memory.Source = current.ChapterID + "/" + current.EventID
-			player.Memories = append(player.Memories, memory)
-			player.MemoryLedger = append(player.MemoryLedger, model.LedgerEntry{MemoryID: memory.ID, Title: memory.Title, Action: "kept", ChapterID: current.ChapterID, EventID: current.EventID, OccurredAt: memory.AddedAt})
 		}
 		player.CompletedEvents[key] = result
 		unlockNextChapter(s.catalog, current.ChapterID, player)
@@ -930,7 +974,7 @@ func calculateResult(session *model.EventSession, event *content.Event, erosion 
 	} else if quality >= 60 {
 		stars = 2
 	}
-	return model.EventResult{ChapterID: session.ChapterID, EventID: session.EventID, Stars: stars, PuzzleScore: session.PuzzleScore, PuzzleTotal: session.PuzzleTotal, BattleWon: session.BattleWon, RepairPercent: quality, ErosionAtEnd: erosion, InkMarksEarned: clamp(event.Reward.BaseInkMarks+stars-1, 1, 3)}
+	return model.EventResult{ChapterID: session.ChapterID, EventID: session.EventID, Stars: stars, PuzzleScore: session.PuzzleScore, PuzzleTotal: session.PuzzleTotal, BattleWon: session.BattleWon, RepairPercent: quality, ErosionAtEnd: erosion, InkMarksEarned: stars}
 }
 
 func (s *Server) handleEventStartPath(w http.ResponseWriter, r *http.Request, remainder string) {
@@ -956,7 +1000,7 @@ func memoryFromEvent(event *content.Event) *model.Memory {
 	if event == nil {
 		return nil
 	}
-	return &model.Memory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Source: event.ID}
+	return &model.Memory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Source: event.Reward.Memory.Source}
 }
 
 func publicMemoryFromModel(memory *model.Memory) any {
@@ -974,8 +1018,16 @@ func usedCapacity(player model.Player) int {
 	return total
 }
 
-func playerSkills(player model.Player) map[string]bool {
+func (s *Server) playerSkills(player model.Player) map[string]bool {
 	result := make(map[string]bool)
+	for _, entry := range player.MemoryLedger {
+		if entry.Action == "kept" {
+			skill := s.catalog.Memories[entry.MemoryID].Skill
+			if skill != "" {
+				result[skill] = true
+			}
+		}
+	}
 	for _, memory := range player.Memories {
 		if memory.Skill != "" {
 			result[memory.Skill] = true
@@ -1026,6 +1078,10 @@ func unlockNextChapter(catalog *content.Catalog, chapterID string, player *model
 	if !ok || player.InkMarks < next.UnlockCost || chapterAlreadyUnlocked(*player, next.ID) {
 		return
 	}
+	if next.Events[0].Draft {
+		return
+	}
+	player.InkMarks -= next.UnlockCost
 	player.UnlockedChapters = append(player.UnlockedChapters, next.ID)
 }
 
@@ -1119,6 +1175,7 @@ func writeJSON(w http.ResponseWriter, status int, value any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(status)
 	if err := json.NewEncoder(w).Encode(value); err != nil {
+		log.Printf("write HTTP response: %v", err)
 		return
 	}
 }

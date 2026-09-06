@@ -1,11 +1,66 @@
 package store
 
 import (
+	"errors"
+	"os"
 	"path/filepath"
 	"testing"
 
 	"yanxia-server/internal/model"
 )
+
+func TestSnapshotsKeepCompletedEventsAndRollbackSlices(t *testing.T) {
+	s, err := Open(filepath.Join(t.TempDir(), "save.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, _, err = s.EnsurePlayer("p")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = s.UpdatePlayer("p", func(p *model.Player) error {
+		p.CompletedEvents["prologue:bridge"] = model.EventResult{Stars: 3}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, _ := s.GetPlayer("p")
+	if len(p.CompletedEvents) != 1 {
+		t.Fatal("completed events lost in clone")
+	}
+	delete(p.CompletedEvents, "prologue:bridge")
+	p, _ = s.GetPlayer("p")
+	if len(p.CompletedEvents) != 1 {
+		t.Fatal("caller mutated store")
+	}
+	err = s.CreateSession(model.EventSession{ID: "s", PlayerID: "p", AcceptedSteps: []string{"first"}, Actions: []model.ActionRecord{{StepID: "first"}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = s.UpdateSession("s", func(run *model.EventSession) error {
+		run.AcceptedSteps[0] = "corrupt"
+		run.Actions[0].StepID = "corrupt"
+		return errors.New("abort")
+	})
+	if err == nil {
+		t.Fatal("expected transaction error")
+	}
+	run, _ := s.GetSession("s")
+	if run.AcceptedSteps[0] != "first" || run.Actions[0].StepID != "first" {
+		t.Fatal("failed transaction mutated slices")
+	}
+}
+
+func TestEmptySaveFailsInsteadOfErasingProgress(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "save.json")
+	if err := os.WriteFile(path, []byte{}, 0600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Open(path); err == nil {
+		t.Fatal("empty save silently reset")
+	}
+}
 
 func TestStoreRoundTripsPlayerAndSession(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "save.json")

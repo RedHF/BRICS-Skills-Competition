@@ -50,27 +50,11 @@ func Open(path string) (*Store, error) {
 	if err != nil {
 		return nil, fmt.Errorf("read store: %w", err)
 	}
-	if len(b) == 0 {
-		s.db = newDatabase()
-		if err := s.persistLocked(); err != nil {
-			return nil, err
-		}
-		return s, nil
-	}
 	if err := json.Unmarshal(b, &s.db); err != nil {
 		return nil, fmt.Errorf("decode store %q: %w", path, err)
 	}
-	if s.db.Version == 0 {
-		s.db.Version = databaseVersion
-	}
-	if s.db.Version > databaseVersion {
-		return nil, fmt.Errorf("store version %d is newer than supported version %d", s.db.Version, databaseVersion)
-	}
-	if s.db.Players == nil {
-		s.db.Players = make(map[string]model.Player)
-	}
-	if s.db.Sessions == nil {
-		s.db.Sessions = make(map[string]model.EventSession)
+	if s.db.Version != databaseVersion || s.db.Players == nil || s.db.Sessions == nil {
+		return nil, fmt.Errorf("invalid store structure or version in %q", path)
 	}
 	return s, nil
 }
@@ -93,7 +77,9 @@ func (s *Store) persistLocked() error {
 		return fmt.Errorf("write store temp: %w", err)
 	}
 	if err := os.Rename(tmp, s.path); err != nil {
-		_ = os.Remove(tmp)
+		if cleanupErr := os.Remove(tmp); cleanupErr != nil {
+			return errors.Join(err, cleanupErr)
+		}
 		return fmt.Errorf("replace store: %w", err)
 	}
 	return nil
@@ -338,10 +324,11 @@ func clonePlayer(p model.Player) model.Player {
 		p.UnlockedChapters = append([]string{}, p.UnlockedChapters...)
 	}
 	if p.CompletedEvents != nil {
-		p.CompletedEvents = make(map[string]model.EventResult, len(p.CompletedEvents))
+		completed := make(map[string]model.EventResult, len(p.CompletedEvents))
 		for k, v := range p.CompletedEvents {
-			p.CompletedEvents[k] = v
+			completed[k] = v
 		}
+		p.CompletedEvents = completed
 	}
 	if p.Memories != nil {
 		p.Memories = append([]model.Memory{}, p.Memories...)
@@ -353,6 +340,8 @@ func clonePlayer(p model.Player) model.Player {
 }
 
 func cloneSession(s model.EventSession) model.EventSession {
+	s.AcceptedSteps = append([]string{}, s.AcceptedSteps...)
+	s.Actions = append([]model.ActionRecord{}, s.Actions...)
 	if s.PendingMemory != nil {
 		m := *s.PendingMemory
 		s.PendingMemory = &m

@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"testing"
 	"time"
@@ -55,7 +56,7 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 	if wrong["erosion"].(float64) != 10 {
 		t.Fatalf("wrong answer did not increase erosion: %+v", wrong)
 	}
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "平安"})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"actions": []map[string]any{{"skill": "斗拱", "at_ms": 1000}}, "duration_ms": 30000})
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"})
 	first := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
@@ -92,7 +93,7 @@ func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
 	for attempt := 0; attempt < 3; attempt++ {
 		postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "错误"})
 	}
-	failed := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "平安"})
+	failed := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	if failed.status != http.StatusConflict || failed.body["error"].(map[string]any)["code"] != "session_failed" {
 		t.Fatalf("failed puzzle session was reusable: status=%d body=%+v", failed.status, failed.body)
 	}
@@ -102,7 +103,7 @@ func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
 	if newSID == sid {
 		t.Fatal("retry unexpectedly reused the failed session id")
 	}
-	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "平安"})
+	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	failedBattle := postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", map[string]any{"duration_ms": 1000, "waves_cleared": 0, "hits_taken": 0, "actions": []map[string]any{}})
 	if failedBattle["won"].(bool) || failedBattle["status"] != "failed" {
 		t.Fatalf("expected failed battle session: %+v", failedBattle)
@@ -132,7 +133,7 @@ func TestExpiredSessionCannotChooseOrSettle(t *testing.T) {
 	postJSON(t, server.URL+"/api/v1/players", map[string]any{"player_id": "expiry-flow"})
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "expiry-flow", "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "平安"})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"duration_ms": 30000, "waves_cleared": 1, "hits_taken": 0, "actions": []map[string]any{{"skill": "斗拱", "at_ms": 1000}}})
 	if _, err := persistence.UpdateSession(sid, func(current *model.EventSession) error {
 		current.ExpiresAt = time.Now().UTC().Add(-time.Minute)
@@ -167,7 +168,22 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	custom.Battle = &battleSpec
 	custom.Reward.Memory.ID = "custom_skill_memory"
 	custom.Reward.Memory.Skill = "木榫"
-	catalog.Chapters[0].Events = append(catalog.Chapters[0].Events, custom)
+	custom.Reward.MemoryID = "custom_skill_memory"
+	custom.Reward.Memory.Source = "prologue/custom_skill_event"
+	catalog.Memories[custom.Reward.MemoryID] = custom.Reward.Memory
+	catalog.Chapters[0].Events = []content.Event{custom}
+	contentPath := filepath.Join(t.TempDir(), "chapters.json")
+	encoded, err := json.Marshal(catalog)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(contentPath, encoded, 0600); err != nil {
+		t.Fatal(err)
+	}
+	catalog, err = content.Load(contentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
 	persistence, err := store.Open(filepath.Join(t.TempDir(), "save.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -182,7 +198,7 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	postJSON(t, server.URL+"/api/v1/players", map[string]any{"player_id": "custom-skill-flow"})
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "custom-skill-flow", "chapter_id": "prologue", "event_id": "custom_skill_event"})
 	sid := session["session_id"].(string)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "平安"})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	battle := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"duration_ms": 30000, "waves_cleared": 1, "hits_taken": 0, "actions": []map[string]any{{"skill": "木榫", "at_ms": 1000}}})
 	if !battle["won"].(bool) {
 		t.Fatalf("catalog-defined skill was rejected by HTTP flow: %+v", battle)
@@ -251,4 +267,91 @@ func getJSON(t *testing.T, url string) map[string]any {
 		t.Fatalf("GET %s failed (%d): %s", url, response.StatusCode, data)
 	}
 	return result
+}
+
+func traceRequest(step content.PuzzleStep) map[string]any {
+	strokes := make([][][2]float64, len(step.Trace.Strokes))
+	for i, stroke := range step.Trace.Strokes {
+		strokes[i] = append(strokes[i], stroke[0])
+		for j := 1; j < len(stroke); j++ {
+			for k := 1; k <= 50; k++ {
+				t := float64(k) / 50
+				strokes[i] = append(strokes[i], [2]float64{stroke[j-1][0] + t*(stroke[j][0]-stroke[j-1][0]), stroke[j-1][1] + t*(stroke[j][1]-stroke[j-1][1])})
+			}
+		}
+	}
+	return map[string]any{"step_id": step.ID, "strokes": strokes}
+}
+
+func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
+	catalog, err := content.Load(filepath.Join("..", "..", "content", "chapters.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "save.json")
+	persistence, err := store.Open(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	api, err := New(catalog, persistence)
+	if err != nil {
+		t.Fatal(err)
+	}
+	server := httptest.NewServer(api)
+	defer server.Close()
+	postJSON(t, server.URL+"/api/v1/players", map[string]any{"player_id": "full-demo"})
+	lastSID := ""
+	for _, chapter := range catalog.Chapters[:2] {
+		for _, event := range chapter.Events {
+			start := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "full-demo", "chapter_id": chapter.ID, "event_id": event.ID})
+			sid := start["session_id"].(string)
+			lastSID = sid
+			for _, step := range event.Puzzle.Steps {
+				input := map[string]any{"step_id": step.ID, "answer": step.Answer}
+				if step.Kind == "trace" {
+					input = traceRequest(step)
+				}
+				response := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", input)
+				if response["accepted"] != true {
+					t.Fatalf("step %s rejected: %+v", step.ID, response)
+				}
+			}
+			input := map[string]any{"action": "keep"}
+			if event.ID == "temple_drum" {
+				input = map[string]any{"action": "forget", "forget_memory_id": "yan_ping_an"}
+			}
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input)
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input)
+			if event.Battle != nil {
+				actions := []map[string]any{}
+				for _, skill := range event.Battle.RequiredSkills {
+					actions = append(actions, map[string]any{"skill": skill, "at_ms": 1000})
+				}
+				postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"duration_ms": event.Battle.DurationSec * 1000, "waves_cleared": 1, "actions": actions})
+			}
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
+		}
+	}
+	reloaded, err := store.Open(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	player, _ := reloaded.GetPlayer("full-demo")
+	if player.InkMarks != 12 {
+		t.Fatal("draft chapter consumed ink marks")
+	}
+	if len(player.CompletedEvents) != 4 || len(player.Memories) != 3 || len(player.MemoryLedger) != 5 || player.Capacity != 6 || player.LastSequence != 4 {
+		t.Fatalf("progress lost or duplicated: %+v", player)
+	}
+	if player.MemoryLedger[3].Action != "forgotten" || player.MemoryLedger[3].MemoryID != "yan_ping_an" || player.MemoryLedger[3].EventID != "temple_drum" {
+		t.Fatalf("wrong narrative link: %+v", player.MemoryLedger)
+	}
+	session, _ := reloaded.GetSession(lastSID)
+	if session.Status != "completed" || session.PendingResult == nil {
+		t.Fatal("settlement not persisted")
+	}
+	if !api.playerSkills(player)["斗拱"] || !api.playerSkills(player)["藻井"] {
+		t.Fatal("learned skill lost after erasure")
+	}
 }

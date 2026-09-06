@@ -10,14 +10,15 @@ import (
 	"os"
 )
 
-const CurrentVersion = 1
+const CurrentVersion = 3
 
 // Catalog is the complete, versioned game content manifest.
 type Catalog struct {
-	Version  int                `json:"version"`
-	GameID   string             `json:"game_id"`
-	Art      map[string]ArtSpec `json:"art,omitempty"`
-	Chapters []Chapter          `json:"chapters"`
+	Memories map[string]MemorySpec `json:"memories"`
+	Version  int                   `json:"version"`
+	GameID   string                `json:"game_id"`
+	Art      map[string]ArtSpec    `json:"art,omitempty"`
+	Chapters []Chapter             `json:"chapters"`
 }
 
 type ArtSpec struct {
@@ -35,7 +36,15 @@ type Chapter struct {
 	NextChapter string  `json:"next_chapter,omitempty"`
 }
 
+type StorySpec struct {
+	Beats        []string `json:"beats"`
+	Outro        string   `json:"outro"`
+	ChapterOutro string   `json:"chapter_outro,omitempty"`
+}
+
 type Event struct {
+	Story      StorySpec   `json:"story"`
+	Draft      bool        `json:"draft"`
 	ID         string      `json:"id"`
 	Order      int         `json:"order"`
 	Title      string      `json:"title"`
@@ -53,13 +62,20 @@ type PuzzleSpec struct {
 	Steps       []PuzzleStep `json:"steps"`
 }
 
+type TraceSpec struct {
+	AspectRatio float64        `json:"aspect_ratio"`
+	Strokes     [][][2]float64 `json:"strokes"`
+	Tolerance   float64        `json:"tolerance"`
+}
+
 type PuzzleStep struct {
-	ID      string   `json:"id"`
-	Kind    string   `json:"kind"`
-	Prompt  string   `json:"prompt"`
-	Options []string `json:"options,omitempty"`
-	Answer  string   `json:"answer"`
-	Points  int      `json:"points"`
+	Trace   *TraceSpec `json:"trace,omitempty"`
+	ID      string     `json:"id"`
+	Kind    string     `json:"kind"`
+	Prompt  string     `json:"prompt"`
+	Options []string   `json:"options,omitempty"`
+	Answer  string     `json:"answer,omitempty"`
+	Points  int        `json:"points"`
 }
 
 type BattleSpec struct {
@@ -71,19 +87,24 @@ type BattleSpec struct {
 }
 
 type RewardSpec struct {
-	Memory           MemorySpec `json:"memory"`
-	BaseInkMarks     int        `json:"base_ink_marks"`
+	MemoryID         string     `json:"memory_id"`
+	Choices          []string   `json:"choices"`
+	Memory           MemorySpec `json:"-"`
 	UnlockChapter    string     `json:"unlock_chapter,omitempty"`
 	CapacityIncrease int        `json:"capacity_increase,omitempty"`
 }
 
 type MemorySpec struct {
-	ID       string   `json:"id"`
-	Title    string   `json:"title"`
-	Summary  string   `json:"summary"`
-	Skill    string   `json:"skill"`
-	Capacity int      `json:"capacity"`
-	Choices  []string `json:"choices"`
+	Source         string  `json:"source"`
+	RememberedText string  `json:"remembered_text"`
+	ForgottenText  string  `json:"forgotten_text"`
+	Color          string  `json:"color"`
+	ToneHz         float64 `json:"tone_hz"`
+	ID             string  `json:"id"`
+	Title          string  `json:"title"`
+	Summary        string  `json:"summary"`
+	Skill          string  `json:"skill"`
+	Capacity       int     `json:"capacity"`
 }
 
 // Load reads and validates a catalog from disk.
@@ -107,14 +128,33 @@ func (c *Catalog) Validate() error {
 	if c == nil {
 		return errors.New("catalog is nil")
 	}
-	if c.Version <= 0 {
-		return errors.New("version must be positive")
+	if c.Version != CurrentVersion {
+		return fmt.Errorf("content version must be %d", CurrentVersion)
 	}
 	if c.GameID == "" {
 		return errors.New("game_id is required")
 	}
 	if len(c.Chapters) == 0 {
 		return errors.New("at least one chapter is required")
+	}
+	for ci := range c.Chapters {
+		for ei := range c.Chapters[ci].Events {
+			event := &c.Chapters[ci].Events[ei]
+			memory, ok := c.Memories[event.Reward.MemoryID]
+			if !ok {
+				return fmt.Errorf("event %q references missing memory %q", event.ID, event.Reward.MemoryID)
+			}
+			if memory.ID != event.Reward.MemoryID || memory.Source != c.Chapters[ci].ID+"/"+event.ID {
+				return fmt.Errorf("memory %q source does not match event", memory.ID)
+			}
+			if memory.Title == "" || memory.Summary == "" || memory.RememberedText == "" || memory.ForgottenText == "" {
+				return fmt.Errorf("memory %q missing narrative text", memory.ID)
+			}
+			if len(event.Story.Beats) == 0 || event.Story.Outro == "" {
+				return fmt.Errorf("event %q missing story", event.ID)
+			}
+			event.Reward.Memory = memory
+		}
 	}
 	chapterIDs := make(map[string]struct{}, len(c.Chapters))
 	for _, chapter := range c.Chapters {
@@ -142,13 +182,31 @@ func (c *Catalog) Validate() error {
 			}
 			stepIDs := make(map[string]struct{}, len(event.Puzzle.Steps))
 			for _, step := range event.Puzzle.Steps {
-				if step.ID == "" || step.Answer == "" {
+				if step.ID == "" || (step.Kind != "trace" && step.Answer == "") {
 					return fmt.Errorf("event %q has puzzle step without id/answer", event.ID)
 				}
 				if _, exists := stepIDs[step.ID]; exists {
 					return fmt.Errorf("event %q has duplicate puzzle step id %q", event.ID, step.ID)
 				}
 				stepIDs[step.ID] = struct{}{}
+				if step.Kind == "trace" {
+					if step.Trace == nil || len(step.Trace.Strokes) == 0 || step.Trace.Tolerance <= 0 || step.Trace.Tolerance > .2 || step.Trace.AspectRatio <= 0 {
+						return fmt.Errorf("step %q has invalid trace specification", step.ID)
+					}
+					for _, stroke := range step.Trace.Strokes {
+						if len(stroke) < 2 {
+							return fmt.Errorf("step %q has empty stroke", step.ID)
+						}
+						for i, p := range stroke {
+							if p[0] < 0 || p[0] > 1 || p[1] < 0 || p[1] > 1 {
+								return fmt.Errorf("step %q trace outside canvas", step.ID)
+							}
+							if i > 0 && p == stroke[i-1] {
+								return fmt.Errorf("step %q duplicate trace vertex", step.ID)
+							}
+						}
+					}
+				}
 				if step.Points < 0 {
 					return fmt.Errorf("event %q step %q has negative points", event.ID, step.ID)
 				}
@@ -159,7 +217,7 @@ func (c *Catalog) Validate() error {
 			if event.Reward.Memory.Capacity <= 0 {
 				return fmt.Errorf("event %q reward memory capacity must be positive", event.ID)
 			}
-			if len(event.Reward.Memory.Choices) == 0 {
+			if len(event.Reward.Choices) == 0 {
 				return fmt.Errorf("event %q reward memory has no choices", event.ID)
 			}
 			if event.Battle != nil {

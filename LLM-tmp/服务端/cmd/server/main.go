@@ -26,7 +26,16 @@ func main() {
 	address := flag.String("addr", ":8090", "HTTP listen address")
 	contentPath := flag.String("content", "content/chapters.json", "path to data-driven chapter catalog")
 	dataPath := flag.String("data", "data/save.json", "path to server-side save database")
+	logPath := flag.String("log", "", "log file for desktop launch")
 	flag.Parse()
+	if *logPath != "" {
+		file, err := os.OpenFile(*logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+		log.SetOutput(file)
+	}
 
 	resolvedContentPath := resolvePath(*contentPath, "content/chapters.json")
 	catalog, err := content.Load(resolvedContentPath)

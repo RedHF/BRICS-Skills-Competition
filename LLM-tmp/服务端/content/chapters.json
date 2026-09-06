@@ -1,11 +1,19 @@
 {
-  "version": 1,
+  "version": 3,
   "game_id": "yanxia-qianqiu",
   "art": {
-    "prologue_bridge": {"backdrop_color": "#172b35"},
-    "temple_incense": {"backdrop_color": "#2b2724"},
-    "temple_guest": {"backdrop_color": "#26333a"},
-    "temple_drum": {"backdrop_color": "#35272a"}
+    "prologue_bridge": {
+      "backdrop_color": "#172b35"
+    },
+    "temple_incense": {
+      "backdrop_color": "#2b2724"
+    },
+    "temple_guest": {
+      "backdrop_color": "#26333a"
+    },
+    "temple_drum": {
+      "backdrop_color": "#35272a"
+    }
   },
   "chapters": [
     {
@@ -22,18 +30,179 @@
           "title": "桥上平安",
           "scene": "风雨廊桥",
           "intro": "桥心刻着正在褪色的‘平安’二字。古建呓语从雨幕深处传来：桥记着送别，也记着归来。",
-          "objectives": ["调查桥心刻字", "完成墨线拓印", "以斗拱承重驱散白蚀"],
+          "objectives": [
+            "调查桥心刻字",
+            "完成墨线拓印",
+            "以斗拱承重驱散白蚀"
+          ],
           "puzzle": {
             "type": "trace",
             "max_attempts": 3,
             "steps": [
-              {"id": "bridge_trace", "kind": "trace", "prompt": "沿完整墨线拓印桥心刻字。", "answer": "平安", "points": 100}
+              {
+                "id": "bridge_trace",
+                "kind": "trace",
+                "prompt": "沿完整墨线拓印桥心刻字。",
+                "points": 100,
+                "trace": {
+                  "strokes": [
+                    [
+                      [
+                        0.1175,
+                        0.185
+                      ],
+                      [
+                        0.4325,
+                        0.185
+                      ]
+                    ],
+                    [
+                      [
+                        0.149,
+                        0.302
+                      ],
+                      [
+                        0.2075,
+                        0.437
+                      ]
+                    ],
+                    [
+                      [
+                        0.401,
+                        0.302
+                      ],
+                      [
+                        0.3425,
+                        0.437
+                      ]
+                    ],
+                    [
+                      [
+                        0.095,
+                        0.527
+                      ],
+                      [
+                        0.455,
+                        0.527
+                      ]
+                    ],
+                    [
+                      [
+                        0.275,
+                        0.194
+                      ],
+                      [
+                        0.275,
+                        0.86
+                      ]
+                    ],
+                    [
+                      [
+                        0.707,
+                        0.122
+                      ],
+                      [
+                        0.743,
+                        0.212
+                      ]
+                    ],
+                    [
+                      [
+                        0.59,
+                        0.275
+                      ],
+                      [
+                        0.5765,
+                        0.401
+                      ]
+                    ],
+                    [
+                      [
+                        0.59,
+                        0.275
+                      ],
+                      [
+                        0.878,
+                        0.275
+                      ],
+                      [
+                        0.851,
+                        0.401
+                      ]
+                    ],
+                    [
+                      [
+                        0.7025,
+                        0.392
+                      ],
+                      [
+                        0.626,
+                        0.626
+                      ],
+                      [
+                        0.851,
+                        0.842
+                      ]
+                    ],
+                    [
+                      [
+                        0.806,
+                        0.446
+                      ],
+                      [
+                        0.7655,
+                        0.68
+                      ],
+                      [
+                        0.671,
+                        0.815
+                      ],
+                      [
+                        0.563,
+                        0.86
+                      ]
+                    ],
+                    [
+                      [
+                        0.554,
+                        0.536
+                      ],
+                      [
+                        0.896,
+                        0.536
+                      ]
+                    ]
+                  ],
+                  "tolerance": 0.1,
+                  "aspect_ratio": 2.4
+                }
+              }
             ]
           },
-          "battle": {"waves": 1, "enemy_hp": 30, "duration_sec": 30, "max_hits_taken": 2, "required_skills": ["斗拱"]},
+          "battle": {
+            "waves": 1,
+            "enemy_hp": 30,
+            "duration_sec": 30,
+            "max_hits_taken": 2,
+            "required_skills": [
+              "斗拱"
+            ]
+          },
           "reward": {
-            "memory": {"id": "yan_ping_an", "title": "檐·平安", "summary": "桥记着每一次送别与归来。", "skill": "斗拱", "capacity": 1, "choices": ["keep", "forget"]},
-            "base_ink_marks": 1
+            "memory_id": "yan_ping_an",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "黑屏渐亮，雨声从檐角落下。白蚀像褪色的墨汁，沿桥栏一寸寸爬行。",
+              "拓印师在桥心醒来，身下压着一本空白《檐下谱》。石板上的‘平安’二字正在消退。",
+              "古建呓语：‘桥记着送别……也记着归来。香客、货郎、赶考的书生……他们都从桥上走过。’",
+              "你伸手触到刻痕，空白谱页泛起微光。第一道墨灵，正在等你记住。"
+            ],
+            "outro": "桥身恢复原色，雾后露出通往山间社庙的土路。呓语：‘往前走吧。社庙的香，好像很久没有点起来了……’"
           }
         }
       ]
@@ -52,20 +221,76 @@
           "title": "香火断",
           "scene": "社庙正殿",
           "intro": "香炉倾倒，主梁断裂半悬。呓语说：春社那天，全村的人都来。后来香断了，村子也慢慢空了。",
-          "objectives": ["调查香炉、断梁与牌位", "将三块斗拱构件归位", "击退一波白蚀"],
+          "objectives": [
+            "调查香炉、断梁与牌位",
+            "将三块斗拱构件归位",
+            "击退一波白蚀"
+          ],
           "puzzle": {
             "type": "join",
             "max_attempts": 3,
             "steps": [
-              {"id": "beam_left", "kind": "join", "prompt": "将左燕尾榫放入主梁榫口。", "options": ["left", "right", "center"], "answer": "left", "points": 30},
-              {"id": "beam_center", "kind": "join", "prompt": "将承重斗放入主梁中央。", "options": ["left", "right", "center"], "answer": "center", "points": 30},
-              {"id": "beam_right", "kind": "join", "prompt": "将右燕尾榫归位。", "options": ["left", "right", "center"], "answer": "right", "points": 40}
+              {
+                "id": "beam_left",
+                "kind": "join",
+                "prompt": "将左燕尾榫放入主梁榫口。",
+                "options": [
+                  "left",
+                  "right",
+                  "center"
+                ],
+                "answer": "left",
+                "points": 30
+              },
+              {
+                "id": "beam_center",
+                "kind": "join",
+                "prompt": "将承重斗放入主梁中央。",
+                "options": [
+                  "left",
+                  "right",
+                  "center"
+                ],
+                "answer": "center",
+                "points": 30
+              },
+              {
+                "id": "beam_right",
+                "kind": "join",
+                "prompt": "将右燕尾榫归位。",
+                "options": [
+                  "left",
+                  "right",
+                  "center"
+                ],
+                "answer": "right",
+                "points": 40
+              }
             ]
           },
-          "battle": {"waves": 1, "enemy_hp": 45, "duration_sec": 30, "max_hits_taken": 3, "required_skills": ["斗拱"]},
+          "battle": {
+            "waves": 1,
+            "enemy_hp": 45,
+            "duration_sec": 30,
+            "max_hits_taken": 3,
+            "required_skills": [
+              "斗拱"
+            ]
+          },
           "reward": {
-            "memory": {"id": "she_cheng_xiang", "title": "社·承香", "summary": "一炷香把一村人的愿望托给屋梁。", "skill": "斗拱", "capacity": 1, "choices": ["keep", "forget"]},
-            "base_ink_marks": 1
+            "memory_id": "she_cheng_xiang",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "社庙正殿的香炉倾倒，主梁断裂半悬，牌位上还能辨出褪色的村名。",
+              "古建呓语：‘春社那天，全村的人都来。香要烧得旺，庄稼才肯长。’",
+              "‘后来……后来香断了，村子也就慢慢空了。’"
+            ],
+            "outro": "最后一块斗拱扣入榫口，香灰重新聚成一缕青烟。"
           }
         },
         {
@@ -74,18 +299,189 @@
           "title": "檐下客",
           "scene": "社庙侧厢",
           "intro": "门楣匾额缺了一字，供桌上的冷饭和旧蓑衣仍在等候过路人。",
-          "objectives": ["调查匾额、冷饭碗与旧蓑衣", "推理匾额缺字", "沿完整字形完成拓印"],
+          "objectives": [
+            "调查匾额、冷饭碗与旧蓑衣",
+            "推理匾额缺字",
+            "沿完整字形完成拓印"
+          ],
           "puzzle": {
             "type": "trace",
             "max_attempts": 3,
             "steps": [
-              {"id": "guest_word", "kind": "choice", "prompt": "‘□安’缺少哪个字？", "options": ["平", "宁", "保"], "answer": "宁", "points": 50},
-              {"id": "guest_trace", "kind": "trace", "prompt": "沿‘宁安’的墨线完成拓印。", "answer": "宁安", "points": 50}
+              {
+                "id": "guest_word",
+                "kind": "choice",
+                "prompt": "‘□安’缺少哪个字？",
+                "options": [
+                  "平",
+                  "宁",
+                  "保"
+                ],
+                "answer": "宁",
+                "points": 50
+              },
+              {
+                "id": "guest_trace",
+                "kind": "trace",
+                "prompt": "沿‘宁安’的墨线完成拓印。",
+                "points": 50,
+                "trace": {
+                  "strokes": [
+                    [
+                      [
+                        0.257,
+                        0.122
+                      ],
+                      [
+                        0.293,
+                        0.212
+                      ]
+                    ],
+                    [
+                      [
+                        0.14,
+                        0.275
+                      ],
+                      [
+                        0.1265,
+                        0.401
+                      ]
+                    ],
+                    [
+                      [
+                        0.14,
+                        0.275
+                      ],
+                      [
+                        0.428,
+                        0.275
+                      ],
+                      [
+                        0.401,
+                        0.401
+                      ]
+                    ],
+                    [
+                      [
+                        0.1175,
+                        0.5
+                      ],
+                      [
+                        0.4325,
+                        0.5
+                      ]
+                    ],
+                    [
+                      [
+                        0.2885,
+                        0.5
+                      ],
+                      [
+                        0.2885,
+                        0.824
+                      ],
+                      [
+                        0.23,
+                        0.797
+                      ]
+                    ],
+                    [
+                      [
+                        0.707,
+                        0.122
+                      ],
+                      [
+                        0.743,
+                        0.212
+                      ]
+                    ],
+                    [
+                      [
+                        0.59,
+                        0.275
+                      ],
+                      [
+                        0.5765,
+                        0.401
+                      ]
+                    ],
+                    [
+                      [
+                        0.59,
+                        0.275
+                      ],
+                      [
+                        0.878,
+                        0.275
+                      ],
+                      [
+                        0.851,
+                        0.401
+                      ]
+                    ],
+                    [
+                      [
+                        0.7025,
+                        0.392
+                      ],
+                      [
+                        0.626,
+                        0.626
+                      ],
+                      [
+                        0.851,
+                        0.842
+                      ]
+                    ],
+                    [
+                      [
+                        0.806,
+                        0.446
+                      ],
+                      [
+                        0.7655,
+                        0.68
+                      ],
+                      [
+                        0.671,
+                        0.815
+                      ],
+                      [
+                        0.563,
+                        0.86
+                      ]
+                    ],
+                    [
+                      [
+                        0.554,
+                        0.536
+                      ],
+                      [
+                        0.896,
+                        0.536
+                      ]
+                    ]
+                  ],
+                  "tolerance": 0.1,
+                  "aspect_ratio": 2.4
+                }
+              }
             ]
           },
           "reward": {
-            "memory": {"id": "she_ning_an", "title": "社·宁安", "summary": "檐下不拒客，一碗冷饭也分半碗。", "skill": "斗拱", "capacity": 1, "choices": ["keep", "forget"]},
-            "base_ink_marks": 1
+            "memory_id": "she_ning_an",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "侧厢门楣只剩‘□安’，供桌上的冷饭和旧蓑衣仍在等候过路人。",
+              "古建呓语：‘下雨天，行路的、要饭的，都到庙檐下躲雨。’",
+              "‘庙祝说：檐下不拒客。一碗冷饭，也分半碗。’"
+            ],
+            "outro": "缺失的字回到匾额，檐下的雨声忽然变得温和。"
           }
         },
         {
@@ -94,20 +490,237 @@
           "title": "社鼓声",
           "scene": "社庙前坪",
           "intro": "社鼓蒙灰，鼓面白蚀斑驳。鼓一响，社就开了；鼓声停了，连孩子的声音也听不见了。",
-          "objectives": ["用藻井净化鼓面", "按鼓纹墨线拓印", "击退强化白蚀", "为双格记忆作出选择"],
+          "objectives": [
+            "用藻井净化鼓面",
+            "按鼓纹墨线拓印",
+            "击退强化白蚀",
+            "拓印社鼓记忆，回看心舍账册"
+          ],
           "puzzle": {
             "type": "purify_trace",
             "max_attempts": 3,
             "steps": [
-              {"id": "drum_purify", "kind": "skill", "prompt": "使用藻井净化鼓面白蚀斑。", "answer": "藻井", "points": 40},
-              {"id": "drum_trace", "kind": "trace", "prompt": "沿显影出的鼓纹完成拓印。", "answer": "回春", "points": 60}
+              {
+                "id": "drum_purify",
+                "kind": "skill",
+                "prompt": "使用藻井净化鼓面白蚀斑。",
+                "answer": "藻井",
+                "points": 40
+              },
+              {
+                "id": "drum_trace",
+                "kind": "trace",
+                "prompt": "沿显影出的鼓纹完成拓印。",
+                "points": 60,
+                "trace": {
+                  "strokes": [
+                    [
+                      [
+                        0.113,
+                        0.167
+                      ],
+                      [
+                        0.113,
+                        0.833
+                      ]
+                    ],
+                    [
+                      [
+                        0.113,
+                        0.167
+                      ],
+                      [
+                        0.437,
+                        0.167
+                      ],
+                      [
+                        0.437,
+                        0.833
+                      ]
+                    ],
+                    [
+                      [
+                        0.203,
+                        0.365
+                      ],
+                      [
+                        0.203,
+                        0.635
+                      ]
+                    ],
+                    [
+                      [
+                        0.203,
+                        0.365
+                      ],
+                      [
+                        0.347,
+                        0.365
+                      ],
+                      [
+                        0.347,
+                        0.635
+                      ]
+                    ],
+                    [
+                      [
+                        0.203,
+                        0.635
+                      ],
+                      [
+                        0.347,
+                        0.635
+                      ]
+                    ],
+                    [
+                      [
+                        0.113,
+                        0.833
+                      ],
+                      [
+                        0.437,
+                        0.833
+                      ]
+                    ],
+                    [
+                      [
+                        0.6035,
+                        0.194
+                      ],
+                      [
+                        0.8465,
+                        0.194
+                      ]
+                    ],
+                    [
+                      [
+                        0.581,
+                        0.311
+                      ],
+                      [
+                        0.869,
+                        0.311
+                      ]
+                    ],
+                    [
+                      [
+                        0.554,
+                        0.428
+                      ],
+                      [
+                        0.896,
+                        0.428
+                      ]
+                    ],
+                    [
+                      [
+                        0.725,
+                        0.122
+                      ],
+                      [
+                        0.6935,
+                        0.392
+                      ],
+                      [
+                        0.635,
+                        0.545
+                      ],
+                      [
+                        0.545,
+                        0.626
+                      ]
+                    ],
+                    [
+                      [
+                        0.761,
+                        0.428
+                      ],
+                      [
+                        0.824,
+                        0.545
+                      ],
+                      [
+                        0.905,
+                        0.608
+                      ]
+                    ],
+                    [
+                      [
+                        0.6395,
+                        0.59
+                      ],
+                      [
+                        0.6395,
+                        0.869
+                      ]
+                    ],
+                    [
+                      [
+                        0.6395,
+                        0.59
+                      ],
+                      [
+                        0.815,
+                        0.59
+                      ],
+                      [
+                        0.815,
+                        0.869
+                      ]
+                    ],
+                    [
+                      [
+                        0.6395,
+                        0.725
+                      ],
+                      [
+                        0.815,
+                        0.725
+                      ]
+                    ],
+                    [
+                      [
+                        0.6395,
+                        0.869
+                      ],
+                      [
+                        0.815,
+                        0.869
+                      ]
+                    ]
+                  ],
+                  "tolerance": 0.1,
+                  "aspect_ratio": 2.4
+                }
+              }
             ]
           },
-          "battle": {"waves": 1, "enemy_hp": 80, "duration_sec": 45, "max_hits_taken": 4, "required_skills": ["藻井"]},
+          "battle": {
+            "waves": 1,
+            "enemy_hp": 80,
+            "duration_sec": 45,
+            "max_hits_taken": 4,
+            "required_skills": [
+              "藻井"
+            ]
+          },
           "reward": {
-            "memory": {"id": "she_hui_chun", "title": "社·回春", "summary": "鼓声唤回春社，也唤回孩子们的脚步。", "skill": "藻井", "capacity": 2, "choices": ["yan_ping_an", "she_cheng_xiang", "she_ning_an"]},
-            "base_ink_marks": 2,
-            "capacity_increase": 1
+            "capacity_increase": 1,
+            "memory_id": "she_hui_chun",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "前坪的社鼓蒙灰，白蚀斑驳地覆盖住鼓面纹样；鼓槌还压在鼓下。",
+              "古建呓语：‘鼓一响，社就开了。小孩儿追着鼓点跑……’",
+              "‘后来鼓声停了，连孩子的声音也听不见了。’",
+              "净化显影出一圈旧墨线，鼓声记忆正在等待拓印。"
+            ],
+            "outro": "鼓面传出第一声回响，香樟树上的红绳随风轻摆。识海容量扩展为六格。",
+            "chapter_outro": "东南方传来若有若无的锣鼓声。呓语：‘戏楼要开场了。可是那锣鼓，怎么越敲越远……’"
           }
         }
       ]
@@ -126,13 +739,263 @@
           "title": "开场锣",
           "scene": "戏楼后台",
           "intro": "行头箱错位，锣鼓声被白蚀吞去半拍。",
-          "objectives": ["按纹样归类戏袍行当", "拓印开场锣的节拍"],
-          "puzzle": {"type": "pattern", "max_attempts": 3, "steps": [
-            {"id": "opera_role", "kind": "choice", "prompt": "水袖与凤冠属于哪个行当？", "options": ["旦", "生", "净"], "answer": "旦", "points": 50},
-            {"id": "opera_trace", "kind": "trace", "prompt": "沿锣面纹样拓印开场节拍。", "answer": "行腔", "points": 50}
-          ]},
-          "battle": {"waves": 1, "enemy_hp": 90, "duration_sec": 40, "max_hits_taken": 4, "required_skills": ["飞檐"]},
-          "reward": {"memory": {"id": "xi_xing_qiang", "title": "戏·行腔", "summary": "一腔唱尽台上台下的悲欢。", "skill": "飞檐", "capacity": 1, "choices": ["keep", "forget"]}, "base_ink_marks": 2}
+          "objectives": [
+            "按纹样归类戏袍行当",
+            "拓印开场锣的节拍"
+          ],
+          "puzzle": {
+            "type": "pattern",
+            "max_attempts": 3,
+            "steps": [
+              {
+                "id": "opera_role",
+                "kind": "choice",
+                "prompt": "水袖与凤冠属于哪个行当？",
+                "options": [
+                  "旦",
+                  "生",
+                  "净"
+                ],
+                "answer": "旦",
+                "points": 50
+              },
+              {
+                "id": "opera_trace",
+                "kind": "trace",
+                "prompt": "沿锣面纹样拓印开场节拍。",
+                "points": 50,
+                "trace": {
+                  "strokes": [
+                    [
+                      [
+                        0.23,
+                        0.158
+                      ],
+                      [
+                        0.122,
+                        0.338
+                      ]
+                    ],
+                    [
+                      [
+                        0.2435,
+                        0.356
+                      ],
+                      [
+                        0.113,
+                        0.572
+                      ]
+                    ],
+                    [
+                      [
+                        0.185,
+                        0.455
+                      ],
+                      [
+                        0.185,
+                        0.86
+                      ]
+                    ],
+                    [
+                      [
+                        0.311,
+                        0.212
+                      ],
+                      [
+                        0.4325,
+                        0.212
+                      ]
+                    ],
+                    [
+                      [
+                        0.275,
+                        0.41
+                      ],
+                      [
+                        0.464,
+                        0.41
+                      ]
+                    ],
+                    [
+                      [
+                        0.383,
+                        0.41
+                      ],
+                      [
+                        0.383,
+                        0.842
+                      ],
+                      [
+                        0.3245,
+                        0.806
+                      ]
+                    ],
+                    [
+                      [
+                        0.572,
+                        0.194
+                      ],
+                      [
+                        0.572,
+                        0.68
+                      ],
+                      [
+                        0.5405,
+                        0.86
+                      ]
+                    ],
+                    [
+                      [
+                        0.572,
+                        0.194
+                      ],
+                      [
+                        0.653,
+                        0.194
+                      ],
+                      [
+                        0.653,
+                        0.842
+                      ],
+                      [
+                        0.6215,
+                        0.824
+                      ]
+                    ],
+                    [
+                      [
+                        0.572,
+                        0.41
+                      ],
+                      [
+                        0.653,
+                        0.41
+                      ]
+                    ],
+                    [
+                      [
+                        0.572,
+                        0.608
+                      ],
+                      [
+                        0.653,
+                        0.608
+                      ]
+                    ],
+                    [
+                      [
+                        0.7925,
+                        0.122
+                      ],
+                      [
+                        0.815,
+                        0.212
+                      ]
+                    ],
+                    [
+                      [
+                        0.716,
+                        0.275
+                      ],
+                      [
+                        0.7025,
+                        0.392
+                      ]
+                    ],
+                    [
+                      [
+                        0.716,
+                        0.275
+                      ],
+                      [
+                        0.9095,
+                        0.275
+                      ],
+                      [
+                        0.896,
+                        0.392
+                      ]
+                    ],
+                    [
+                      [
+                        0.7745,
+                        0.383
+                      ],
+                      [
+                        0.716,
+                        0.5
+                      ]
+                    ],
+                    [
+                      [
+                        0.842,
+                        0.383
+                      ],
+                      [
+                        0.9005,
+                        0.5
+                      ]
+                    ],
+                    [
+                      [
+                        0.7295,
+                        0.599
+                      ],
+                      [
+                        0.896,
+                        0.599
+                      ]
+                    ],
+                    [
+                      [
+                        0.815,
+                        0.599
+                      ],
+                      [
+                        0.815,
+                        0.824
+                      ]
+                    ],
+                    [
+                      [
+                        0.707,
+                        0.824
+                      ],
+                      [
+                        0.914,
+                        0.824
+                      ]
+                    ]
+                  ],
+                  "tolerance": 0.1,
+                  "aspect_ratio": 2.4
+                }
+              }
+            ]
+          },
+          "battle": {
+            "waves": 1,
+            "enemy_hp": 90,
+            "duration_sec": 40,
+            "max_hits_taken": 4,
+            "required_skills": [
+              "飞檐"
+            ]
+          },
+          "reward": {
+            "memory_id": "xi_xing_qiang",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "行头箱错位，锣鼓声被白蚀吞去半拍。"
+            ],
+            "outro": "一腔唱尽台上台下的悲欢。"
+          },
+          "draft": true
         },
         {
           "id": "opera_master",
@@ -140,13 +1003,65 @@
           "title": "名角儿",
           "scene": "戏楼舞台",
           "intro": "台步点位和布景板散成一片，名角儿的绝唱只剩半句。",
-          "objectives": ["复原台步点位", "对齐布景板", "选择要守护的戏曲记忆"],
-          "puzzle": {"type": "join", "max_attempts": 3, "steps": [
-            {"id": "stage_step", "kind": "join", "prompt": "将第一步落在正确的台步点。", "options": ["梅", "兰", "竹"], "answer": "梅", "points": 50},
-            {"id": "stage_backdrop", "kind": "join", "prompt": "将水袖纹布景板对齐。", "options": ["左", "中", "右"], "answer": "中", "points": 50}
-          ]},
-          "battle": {"waves": 1, "enemy_hp": 110, "duration_sec": 45, "max_hits_taken": 5, "required_skills": ["飞檐"]},
-          "reward": {"memory": {"id": "xi_jue_chang", "title": "戏·绝唱", "summary": "记住绝唱，就要面对被抹去的童年社戏。", "skill": "飞檐", "capacity": 2, "choices": ["forget_childhood", "keep_childhood"]}, "base_ink_marks": 2}
+          "objectives": [
+            "复原台步点位",
+            "对齐布景板",
+            "选择要守护的戏曲记忆"
+          ],
+          "puzzle": {
+            "type": "join",
+            "max_attempts": 3,
+            "steps": [
+              {
+                "id": "stage_step",
+                "kind": "join",
+                "prompt": "将第一步落在正确的台步点。",
+                "options": [
+                  "梅",
+                  "兰",
+                  "竹"
+                ],
+                "answer": "梅",
+                "points": 50
+              },
+              {
+                "id": "stage_backdrop",
+                "kind": "join",
+                "prompt": "将水袖纹布景板对齐。",
+                "options": [
+                  "左",
+                  "中",
+                  "右"
+                ],
+                "answer": "中",
+                "points": 50
+              }
+            ]
+          },
+          "battle": {
+            "waves": 1,
+            "enemy_hp": 110,
+            "duration_sec": 45,
+            "max_hits_taken": 5,
+            "required_skills": [
+              "飞檐"
+            ]
+          },
+          "reward": {
+            "memory_id": "xi_jue_chang",
+            "choices": [
+              "forget_childhood",
+              "keep_childhood"
+            ],
+            "capacity_increase": 1
+          },
+          "story": {
+            "beats": [
+              "台步点位和布景板散成一片，名角儿的绝唱只剩半句。"
+            ],
+            "outro": "记住绝唱，就要面对被抹去的童年社戏。"
+          },
+          "draft": true
         }
       ]
     },
@@ -164,13 +1079,63 @@
           "title": "四柱三间",
           "scene": "官道牌坊",
           "intro": "牌坊正面褪色，四柱三间的规制只剩轮廓。",
-          "objectives": ["识别牌坊形制", "归位残缺构件"],
-          "puzzle": {"type": "pattern", "max_attempts": 3, "steps": [
-            {"id": "archway_grade", "kind": "choice", "prompt": "这座牌坊的形制是？", "options": ["四柱三间", "两柱一间", "三柱两间"], "answer": "四柱三间", "points": 50},
-            {"id": "archway_join", "kind": "join", "prompt": "将匾额托斗归位。", "options": ["左", "中", "右"], "answer": "中", "points": 50}
-          ]},
-          "battle": {"waves": 2, "enemy_hp": 120, "duration_sec": 50, "max_hits_taken": 5, "required_skills": ["飞檐"]},
-          "reward": {"memory": {"id": "fang_wu_ming", "title": "坊·无名", "summary": "无名匠人的手艺也值得被记住。", "skill": "飞檐", "capacity": 1, "choices": ["keep", "forget"]}, "base_ink_marks": 2}
+          "objectives": [
+            "识别牌坊形制",
+            "归位残缺构件"
+          ],
+          "puzzle": {
+            "type": "pattern",
+            "max_attempts": 3,
+            "steps": [
+              {
+                "id": "archway_grade",
+                "kind": "choice",
+                "prompt": "这座牌坊的形制是？",
+                "options": [
+                  "四柱三间",
+                  "两柱一间",
+                  "三柱两间"
+                ],
+                "answer": "四柱三间",
+                "points": 50
+              },
+              {
+                "id": "archway_join",
+                "kind": "join",
+                "prompt": "将匾额托斗归位。",
+                "options": [
+                  "左",
+                  "中",
+                  "右"
+                ],
+                "answer": "中",
+                "points": 50
+              }
+            ]
+          },
+          "battle": {
+            "waves": 2,
+            "enemy_hp": 120,
+            "duration_sec": 50,
+            "max_hits_taken": 5,
+            "required_skills": [
+              "飞檐"
+            ]
+          },
+          "reward": {
+            "memory_id": "fang_wu_ming",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "牌坊正面褪色，四柱三间的规制只剩轮廓。"
+            ],
+            "outro": "无名匠人的手艺也值得被记住。"
+          },
+          "draft": true
         },
         {
           "id": "archway_craftsman",
@@ -178,13 +1143,55 @@
           "title": "无名匠",
           "scene": "牌坊背面",
           "intro": "营造记录没有署名，只有一条条与木石共鸣的墨线。",
-          "objectives": ["以斗拱压住构件", "以飞檐触发远端机关", "决定名与实的归属"],
-          "puzzle": {"type": "combo", "max_attempts": 3, "steps": [
-            {"id": "craftsman_anchor", "kind": "skill", "prompt": "用斗拱承住摇晃的牌坊。", "answer": "斗拱", "points": 50},
-            {"id": "craftsman_trigger", "kind": "skill", "prompt": "用飞檐触发远端墨印。", "answer": "飞檐", "points": 50}
-          ]},
-          "battle": {"waves": 2, "enemy_hp": 135, "duration_sec": 55, "max_hits_taken": 6, "required_skills": ["斗拱", "飞檐"]},
-          "reward": {"memory": {"id": "fang_jiang_hun", "title": "坊·匠魂", "summary": "名字可以被风吹散，手艺留下的结构不会。", "skill": "斗拱", "capacity": 2, "choices": ["keep", "forget"]}, "base_ink_marks": 3}
+          "objectives": [
+            "以斗拱压住构件",
+            "以飞檐触发远端机关",
+            "决定名与实的归属"
+          ],
+          "puzzle": {
+            "type": "combo",
+            "max_attempts": 3,
+            "steps": [
+              {
+                "id": "craftsman_anchor",
+                "kind": "skill",
+                "prompt": "用斗拱承住摇晃的牌坊。",
+                "answer": "斗拱",
+                "points": 50
+              },
+              {
+                "id": "craftsman_trigger",
+                "kind": "skill",
+                "prompt": "用飞檐触发远端墨印。",
+                "answer": "飞檐",
+                "points": 50
+              }
+            ]
+          },
+          "battle": {
+            "waves": 2,
+            "enemy_hp": 135,
+            "duration_sec": 55,
+            "max_hits_taken": 6,
+            "required_skills": [
+              "斗拱",
+              "飞檐"
+            ]
+          },
+          "reward": {
+            "memory_id": "fang_jiang_hun",
+            "choices": [
+              "keep",
+              "forget"
+            ]
+          },
+          "story": {
+            "beats": [
+              "营造记录没有署名，只有一条条与木石共鸣的墨线。"
+            ],
+            "outro": "名字可以被风吹散，手艺留下的结构不会。"
+          },
+          "draft": true
         }
       ]
     },
@@ -201,14 +1208,138 @@
           "title": "登塔",
           "scene": "通天塔七层",
           "intro": "每一层都保存着一次被遗忘的修复，七层墨线交叠成白蚀的源头。",
-          "objectives": ["完成综合拓印", "在限次内修复塔心"],
-          "puzzle": {"type": "combo", "max_attempts": 5, "steps": [
-            {"id": "tower_trace", "kind": "trace", "prompt": "拓印塔心第一道墨线。", "answer": "记", "points": 30},
-            {"id": "tower_anchor", "kind": "skill", "prompt": "用斗拱承住第七层。", "answer": "斗拱", "points": 30},
-            {"id": "tower_purify", "kind": "skill", "prompt": "用藻井净化逆结晶。", "answer": "藻井", "points": 40}
-          ]},
-          "battle": {"waves": 3, "enemy_hp": 180, "duration_sec": 60, "max_hits_taken": 7, "required_skills": ["斗拱", "飞檐", "藻井"]},
-          "reward": {"memory": {"id": "tower_origin", "title": "塔·初代之忆", "summary": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。", "skill": "藻井", "capacity": 2, "choices": ["restore_all", "preserve_forgetfulness", "restore_chosen"]}, "base_ink_marks": 3}
+          "objectives": [
+            "完成综合拓印",
+            "在限次内修复塔心"
+          ],
+          "puzzle": {
+            "type": "combo",
+            "max_attempts": 5,
+            "steps": [
+              {
+                "id": "tower_trace",
+                "kind": "trace",
+                "prompt": "拓印塔心第一道墨线。",
+                "points": 30,
+                "trace": {
+                  "strokes": [
+                    [
+                      [
+                        0.176,
+                        0.167
+                      ],
+                      [
+                        0.284,
+                        0.257
+                      ]
+                    ],
+                    [
+                      [
+                        0.14,
+                        0.41
+                      ],
+                      [
+                        0.275,
+                        0.41
+                      ],
+                      [
+                        0.275,
+                        0.824
+                      ],
+                      [
+                        0.392,
+                        0.716
+                      ]
+                    ],
+                    [
+                      [
+                        0.473,
+                        0.23
+                      ],
+                      [
+                        0.806,
+                        0.23
+                      ],
+                      [
+                        0.806,
+                        0.491
+                      ]
+                    ],
+                    [
+                      [
+                        0.482,
+                        0.491
+                      ],
+                      [
+                        0.806,
+                        0.491
+                      ]
+                    ],
+                    [
+                      [
+                        0.482,
+                        0.491
+                      ],
+                      [
+                        0.482,
+                        0.824
+                      ],
+                      [
+                        0.815,
+                        0.824
+                      ],
+                      [
+                        0.86,
+                        0.698
+                      ]
+                    ]
+                  ],
+                  "tolerance": 0.1,
+                  "aspect_ratio": 1.2
+                }
+              },
+              {
+                "id": "tower_anchor",
+                "kind": "skill",
+                "prompt": "用斗拱承住第七层。",
+                "answer": "斗拱",
+                "points": 30
+              },
+              {
+                "id": "tower_purify",
+                "kind": "skill",
+                "prompt": "用藻井净化逆结晶。",
+                "answer": "藻井",
+                "points": 40
+              }
+            ]
+          },
+          "battle": {
+            "waves": 3,
+            "enemy_hp": 180,
+            "duration_sec": 60,
+            "max_hits_taken": 7,
+            "required_skills": [
+              "斗拱",
+              "飞檐",
+              "藻井"
+            ]
+          },
+          "reward": {
+            "memory_id": "tower_origin",
+            "choices": [
+              "restore_all",
+              "preserve_forgetfulness",
+              "restore_chosen"
+            ]
+          },
+          "story": {
+            "beats": [
+              "每一层都保存着一次被遗忘的修复，七层墨线交叠成白蚀的源头。"
+            ],
+            "outro": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。"
+          },
+          "draft": true
         },
         {
           "id": "tower_ledger",
@@ -216,13 +1347,167 @@
           "title": "千层墨",
           "scene": "通天塔记忆长廊",
           "intro": "长廊回放拓印师一路记住与遗忘的选择，账册中的每一道灰痕都发出回声。",
-          "objectives": ["回看记忆账册", "选择要拓印回世界的记忆"],
-          "puzzle": {"type": "choice", "max_attempts": 3, "steps": [
-            {"id": "tower_choice", "kind": "choice", "prompt": "你愿意将哪些记忆拓印回世界？", "options": ["all", "none", "kept"], "answer": "kept", "points": 100}
-          ]},
-          "reward": {"memory": {"id": "tower_epilogue", "title": "塔·檐下折中", "summary": "只记住值得记住的，让世界自己选择颜色。", "skill": "", "capacity": 1, "choices": ["all", "none", "kept"]}, "base_ink_marks": 3}
+          "objectives": [
+            "回看记忆账册",
+            "选择要拓印回世界的记忆"
+          ],
+          "puzzle": {
+            "type": "choice",
+            "max_attempts": 3,
+            "steps": [
+              {
+                "id": "tower_choice",
+                "kind": "choice",
+                "prompt": "你愿意将哪些记忆拓印回世界？",
+                "options": [
+                  "all",
+                  "none",
+                  "kept"
+                ],
+                "answer": "kept",
+                "points": 100
+              }
+            ]
+          },
+          "reward": {
+            "memory_id": "tower_epilogue",
+            "choices": [
+              "all",
+              "none",
+              "kept"
+            ]
+          },
+          "story": {
+            "beats": [
+              "长廊回放拓印师一路记住与遗忘的选择，账册中的每一道灰痕都发出回声。"
+            ],
+            "outro": "只记住值得记住的，让世界自己选择颜色。"
+          },
+          "draft": true
         }
       ]
     }
-  ]
+  ],
+  "memories": {
+    "yan_ping_an": {
+      "id": "yan_ping_an",
+      "title": "檐·平安",
+      "summary": "桥记着每一次送别与归来。",
+      "skill": "斗拱",
+      "capacity": 1,
+      "source": "prologue/prologue_bridge",
+      "remembered_text": "桥记着每一次送别与归来。",
+      "forgotten_text": "这段记忆已从心舍抹去：桥记着每一次送别与归来。",
+      "color": "#d9ba78",
+      "tone_hz": 261.63
+    },
+    "she_cheng_xiang": {
+      "id": "she_cheng_xiang",
+      "title": "社·承香",
+      "summary": "一炷香把一村人的愿望托给屋梁。",
+      "skill": "斗拱",
+      "capacity": 1,
+      "source": "temple/temple_incense",
+      "remembered_text": "一炷香把一村人的愿望托给屋梁。",
+      "forgotten_text": "这段记忆已从心舍抹去：一炷香把一村人的愿望托给屋梁。",
+      "color": "#d9ba78",
+      "tone_hz": 261.63
+    },
+    "she_ning_an": {
+      "id": "she_ning_an",
+      "title": "社·宁安",
+      "summary": "檐下不拒客，一碗冷饭也分半碗。",
+      "skill": "藻井",
+      "capacity": 1,
+      "source": "temple/temple_guest",
+      "remembered_text": "檐下不拒客，一碗冷饭也分半碗。",
+      "forgotten_text": "这段记忆已从心舍抹去：檐下不拒客，一碗冷饭也分半碗。",
+      "color": "#92c5a3",
+      "tone_hz": 329.63
+    },
+    "she_hui_chun": {
+      "id": "she_hui_chun",
+      "title": "社·回春",
+      "summary": "鼓声唤回春社，也唤回孩子们的脚步。",
+      "skill": "藻井",
+      "capacity": 1,
+      "source": "temple/temple_drum",
+      "remembered_text": "鼓声唤回春社，也唤回孩子们的脚步。",
+      "forgotten_text": "这段记忆已从心舍抹去：鼓声唤回春社，也唤回孩子们的脚步。",
+      "color": "#92c5a3",
+      "tone_hz": 329.63
+    },
+    "xi_xing_qiang": {
+      "id": "xi_xing_qiang",
+      "title": "戏·行腔",
+      "summary": "一腔唱尽台上台下的悲欢。",
+      "skill": "飞檐",
+      "capacity": 1,
+      "source": "opera/opera_opening",
+      "remembered_text": "一腔唱尽台上台下的悲欢。",
+      "forgotten_text": "这段记忆已从心舍抹去：一腔唱尽台上台下的悲欢。",
+      "color": "#80b6ce",
+      "tone_hz": 392
+    },
+    "xi_jue_chang": {
+      "id": "xi_jue_chang",
+      "title": "戏·绝唱",
+      "summary": "记住绝唱，就要面对被抹去的童年社戏。",
+      "skill": "飞檐",
+      "capacity": 1,
+      "source": "opera/opera_master",
+      "remembered_text": "记住绝唱，就要面对被抹去的童年社戏。",
+      "forgotten_text": "这段记忆已从心舍抹去：记住绝唱，就要面对被抹去的童年社戏。",
+      "color": "#80b6ce",
+      "tone_hz": 392
+    },
+    "fang_wu_ming": {
+      "id": "fang_wu_ming",
+      "title": "坊·无名",
+      "summary": "无名匠人的手艺也值得被记住。",
+      "skill": "飞檐",
+      "capacity": 1,
+      "source": "archway/archway_form",
+      "remembered_text": "无名匠人的手艺也值得被记住。",
+      "forgotten_text": "这段记忆已从心舍抹去：无名匠人的手艺也值得被记住。",
+      "color": "#80b6ce",
+      "tone_hz": 392
+    },
+    "fang_jiang_hun": {
+      "id": "fang_jiang_hun",
+      "title": "坊·匠魂",
+      "summary": "名字可以被风吹散，手艺留下的结构不会。",
+      "skill": "斗拱",
+      "capacity": 1,
+      "source": "archway/archway_craftsman",
+      "remembered_text": "名字可以被风吹散，手艺留下的结构不会。",
+      "forgotten_text": "这段记忆已从心舍抹去：名字可以被风吹散，手艺留下的结构不会。",
+      "color": "#d9ba78",
+      "tone_hz": 261.63
+    },
+    "tower_origin": {
+      "id": "tower_origin",
+      "title": "塔·初代之忆",
+      "summary": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
+      "skill": "藻井",
+      "capacity": 1,
+      "source": "tower/tower_ascent",
+      "remembered_text": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
+      "forgotten_text": "这段记忆已从心舍抹去：初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
+      "color": "#92c5a3",
+      "tone_hz": 329.63
+    },
+    "tower_epilogue": {
+      "id": "tower_epilogue",
+      "title": "塔·檐下折中",
+      "summary": "只记住值得记住的，让世界自己选择颜色。",
+      "skill": "",
+      "capacity": 1,
+      "source": "tower/tower_ledger",
+      "remembered_text": "只记住值得记住的，让世界自己选择颜色。",
+      "forgotten_text": "这段记忆已从心舍抹去：只记住值得记住的，让世界自己选择颜色。",
+      "color": "#c1b5db",
+      "tone_hz": 440
+    }
+  }
 }
