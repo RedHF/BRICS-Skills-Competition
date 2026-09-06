@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "game_id": "yanxia-qianqiu",
   "art": {
     "prologue_bridge": {
@@ -173,7 +173,7 @@
                       ]
                     ]
                   ],
-                  "tolerance": 0.1,
+                  "tolerance": 0.14,
                   "aspect_ratio": 2.4
                 }
               }
@@ -462,7 +462,7 @@
                       ]
                     ]
                   ],
-                  "tolerance": 0.1,
+                  "tolerance": 0.14,
                   "aspect_ratio": 2.4
                 }
               }
@@ -689,7 +689,7 @@
                       ]
                     ]
                   ],
-                  "tolerance": 0.1,
+                  "tolerance": 0.14,
                   "aspect_ratio": 2.4
                 }
               }
@@ -967,7 +967,7 @@
                       ]
                     ]
                   ],
-                  "tolerance": 0.1,
+                  "tolerance": 0.14,
                   "aspect_ratio": 2.4
                 }
               }
@@ -1294,7 +1294,7 @@
                       ]
                     ]
                   ],
-                  "tolerance": 0.1,
+                  "tolerance": 0.14,
                   "aspect_ratio": 1.2
                 }
               },
@@ -1399,7 +1399,8 @@
       "remembered_text": "桥记着每一次送别与归来。",
       "forgotten_text": "这段记忆已从心舍抹去：桥记着每一次送别与归来。",
       "color": "#d9ba78",
-      "tone_hz": 261.63
+      "tone_hz": 261.63,
+      "echo_audio": "res://assets/echo/yan_ping_an.wav"
     },
     "she_cheng_xiang": {
       "id": "she_cheng_xiang",
@@ -1411,7 +1412,8 @@
       "remembered_text": "一炷香把一村人的愿望托给屋梁。",
       "forgotten_text": "这段记忆已从心舍抹去：一炷香把一村人的愿望托给屋梁。",
       "color": "#d9ba78",
-      "tone_hz": 261.63
+      "tone_hz": 261.63,
+      "echo_audio": "res://assets/echo/she_cheng_xiang.wav"
     },
     "she_ning_an": {
       "id": "she_ning_an",
@@ -1423,7 +1425,8 @@
       "remembered_text": "檐下不拒客，一碗冷饭也分半碗。",
       "forgotten_text": "这段记忆已从心舍抹去：檐下不拒客，一碗冷饭也分半碗。",
       "color": "#92c5a3",
-      "tone_hz": 329.63
+      "tone_hz": 329.63,
+      "echo_audio": "res://assets/echo/she_ning_an.wav"
     },
     "she_hui_chun": {
       "id": "she_hui_chun",
@@ -1435,7 +1438,8 @@
       "remembered_text": "鼓声唤回春社，也唤回孩子们的脚步。",
       "forgotten_text": "这段记忆已从心舍抹去：鼓声唤回春社，也唤回孩子们的脚步。",
       "color": "#92c5a3",
-      "tone_hz": 329.63
+      "tone_hz": 329.63,
+      "echo_audio": "res://assets/echo/she_hui_chun.wav"
     },
     "xi_xing_qiang": {
       "id": "xi_xing_qiang",
@@ -1447,7 +1451,8 @@
       "remembered_text": "一腔唱尽台上台下的悲欢。",
       "forgotten_text": "这段记忆已从心舍抹去：一腔唱尽台上台下的悲欢。",
       "color": "#80b6ce",
-      "tone_hz": 392
+      "tone_hz": 392,
+      "echo_audio": "res://assets/echo/xi_xing_qiang.wav"
     },
     "xi_jue_chang": {
       "id": "xi_jue_chang",
@@ -1459,7 +1464,8 @@
       "remembered_text": "记住绝唱，就要面对被抹去的童年社戏。",
       "forgotten_text": "这段记忆已从心舍抹去：记住绝唱，就要面对被抹去的童年社戏。",
       "color": "#80b6ce",
-      "tone_hz": 392
+      "tone_hz": 392,
+      "echo_audio": "res://assets/echo/xi_jue_chang.wav"
     },
     "fang_wu_ming": {
       "id": "fang_wu_ming",
@@ -1471,7 +1477,8 @@
       "remembered_text": "无名匠人的手艺也值得被记住。",
       "forgotten_text": "这段记忆已从心舍抹去：无名匠人的手艺也值得被记住。",
       "color": "#80b6ce",
-      "tone_hz": 392
+      "tone_hz": 392,
+      "echo_audio": "res://assets/echo/fang_wu_ming.wav"
     },
     "fang_jiang_hun": {
       "id": "fang_jiang_hun",
@@ -1483,7 +1490,8 @@
       "remembered_text": "名字可以被风吹散，手艺留下的结构不会。",
       "forgotten_text": "这段记忆已从心舍抹去：名字可以被风吹散，手艺留下的结构不会。",
       "color": "#d9ba78",
-      "tone_hz": 261.63
+      "tone_hz": 261.63,
+      "echo_audio": "res://assets/echo/fang_jiang_hun.wav"
     },
     "tower_origin": {
       "id": "tower_origin",
@@ -1495,7 +1503,8 @@
       "remembered_text": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
       "forgotten_text": "这段记忆已从心舍抹去：初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
       "color": "#92c5a3",
-      "tone_hz": 329.63
+      "tone_hz": 329.63,
+      "echo_audio": "res://assets/echo/tower_origin.wav"
     },
     "tower_epilogue": {
       "id": "tower_epilogue",
@@ -1507,7 +1516,42 @@
       "remembered_text": "只记住值得记住的，让世界自己选择颜色。",
       "forgotten_text": "这段记忆已从心舍抹去：只记住值得记住的，让世界自己选择颜色。",
       "color": "#c1b5db",
-      "tone_hz": 440
+      "tone_hz": 440,
+      "echo_audio": "res://assets/echo/tower_epilogue.wav"
+    }
+  },
+  "skills": {
+    "挥墨": {
+      "description": "点击攻击白蚀，每次造成 10 点伤害，间隔 0.5 秒。",
+      "cooldown_ms": 500,
+      "damage": 10,
+      "shield": 0,
+      "heal": 0,
+      "color": "#e4c98a"
+    },
+    "斗拱": {
+      "description": "点击架起护盾，抵挡接下来的 2 次攻击；冷却 6 秒。受击前使用，护盾不叠加。",
+      "cooldown_ms": 6000,
+      "damage": 0,
+      "shield": 2,
+      "heal": 0,
+      "color": "#9ad5ad"
+    },
+    "飞檐": {
+      "description": "点击发出飞墨，造成 25 点伤害；冷却 4 秒。",
+      "cooldown_ms": 4000,
+      "damage": 25,
+      "shield": 0,
+      "heal": 0,
+      "color": "#8dcfe3"
+    },
+    "藻井": {
+      "description": "点击净化白蚀，造成 18 点伤害并消除 1 次受蚀；冷却 6 秒。也可在净化谜题中使用。",
+      "cooldown_ms": 6000,
+      "damage": 18,
+      "shield": 0,
+      "heal": 1,
+      "color": "#d7b1eb"
     }
   }
 }

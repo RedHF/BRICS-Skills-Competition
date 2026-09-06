@@ -59,3 +59,30 @@ func TestTraceAcceptsHumanDeviationInVisibleBand(t *testing.T) {
 		t.Fatal("drawing outside the visible band accepted")
 	}
 }
+
+func TestFailedStrokeIndexesAndRepair(t *testing.T) {
+	spec := &content.TraceSpec{Tolerance: .14, AspectRatio: 1, Strokes: [][][2]float64{{{.1, .3}, {.8, .3}}, {{.2, .2}, {.2, .8}}}}
+	drawn := [][][2]float64{{}, {}}
+	for i := 0; i <= 50; i++ {
+		drawn[0] = append(drawn[0], [2]float64{.1 + .7*float64(i)/50, .3 + .11})
+	}
+	drawn[0][25][1] = .46 // Brief excursion and small backward movement are tolerated.
+	drawn[0][26][0] -= .03
+	failed := FailedTraceStrokes(spec, drawn)
+	if len(failed) != 1 || failed[0] != 1 {
+		t.Fatalf("wrong marked strokes: %v", failed)
+	}
+	for i := 0; i <= 50; i++ {
+		drawn[1] = append(drawn[1], [2]float64{.2, .2 + .6*float64(i)/50})
+	}
+	if !MatchTrace(spec, drawn) {
+		t.Fatal("repair of only missing stroke rejected")
+	}
+	for i := range drawn[0] {
+		drawn[0][i][1] = .6
+	}
+	failed = FailedTraceStrokes(spec, drawn)
+	if len(failed) != 1 || failed[0] != 0 {
+		t.Fatalf("off-target stroke not marked: %v", failed)
+	}
+}

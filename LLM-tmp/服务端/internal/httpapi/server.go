@@ -116,6 +116,7 @@ func (s *Server) handleCatalog(w http.ResponseWriter, r *http.Request) {
 }
 
 type publicCatalogResponse struct {
+	Skills   map[string]content.SkillSpec  `json:"skills"`
 	Memories map[string]content.MemorySpec `json:"memories"`
 	Version  int                           `json:"version"`
 	GameID   string                        `json:"game_id"`
@@ -173,7 +174,7 @@ type publicMemory struct {
 }
 
 func publicCatalog(c *content.Catalog) publicCatalogResponse {
-	response := publicCatalogResponse{Memories: c.Memories, Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
+	response := publicCatalogResponse{Skills: c.Skills, Memories: c.Memories, Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
 	for _, chapter := range c.Chapters {
 		pc := publicChapter{ID: chapter.ID, Order: chapter.Order, Title: chapter.Title, Summary: chapter.Summary, UnlockCost: chapter.UnlockCost, NextChapter: chapter.NextChapter, Events: make([]publicEvent, 0, len(chapter.Events))}
 		for _, event := range chapter.Events {
@@ -550,7 +551,7 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"accepted": evaluation.Accepted, "correct": evaluation.Correct, "complete": evaluation.Complete,
+		"failed_strokes": evaluation.FailedStrokes, "accepted": evaluation.Accepted, "correct": evaluation.Correct, "complete": evaluation.Complete,
 		"reason": evaluation.Reason, "next_step_id": evaluation.NextStepID,
 		"puzzle_score": updated.PuzzleScore, "puzzle_total": updated.PuzzleTotal,
 		"attempt_count": updated.AttemptCount, "invalid_attempts": updated.InvalidAttempts,
@@ -622,6 +623,7 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	availableSkills := s.playerSkills(player)
+	availableSkills["挥墨"] = true
 	if session.PendingMemory != nil && session.PendingMemory.Skill != "" {
 		availableSkills[session.PendingMemory.Skill] = true
 	}
@@ -631,7 +633,7 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 			return
 		}
 	}
-	input := rules.BattleInput{DurationMS: request.DurationMS, WavesCleared: request.WavesCleared, HitsTaken: request.HitsTaken, AllowedSkills: availableSkills, Actions: make([]rules.BattleAction, 0, len(request.Actions))}
+	input := rules.BattleInput{Skills: s.catalog.Skills, DurationMS: request.DurationMS, WavesCleared: request.WavesCleared, HitsTaken: request.HitsTaken, AllowedSkills: availableSkills, Actions: make([]rules.BattleAction, 0, len(request.Actions))}
 	for _, action := range request.Actions {
 		input.Actions = append(input.Actions, rules.BattleAction{Skill: strings.TrimSpace(action.Skill), AtMS: action.AtMS})
 	}

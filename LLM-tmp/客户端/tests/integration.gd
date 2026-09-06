@@ -7,7 +7,13 @@ func _run() -> void:
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	while main.busy or main.data.catalog == null: await process_frame
+	main.set_process(false)
 	var game = root.get_node("GameState")
+	await process_frame
+	await process_frame
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("user://portrait-map.png")
 	var ids := [["prologue", "prologue_bridge"], ["temple", "temple_incense"], ["temple", "temple_guest"], ["temple", "temple_drum"]]
 	for ids_pair in ids:
 		main._open_event(ids_pair[0], ids_pair[1])
@@ -19,20 +25,23 @@ func _run() -> void:
 				var canvas = main.trace_canvas
 				await process_frame
 				var hand_offset := Vector2(0, canvas.canvas_rect.size.y * 0.055)
-				for stroke in step.trace.strokes:
+				for stroke_index in range(step.trace.strokes.size()):
+					canvas.select_stroke(stroke_index)
+					await process_frame
+					var stroke: Array = step.trace.strokes[stroke_index]
 					var press := InputEventMouseButton.new()
 					press.button_index = MOUSE_BUTTON_LEFT
 					press.pressed = true
-					press.position = canvas.canvas_rect.position + Vector2(stroke[0][0], stroke[0][1]) * canvas.canvas_rect.size + hand_offset
+					press.position = canvas.canvas_rect.position + Vector2((stroke[0][0] - canvas.view_x) * canvas.characters, stroke[0][1]) * canvas.canvas_rect.size + hand_offset
 					canvas._gui_input(press)
 					for p in stroke.slice(1):
 						var motion := InputEventMouseMotion.new()
-						motion.position = canvas.canvas_rect.position + Vector2(p[0], p[1]) * canvas.canvas_rect.size + hand_offset
+						motion.position = canvas.canvas_rect.position + Vector2((p[0] - canvas.view_x) * canvas.characters, p[1]) * canvas.canvas_rect.size + hand_offset
 						canvas._gui_input(motion)
 					var release := InputEventMouseButton.new()
 					release.button_index = MOUSE_BUTTON_LEFT
 					release.pressed = false
-					release.position = canvas.canvas_rect.position + Vector2(stroke[-1][0], stroke[-1][1]) * canvas.canvas_rect.size + hand_offset
+					release.position = canvas.canvas_rect.position + Vector2((stroke[-1][0] - canvas.view_x) * canvas.characters, stroke[-1][1]) * canvas.canvas_rect.size + hand_offset
 					canvas._gui_input(release)
 				payload.strokes = canvas.strokes
 			else:
@@ -47,15 +56,16 @@ func _run() -> void:
 					push_error("Rejected tracing was erased")
 					quit(7)
 					return
-				for row in main.page.get_children():
-					if row is HBoxContainer:
-						for button in row.get_children():
-							if button.text == "撤回上一笔": button.pressed.emit()
-				if canvas.strokes.size() != step.trace.strokes.size() - 1:
+				if canvas.failed != [step.trace.strokes.size() - 1]:
+					push_error("Wrong failed stroke indexes: " + str(canvas.failed))
 					quit(8)
 					return
-				canvas.strokes.append(saved_last)
-				print("PASS rejection preserves canvas and undo removes one stroke")
+				await process_frame
+				if DisplayServer.get_name() != "headless":
+					await RenderingServer.frame_post_draw
+					root.get_texture().get_image().save_png("user://portrait-trace.png")
+				canvas.strokes[-1] = saved_last
+				print("PASS failed stroke marked; other strokes preserved; single-stroke repair")
 			await main._submit_puzzle(payload)
 		if main.flow != "choice":
 			push_error("Puzzle flow failed: " + main.status.text)
@@ -70,9 +80,45 @@ func _run() -> void:
 			await main._choose("forget", "yan_ping_an")
 		else: await main._choose("keep", "")
 		if main.current_event.has("battle"):
+			main._process(10.0)
+			if main.battle_elapsed != 0:
+				push_error("Battle started before player was ready")
+				quit(16)
+				return
+			main._begin_battle()
+			if ids_pair[1] == "temple_drum":
+				main._process(3.0)
+				if main.battle_hits != 1:
+					push_error("Enemy failed to attack")
+					quit(9)
+					return
 			for skill in main.current_event.battle.required_skills: main._battle_skill(skill)
-			# Advance only the battle clock to keep integration verification fast.
-			main._process(float(main.current_event.battle.duration_sec))
+			if main.battle_hits != 0:
+				push_error("Purification did not heal")
+				quit(10)
+				return
+			if ids_pair[1] == "prologue_bridge":
+				main._process(3.0)
+				if main.arena.shield != 1 or main.battle_hits != 0:
+					push_error("Shield did not block enemy attack")
+					quit(11)
+					return
+			main._battle_skill("挥墨")
+			var hp: int = main.arena.hp
+			main._battle_skill("挥墨")
+			if main.arena.hp != hp:
+				push_error("Cooldown did not stop repeated attack")
+				quit(12)
+				return
+			await process_frame
+			await process_frame
+			if DisplayServer.get_name() != "headless":
+				await RenderingServer.frame_post_draw
+				root.get_texture().get_image().save_png("user://portrait-battle-" + ids_pair[1] + ".png")
+			while not main.battle_finished:
+				main._process(0.501)
+				main._battle_skill("挥墨")
+			print("PASS actual enemy damage, shield, healing, cooldown and victory")
 			await main._submit_battle()
 		if main.flow != "settlement":
 			push_error("Settlement flow failed: " + main.status.text)
@@ -89,12 +135,38 @@ func _run() -> void:
 		quit(5)
 		return
 	main._memory_detail("she_hui_chun")
-	main._play_memory(329.63)
+	main._play_memory(main.data.memory("she_hui_chun").echo_audio)
 	if not main.memory_audio.playing:
 		quit(6)
 		return
-	print("PASS memory choice, confirmation, source story, audio, capacity and ledger")
+	await create_timer(0.3).timeout
+	if main.memory_audio.get_playback_position() < 0.1 or main.memory_audio.stream.get_length() < 2:
+		push_error("Narration did not progress")
+		quit(13)
+		return
+	main._play_memory(main.data.memory("she_hui_chun").echo_audio)
+	if not main.memory_audio.stream_paused:
+		quit(14)
+		return
+	main._process(0.0)
+	await process_frame
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("user://portrait-echo.png")
+	main._play_memory(main.data.memory("she_hui_chun").echo_audio)
+	if main.memory_audio.stream_paused:
+		quit(15)
+		return
+	print("PASS narration duration, playback progress, pause/resume, memory source, capacity and ledger")
 	print("TEST_PLAYER=", game.player.id)
+	main._start_battle()
+	main._begin_battle()
+	main._process(float(main.current_event.battle.duration_sec))
+	if not main.battle_finished or main.battle_wave != 0 or main.battle_hits != int(main.current_event.battle.max_hits_taken) + 1:
+		push_error("Idle player did not lose to actual enemy attacks")
+		quit(17)
+		return
+	print("PASS idle defeat")
 	main.memory_audio.stop()
 	main.memory_audio.stream = null
 	await create_timer(0.1).timeout

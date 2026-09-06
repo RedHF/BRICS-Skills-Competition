@@ -29,17 +29,18 @@ type PuzzleAttempt struct {
 }
 
 type PuzzleEvaluation struct {
-	Accepted     bool
-	Correct      bool
-	Complete     bool
-	ScoreDelta   int
-	PuzzleScore  int
-	PuzzleTotal  int
-	ErosionDelta int
-	AttemptCount int
-	NextStepID   string
-	Reason       string
-	ActionRecord model.ActionRecord
+	FailedStrokes []int
+	Accepted      bool
+	Correct       bool
+	Complete      bool
+	ScoreDelta    int
+	PuzzleScore   int
+	PuzzleTotal   int
+	ErosionDelta  int
+	AttemptCount  int
+	NextStepID    string
+	Reason        string
+	ActionRecord  model.ActionRecord
 }
 
 // EvaluatePuzzleStep validates exactly one next puzzle step.  Sequence is
@@ -107,7 +108,16 @@ func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attem
 	if attempt.StepID != expected.ID {
 		return rejectPuzzle(event, session, result, record, "step_out_of_order")
 	}
-	if (expected.Kind == "trace" && !MatchTrace(expected.Trace, attempt.Strokes)) || (expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer)) {
+	if expected.Kind == "trace" {
+		result.FailedStrokes = FailedTraceStrokes(expected.Trace, attempt.Strokes)
+	}
+	if expected.Kind == "trace" && len(result.FailedStrokes) > 0 {
+		result.Reason = "trace_incomplete"
+		record.Reason = result.Reason
+		result.ActionRecord = record
+		return result
+	}
+	if expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer) {
 		return rejectPuzzle(event, session, result, record, "answer_incorrect")
 	}
 
@@ -152,6 +162,7 @@ type BattleAction struct {
 }
 
 type BattleInput struct {
+	Skills       map[string]content.SkillSpec
 	Actions      []BattleAction
 	DurationMS   int
 	WavesCleared int
@@ -175,73 +186,67 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 		return BattleEvaluation{Won: true, Reason: "no_battle"}, nil
 	}
 	battle := event.Battle
-	if input.DurationMS <= 0 {
-		return BattleEvaluation{}, errors.New("duration_ms must be positive")
+	if input.DurationMS <= 0 || input.DurationMS > battle.DurationSec*1000 {
+		return BattleEvaluation{}, errors.New("duration_ms outside event bounds")
 	}
-	if input.DurationMS > battle.DurationSec*1000 {
-		return BattleEvaluation{}, fmt.Errorf("duration_ms exceeds event limit (%d ms)", battle.DurationSec*1000)
-	}
-	if input.WavesCleared < 0 || input.WavesCleared > battle.Waves {
-		return BattleEvaluation{}, errors.New("waves_cleared is outside event bounds")
-	}
-	if input.HitsTaken < 0 || input.HitsTaken > battle.MaxHitsTaken+10 {
-		return BattleEvaluation{}, errors.New("hits_taken is outside event bounds")
-	}
-	seenSkills := make(map[string]bool)
+	hp, waves, hits, shield, nextAttack := battle.EnemyHP, 0, 0, 0, 3000
+	ready := map[string]int{}
+	seen := map[string]bool{}
 	lastAt := -1
 	for _, action := range input.Actions {
-		action.Skill = strings.TrimSpace(action.Skill)
-		if action.Skill == "" {
-			return BattleEvaluation{}, errors.New("battle action skill is required")
+		skill, ok := input.Skills[action.Skill]
+		if !ok || !input.AllowedSkills[action.Skill] {
+			return BattleEvaluation{}, fmt.Errorf("unavailable skill %q", action.Skill)
 		}
-		// A nil map means the pure rules caller did not provide ownership
-		// context. The HTTP layer always passes a non-nil map resolved from the
-		// player's memories, so unowned skills are rejected in live play.
-		if input.AllowedSkills != nil && !input.AllowedSkills[action.Skill] {
-			return BattleEvaluation{}, fmt.Errorf("unknown or unavailable battle skill %q", action.Skill)
+		if action.AtMS < lastAt || action.AtMS < 0 || action.AtMS > input.DurationMS {
+			return BattleEvaluation{}, errors.New("battle action timestamp outside chronological timeline")
 		}
-		if action.AtMS < 0 || action.AtMS > input.DurationMS {
-			return BattleEvaluation{}, errors.New("battle action timestamp outside duration")
+		if waves == battle.Waves || hits > battle.MaxHitsTaken {
+			return BattleEvaluation{}, errors.New("action after battle ended")
 		}
-		if action.AtMS < lastAt {
-			return BattleEvaluation{}, errors.New("battle actions must be chronological")
+		if action.AtMS < ready[action.Skill] {
+			return BattleEvaluation{}, errors.New("skill used during cooldown")
 		}
+		for nextAttack <= action.AtMS && hits <= battle.MaxHitsTaken {
+			if shield > 0 {
+				shield--
+			} else {
+				hits++
+			}
+			nextAttack += 3000
+		}
+		if hits > battle.MaxHitsTaken {
+			return BattleEvaluation{}, errors.New("action after player defeat")
+		}
+		ready[action.Skill] = action.AtMS + skill.CooldownMS
 		lastAt = action.AtMS
-		seenSkills[action.Skill] = true
-	}
-	// The client may omit optional counters for compatibility.  In that case
-	// derive a conservative wave count from the number of timestamped actions;
-	// it can never exceed the server-defined wave count.
-	waves := input.WavesCleared
-	if waves == 0 && len(input.Actions) > 0 {
-		waves = len(input.Actions)
-		if waves > battle.Waves {
-			waves = battle.Waves
+		seen[action.Skill] = true
+		hp -= skill.Damage
+		if skill.Shield > 0 {
+			shield = skill.Shield
+		}
+		hits = max(0, hits-skill.Heal)
+		if hp <= 0 {
+			waves++
+			hp = battle.EnemyHP
 		}
 	}
-	if input.HitsTaken > 0 {
-		// Hits are client telemetry, but still bounded and always penalize the
-		// result.  A forged lower value cannot create a score above the no-hit
-		// baseline.
+	for nextAttack <= input.DurationMS && waves < battle.Waves && hits <= battle.MaxHitsTaken {
+		if shield > 0 {
+			shield--
+		} else {
+			hits++
+		}
+		nextAttack += 3000
 	}
-	missingSkill := ""
+	won := waves == battle.Waves && hits <= battle.MaxHitsTaken
 	for _, required := range battle.RequiredSkills {
-		if !seenSkills[required] {
-			missingSkill = required
-			break
-		}
+		won = won && seen[required]
 	}
-	minDuration := battle.Waves * 1000
-	won := waves == battle.Waves && missingSkill == "" && len(input.Actions) >= battle.Waves && input.DurationMS >= minDuration && input.HitsTaken <= battle.MaxHitsTaken
-	eval := BattleEvaluation{Won: won, Waves: waves, HitsTaken: input.HitsTaken}
+	eval := BattleEvaluation{Won: won, Waves: waves, HitsTaken: hits, ErosionDelta: hits * HitErosion, Reason: "battle_cleared"}
 	if !won {
-		eval.ErosionDelta = BattleFailureErosion
+		eval.ErosionDelta += BattleFailureErosion
 		eval.Reason = "battle_requirements_not_met"
-	} else {
-		eval.Reason = "battle_cleared"
-	}
-	if input.HitsTaken > 0 {
-		eval.ErosionDelta += input.HitsTaken * HitErosion
 	}
 	return eval, nil
 }

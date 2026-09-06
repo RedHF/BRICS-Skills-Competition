@@ -27,32 +27,50 @@ func TestEvaluatePuzzleStepIsOrderedAndPenalizesWrongAnswer(t *testing.T) {
 	}
 }
 
-func TestEvaluateBattleRejectsForgedTimeline(t *testing.T) {
-	event := &content.Event{Battle: &content.BattleSpec{Waves: 1, DurationSec: 30, MaxHitsTaken: 2, RequiredSkills: []string{"斗拱"}}}
-	if _, err := EvaluateBattle(event, BattleInput{DurationMS: 30000, Actions: []BattleAction{{Skill: "斗拱", AtMS: 30001}}}); err == nil {
-		t.Fatal("expected timestamp validation error")
+func TestBattleReplaysDamageShieldHealingAndCooldown(t *testing.T) {
+	skills := map[string]content.SkillSpec{
+		"挥墨": {CooldownMS: 500, Damage: 10}, "斗拱": {CooldownMS: 6000, Shield: 2},
+		"藻井": {CooldownMS: 6000, Damage: 18, Heal: 1}, "木榫": {CooldownMS: 1000, Damage: 30},
 	}
-	eval, err := EvaluateBattle(event, BattleInput{DurationMS: 30000, Actions: []BattleAction{{Skill: "斗拱", AtMS: 1000}}, WavesCleared: 1})
-	if err != nil || !eval.Won || eval.ErosionDelta != 0 {
-		t.Fatalf("unexpected battle result: %+v err=%v", eval, err)
+	allowed := map[string]bool{"挥墨": true, "斗拱": true, "藻井": true, "木榫": true}
+	event := &content.Event{Battle: &content.BattleSpec{Waves: 1, EnemyHP: 30, DurationSec: 30, MaxHitsTaken: 2, RequiredSkills: []string{"斗拱"}}}
+	cases := []struct {
+		name     string
+		actions  []BattleAction
+		duration int
+		won      bool
+		hits     int
+		invalid  bool
+	}{
+		{"shield and attack", []BattleAction{{"斗拱", 0}, {"挥墨", 3000}, {"挥墨", 3500}, {"挥墨", 4000}}, 4000, true, 0, false},
+		{"forged victory without damage", []BattleAction{{"斗拱", 0}}, 1000, false, 0, false},
+		{"idle loses", nil, 30000, false, 3, false},
+		{"missing required skill", []BattleAction{{"木榫", 0}}, 1000, false, 0, false},
+		{"healing", []BattleAction{{"斗拱", 0}, {"藻井", 9000}, {"挥墨", 9000}, {"挥墨", 9500}}, 9500, true, 0, false},
+		{"cooldown spam", []BattleAction{{"挥墨", 0}, {"挥墨", 100}}, 1000, false, 0, true},
+		{"outside timeline", []BattleAction{{"斗拱", 30001}}, 30000, false, 0, true},
+		{"unknown skill", []BattleAction{{"伪造", 0}}, 1000, false, 0, true},
+		{"late action", []BattleAction{{"挥墨", 12000}}, 15000, false, 0, true},
 	}
-}
-
-func TestEvaluateBattleAcceptsCatalogSkillWhenAllowed(t *testing.T) {
-	event := &content.Event{Battle: &content.BattleSpec{Waves: 1, DurationSec: 30, MaxHitsTaken: 2, RequiredSkills: []string{"木榫"}}}
-	eval, err := EvaluateBattle(event, BattleInput{
-		DurationMS: 30000, WavesCleared: 1,
-		Actions:       []BattleAction{{Skill: "木榫", AtMS: 1000}},
-		AllowedSkills: map[string]bool{"木榫": true},
-	})
+	for _, test := range cases {
+		t.Run(test.name, func(t *testing.T) {
+			eval, err := EvaluateBattle(event, BattleInput{Skills: skills, AllowedSkills: allowed, Actions: test.actions, DurationMS: test.duration, WavesCleared: 1, HitsTaken: 0})
+			if (err != nil) != test.invalid {
+				t.Fatalf("error=%v", err)
+			}
+			if err == nil && (eval.Won != test.won || eval.HitsTaken != test.hits) {
+				t.Fatalf("unexpected replay: %+v", eval)
+			}
+		})
+	}
+	event.Battle.RequiredSkills = []string{"木榫"}
+	eval, err := EvaluateBattle(event, BattleInput{Skills: skills, AllowedSkills: allowed, Actions: []BattleAction{{"木榫", 0}}, DurationMS: 1})
 	if err != nil || !eval.Won {
-		t.Fatalf("catalog-defined skill was not accepted: %+v err=%v", eval, err)
+		t.Fatalf("new data-defined skill failed: %+v %v", eval, err)
 	}
-	if _, err := EvaluateBattle(event, BattleInput{
-		DurationMS: 30000, WavesCleared: 1,
-		Actions:       []BattleAction{{Skill: "伪造", AtMS: 1000}},
-		AllowedSkills: map[string]bool{"木榫": true},
-	}); err == nil {
-		t.Fatal("unowned battle skill was accepted")
+	event.Battle.Waves = 2
+	eval, err = EvaluateBattle(event, BattleInput{Skills: skills, AllowedSkills: allowed, Actions: []BattleAction{{"木榫", 0}, {"木榫", 1000}}, DurationMS: 1000})
+	if err != nil || !eval.Won || eval.Waves != 2 {
+		t.Fatalf("multiple enemies did not advance waves: %+v %v", eval, err)
 	}
 }

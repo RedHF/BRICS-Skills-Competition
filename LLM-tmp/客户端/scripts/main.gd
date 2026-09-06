@@ -25,8 +25,18 @@ var battle_hits := 0
 var battle_note: Label
 var battle_skills: Array[String] = []
 var wave_skills: Array[String] = []
+var arena: Control
+var battle_ready: Dictionary = {}
+var battle_buttons: Dictionary = {}
+var next_attack := 3000
+var echo_note: Label
+var echo_button: Button
+var stroke_buttons: HFlowContainer
+var trace_progress: Label
 var battle_finished := false
-var battle_controls: HBoxContainer
+var battle_running := false
+var battle_start: Button
+var battle_controls: VBoxContainer
 var confirmation: ConfirmationDialog
 var navigation: HBoxContainer
 
@@ -43,12 +53,13 @@ func _ready() -> void:
 	root.add_child(backdrop)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 24)
+	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 20)
 	root.add_child(margin)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
-	_label(column, "檐下千秋  /  檐下谱", 30, Color("#e4c98a"))
+	_label(column, "檐 下 千 秋", 32, Color("#e4c98a"))
+	_label(column, "听古建呓语 · 拓人间记忆", 14, Color("#94b0aa"))
 	stats = _label(column, "正在连接本地服务…", 17)
 	var nav := HBoxContainer.new()
 	navigation = nav
@@ -60,11 +71,13 @@ func _ready() -> void:
 	status = _label(column, "", 16, Color("#e9bb86"))
 	scroll = ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	column.add_child(scroll)
 	page = VBoxContainer.new()
 	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page.add_theme_constant_override("separation", 12)
 	scroll.add_child(page)
+	column.move_child(nav, column.get_child_count() - 1)
 	confirmation = ConfirmationDialog.new()
 	confirmation.title = "确认抹去记忆"
 	confirmation.ok_button_text = "亲手抹去"
@@ -101,7 +114,7 @@ func _connect_server() -> void:
 	if health.is_empty():
 		_error(network.last_error)
 		return
-	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 3:
+	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 4:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
 		return
 	var catalog: Dictionary = await network.request_json("/api/v1/catalog")
@@ -149,14 +162,16 @@ func _refresh_stats() -> void:
 	var p: Dictionary = GameState.player
 	var used := 0
 	for memory in p.memories: used += int(memory.capacity)
-	stats.text = "识海 %d / %d 道    墨痕 %d    侵蚀 %d / 100    %s" % [used, int(p.capacity), int(p.ink_marks), int(p.erosion), "浸" if int(p.erosion) < 40 else ("蚀" if int(p.erosion) < 70 else "竭")]
+	stats.text = "识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), int(p.erosion), "浸" if int(p.erosion) < 40 else ("蚀" if int(p.erosion) < 70 else "竭")]
 
 func _clear() -> void:
+	status.text = ""
 	for child in page.get_children():
 		page.remove_child(child)
 		child.queue_free()
 	scroll.scroll_vertical = 0
 	memory_audio.stop()
+	memory_audio.stream = null
 	backdrop.color = Color("#14262b")
 
 func _show_map() -> void:
@@ -168,11 +183,26 @@ func _show_map() -> void:
 	_clear()
 	status.text = "沿古建呓语前行。序章与社庙为本次可玩篇章。"
 	for chapter in data.catalog.chapters:
-		_label(page, chapter.title, 24, Color("#e4c98a"))
-		_label(page, chapter.summary)
+		var card := PanelContainer.new()
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("#1c3235")
+		style.border_color = Color("#9a8960")
+		style.border_width_left = 3
+		style.set_corner_radius_all(8)
+		style.content_margin_left = 16
+		style.content_margin_right = 16
+		style.content_margin_top = 14
+		style.content_margin_bottom = 14
+		card.add_theme_stylebox_override("panel", style)
+		page.add_child(card)
+		var entries := VBoxContainer.new()
+		entries.add_theme_constant_override("separation", 12)
+		card.add_child(entries)
+		_label(entries, chapter.title, 24, Color("#e4c98a"))
+		_label(entries, chapter.summary, 17)
 		for event in chapter.events:
 			var done: bool = GameState.player.completed_events.has(chapter.id + ":" + event.id)
-			var button := _button(page, event.title + (" · 已修复" if done else "") + (" · 剧情草稿" if event.draft else ""), _open_event.bind(chapter.id, event.id))
+			var button := _button(entries, event.title + (" · 已修复" if done else "") + (" · 剧情草稿" if event.draft else ""), _open_event.bind(chapter.id, event.id))
 			button.disabled = event.draft or not chapter.id in GameState.player.unlocked_chapters
 			for previous in chapter.events:
 				if int(previous.order) < int(event.order) and not GameState.player.completed_events.has(chapter.id + ":" + previous.id): button.disabled = true
@@ -242,30 +272,44 @@ func _show_puzzle() -> void:
 	_label(page, "修复 %d / %d · %s" % [index + 1, current_event.puzzle.steps.size(), current_event.title], 24, Color("#e4c98a"))
 	_label(page, step.prompt, 20)
 	if step.kind == "trace":
-		_label(page, "从绿点沿宽金色墨带描到橙点，松开完成一笔。允许偏离细线，不必精确重合。", 16)
+		_label(page, "逐字放大描摹：绿点起笔、橙点收笔。金色宽带内均可落墨，短暂手抖可容忍。点击笔画编号可单独重描。", 16)
 		trace_canvas = TRACE.new()
 		trace_canvas.spec = step.trace
 		page.add_child(trace_canvas)
-		var progress := _label(page, "已描 0 / %d 笔" % step.trace.strokes.size(), 16)
-		trace_canvas.stroke_finished.connect(func(): progress.text = "已描 %d / %d 笔" % [trace_canvas.strokes.size(), step.trace.strokes.size()])
+		trace_progress = _label(page, "", 16)
+		stroke_buttons = HFlowContainer.new()
+		page.add_child(stroke_buttons)
+		for i in range(step.trace.strokes.size()):
+			var button := _button(stroke_buttons, str(i + 1), trace_canvas.select_stroke.bind(i))
+			button.custom_minimum_size = Vector2(48, 42)
+		trace_canvas.stroke_finished.connect(_trace_feedback)
+		_trace_feedback()
 		var buttons := HBoxContainer.new()
 		page.add_child(buttons)
-		_button(buttons, "撤回上一笔", func():
-			if not trace_canvas.strokes.is_empty():
-				trace_canvas.strokes.pop_back()
-				trace_canvas.drawing = false
-				trace_canvas.queue_redraw()
-				trace_canvas.stroke_finished.emit())
-		_button(buttons, "重描本步", _show_puzzle)
+		_button(buttons, "清空当前笔", func():
+			trace_canvas.strokes[trace_canvas.active] = []
+			trace_canvas.queue_redraw()
+			_trace_feedback())
 		_button(buttons, "提交拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
 	elif step.kind == "skill":
 		for skill in _learned_skills(): _button(page, "使用「%s」" % skill, _submit_puzzle.bind({"step_id": step.id, "answer": skill}))
 	else:
 		for option in step.options: _button(page, str(option), _submit_puzzle.bind({"step_id": step.id, "answer": option}))
 
+func _trace_feedback() -> void:
+	var count := 0
+	for stroke in trace_canvas.strokes:
+		if not stroke.is_empty(): count += 1
+	trace_progress.text = "第 %d 笔 · 已描 %d/%d · 红色 × 为未通过" % [trace_canvas.active + 1, count, trace_canvas.strokes.size()]
+	for i in range(stroke_buttons.get_child_count()):
+		var button: Button = stroke_buttons.get_child(i)
+		button.text = str(i + 1) + (" ×" if trace_canvas.failed.has(i) else "")
+		button.modulate = Color("#ff8078") if trace_canvas.failed.has(i) else (Color("#e4c98a") if i == trace_canvas.active else Color.WHITE)
+
 func _submit_puzzle(payload: Dictionary) -> void:
 	if busy: return
 	busy = true
+	if current_event.puzzle.steps[GameState.session.accepted_steps.size()].kind == "trace": trace_canvas.locked = true
 	var response: Dictionary = await network.request_json("/api/v1/sessions/%s/puzzle" % session_id, HTTPClient.METHOD_POST, payload)
 	if response.is_empty():
 		_error(network.last_error)
@@ -275,7 +319,14 @@ func _submit_puzzle(payload: Dictionary) -> void:
 		GameState.player.erosion = response.erosion
 		_refresh_stats()
 		busy = false
-		status.text = "修复尚未相合，侵蚀 +10。描摹会保留，可撤回上一笔修正；不必重新画整幅。"
+		if current_event.puzzle.steps[GameState.session.accepted_steps.size()].kind == "trace":
+			trace_canvas.locked = false
+			trace_canvas.failed = []
+			for index in response.failed_strokes: trace_canvas.failed.append(int(index))
+			trace_canvas.select_stroke(int(response.failed_strokes[0]))
+			_trace_feedback()
+			status.text = "未通过的笔画已标红，点击编号重描即可。描摹练习不扣侵蚀。"
+		else: status.text = "修复尚未相合，侵蚀 +10。"
 		return
 	await _resume()
 	if response.accepted: status.text = "墨线相合，记忆显影。"
@@ -286,7 +337,8 @@ func _show_choice() -> void:
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
 	_label(page, "墨灵显影 · " + memory.title, 26, Color(memory.color))
 	_label(page, memory.summary, 21)
-	_label(page, "技能：%s　来历：%s" % [memory.skill, memory.source])
+	_label(page, "技能：%s" % memory.skill)
+	if not memory.skill.is_empty(): _label(page, data.catalog.skills[memory.skill].description, 16)
 	var used := 0
 	for held in GameState.player.memories: used += int(held.capacity)
 	var keep := _button(page, "拓印这道墨灵", _choose.bind("keep", ""))
@@ -303,7 +355,7 @@ func _confirm_forget(id: String) -> void:
 	confirmation.dialog_text = "%s\n\n%s\n\n抹除后对应色调与心舍音色消失，技能保留为残余技艺。" % [memory.title, memory.forgotten_text]
 	for connection in confirmation.confirmed.get_connections(): confirmation.confirmed.disconnect(connection.callable)
 	confirmation.confirmed.connect(_choose.bind("forget", id), CONNECT_ONE_SHOT)
-	confirmation.popup_centered(Vector2i(620, 260))
+	confirmation.popup_centered(Vector2i(460, 300))
 
 func _choose(action: String, forget_id: String) -> void:
 	if busy: return
@@ -334,42 +386,92 @@ func _start_battle() -> void:
 	battle_wave = 0
 	battle_hits = 0
 	battle_finished = false
+	battle_running = false
 	wave_skills = []
+	battle_ready = {}
+	battle_buttons = {}
+	next_attack = 3000
 	battle_skills = _learned_skills()
-	_label(page, "白蚀来袭 · " + current_event.title, 26)
-	_label(page, "守住墨线直到白蚀散去。每波使用指定技能，战斗结束后结算。", 18)
-	battle_note = _label(page, "", 20, Color("#e4c98a"))
-	battle_controls = HBoxContainer.new()
+	_label(page, "白蚀来袭", 26, Color("#e4c98a"))
+	_label(page, "点击挥墨消灭白蚀；红色蓄力时用斗拱防护。白蚀每 3 秒攻击一次。", 16)
+	battle_note = _label(page, "", 17)
+	arena = preload("res://scripts/battle_arena.gd").new()
+	arena.hp = int(current_event.battle.enemy_hp)
+	arena.max_hp = arena.hp
+	page.add_child(arena)
+	battle_start = _button(page, "开始守护 · 准备好再迎战", _begin_battle)
+	battle_controls = VBoxContainer.new()
 	page.add_child(battle_controls)
-	for skill in battle_skills: _button(battle_controls, skill, _battle_skill.bind(skill))
-	status.text = "需要技能：" + ", ".join(current_event.battle.required_skills)
+	for skill in ["挥墨"] + battle_skills:
+		battle_ready[skill] = 0
+		battle_buttons[skill] = _button(battle_controls, skill, _battle_skill.bind(skill))
+		_label(battle_controls, data.catalog.skills[skill].description, 15, Color("#aac4bd"))
+	status.text = "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
+	_battle_update()
+
+func _begin_battle() -> void:
+	battle_running = true
+	battle_start.hide()
+	_battle_update()
 
 func _battle_skill(skill: String) -> void:
-	if busy or battle_finished: return
-	battle_actions.append({"skill": skill, "at_ms": int(battle_elapsed * 1000)})
+	if busy or battle_finished or not battle_running: return
+	var at := int(battle_elapsed * 1000)
+	if at < int(battle_ready[skill]): return
+	var spec: Dictionary = data.catalog.skills[skill]
+	battle_actions.append({"skill": skill, "at_ms": at})
+	battle_ready[skill] = at + int(spec.cooldown_ms)
 	if not wave_skills.has(skill): wave_skills.append(skill)
-	status.text = "「%s」护住墨线。" % skill
+	arena.hp -= int(spec.damage)
+	if int(spec.shield) > 0: arena.shield = int(spec.shield)
+	battle_hits = maxi(0, battle_hits - int(spec.heal))
+	var effect := skill
+	if int(spec.damage) > 0: effect += " -%d" % int(spec.damage)
+	if int(spec.shield) > 0: effect += " 护盾 +%d" % int(spec.shield)
+	if int(spec.heal) > 0: effect += " 净化"
+	arena.flash(effect, Color(spec.color))
+	if arena.hp <= 0:
+		battle_wave += 1
+		arena.hp = int(current_event.battle.enemy_hp)
+	_battle_update()
 
 func _process(delta: float) -> void:
-	if flow != "battle" or battle_finished: return
-	battle_elapsed += delta
-	var duration := float(current_event.battle.duration_sec)
-	var waves := int(current_event.battle.waves)
-	battle_note.text = "白蚀 %d / %d 波　剩余 %d 秒　受蚀 %d 次" % [mini(battle_wave + 1, waves), waves, maxi(0, ceili(duration - battle_elapsed)), battle_hits]
-	if battle_elapsed >= duration * (battle_wave + 1) / waves:
-		for required in current_event.battle.required_skills:
-			if not wave_skills.has(required): battle_hits += 1
-		battle_wave += 1
-		wave_skills.clear()
-	if battle_elapsed >= duration:
+	if flow == "memory" and memory_audio.stream != null:
+		var position := memory_audio.get_playback_position()
+		echo_note.text = "%s  %.1f / %.1f 秒" % ["已暂停" if memory_audio.stream_paused else ("正在聆听" if memory_audio.playing else "回声播放完毕"), position, memory_audio.stream.get_length()]
+		echo_button.text = "暂停回声" if memory_audio.playing and not memory_audio.stream_paused else "继续 / 重听回声"
+	if flow != "battle" or battle_finished or not battle_running: return
+	battle_elapsed = minf(battle_elapsed + delta, float(current_event.battle.duration_sec))
+	while next_attack <= int(battle_elapsed * 1000) and battle_hits <= int(current_event.battle.max_hits_taken):
+		if arena.shield > 0:
+			arena.shield -= 1
+			arena.flash("斗拱挡住侵袭", Color("#9ad5ad"))
+		else:
+			battle_hits += 1
+			arena.flash("受到侵蚀 +1", Color("#ff8078"))
+		next_attack += 3000
+	_battle_update()
+
+func _battle_update() -> void:
+	arena.hits = battle_hits
+	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / 3000.0
+	battle_note.text = "第 %d/%d 波 · 剩余 %d 秒 · 受蚀 %d/%d" % [mini(battle_wave + 1, int(current_event.battle.waves)), int(current_event.battle.waves), ceili(float(current_event.battle.duration_sec) - battle_elapsed), battle_hits, int(current_event.battle.max_hits_taken) + 1]
+	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or battle_elapsed >= float(current_event.battle.duration_sec):
 		battle_finished = true
-		for child in battle_controls.get_children(): child.disabled = true
+		arena.defeated = battle_wave == int(current_event.battle.waves)
+		var complete: bool = arena.defeated
+		for skill in current_event.battle.required_skills: complete = complete and wave_skills.has(skill)
+		status.text = "白蚀已驱散。" if complete else ("白蚀已散，但未施展本关要求的技能。" if arena.defeated else "墨线失守，本次战斗失败。")
 		_button(page, "结算白蚀战斗", _submit_battle)
+	for skill in battle_buttons:
+		var remaining := maxi(0, int(battle_ready[skill]) - int(battle_elapsed * 1000))
+		battle_buttons[skill].text = skill + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
+		battle_buttons[skill].disabled = not battle_running or battle_finished or remaining > 0
 
 func _submit_battle() -> void:
 	if busy: return
 	busy = true
-	var response: Dictionary = await network.request_json("/api/v1/sessions/%s/battle" % session_id, HTTPClient.METHOD_POST, {"actions": battle_actions, "duration_ms": int(current_event.battle.duration_sec) * 1000, "waves_cleared": battle_wave, "hits_taken": battle_hits})
+	var response: Dictionary = await network.request_json("/api/v1/sessions/%s/battle" % session_id, HTTPClient.METHOD_POST, {"actions": battle_actions, "duration_ms": maxi(1, int(battle_elapsed * 1000)), "waves_cleared": battle_wave, "hits_taken": battle_hits})
 	if response.is_empty():
 		_error(network.last_error)
 		_button(page, "读取服务器进度后继续", _resume)
@@ -407,6 +509,10 @@ func _show_memories() -> void:
 	for held in GameState.player.memories:
 		var memory: Dictionary = data.memory(held.id)
 		_button(page, "%s  /  %s" % [memory.title, memory.skill], _memory_detail.bind(held.id))
+	_label(page, "技艺册 · 点击按钮施展", 23, Color("#e4c98a"))
+	_label(page, "战斗中点击挥墨攻击，技能冷却结束后可再次施展。遗忘记忆后，习得的技艺仍然保留。", 16)
+	for skill in ["挥墨"] + _learned_skills():
+		_label(page, skill + " · " + data.catalog.skills[skill].description, 18)
 	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
 
 func _memory_detail(id: String) -> void:
@@ -422,23 +528,24 @@ func _memory_detail(id: String) -> void:
 	var source: PackedStringArray = str(memory.source).split("/")
 	var event: Dictionary = data.event(source[0], source[1])
 	_label(page, "来历：%s / %s\n技能：%s　识海：%d 道" % [event.scene, event.title, memory.skill, int(memory.capacity)], 18)
+	if not memory.skill.is_empty(): _label(page, data.catalog.skills[memory.skill].description, 17)
 	if remembered:
-		_button(page, "聆听墨灵回声", _play_memory.bind(float(memory.tone_hz)))
+		echo_button = _button(page, "聆听墨灵回声", _play_memory.bind(memory.echo_audio))
+		echo_note = _label(page, "点击聆听这段记忆的中文回声。", 16)
 	else: _label(page, "色调与音色已随记忆褪去；习得的技艺仍可用于修复。", 16)
 	_button(page, "返回心舍", _show_memories)
 	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
 
-func _play_memory(hz: float) -> void:
-	var samples := PackedByteArray()
-	for i in range(22050):
-		var value := int(sin(TAU * hz * i / 22050.0) * 14000 * pow(1.0 - i / 22050.0, 2))
-		samples.append(value & 255)
-		samples.append((value >> 8) & 255)
-	var sound := AudioStreamWAV.new()
-	sound.format = AudioStreamWAV.FORMAT_16_BITS
-	sound.mix_rate = 22050
-	sound.data = samples
+func _play_memory(path: String) -> void:
+	if memory_audio.playing:
+		memory_audio.stream_paused = not memory_audio.stream_paused
+		return
+	var sound := load(path) as AudioStream
+	if sound == null:
+		_error("无法读取墨灵回声：" + path)
+		return
 	memory_audio.stream = sound
+	memory_audio.stream_paused = false
 	memory_audio.play()
 
 func _show_ledger() -> void:
@@ -466,7 +573,30 @@ func _label(parent: Node, text: String, font_size: int = 18, color: Color = Colo
 func _button(parent: Node, text: String, callback: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(160, 42)
+	button.custom_minimum_size = Vector2(0, 48)
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("#29423f")
+	style.border_color = Color("#688477")
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(8)
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	button.add_theme_stylebox_override("normal", style)
+	var hover := style.duplicate()
+	hover.bg_color = Color("#3d5b51")
+	button.add_theme_stylebox_override("hover", hover)
+	var pressed := style.duplicate()
+	pressed.bg_color = Color("#596447")
+	button.add_theme_stylebox_override("pressed", pressed)
+	var disabled := style.duplicate()
+	disabled.bg_color = Color("#223236")
+	disabled.border_color = Color("#344c46")
+	button.add_theme_stylebox_override("disabled", disabled)
+	button.add_theme_color_override("font_disabled_color", Color("#acb8b3"))
 	button.add_theme_font_size_override("font_size", 18)
 	button.pressed.connect(func():
 		if not busy: callback.call())

@@ -53,11 +53,11 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "flow", "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
 	wrong := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "错"})
-	if wrong["erosion"].(float64) != 10 {
-		t.Fatalf("wrong answer did not increase erosion: %+v", wrong)
+	if wrong["erosion"].(float64) != 0 || len(wrong["failed_strokes"].([]any)) != 11 {
+		t.Fatalf("trace practice must report missing strokes without erosion: %+v", wrong)
 	}
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"actions": []map[string]any{{"skill": "斗拱", "at_ms": 1000}}, "duration_ms": 30000})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]))
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"})
 	first := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
 	second := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
@@ -91,7 +91,7 @@ func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "retry-flow", "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
 	for attempt := 0; attempt < 3; attempt++ {
-		postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "错误"})
+		postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "out_of_order", "answer": "错误"})
 	}
 	failed := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	if failed.status != http.StatusConflict || failed.body["error"].(map[string]any)["code"] != "session_failed" {
@@ -108,7 +108,7 @@ func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
 	if failedBattle["won"].(bool) || failedBattle["status"] != "failed" {
 		t.Fatalf("expected failed battle session: %+v", failedBattle)
 	}
-	reusedBattle := postJSONStatus(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", map[string]any{"duration_ms": 30000, "waves_cleared": 1, "hits_taken": 0, "actions": []map[string]any{{"skill": "斗拱", "at_ms": 1000}}})
+	reusedBattle := postJSONStatus(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", winningBattle(catalog.Chapters[0].Events[0]))
 	if reusedBattle.status != http.StatusConflict || reusedBattle.body["error"].(map[string]any)["code"] != "session_failed" {
 		t.Fatalf("failed battle session was reusable: status=%d body=%+v", reusedBattle.status, reusedBattle.body)
 	}
@@ -134,7 +134,7 @@ func TestExpiredSessionCannotChooseOrSettle(t *testing.T) {
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "expiry-flow", "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"duration_ms": 30000, "waves_cleared": 1, "hits_taken": 0, "actions": []map[string]any{{"skill": "斗拱", "at_ms": 1000}}})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]))
 	if _, err := persistence.UpdateSession(sid, func(current *model.EventSession) error {
 		current.ExpiresAt = time.Now().UTC().Add(-time.Minute)
 		return nil
@@ -161,6 +161,7 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	catalog.Skills["木榫"] = catalog.Skills["斗拱"]
 	custom := catalog.Chapters[0].Events[0]
 	custom.ID = "custom_skill_event"
 	battleSpec := *custom.Battle
@@ -199,7 +200,7 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": "custom-skill-flow", "chapter_id": "prologue", "event_id": "custom_skill_event"})
 	sid := session["session_id"].(string)
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
-	battle := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"duration_ms": 30000, "waves_cleared": 1, "hits_taken": 0, "actions": []map[string]any{{"skill": "木榫", "at_ms": 1000}}})
+	battle := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(custom))
 	if !battle["won"].(bool) {
 		t.Fatalf("catalog-defined skill was rejected by HTTP flow: %+v", battle)
 	}
@@ -323,11 +324,7 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input)
 			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input)
 			if event.Battle != nil {
-				actions := []map[string]any{}
-				for _, skill := range event.Battle.RequiredSkills {
-					actions = append(actions, map[string]any{"skill": skill, "at_ms": 1000})
-				}
-				postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", map[string]any{"duration_ms": event.Battle.DurationSec * 1000, "waves_cleared": 1, "actions": actions})
+				postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(event))
 			}
 			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
 			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
@@ -354,4 +351,22 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 	if !api.playerSkills(player)["斗拱"] || !api.playerSkills(player)["藻井"] {
 		t.Fatal("learned skill lost after erasure")
 	}
+}
+
+func winningBattle(event content.Event) map[string]any {
+	actions := []map[string]any{}
+	damage := 0
+	for _, skill := range event.Battle.RequiredSkills {
+		actions = append(actions, map[string]any{"skill": skill, "at_ms": 0})
+		if skill == "藻井" {
+			damage += 18
+		}
+	}
+	at := 0
+	for damage < event.Battle.EnemyHP {
+		actions = append(actions, map[string]any{"skill": "挥墨", "at_ms": at})
+		damage += 10
+		at += 500
+	}
+	return map[string]any{"duration_ms": at, "actions": actions}
 }

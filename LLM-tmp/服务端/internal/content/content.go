@@ -10,10 +10,20 @@ import (
 	"os"
 )
 
-const CurrentVersion = 3
+const CurrentVersion = 4
 
 // Catalog is the complete, versioned game content manifest.
+type SkillSpec struct {
+	Description string `json:"description"`
+	CooldownMS  int    `json:"cooldown_ms"`
+	Damage      int    `json:"damage"`
+	Shield      int    `json:"shield"`
+	Heal        int    `json:"heal"`
+	Color       string `json:"color"`
+}
+
 type Catalog struct {
+	Skills   map[string]SkillSpec  `json:"skills"`
 	Memories map[string]MemorySpec `json:"memories"`
 	Version  int                   `json:"version"`
 	GameID   string                `json:"game_id"`
@@ -95,6 +105,7 @@ type RewardSpec struct {
 }
 
 type MemorySpec struct {
+	EchoAudio      string  `json:"echo_audio"`
 	Source         string  `json:"source"`
 	RememberedText string  `json:"remembered_text"`
 	ForgottenText  string  `json:"forgotten_text"`
@@ -137,6 +148,14 @@ func (c *Catalog) Validate() error {
 	if len(c.Chapters) == 0 {
 		return errors.New("at least one chapter is required")
 	}
+	if _, ok := c.Skills["挥墨"]; !ok {
+		return errors.New("basic attack skill 挥墨 is required")
+	}
+	for name, skill := range c.Skills {
+		if name == "" || skill.Description == "" || skill.CooldownMS <= 0 || skill.Damage < 0 || skill.Shield < 0 || skill.Heal < 0 {
+			return fmt.Errorf("invalid skill %q", name)
+		}
+	}
 	for ci := range c.Chapters {
 		for ei := range c.Chapters[ci].Events {
 			event := &c.Chapters[ci].Events[ei]
@@ -152,6 +171,12 @@ func (c *Catalog) Validate() error {
 			}
 			if len(event.Story.Beats) == 0 || event.Story.Outro == "" {
 				return fmt.Errorf("event %q missing story", event.ID)
+			}
+			if _, ok := c.Skills[memory.Skill]; memory.Skill != "" && !ok {
+				return fmt.Errorf("memory %q references missing skill %q", memory.ID, memory.Skill)
+			}
+			if memory.EchoAudio == "" {
+				return fmt.Errorf("memory %q missing echo audio", memory.ID)
 			}
 			event.Reward.Memory = memory
 		}
@@ -221,7 +246,12 @@ func (c *Catalog) Validate() error {
 				return fmt.Errorf("event %q reward memory has no choices", event.ID)
 			}
 			if event.Battle != nil {
-				if event.Battle.Waves <= 0 || event.Battle.DurationSec <= 0 {
+				for _, skill := range event.Battle.RequiredSkills {
+					if _, ok := c.Skills[skill]; !ok {
+						return fmt.Errorf("event %q references missing battle skill %q", event.ID, skill)
+					}
+				}
+				if event.Battle.Waves <= 0 || event.Battle.DurationSec <= 0 || event.Battle.EnemyHP <= 0 {
 					return fmt.Errorf("event %q battle waves/duration must be positive", event.ID)
 				}
 				if event.Battle.MaxHitsTaken < 0 {
