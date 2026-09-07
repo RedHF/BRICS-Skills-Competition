@@ -6,6 +6,9 @@ config_version=5
 [application]
 
 config/name="檐下千秋"
+config/icon="res://assets/logo.svg"
+boot_splash/image="res://assets/logo.png"
+boot_splash/bg_color=Color(0.078, 0.149, 0.169, 1)
 config/description="Data-driven online puzzle adventure demo"
 run/main_scene="res://scenes/main.tscn"
 

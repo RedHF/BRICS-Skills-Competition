@@ -23,7 +23,7 @@ import (
 )
 
 func main() {
-	address := flag.String("addr", ":8090", "HTTP listen address")
+	address := flag.String("addr", "127.0.0.1:8090", "HTTP listen address")
 	contentPath := flag.String("content", "content/chapters.json", "path to data-driven chapter catalog")
 	dataPath := flag.String("data", "data/save.json", "path to server-side save database")
 	logPath := flag.String("log", "", "log file for desktop launch")

@@ -1,6 +1,6 @@
 # 《檐下千秋》服务端
 
-标准库 Go 实现的轻量服务器，为 Godot 客户端提供联网存档与服务端结算。内容定义在 `content/chapters.json`，新增章节/事件/谜题只需添加 JSON 数据，不修改 HTTP 或规则代码。客户端项目已将默认地址配置为 `http://127.0.0.1:8090`。内容与墨灵的维护规则详见 `content/README.md`。
+Go 实现（密码哈希使用 golang.org/x/crypto/bcrypt）的轻量服务器，为 Godot 客户端提供联网存档与服务端结算。内容定义在 `content/chapters.json`，新增章节/事件/谜题只需添加 JSON 数据，不修改 HTTP 或规则代码。客户端项目已将默认地址配置为 `http://127.0.0.1:8090`。内容与墨灵的维护规则详见 `content/README.md`。
 
 ## 运行
 
@@ -23,13 +23,15 @@ go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/sa
 
 ## API
 
+注册/登录协议见 [鉴权与第三方接入](鉴权与第三方接入.md)。除了健康检查和认证入口，以下接口都要求 `Authorization: Bearer <access_token>`，并校验玩家/事件归属。
+
 所有请求和响应均为 JSON；请求体禁止未知字段，单个请求最大 512 KiB。答案键只存在 `content/chapters.json`，`GET /api/v1/catalog` 会隐藏答案。
 
 | 方法 | 路由 | 用途 |
 |---|---|---|
 | GET | `/healthz` | 健康检查与内容版本 |
 | GET | `/api/v1/catalog` | 获取章节、事件、文本、谜题提示和公开规则 |
-| POST | `/api/v1/players` | 创建/恢复玩家，body `{player_id?,display_name?}` |
+| POST | `/api/v1/players` | 读取/更新当前账号显示名，body `{player_id?,display_name?}`，不能创建匿名玩家 |
 | GET | `/api/v1/players/{id}` | 获取服务器存档 |
 | GET | `/api/v1/players/{id}/ledger` | 获取记忆账册 |
 | POST | `/api/v1/sessions` | 开始事件，body `{player_id,chapter_id,event_id}` |
@@ -45,7 +47,7 @@ go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/sa
 
 ## 校验规则
 
-内容协议为版本 4。抉择发生在战斗前，获得与遗忘立即原子写入，随后结算发奖。每星对应一点墨痕；解锁章节扣除配置成本。拓印展示与服务器共享 aspect_ratio 和 tolerance，支持宽容差。
+内容协议为版本 5。抉择发生在战斗前，获得与遗忘立即原子写入，随后结算发奖。每星对应一点墨痕；解锁章节扣除配置成本。拓印展示与服务器共享 aspect_ratio 和 tolerance，支持宽容差。
 
 
 - 章节必须已解锁；谜题按 JSON 定义的步骤顺序提交，答案由服务器比较，非描摹步骤错误增加 10 点侵蚀度并受最大尝试次数限制；描摹失败返回 `failed_strokes` 供单笔修正，不扣侵蚀。

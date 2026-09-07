@@ -4,14 +4,17 @@
 package httpapi
 
 import (
+	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"golang.org/x/crypto/bcrypt"
 	"io"
 	"log"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"yanxia-server/internal/content"
@@ -27,10 +30,15 @@ const (
 )
 
 type Server struct {
-	catalog *content.Catalog
-	store   *store.Store
-	started time.Time
-	buildID string
+	authMu    sync.Mutex
+	tokens    map[[32]byte]loginSession
+	attempts  map[string]loginWindow
+	providers map[string]IdentityProvider
+	dummyHash []byte
+	catalog   *content.Catalog
+	store     *store.Store
+	started   time.Time
+	buildID   string
 }
 
 // Catalog returns the loaded content for embedding in a local admin tool or
@@ -42,11 +50,25 @@ func (s *Server) Catalog() *content.Catalog { return s.catalog }
 // HTTP handlers so validation is applied consistently.
 func (s *Server) Store() *store.Store { return s.store }
 
-func New(catalog *content.Catalog, persistence *store.Store) (*Server, error) {
+func New(catalog *content.Catalog, persistence *store.Store, providers ...IdentityProvider) (*Server, error) {
 	if catalog == nil || persistence == nil {
 		return nil, errors.New("catalog and persistence are required")
 	}
-	return &Server{catalog: catalog, store: persistence, started: time.Now().UTC(), buildID: "dev"}, nil
+	dummy, err := bcrypt.GenerateFromPassword([]byte("unavailable-account"), 12)
+	if err != nil {
+		return nil, err
+	}
+	s := &Server{catalog: catalog, store: persistence, started: time.Now().UTC(), buildID: "dev", tokens: make(map[[32]byte]loginSession), attempts: make(map[string]loginWindow), providers: make(map[string]IdentityProvider), dummyHash: dummy}
+	for _, provider := range providers {
+		if !validID(provider.Name()) {
+			return nil, errors.New("invalid provider name")
+		}
+		if _, exists := s.providers[provider.Name()]; exists {
+			return nil, errors.New("duplicate login provider")
+		}
+		s.providers[provider.Name()] = provider
+	}
+	return s, nil
 }
 
 // ServeHTTP implements routing without a framework so the server remains a
@@ -58,6 +80,17 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	path := strings.TrimSuffix(r.URL.Path, "/")
+	if strings.HasPrefix(path, "/api/v1/auth/") {
+		s.handleAuth(w, r, strings.TrimPrefix(path, "/api/v1/auth/"))
+		return
+	}
+	if path != "/healthz" {
+		id, ok := s.authenticate(w, r)
+		if !ok {
+			return
+		}
+		r = r.WithContext(context.WithValue(r.Context(), playerContextKey{}, id))
+	}
 	switch {
 	case path == "/healthz":
 		s.handleHealth(w, r)
@@ -84,7 +117,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func setCORS(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-Player-ID")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Cache-Control", "no-store")
 }
@@ -208,16 +241,13 @@ func (s *Server) handlePlayers(w http.ResponseWriter, r *http.Request) {
 	if !decodeJSON(w, r, &request) {
 		return
 	}
-	request.PlayerID = strings.TrimSpace(request.PlayerID)
-	if request.PlayerID != "" && !validID(request.PlayerID) {
-		writeError(w, http.StatusBadRequest, "invalid_player_id", "player_id contains unsupported characters")
+	if request.PlayerID != "" && request.PlayerID != r.Context().Value(playerContextKey{}).(string) {
+		writeError(w, http.StatusForbidden, "player_mismatch", "不能访问其他玩家")
 		return
 	}
-	player, created, err := s.store.EnsurePlayer(request.PlayerID)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, "store_error", err.Error())
-		return
-	}
+	player, _ := s.store.GetPlayer(r.Context().Value(playerContextKey{}).(string))
+	var err error
+	created := false
 	if request.DisplayName != "" && player.DisplayName != request.DisplayName {
 		player, err = s.store.UpdatePlayer(player.ID, func(p *model.Player) error {
 			p.DisplayName = strings.TrimSpace(request.DisplayName)
@@ -267,6 +297,10 @@ func (s *Server) handlePlayerPath(w http.ResponseWriter, r *http.Request, remain
 		return
 	}
 	playerID := parts[0]
+	if playerID != r.Context().Value(playerContextKey{}).(string) {
+		writeError(w, http.StatusForbidden, "player_mismatch", "不能访问其他玩家")
+		return
+	}
 	if len(parts) > 2 || (len(parts) == 2 && parts[1] != "save" && parts[1] != "ledger") {
 		writeError(w, http.StatusNotFound, "not_found", "player route not found")
 		return
@@ -322,11 +356,15 @@ func (s *Server) handleSessionRoot(w http.ResponseWriter, r *http.Request) {
 	if !decodeJSON(w, r, &request) {
 		return
 	}
-	s.startSession(w, request)
+	s.startSession(w, r, request)
 }
 
-func (s *Server) startSession(w http.ResponseWriter, request startSessionRequest) {
-	request.PlayerID = strings.TrimSpace(request.PlayerID)
+func (s *Server) startSession(w http.ResponseWriter, r *http.Request, request startSessionRequest) {
+	if request.PlayerID != "" && request.PlayerID != r.Context().Value(playerContextKey{}).(string) {
+		writeError(w, http.StatusForbidden, "player_mismatch", "不能替其他玩家开始事件")
+		return
+	}
+	request.PlayerID = r.Context().Value(playerContextKey{}).(string)
 	request.ChapterID = strings.TrimSpace(request.ChapterID)
 	request.EventID = strings.TrimSpace(request.EventID)
 	if !validID(request.PlayerID) || !validID(request.ChapterID) || !validID(request.EventID) {
@@ -398,6 +436,15 @@ func (s *Server) handleSessionPath(w http.ResponseWriter, r *http.Request, remai
 		return
 	}
 	sessionID := parts[0]
+	owned, exists := s.store.GetSession(sessionID)
+	if !exists {
+		writeError(w, http.StatusNotFound, "session_not_found", "事件会话不存在")
+		return
+	}
+	if owned.PlayerID != r.Context().Value(playerContextKey{}).(string) {
+		writeError(w, http.StatusForbidden, "session_mismatch", "不能访问其他玩家的事件")
+		return
+	}
 	if len(parts) == 1 {
 		if r.Method != http.MethodGet {
 			methodNotAllowed(w, http.MethodGet)
@@ -995,7 +1042,7 @@ func (s *Server) handleEventStartPath(w http.ResponseWriter, r *http.Request, re
 	if !decodeJSON(w, r, &request) {
 		return
 	}
-	s.startSession(w, startSessionRequest{PlayerID: request.PlayerID, ChapterID: parts[0], EventID: parts[1]})
+	s.startSession(w, r, startSessionRequest{PlayerID: request.PlayerID, ChapterID: parts[0], EventID: parts[1]})
 }
 
 func memoryFromEvent(event *content.Event) *model.Memory {

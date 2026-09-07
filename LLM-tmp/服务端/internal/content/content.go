@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-const CurrentVersion = 4
+const CurrentVersion = 5
 
 // Catalog is the complete, versioned game content manifest.
 type SkillSpec struct {

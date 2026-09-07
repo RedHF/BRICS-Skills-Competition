@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"os"
 	"path/filepath"
 	"sync"
@@ -17,9 +18,20 @@ import (
 	"yanxia-server/internal/model"
 )
 
-const databaseVersion = 1
+const databaseVersion = 2
+
+type Account struct {
+	Username     string `json:"username"`
+	PasswordHash string `json:"password_hash,omitempty"`
+	PlayerID     string `json:"player_id"`
+	Provider     string `json:"provider,omitempty"`
+	Subject      string `json:"subject,omitempty"`
+}
+
+var ErrAccountExists = errors.New("account already exists")
 
 type database struct {
+	Accounts map[string]Account            `json:"accounts"`
 	Version  int                           `json:"version"`
 	Players  map[string]model.Player       `json:"players"`
 	Sessions map[string]model.EventSession `json:"sessions"`
@@ -53,14 +65,25 @@ func Open(path string) (*Store, error) {
 	if err := json.Unmarshal(b, &s.db); err != nil {
 		return nil, fmt.Errorf("decode store %q: %w", path, err)
 	}
-	if s.db.Version != databaseVersion || s.db.Players == nil || s.db.Sessions == nil {
+	if s.db.Version != databaseVersion || s.db.Players == nil || s.db.Sessions == nil || s.db.Accounts == nil {
 		return nil, fmt.Errorf("invalid store structure or version in %q", path)
+	}
+	for key, account := range s.db.Accounts {
+		if _, exists := s.db.Players[account.PlayerID]; !exists {
+			return nil, fmt.Errorf("account %q references missing player", key)
+		}
+		if account.Provider == "" {
+			if _, err := bcrypt.Cost([]byte(account.PasswordHash)); err != nil {
+				return nil, fmt.Errorf("account %q has invalid password hash: %w", key, err)
+			}
+		}
 	}
 	return s, nil
 }
 
 func newDatabase() database {
 	return database{
+		Accounts: make(map[string]Account),
 		Version:  databaseVersion,
 		Players:  make(map[string]model.Player),
 		Sessions: make(map[string]model.EventSession),
@@ -113,19 +136,7 @@ func (s *Store) EnsurePlayer(id string) (model.Player, bool, error) {
 			return model.Player{}, false, err
 		}
 	}
-	now := time.Now().UTC()
-	p := model.Player{
-		ID:               newID,
-		CreatedAt:        now,
-		UpdatedAt:        now,
-		InkMarks:         0,
-		Capacity:         5,
-		Erosion:          0,
-		UnlockedChapters: []string{"prologue"},
-		CompletedEvents:  make(map[string]model.EventResult),
-		Memories:         make([]model.Memory, 0),
-		MemoryLedger:     make([]model.LedgerEntry, 0),
-	}
+	p := newPlayer(newID)
 	s.db.Players[newID] = p
 	if err := s.persistLocked(); err != nil {
 		delete(s.db.Players, newID)
@@ -351,4 +362,51 @@ func cloneSession(s model.EventSession) model.EventSession {
 		s.PendingResult = &r
 	}
 	return s
+}
+
+func newPlayer(newID string) model.Player {
+	now := time.Now().UTC()
+	return model.Player{
+		ID:               newID,
+		CreatedAt:        now,
+		UpdatedAt:        now,
+		InkMarks:         0,
+		Capacity:         5,
+		Erosion:          0,
+		UnlockedChapters: []string{"prologue"},
+		CompletedEvents:  make(map[string]model.EventResult),
+		Memories:         make([]model.Memory, 0),
+		MemoryLedger:     make([]model.LedgerEntry, 0),
+	}
+}
+
+func (s *Store) GetAccount(key string) (Account, bool) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	account, ok := s.db.Accounts[key]
+	return account, ok
+}
+
+// Account and player are created in one JSON transaction.
+func (s *Store) CreateAccount(key string, account Account, displayName string) (Account, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, exists := s.db.Accounts[key]; exists {
+		return Account{}, ErrAccountExists
+	}
+	id, err := newIDValue("p")
+	if err != nil {
+		return Account{}, err
+	}
+	account.PlayerID = id
+	player := newPlayer(id)
+	player.DisplayName = displayName
+	s.db.Accounts[key] = account
+	s.db.Players[id] = player
+	if err := s.persistLocked(); err != nil {
+		delete(s.db.Accounts, key)
+		delete(s.db.Players, id)
+		return Account{}, err
+	}
+	return account, nil
 }

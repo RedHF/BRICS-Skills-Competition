@@ -1,5 +1,7 @@
 extends Node
 
+signal third_party_login_requested(provider: String)
+
 const TRACE = preload("res://scripts/trace_canvas.gd")
 const NETWORK = preload("res://scripts/network_client.gd")
 const REPOSITORY = preload("res://scripts/data_repository.gd")
@@ -38,6 +40,12 @@ var battle_running := false
 var battle_start: Button
 var battle_controls: VBoxContainer
 var confirmation: ConfirmationDialog
+var auth_username: LineEdit
+var auth_password: LineEdit
+var auth_confirm: LineEdit
+var registering := false
+var auth_providers: Array = []
+var heading: VBoxContainer
 var navigation: HBoxContainer
 
 func _ready() -> void:
@@ -58,15 +66,19 @@ func _ready() -> void:
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
-	_label(column, "檐 下 千 秋", 32, Color("#e4c98a"))
-	_label(column, "听古建呓语 · 拓人间记忆", 14, Color("#94b0aa"))
-	stats = _label(column, "正在连接本地服务…", 17)
+	heading = VBoxContainer.new()
+	column.add_child(heading)
+	_label(heading, "檐 下 千 秋", 32, Color("#e4c98a"))
+	_label(heading, "听古建呓语 · 拓人间记忆", 14, Color("#94b0aa"))
+	stats = _label(heading, "正在连接本地服务…", 17)
 	var nav := HBoxContainer.new()
 	navigation = nav
 	column.add_child(nav)
 	_button(nav, "古建地图", _show_map)
 	_button(nav, "心舍 · 墨灵", _show_memories)
 	_button(nav, "记忆账册", _show_ledger)
+	_button(nav, "退出账号", _logout)
+	navigation.hide()
 	for button in nav.get_children(): button.disabled = true
 	status = _label(column, "", 16, Color("#e9bb86"))
 	scroll = ScrollContainer.new()
@@ -83,6 +95,23 @@ func _ready() -> void:
 	confirmation.ok_button_text = "亲手抹去"
 	confirmation.cancel_button_text = "留下这段记忆"
 	add_child(confirmation)
+	heading.hide()
+	flow = "splash"
+	var spacer := Control.new()
+	spacer.custom_minimum_size.y = 170
+	page.add_child(spacer)
+	var logo := TextureRect.new()
+	logo.texture = preload("res://assets/logo.svg")
+	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	logo.custom_minimum_size = Vector2(0, 220)
+	page.add_child(logo)
+	var title := _label(page, "檐 下 千 秋", 36, Color("#e4c98a"))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var subtitle := _label(page, "一笔留住千秋，一念守住人间", 18)
+	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	await get_tree().create_timer(1.2).timeout
+	heading.show()
 	await _connect_server()
 
 func _connect_server() -> void:
@@ -96,6 +125,10 @@ func _connect_server() -> void:
 			_error("无法读取 client.cfg：%s" % error)
 			return
 		network.base_url = str(config.get_value("server", "url", "http://127.0.0.1:8090"))
+	var local_address := RegEx.create_from_string("^http://(127\\.0\\.0\\.1|localhost)(:[0-9]+)?(/|$)")
+	if not network.base_url.begins_with("https://") and local_address.search(network.base_url) == null:
+		_error("远程账号登录须使用 HTTPS 服务地址。")
+		return
 	var health: Dictionary = await network.request_json("/healthz")
 	if health.is_empty() and network.base_url == "http://127.0.0.1:8090" and not OS.has_feature("editor"):
 		var server := OS.get_executable_path().get_base_dir().path_join("server/yanxia-server.exe")
@@ -114,36 +147,134 @@ func _connect_server() -> void:
 	if health.is_empty():
 		_error(network.last_error)
 		return
-	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 4:
+	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 5:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
 		return
+	var providers: Dictionary = await network.request_json("/api/v1/auth/providers")
+	if providers.is_empty():
+		_error(network.last_error)
+		return
+	auth_providers = providers.providers
+	busy = false
+	_show_auth()
+
+func _show_auth() -> void:
+	flow = "auth"
+	navigation.hide()
+	_clear()
+	stats.text = "登录后开启你的古建记忆"
+	var logo := TextureRect.new()
+	logo.texture = preload("res://assets/logo.svg")
+	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	logo.custom_minimum_size = Vector2(0, 140)
+	page.add_child(logo)
+	_label(page, "建立你的拓印师账号" if registering else "欢迎归来，拓印师", 26, Color("#e4c98a"))
+	_label(page, "用户名 · 3–24 个汉字、字母、数字或下划线", 16)
+	auth_username = LineEdit.new()
+	auth_username.placeholder_text = "输入用户名"
+	auth_username.max_length = 24
+	auth_username.custom_minimum_size.y = 48
+	page.add_child(auth_username)
+	_label(page, "密码 · 至少 8 位，最多 72 字节", 16)
+	auth_password = LineEdit.new()
+	auth_password.secret = true
+	auth_password.placeholder_text = "输入密码"
+	auth_password.custom_minimum_size.y = 48
+	page.add_child(auth_password)
+	if registering:
+		auth_confirm = LineEdit.new()
+		auth_confirm.secret = true
+		auth_confirm.placeholder_text = "再次输入密码"
+		auth_confirm.custom_minimum_size.y = 48
+		page.add_child(auth_confirm)
+		auth_confirm.text_submitted.connect(func(_text): _authenticate())
+	else: auth_password.text_submitted.connect(func(_text): _authenticate())
+	var reveal := CheckButton.new()
+	reveal.text = "显示密码"
+	reveal.toggled.connect(func(visible):
+		auth_password.secret = not visible
+		if registering: auth_confirm.secret = not visible)
+	page.add_child(reveal)
+	_button(page, "注册并进入游戏" if registering else "登录", _authenticate)
+	_button(page, "已有账号 · 返回登录" if registering else "初次来访 · 注册账号", func():
+		registering = not registering
+		_show_auth())
+	if not registering:
+		_label(page, "其他登录方式", 17, Color("#aac4bd"))
+		if auth_providers.is_empty(): _label(page, "第三方登录暂未开放", 15)
+		for provider in auth_providers:
+			_button(page, "通过 %s 登录" % provider, _request_external_login.bind(provider))
+	auth_username.grab_focus()
+
+func _authenticate() -> void:
+	if busy: return
+	if registering and auth_password.text != auth_confirm.text:
+		status.text = "两次输入的密码不一致。"
+		return
+	busy = true
+	status.text = "正在注册…" if registering else "正在登录…"
+	var payload := {"username": auth_username.text, "password": auth_password.text}
+	var response: Dictionary = await network.request_json("/api/v1/auth/" + ("register" if registering else "login"), HTTPClient.METHOD_POST, payload)
+	payload.clear()
+	auth_password.clear()
+	if registering: auth_confirm.clear()
+	if response.is_empty():
+		busy = false
+		status.text = network.last_error
+		return
+	await _accept_login(response)
+
+func _accept_login(response: Dictionary) -> void:
+	network.access_token = response.access_token
+	GameState.player = response.player
 	var catalog: Dictionary = await network.request_json("/api/v1/catalog")
 	if catalog.is_empty():
 		_error(network.last_error)
 		return
 	data.catalog = catalog
-	var identity := ConfigFile.new()
-	var payload := {"display_name": "无名拓印师"}
-	if FileAccess.file_exists("user://yanxia_identity.cfg"):
-		var error := identity.load("user://yanxia_identity.cfg")
-		if error != OK:
-			_error("玩家身份文件无法读取：%s" % error)
-			return
-		payload.player_id = identity.get_value("identity", "player_id")
-	var response: Dictionary = await network.request_json("/api/v1/players", HTTPClient.METHOD_POST, payload)
+	session_id = ""
+	GameState.session = {}
+	busy = false
+	navigation.show()
+	for button in navigation.get_children(): button.disabled = false
+	flow = "map"
+	_refresh_stats()
+	_show_map()
+
+func _logout() -> void:
+	if flow == "battle" and not battle_finished:
+		status.text = "请先完成当前战斗再退出账号。"
+		return
+	busy = true
+	var response: Dictionary = await network.request_json("/api/v1/auth/logout", HTTPClient.METHOD_POST, {})
 	if response.is_empty():
 		_error(network.last_error)
 		return
-	GameState.player = response.player
-	identity.set_value("identity", "player_id", GameState.player.id)
-	var save_error := identity.save("user://yanxia_identity.cfg")
-	if save_error != OK:
-		_error("无法保存玩家身份：%s" % save_error)
-		return
+	network.access_token = ""
+	GameState.player = {}
+	GameState.session = {}
+	session_id = ""
 	busy = false
-	for button in navigation.get_children(): button.disabled = false
-	_refresh_stats()
-	_show_map()
+	registering = false
+	_show_auth()
+
+func _request_external_login(provider: String) -> void:
+	if not third_party_login_requested.has_connections():
+		status.text = "此登录方式尚未在当前版本开放。"
+		return
+	third_party_login_requested.emit(provider)
+
+# SDK adapters call this after obtaining a credential; identity is verified by the server.
+func login_external(provider: String, credential: String) -> void:
+	if busy or flow != "auth": return
+	busy = true
+	var response: Dictionary = await network.request_json("/api/v1/auth/external", HTTPClient.METHOD_POST, {"provider": provider, "credential": credential})
+	if response.is_empty():
+		busy = false
+		status.text = network.last_error
+		return
+	await _accept_login(response)
 
 func _exit_tree() -> void:
 	memory_audio.stop()
@@ -154,6 +285,14 @@ func _exit_tree() -> void:
 
 func _error(message: String) -> void:
 	busy = false
+	if network.last_status == 401 and not network.access_token.is_empty():
+		network.access_token = ""
+		GameState.player = {}
+		GameState.session = {}
+		session_id = ""
+		_show_auth()
+		status.text = "登录已失效，请重新登录。"
+		return
 	status.text = message
 	push_error(message)
 	if data.catalog.is_empty(): _button(page, "重新连接服务端", _connect_server)
@@ -162,7 +301,7 @@ func _refresh_stats() -> void:
 	var p: Dictionary = GameState.player
 	var used := 0
 	for memory in p.memories: used += int(memory.capacity)
-	stats.text = "识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), int(p.erosion), "浸" if int(p.erosion) < 40 else ("蚀" if int(p.erosion) < 70 else "竭")]
+	stats.text = str(p.display_name) + " · 识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), int(p.erosion), "浸" if int(p.erosion) < 40 else ("蚀" if int(p.erosion) < 70 else "竭")]
 
 func _clear() -> void:
 	status.text = ""
