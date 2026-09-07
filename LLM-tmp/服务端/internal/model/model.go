@@ -39,23 +39,28 @@ type LedgerEntry struct {
 }
 
 type EventResult struct {
-	ChapterID      string    `json:"chapter_id"`
-	EventID        string    `json:"event_id"`
-	Stars          int       `json:"stars"`
-	PuzzleScore    int       `json:"puzzle_score"`
-	PuzzleTotal    int       `json:"puzzle_total"`
-	BattleWon      bool      `json:"battle_won"`
-	RepairPercent  int       `json:"repair_percent"`
-	ErosionAtEnd   int       `json:"erosion_at_end"`
-	InkMarksEarned int       `json:"ink_marks_earned"`
-	CompletedAt    time.Time `json:"completed_at"`
-	Sequence       uint64    `json:"sequence"`
+	MemoriesKept       int       `json:"memories_kept"`
+	MemoriesAcquired   int       `json:"memories_acquired"`
+	BattleClearPercent int       `json:"battle_clear_percent"`
+	ChapterID          string    `json:"chapter_id"`
+	EventID            string    `json:"event_id"`
+	Stars              int       `json:"stars"`
+	PuzzleScore        int       `json:"puzzle_score"`
+	PuzzleTotal        int       `json:"puzzle_total"`
+	BattleWon          bool      `json:"battle_won"`
+	RepairPercent      int       `json:"repair_percent"`
+	ErosionAtEnd       int       `json:"erosion_at_end"`
+	InkMarksEarned     int       `json:"ink_marks_earned"`
+	CompletedAt        time.Time `json:"completed_at"`
+	Sequence           uint64    `json:"sequence"`
 }
 
 // EventSession is persisted server state for one event attempt.  Answers are
 // looked up from the content catalog at verification time and are never sent
 // to the client.
 type EventSession struct {
+	StartErosion    int            `json:"start_erosion"`
+	Retries         int            `json:"retries"`
 	ID              string         `json:"id"`
 	PlayerID        string         `json:"player_id"`
 	ChapterID       string         `json:"chapter_id"`

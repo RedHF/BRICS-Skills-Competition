@@ -34,7 +34,7 @@ func TestSnapshotsKeepCompletedEventsAndRollbackSlices(t *testing.T) {
 	if len(p.CompletedEvents) != 1 {
 		t.Fatal("caller mutated store")
 	}
-	err = s.CreateSession(model.EventSession{ID: "s", PlayerID: "p", AcceptedSteps: []string{"first"}, Actions: []model.ActionRecord{{StepID: "first"}}})
+	_, err = s.StartSession(model.EventSession{ID: "s", PlayerID: "p", AcceptedSteps: []string{"first"}, Actions: []model.ActionRecord{{StepID: "first"}}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -76,7 +76,7 @@ func TestStoreRoundTripsPlayerAndSession(t *testing.T) {
 		t.Fatal("player creation is not idempotent")
 	}
 	session := model.EventSession{ID: "session", PlayerID: player.ID, ChapterID: "prologue", EventID: "bridge", Status: "active"}
-	if err := s.CreateSession(session); err != nil {
+	if _, err := s.StartSession(session); err != nil {
 		t.Fatal(err)
 	}
 	if _, _, err := s.UpdateSessionAndPlayer(session.ID, player.ID, func(run *model.EventSession, p *model.Player) error {

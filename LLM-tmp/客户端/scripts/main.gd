@@ -46,11 +46,44 @@ var auth_confirm: LineEdit
 var registering := false
 var auth_providers: Array = []
 var heading: VBoxContainer
-var navigation: HBoxContainer
+var navigation: HFlowContainer
+var paused_page: VBoxContainer
+var paused_flow := ""
+var paused_scroll := 0
+var scene_view: Control
+var join_canvas: Control
+var echo_bus := 0
+var volume := 1.0
+var muted := false
+var event_audio: AudioStreamPlayer
 
 func _ready() -> void:
 	add_child(network)
+	AudioServer.add_bus()
+	echo_bus = AudioServer.bus_count - 1
+	AudioServer.set_bus_name(echo_bus, "Echo")
+	var distortion := AudioEffectDistortion.new()
+	distortion.mode = AudioEffectDistortion.MODE_LOFI
+	distortion.drive = 0.2
+	AudioServer.add_bus_effect(echo_bus, distortion)
+	AudioServer.set_bus_effect_enabled(echo_bus, 0, false)
+	var settings := ConfigFile.new()
+	if FileAccess.file_exists("user://settings.cfg"):
+		var error := settings.load("user://settings.cfg")
+		if error != OK:
+			push_error("设置文件读取失败：%s" % error)
+			get_tree().quit(1)
+			return
+		else:
+			volume = clampf(float(settings.get_value("audio", "volume", 1.0)), 0, 1)
+			muted = bool(settings.get_value("audio", "muted", false))
+	AudioServer.set_bus_volume_linear(0, volume)
+	AudioServer.set_bus_mute(0, muted)
+	event_audio = AudioStreamPlayer.new()
+	event_audio.bus = "Echo"
+	add_child(event_audio)
 	memory_audio = AudioStreamPlayer.new()
+	memory_audio.bus = "Echo"
 	add_child(memory_audio)
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -71,12 +104,13 @@ func _ready() -> void:
 	_label(heading, "檐 下 千 秋", 32, Color("#e4c98a"))
 	_label(heading, "听古建呓语 · 拓人间记忆", 14, Color("#94b0aa"))
 	stats = _label(heading, "正在连接本地服务…", 17)
-	var nav := HBoxContainer.new()
+	var nav := HFlowContainer.new()
 	navigation = nav
 	column.add_child(nav)
 	_button(nav, "古建地图", _show_map)
 	_button(nav, "心舍 · 墨灵", _show_memories)
 	_button(nav, "记忆账册", _show_ledger)
+	_button(nav, "设置", _show_settings)
 	_button(nav, "退出账号", _logout)
 	navigation.hide()
 	for button in nav.get_children(): button.disabled = true
@@ -147,7 +181,7 @@ func _connect_server() -> void:
 	if health.is_empty():
 		_error(network.last_error)
 		return
-	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 5:
+	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 6:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
 		return
 	var providers: Dictionary = await network.request_json("/api/v1/auth/providers")
@@ -162,6 +196,7 @@ func _show_auth() -> void:
 	flow = "auth"
 	navigation.hide()
 	_clear()
+	backdrop.color = Color("#14262b")
 	stats.text = "登录后开启你的古建记忆"
 	var logo := TextureRect.new()
 	logo.texture = preload("res://assets/logo.svg")
@@ -235,6 +270,16 @@ func _accept_login(response: Dictionary) -> void:
 	data.catalog = catalog
 	session_id = ""
 	GameState.session = {}
+	current_event = {}
+	var pending: Dictionary = await network.request_json("/api/v1/sessions")
+	if pending.is_empty():
+		_error(network.last_error)
+		return
+	if pending.session != null:
+		GameState.session = pending.session
+		session_id = pending.session.id
+		chapter_id = pending.session.chapter_id
+		current_event = data.event(chapter_id, pending.session.event_id)
 	busy = false
 	navigation.show()
 	for button in navigation.get_children(): button.disabled = false
@@ -252,6 +297,9 @@ func _logout() -> void:
 		_error(network.last_error)
 		return
 	network.access_token = ""
+	if is_instance_valid(paused_page):
+		paused_page.queue_free()
+		paused_page = null
 	GameState.player = {}
 	GameState.session = {}
 	session_id = ""
@@ -279,6 +327,7 @@ func login_external(provider: String, credential: String) -> void:
 func _exit_tree() -> void:
 	memory_audio.stop()
 	memory_audio.stream = null
+	if is_instance_valid(paused_page): paused_page.free()
 	if server_pid > 0 and OS.is_process_running(server_pid):
 		var error := OS.kill(server_pid)
 		if error != OK: push_error("关闭本地服务失败：%s" % error)
@@ -287,6 +336,9 @@ func _error(message: String) -> void:
 	busy = false
 	if network.last_status == 401 and not network.access_token.is_empty():
 		network.access_token = ""
+		if is_instance_valid(paused_page):
+			paused_page.queue_free()
+			paused_page = null
 		GameState.player = {}
 		GameState.session = {}
 		session_id = ""
@@ -297,11 +349,86 @@ func _error(message: String) -> void:
 	push_error(message)
 	if data.catalog.is_empty(): _button(page, "重新连接服务端", _connect_server)
 
-func _refresh_stats() -> void:
+func _refresh_stats(erosion: int = -1) -> void:
 	var p: Dictionary = GameState.player
+	if erosion < 0:
+		erosion = int(p.erosion)
+		if flow == "battle" or (is_instance_valid(paused_page) and paused_flow == "battle"):
+			erosion = mini(100, erosion + battle_hits * 5)
 	var used := 0
 	for memory in p.memories: used += int(memory.capacity)
-	stats.text = str(p.display_name) + " · 识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), int(p.erosion), "浸" if int(p.erosion) < 40 else ("蚀" if int(p.erosion) < 70 else "竭")]
+	stats.text = str(p.display_name) + " · 识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), erosion, "浸" if erosion < 40 else ("蚀" if erosion < 70 else "竭")]
+
+	_apply_erosion(erosion)
+
+func _apply_erosion(value: int) -> void:
+	var base := Color("#14262b")
+	if not current_event.is_empty(): base = Color(data.catalog.art[current_event.id].backdrop_color)
+	backdrop.color = base.lerp(Color("#535953"), float(value) / 100.0)
+	AudioServer.set_bus_volume_db(echo_bus, -float(value) * 0.12)
+	AudioServer.set_bus_effect_enabled(echo_bus, 0, value >= 40)
+	if is_instance_valid(scene_view):
+		scene_view.erosion = value
+		scene_view.queue_redraw()
+
+func _add_building(interactive: bool = false) -> void:
+	scene_view = preload("res://scripts/building_scene.gd").new()
+	scene_view.interactive = interactive
+	scene_view.bridge = chapter_id == "prologue"
+	scene_view.tint = Color(data.memory(current_event.reward.memory_id).color)
+	scene_view.erosion = int(GameState.player.erosion)
+	var held := false
+	var acquired := false
+	for memory in GameState.player.memories:
+		if memory.id == current_event.reward.memory_id: held = true
+	for entry in GameState.player.memory_ledger:
+		if entry.memory_id == current_event.reward.memory_id and entry.action == "kept": acquired = true
+	scene_view.forgotten = acquired and not held
+	page.add_child(scene_view)
+
+func _pause_event() -> void:
+	if flow not in ["puzzle", "choice", "battle"]: return
+	paused_flow = flow
+	paused_scroll = scroll.scroll_vertical
+	paused_page = page
+	scroll.remove_child(page)
+	page = VBoxContainer.new()
+	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page.add_theme_constant_override("separation", 12)
+	scroll.add_child(page)
+
+func _show_settings() -> void:
+	if busy: return
+	_pause_event()
+	flow = "settings"
+	_clear()
+	_label(page, "声音设置", 26, Color("#e4c98a"))
+	_label(page, "总音量（侵蚀还会降低回声强度）", 18)
+	var slider := HSlider.new()
+	slider.min_value = 0
+	slider.max_value = 1
+	slider.step = 0.05
+	slider.value = volume
+	slider.custom_minimum_size.y = 48
+	page.add_child(slider)
+	slider.value_changed.connect(func(value):
+		volume = value
+		AudioServer.set_bus_volume_linear(0, volume))
+	var mute := CheckButton.new()
+	mute.text = "静音"
+	mute.button_pressed = muted
+	page.add_child(mute)
+	mute.toggled.connect(func(value):
+		muted = value
+		AudioServer.set_bus_mute(0, muted))
+	_button(page, "保存设置", func():
+		var config := ConfigFile.new()
+		config.set_value("audio", "volume", volume)
+		config.set_value("audio", "muted", muted)
+		var error := config.save("user://settings.cfg")
+		if error != OK: _error("设置保存失败：%s" % error)
+		else: status.text = "声音设置已保存。")
+	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
 
 func _clear() -> void:
 	status.text = ""
@@ -311,13 +438,12 @@ func _clear() -> void:
 	scroll.scroll_vertical = 0
 	memory_audio.stop()
 	memory_audio.stream = null
-	backdrop.color = Color("#14262b")
+	event_audio.stop()
+	if not GameState.player.is_empty(): _refresh_stats()
 
 func _show_map() -> void:
 	if busy: return
-	if flow == "battle" and not battle_finished:
-		status.text = "请先完成当前白蚀战斗。"
-		return
+	_pause_event()
 	flow = "map"
 	_clear()
 	status.text = "沿古建呓语前行。序章与社庙为本次可玩篇章。"
@@ -349,23 +475,36 @@ func _show_map() -> void:
 
 func _open_event(chapter: String, event: String) -> void:
 	if busy: return
+	if not session_id.is_empty():
+		status.text = "请先继续并完成当前事件；失败后可使用回溯。"
+		return
 	chapter_id = chapter
 	current_event = data.event(chapter, event)
 	session_id = ""
 	flow = "intro"
 	_clear()
 	_label(page, current_event.scene + " · " + current_event.title, 26, Color("#e4c98a"))
-	for beat in current_event.story.beats: _label(page, beat, 19)
-	for objective in current_event.objectives: _label(page, "· " + objective, 16)
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
-	for entry in GameState.player.memory_ledger:
-		if entry.memory_id == memory.id and entry.action == "forgotten":
-			_label(page, memory.forgotten_text, 18, Color("#929996"))
-	if GameState.player.completed_events.has(chapter + ":" + event):
-		_label(page, current_event.story.outro, 20)
-		_button(page, "查看这道墨灵", _memory_detail.bind(memory.id))
-	else:
-		_button(page, "聆听呓语 · 开始修复", _start_event)
+	_add_building(true)
+	_label(page, "方向键 / WASD 或左下摇杆移动，点击金色光点调查。", 16)
+	var details := VBoxContainer.new()
+	page.add_child(details)
+	var completed: bool = GameState.player.completed_events.has(chapter + ":" + event)
+	scene_view.investigated.connect(func():
+		if details.get_child_count() > 0: return
+		for beat in current_event.story.beats: _label(details, beat, 20)
+		if completed:
+			if scene_view.forgotten: _label(details, memory.forgotten_text, 20)
+			else: _label(details, current_event.story.outro, 20)
+			_button(details, "查看这道墨灵", _memory_detail.bind(memory.id))
+		else: _button(details, "开始修复", _start_event)
+		if not scene_view.forgotten:
+			var sound := load(data.catalog.art[current_event.id].whisper_audio) as AudioStream
+			if sound == null:
+				_error("无法读取调查呓语：" + data.catalog.art[current_event.id].whisper_audio)
+				return
+			event_audio.stream = sound
+			event_audio.play())
 
 func _start_event() -> void:
 	busy = true
@@ -374,10 +513,23 @@ func _start_event() -> void:
 		_error(network.last_error)
 		return
 	session_id = response.session_id
+	chapter_id = response.chapter_id
+	current_event = data.event(chapter_id, response.event_id)
 	busy = false
 	await _resume()
 
 func _resume() -> void:
+	if is_instance_valid(paused_page):
+		_clear()
+		scroll.remove_child(page)
+		page.queue_free()
+		page = paused_page
+		paused_page = null
+		scroll.add_child(page)
+		flow = paused_flow
+		scroll.set_deferred("scroll_vertical", paused_scroll)
+		_refresh_stats()
+		return
 	busy = true
 	var response: Dictionary = await network.request_json("/api/v1/sessions/" + session_id)
 	if response.is_empty():
@@ -394,7 +546,12 @@ func _resume() -> void:
 	if response.status == "failed":
 		flow = "failed"
 		_clear()
-		status.text = "事件失败：%s。已拓印记忆仍保留。" % response.failure_reason
+		_add_building()
+		var reasons := {"erosion_limit":"侵蚀已达 100", "puzzle_attempt_limit":"修复尝试用尽", "session_expired":"旧版本事件已超时", "battle_requirements_not_met":"白蚀未清除或未施展所需技能"}
+		status.text = "事件失败：%s。已拓印记忆仍保留。" % reasons.get(response.failure_reason, response.failure_reason)
+		_label(page, "解谜 %d/%d · 已清除白蚀 %d 波" % [int(response.puzzle_score), int(response.puzzle_total), int(response.battle_waves)], 18)
+		var retry := _button(page, "消耗 1 墨痕 · 回溯事件起点" if int(GameState.player.ink_marks) > 0 else ("序章免费重试" if chapter_id == "prologue" else "回溯需要 1 墨痕，当前不足"), _rewind)
+		retry.disabled = int(GameState.player.ink_marks) == 0 and chapter_id != "prologue"
 		_button(page, "返回古建地图", _show_map)
 	elif response.status == "completed":
 		_settlement(response.pending_result)
@@ -403,6 +560,15 @@ func _resume() -> void:
 	elif current_event.has("battle") and not response.battle_checked: _start_battle()
 	else: await _finish()
 
+func _rewind() -> void:
+	if busy: return
+	busy = true
+	var response: Dictionary = await network.request_json("/api/v1/sessions/%s/rewind" % session_id, HTTPClient.METHOD_POST, {"retries": int(GameState.session.retries)})
+	if response.is_empty():
+		_error(network.last_error)
+		return
+	await _resume()
+
 func _show_puzzle() -> void:
 	flow = "puzzle"
 	_clear()
@@ -410,6 +576,7 @@ func _show_puzzle() -> void:
 	var step: Dictionary = current_event.puzzle.steps[index]
 	_label(page, "修复 %d / %d · %s" % [index + 1, current_event.puzzle.steps.size(), current_event.title], 24, Color("#e4c98a"))
 	_label(page, step.prompt, 20)
+	_add_building()
 	if step.kind == "trace":
 		_label(page, "逐字放大描摹：绿点起笔、橙点收笔。金色宽带内均可落墨，短暂手抖可容忍。点击笔画编号可单独重描。", 16)
 		trace_canvas = TRACE.new()
@@ -430,7 +597,13 @@ func _show_puzzle() -> void:
 			trace_canvas.queue_redraw()
 			_trace_feedback())
 		_button(buttons, "提交拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
+	elif step.kind == "join":
+		join_canvas = preload("res://scripts/join_canvas.gd").new()
+		join_canvas.options = step.options
+		page.add_child(join_canvas)
+		join_canvas.placed.connect(func(answer): _submit_puzzle({"step_id": step.id, "answer": answer}))
 	elif step.kind == "skill":
+		scene_view.purification = 1.0
 		for skill in _learned_skills(): _button(page, "使用「%s」" % skill, _submit_puzzle.bind({"step_id": step.id, "answer": skill}))
 	else:
 		for option in step.options: _button(page, str(option), _submit_puzzle.bind({"step_id": step.id, "answer": option}))
@@ -465,8 +638,17 @@ func _submit_puzzle(payload: Dictionary) -> void:
 			trace_canvas.select_stroke(int(response.failed_strokes[0]))
 			_trace_feedback()
 			status.text = "未通过的笔画已标红，点击编号重描即可。描摹练习不扣侵蚀。"
-		else: status.text = "修复尚未相合，侵蚀 +10。"
+		else:
+			if current_event.puzzle.steps[GameState.session.accepted_steps.size()].kind == "join":
+				join_canvas.locked = false
+				join_canvas.snapped = false
+				join_canvas.queue_redraw()
+			status.text = "修复尚未相合，侵蚀 +10。"
 		return
+	if response.accepted and current_event.puzzle.steps[GameState.session.accepted_steps.size()].kind == "skill":
+		var tween := create_tween()
+		tween.tween_property(scene_view, "purification", 0.0, 0.7)
+		await tween.finished
 	await _resume()
 	if response.accepted: status.text = "墨线相合，记忆显影。"
 
@@ -485,6 +667,7 @@ func _show_choice() -> void:
 	_label(page, "识海满时须择一旧记忆抹去；也可主动取舍。抹除会留下账册与场景回声。", 16)
 	for held in GameState.player.memories:
 		if held.id == memory.id: continue
+		_button(page, "并排对比「%s」与新墨灵" % held.title, _compare_memories.bind(held.id, memory.id))
 		var old: Dictionary = data.memory(held.id)
 		var button := _button(page, "抹去「%s」 → 拓印「%s」" % [old.title, memory.title], _confirm_forget.bind(old.id))
 		button.disabled = used - int(held.capacity) + int(memory.capacity) > int(GameState.player.capacity)
@@ -581,21 +764,22 @@ func _process(delta: float) -> void:
 		echo_button.text = "暂停回声" if memory_audio.playing and not memory_audio.stream_paused else "继续 / 重听回声"
 	if flow != "battle" or battle_finished or not battle_running: return
 	battle_elapsed = minf(battle_elapsed + delta, float(current_event.battle.duration_sec))
-	while next_attack <= int(battle_elapsed * 1000) and battle_hits <= int(current_event.battle.max_hits_taken):
+	while next_attack <= int(battle_elapsed * 1000) and battle_hits <= int(current_event.battle.max_hits_taken) and int(GameState.player.erosion) + battle_hits * 5 < 100:
 		if arena.shield > 0:
 			arena.shield -= 1
 			arena.flash("斗拱挡住侵袭", Color("#9ad5ad"))
 		else:
 			battle_hits += 1
-			arena.flash("受到侵蚀 +1", Color("#ff8078"))
+			arena.flash("侵蚀 +5", Color("#ff8078"))
 		next_attack += 3000
 	_battle_update()
 
 func _battle_update() -> void:
+	_refresh_stats(mini(100, int(GameState.player.erosion) + battle_hits * 5))
 	arena.hits = battle_hits
 	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / 3000.0
 	battle_note.text = "第 %d/%d 波 · 剩余 %d 秒 · 受蚀 %d/%d" % [mini(battle_wave + 1, int(current_event.battle.waves)), int(current_event.battle.waves), ceili(float(current_event.battle.duration_sec) - battle_elapsed), battle_hits, int(current_event.battle.max_hits_taken) + 1]
-	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or battle_elapsed >= float(current_event.battle.duration_sec):
+	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or int(GameState.player.erosion) + battle_hits * 5 >= 100 or battle_elapsed >= float(current_event.battle.duration_sec):
 		battle_finished = true
 		arena.defeated = battle_wave == int(current_event.battle.waves)
 		var complete: bool = arena.defeated
@@ -633,26 +817,59 @@ func _settlement(result: Dictionary) -> void:
 	flow = "settlement"
 	_clear()
 	_label(page, "古建修复 · " + "★".repeat(int(result.stars)), 30, Color("#e4c98a"))
+	_add_building()
 	_label(page, current_event.story.outro, 23)
 	_label(page, "修复度 %d%%　侵蚀 %d%%　获得墨痕 %d" % [int(result.repair_percent), int(result.erosion_at_end), int(result.ink_marks_earned)])
+	if result.has("memories_acquired"):
+		_label(page, "解谜 %d/%d　白蚀清除 %s　记忆保留 %d/%d" % [int(result.puzzle_score), int(result.puzzle_total), ("%d%%" % int(result.battle_clear_percent)) if current_event.has("battle") else "本事件无战斗", int(result.memories_kept), int(result.memories_acquired)], 18)
 	if current_event.story.has("chapter_outro"): _label(page, current_event.story.chapter_outro, 20)
 	_button(page, "回看这道墨灵", _memory_detail.bind(current_event.reward.memory_id))
 	_button(page, "继续古建旅程", _show_map)
 	session_id = ""
 
 func _show_memories() -> void:
-	if busy or (flow == "battle" and not battle_finished): return
+	if busy: return
+	_pause_event()
 	flow = "memories"
 	_clear()
 	_label(page, "心舍 · 记住的墨灵", 26, Color("#e4c98a"))
+	var slots := GridContainer.new()
+	slots.columns = 2
+	page.add_child(slots)
+	var used := 0
 	for held in GameState.player.memories:
 		var memory: Dictionary = data.memory(held.id)
-		_button(page, "%s  /  %s" % [memory.title, memory.skill], _memory_detail.bind(held.id))
+		var card := _button(slots, "%s\n%s · %d 格" % [memory.title, memory.skill, int(memory.capacity)], _memory_detail.bind(held.id))
+		card.custom_minimum_size.y = 90
+		used += int(memory.capacity)
+	for i in range(int(GameState.player.capacity) - used):
+		var empty := _button(slots, "空符诏格", func(): pass)
+		empty.disabled = true
+		empty.custom_minimum_size.y = 90
 	_label(page, "技艺册 · 点击按钮施展", 23, Color("#e4c98a"))
 	_label(page, "战斗中点击挥墨攻击，技能冷却结束后可再次施展。遗忘记忆后，习得的技艺仍然保留。", 16)
 	for skill in ["挥墨"] + _learned_skills():
 		_label(page, skill + " · " + data.catalog.skills[skill].description, 18)
 	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+
+func _compare_memories(old_id: String, new_id: String) -> void:
+	_pause_event()
+	flow = "compare"
+	_clear()
+	_label(page, "墨灵对照", 26, Color("#e4c98a"))
+	var columns := HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 14)
+	page.add_child(columns)
+	for id in [old_id, new_id]:
+		var memory: Dictionary = data.memory(id)
+		var column := VBoxContainer.new()
+		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		columns.add_child(column)
+		_label(column, ("旧记忆 · " if id == old_id else "新墨灵 · ") + memory.title, 21, Color(memory.color))
+		_label(column, memory.summary, 18)
+		_label(column, "技能：%s\n占用：%d 格" % [memory.skill, int(memory.capacity)], 17)
+		_label(column, "遗忘后：" + memory.forgotten_text, 17)
+	_button(page, "返回抉择", _resume)
 
 func _memory_detail(id: String) -> void:
 	flow = "memory"
@@ -688,7 +905,8 @@ func _play_memory(path: String) -> void:
 	memory_audio.play()
 
 func _show_ledger() -> void:
-	if busy or (flow == "battle" and not battle_finished): return
+	if busy: return
+	_pause_event()
 	flow = "ledger"
 	_clear()
 	_label(page, "记忆账册 · 每次抉择的来处", 26, Color("#e4c98a"))

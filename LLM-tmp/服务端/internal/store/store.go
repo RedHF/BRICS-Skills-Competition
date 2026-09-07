@@ -176,27 +176,43 @@ func (s *Store) GetSession(id string) (model.EventSession, bool) {
 	return cloneSession(session), true
 }
 
-func (s *Store) CreateSession(session model.EventSession) error {
-	if session.ID == "" || session.PlayerID == "" {
-		return errors.New("session id and player id are required")
-	}
+// StartSession resumes the latest unfinished event, including failed attempts.
+// Selection and creation share the lock so concurrent starts cannot fork progress.
+func (s *Store) StartSession(session model.EventSession) (model.EventSession, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	if _, exists := s.db.Sessions[session.ID]; exists {
-		return os.ErrExist
+	latest := s.latestSessionLocked(session.PlayerID)
+	if latest.ID != "" && latest.Status != "completed" {
+		return cloneSession(latest), nil
 	}
-	if session.Status == "" {
-		session.Status = "active"
-	}
-	if session.LastSeenAt.IsZero() {
-		session.LastSeenAt = session.StartedAt
-	}
+	session.StartErosion = s.db.Players[session.PlayerID].Erosion
 	s.db.Sessions[session.ID] = cloneSession(session)
 	if err := s.persistLocked(); err != nil {
 		delete(s.db.Sessions, session.ID)
-		return err
+		return model.EventSession{}, err
 	}
-	return nil
+	return cloneSession(session), nil
+}
+
+func (s *Store) CurrentSession(playerID string) *model.EventSession {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	latest := s.latestSessionLocked(playerID)
+	if latest.ID == "" || latest.Status == "completed" {
+		return nil
+	}
+	copy := cloneSession(latest)
+	return &copy
+}
+
+func (s *Store) latestSessionLocked(playerID string) model.EventSession {
+	var latest model.EventSession
+	for _, existing := range s.db.Sessions {
+		if existing.PlayerID == playerID && (latest.ID == "" || existing.StartedAt.After(latest.StartedAt)) {
+			latest = existing
+		}
+	}
+	return latest
 }
 
 func (s *Store) UpdateSession(id string, fn func(*model.EventSession) error) (model.EventSession, error) {

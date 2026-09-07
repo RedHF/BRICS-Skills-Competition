@@ -348,6 +348,10 @@ type startSessionRequest struct {
 }
 
 func (s *Server) handleSessionRoot(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		writeJSON(w, http.StatusOK, map[string]any{"session": s.store.CurrentSession(r.Context().Value(playerContextKey{}).(string))})
+		return
+	}
 	if r.Method != http.MethodPost {
 		methodNotAllowed(w, http.MethodPost)
 		return
@@ -411,21 +415,19 @@ func (s *Server) startSession(w http.ResponseWriter, r *http.Request, request st
 		return
 	}
 	now := time.Now().UTC()
-	duration := time.Duration(event.Puzzle.MaxAttempts*30+30) * time.Second
-	if event.Battle != nil && time.Duration(event.Battle.DurationSec)*time.Second > duration {
-		duration = time.Duration(event.Battle.DurationSec) * time.Second
-	}
 	session := model.EventSession{
 		ID: id, PlayerID: player.ID, ChapterID: chapter.ID, EventID: event.ID,
-		StartedAt: now, ExpiresAt: now.Add(duration + 2*time.Minute), LastSeenAt: now,
+		StartedAt: now, LastSeenAt: now,
 		Status: "active", PuzzleTotal: puzzleTotal(event), RepairPercent: 0,
 		AcceptedSteps: make([]string, 0, len(event.Puzzle.Steps)), Actions: make([]model.ActionRecord, 0),
 		PendingMemory: memoryFromEvent(event),
 	}
-	if err := s.store.CreateSession(session); err != nil {
+	session, err = s.store.StartSession(session)
+	if err != nil {
 		writeError(w, http.StatusInternalServerError, "store_error", err.Error())
 		return
 	}
+	event, _ = s.catalog.Event(session.ChapterID, session.EventID)
 	writeJSON(w, http.StatusCreated, s.sessionStartResponse(session, event))
 }
 
@@ -469,6 +471,12 @@ func (s *Server) handleSessionPath(w http.ResponseWriter, r *http.Request, remai
 			return
 		}
 		s.handlePuzzle(w, r, sessionID)
+	case "rewind":
+		if r.Method != http.MethodPost {
+			methodNotAllowed(w, http.MethodPost)
+			return
+		}
+		s.handleRewind(w, r, sessionID)
 	case "battle":
 		if r.Method != http.MethodPost {
 			methodNotAllowed(w, http.MethodPost)
@@ -555,20 +563,7 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusInternalServerError, "content_error", "session references missing event")
 		return
 	}
-	if expired(session) {
-		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-			current.Status = "failed"
-			current.FailureReason = "session_expired"
-			player.Erosion = maxInt(player.Erosion, maxErosion)
-			return nil
-		})
-		if err != nil {
-			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
-			return
-		}
-		writeError(w, http.StatusConflict, "session_expired", "session has expired")
-		return
-	}
+
 	if len(session.AcceptedSteps) < len(event.Puzzle.Steps) {
 		step := event.Puzzle.Steps[len(session.AcceptedSteps)]
 		player, _ := s.store.GetPlayer(session.PlayerID)
@@ -647,19 +642,7 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		writeJSON(w, http.StatusOK, battleResponse(session, player.Erosion, "already_checked"))
 		return
 	}
-	if expired(session) {
-		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-			current.Status = "failed"
-			current.FailureReason = "session_expired"
-			return nil
-		})
-		if err != nil {
-			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
-			return
-		}
-		writeError(w, http.StatusConflict, "session_expired", "session has expired")
-		return
-	}
+
 	if len(session.AcceptedSteps) != len(event.Puzzle.Steps) {
 		writeError(w, http.StatusConflict, "puzzle_incomplete", "complete the puzzle before battle")
 		return
@@ -669,11 +652,12 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusNotFound, "player_not_found", "player not found")
 		return
 	}
+	if !session.ChoiceDone {
+		writeError(w, http.StatusConflict, "choice_incomplete", "请先选择墨灵再进入战斗")
+		return
+	}
 	availableSkills := s.playerSkills(player)
 	availableSkills["挥墨"] = true
-	if session.PendingMemory != nil && session.PendingMemory.Skill != "" {
-		availableSkills[session.PendingMemory.Skill] = true
-	}
 	for _, action := range request.Actions {
 		if !availableSkills[strings.TrimSpace(action.Skill)] {
 			writeError(w, http.StatusBadRequest, "skill_unavailable", "battle action uses a skill not held by the player")
@@ -681,6 +665,7 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 		}
 	}
 	input := rules.BattleInput{Skills: s.catalog.Skills, DurationMS: request.DurationMS, WavesCleared: request.WavesCleared, HitsTaken: request.HitsTaken, AllowedSkills: availableSkills, Actions: make([]rules.BattleAction, 0, len(request.Actions))}
+	input.StartErosion = player.Erosion
 	for _, action := range request.Actions {
 		input.Actions = append(input.Actions, rules.BattleAction{Skill: strings.TrimSpace(action.Skill), AtMS: action.AtMS})
 	}
@@ -752,21 +737,7 @@ func (s *Server) handleChoice(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusInternalServerError, "content_error", "session references missing event")
 		return
 	}
-	if expired(session) {
-		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-			if current.Status != "completed" {
-				current.Status = "failed"
-				current.FailureReason = "session_expired"
-			}
-			return nil
-		})
-		if err != nil {
-			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
-			return
-		}
-		writeError(w, http.StatusConflict, "session_expired", "session has expired")
-		return
-	}
+
 	if session.ChoiceDone {
 		writeJSON(w, http.StatusOK, choiceResponse(session, "already_checked"))
 		return
@@ -915,21 +886,7 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 		writeJSON(w, http.StatusOK, finishResponse(session, player, *session.PendingResult, "already_settled"))
 		return
 	}
-	if expired(session) {
-		_, _, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-			if current.Status != "completed" {
-				current.Status = "failed"
-				current.FailureReason = "session_expired"
-			}
-			return nil
-		})
-		if err != nil {
-			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
-			return
-		}
-		writeError(w, http.StatusConflict, "session_expired", "session has expired")
-		return
-	}
+
 	if session.Status == "failed" {
 		writeError(w, http.StatusConflict, "session_failed", session.FailureReason)
 		return
@@ -965,6 +922,17 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 			return nil
 		}
 		result = calculateResult(current, event, player.Erosion)
+		result.MemoriesKept = len(player.Memories)
+		acquired := make(map[string]bool)
+		for _, entry := range player.MemoryLedger {
+			if entry.Action == "kept" {
+				acquired[entry.MemoryID] = true
+			}
+		}
+		result.MemoriesAcquired = len(acquired)
+		if event.Battle != nil {
+			result.BattleClearPercent = current.BattleWaves * 100 / event.Battle.Waves
+		}
 		result.Sequence = player.LastSequence + 1
 		result.CompletedAt = time.Now().UTC()
 		player.LastSequence = result.Sequence
@@ -1160,10 +1128,6 @@ func puzzleTotal(event *content.Event) int {
 		}
 	}
 	return total
-}
-
-func expired(session model.EventSession) bool {
-	return !session.ExpiresAt.IsZero() && time.Now().UTC().After(session.ExpiresAt)
 }
 
 func splitPath(value string) []string {

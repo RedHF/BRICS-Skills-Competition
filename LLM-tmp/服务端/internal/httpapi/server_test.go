@@ -59,8 +59,8 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 		t.Fatalf("trace practice must report missing strokes without erosion: %+v", wrong)
 	}
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
 	first := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
 	second := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
 	if first["reason"] != "settled" || second["reason"] != "already_settled" {
@@ -73,7 +73,7 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 	}
 }
 
-func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
+func TestFailedSessionRequiresExplicitRewind(t *testing.T) {
 	catalog, err := content.Load(filepath.Join("..", "..", "content", "chapters.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -104,10 +104,12 @@ func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
 
 	newSession := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"}, token)
 	newSID := newSession["session_id"].(string)
-	if newSID == sid {
-		t.Fatal("retry unexpectedly reused the failed session id")
+	if newSID != sid {
+		t.Fatal("start bypassed failed session")
 	}
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/rewind", map[string]any{"retries": 0}, token)
 	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/choice", map[string]any{"action": "keep"}, token)
 	failedBattle := postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", map[string]any{"duration_ms": 1000, "waves_cleared": 0, "hits_taken": 0, "actions": []map[string]any{}}, token)
 	if failedBattle["won"].(bool) || failedBattle["status"] != "failed" {
 		t.Fatalf("expected failed battle session: %+v", failedBattle)
@@ -118,7 +120,7 @@ func TestFailedSessionIsImmutableAndRetryUsesNewSession(t *testing.T) {
 	}
 }
 
-func TestExpiredSessionCannotChooseOrSettle(t *testing.T) {
+func TestReadingAndOldDeadlineDoNotFailEvent(t *testing.T) {
 	catalog, err := content.Load(filepath.Join("..", "..", "content", "chapters.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -139,27 +141,21 @@ func TestExpiredSessionCannotChooseOrSettle(t *testing.T) {
 	playerID := login["player"].(map[string]any)["id"].(string)
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"}, token)
 	sid := session["session_id"].(string)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
 	if _, err := persistence.UpdateSession(sid, func(current *model.EventSession) error {
 		current.ExpiresAt = time.Now().UTC().Add(-time.Minute)
 		return nil
 	}); err != nil {
 		t.Fatal(err)
 	}
-	choice := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
-	if choice.status != http.StatusConflict || choice.body["error"].(map[string]any)["code"] != "session_expired" {
-		t.Fatalf("expired choice was accepted: status=%d body=%+v", choice.status, choice.body)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
+	p, _ := persistence.GetPlayer(playerID)
+	if p.Erosion != 0 {
+		t.Fatalf("reading caused erosion: %d", p.Erosion)
 	}
-	finish := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
-	code := finish.body["error"].(map[string]any)["code"]
-	if finish.status != http.StatusConflict || (code != "session_failed" && code != "session_expired") {
-		t.Fatalf("expired session was not frozen before finish: status=%d body=%+v", finish.status, finish.body)
-	}
-	stored := getJSON(t, server.URL+"/api/v1/sessions/"+sid, token)
-	if stored["status"] != "failed" || stored["failure_reason"] != "session_expired" {
-		t.Fatalf("expired session was not persisted as failed: %+v", stored)
-	}
+
 }
 
 func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
@@ -170,6 +166,7 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	catalog.Skills["木榫"] = catalog.Skills["斗拱"]
 	custom := catalog.Chapters[0].Events[0]
 	custom.ID = "custom_skill_event"
+	catalog.Art[custom.ID] = catalog.Art["prologue_bridge"]
 	battleSpec := *custom.Battle
 	battleSpec.RequiredSkills = []string{"木榫"}
 	custom.Battle = &battleSpec
@@ -208,6 +205,7 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "custom_skill_event"}, token)
 	sid := session["session_id"].(string)
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
 	battle := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(custom), token)
 	if !battle["won"].(bool) {
 		t.Fatalf("catalog-defined skill was rejected by HTTP flow: %+v", battle)

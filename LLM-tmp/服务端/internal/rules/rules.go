@@ -162,6 +162,7 @@ type BattleAction struct {
 }
 
 type BattleInput struct {
+	StartErosion int
 	Skills       map[string]content.SkillSpec
 	Actions      []BattleAction
 	DurationMS   int
@@ -201,13 +202,13 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 		if action.AtMS < lastAt || action.AtMS < 0 || action.AtMS > input.DurationMS {
 			return BattleEvaluation{}, errors.New("battle action timestamp outside chronological timeline")
 		}
-		if waves == battle.Waves || hits > battle.MaxHitsTaken {
+		if waves == battle.Waves || hits > battle.MaxHitsTaken || input.StartErosion+hits*HitErosion >= 100 {
 			return BattleEvaluation{}, errors.New("action after battle ended")
 		}
 		if action.AtMS < ready[action.Skill] {
 			return BattleEvaluation{}, errors.New("skill used during cooldown")
 		}
-		for nextAttack <= action.AtMS && hits <= battle.MaxHitsTaken {
+		for nextAttack <= action.AtMS && hits <= battle.MaxHitsTaken && input.StartErosion+hits*HitErosion < 100 {
 			if shield > 0 {
 				shield--
 			} else {
@@ -215,7 +216,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 			}
 			nextAttack += 3000
 		}
-		if hits > battle.MaxHitsTaken {
+		if hits > battle.MaxHitsTaken || input.StartErosion+hits*HitErosion >= 100 {
 			return BattleEvaluation{}, errors.New("action after player defeat")
 		}
 		ready[action.Skill] = action.AtMS + skill.CooldownMS
@@ -231,7 +232,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 			hp = battle.EnemyHP
 		}
 	}
-	for nextAttack <= input.DurationMS && waves < battle.Waves && hits <= battle.MaxHitsTaken {
+	for nextAttack <= input.DurationMS && waves < battle.Waves && hits <= battle.MaxHitsTaken && input.StartErosion+hits*HitErosion < 100 {
 		if shield > 0 {
 			shield--
 		} else {
@@ -239,7 +240,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 		}
 		nextAttack += 3000
 	}
-	won := waves == battle.Waves && hits <= battle.MaxHitsTaken
+	won := waves == battle.Waves && hits <= battle.MaxHitsTaken && input.StartErosion+hits*HitErosion < 100
 	for _, required := range battle.RequiredSkills {
 		won = won && seen[required]
 	}

@@ -6,7 +6,7 @@ import (
 )
 
 func TestMemoryReferencesAndStoryFailAtLoadBoundary(t *testing.T) {
-	for _, which := range []string{"missing_memory", "wrong_source", "missing_story", "bad_trace"} {
+	for _, which := range []string{"missing_memory", "wrong_source", "missing_story", "bad_trace", "missing_art"} {
 		t.Run(which, func(t *testing.T) {
 			c, err := Load(filepath.Join("..", "..", "content", "chapters.json"))
 			if err != nil {
@@ -14,6 +14,8 @@ func TestMemoryReferencesAndStoryFailAtLoadBoundary(t *testing.T) {
 			}
 			event := &c.Chapters[0].Events[0]
 			switch which {
+			case "missing_art":
+				delete(c.Art, event.ID)
 			case "missing_memory":
 				event.Reward.MemoryID = "missing"
 			case "wrong_source":

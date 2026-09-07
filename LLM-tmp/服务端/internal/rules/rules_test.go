@@ -74,3 +74,16 @@ func TestBattleReplaysDamageShieldHealingAndCooldown(t *testing.T) {
 		t.Fatalf("multiple enemies did not advance waves: %+v %v", eval, err)
 	}
 }
+
+func TestBattleErosionLimitStopsBeforeLateHealing(t *testing.T) {
+	event := &content.Event{Battle: &content.BattleSpec{Waves: 1, EnemyHP: 30, DurationSec: 30, MaxHitsTaken: 4}}
+	input := BattleInput{StartErosion: 95, DurationMS: 6000, Skills: map[string]content.SkillSpec{"heal": {Heal: 1}}, AllowedSkills: map[string]bool{"heal": true}}
+	eval, err := EvaluateBattle(event, input)
+	if err != nil || eval.Won || eval.HitsTaken != 1 {
+		t.Fatalf("erosion did not stop combat: %+v %v", eval, err)
+	}
+	input.Actions = []BattleAction{{"heal", 3000}}
+	if _, err := EvaluateBattle(event, input); err == nil {
+		t.Fatal("healing revived player after erosion reached 100")
+	}
+}

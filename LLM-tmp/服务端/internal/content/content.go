@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-const CurrentVersion = 5
+const CurrentVersion = 6
 
 // Catalog is the complete, versioned game content manifest.
 type SkillSpec struct {
@@ -32,6 +32,7 @@ type Catalog struct {
 }
 
 type ArtSpec struct {
+	WhisperAudio  string `json:"whisper_audio,omitempty"`
 	Background    string `json:"background,omitempty"`
 	BackdropColor string `json:"backdrop_color,omitempty"`
 }
@@ -159,6 +160,12 @@ func (c *Catalog) Validate() error {
 	for ci := range c.Chapters {
 		for ei := range c.Chapters[ci].Events {
 			event := &c.Chapters[ci].Events[ei]
+			if !event.Draft {
+				art, ok := c.Art[event.ID]
+				if !ok || art.BackdropColor == "" || art.WhisperAudio == "" {
+					return fmt.Errorf("playable event %q missing backdrop or whisper audio", event.ID)
+				}
+			}
 			memory, ok := c.Memories[event.Reward.MemoryID]
 			if !ok {
 				return fmt.Errorf("event %q references missing memory %q", event.ID, event.Reward.MemoryID)

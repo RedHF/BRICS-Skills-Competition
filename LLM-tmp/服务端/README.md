@@ -47,7 +47,7 @@ go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/sa
 
 ## 校验规则
 
-内容协议为版本 5。抉择发生在战斗前，获得与遗忘立即原子写入，随后结算发奖。每星对应一点墨痕；解锁章节扣除配置成本。拓印展示与服务器共享 aspect_ratio 和 tolerance，支持宽容差。
+内容协议为版本 6。抉择发生在战斗前，获得与遗忘立即原子写入，随后结算发奖。每星对应一点墨痕；解锁章节扣除配置成本。拓印展示与服务器共享 aspect_ratio 和 tolerance，支持宽容差。
 
 
 - 章节必须已解锁；谜题按 JSON 定义的步骤顺序提交，答案由服务器比较，非描摹步骤错误增加 10 点侵蚀度并受最大尝试次数限制；描摹失败返回 `failed_strokes` 供单笔修正，不扣侵蚀。
@@ -62,3 +62,9 @@ go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/sa
 go test ./...
 go build ./cmd/server
 ```
+
+## 回溯与继续（协议 6）
+
+GET /api/v1/sessions 返回当前账号最近未完成事件（没有则 session 为 null）。重复开始返回该事件。POST /api/v1/sessions/{id}/rewind 提交当前 retries 整数；失败事件恢复起点侵蚀与谜题并保留已获得墨灵，消耗 1 墨痕，序章在无墨痕时免费。请求重复不会重复扣费。
+
+事件不再执行固定墙钟超时；战斗仍按配置 duration_sec 校验。记忆保留数量和白蚀清除比例额外展示，星级权重本轮不调整。

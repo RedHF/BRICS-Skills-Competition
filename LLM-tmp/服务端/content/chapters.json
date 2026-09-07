@@ -1,17 +1,21 @@
 {
-  "version": 5,
+  "version": 6,
   "game_id": "yanxia-qianqiu",
   "art": {
     "prologue_bridge": {
+	  "whisper_audio": "res://assets/echo/prologue_bridge.wav",
       "backdrop_color": "#172b35"
     },
     "temple_incense": {
+	  "whisper_audio": "res://assets/echo/temple_incense.wav",
       "backdrop_color": "#2b2724"
     },
     "temple_guest": {
+	  "whisper_audio": "res://assets/echo/temple_guest.wav",
       "backdrop_color": "#26333a"
     },
     "temple_drum": {
+	  "whisper_audio": "res://assets/echo/temple_drum.wav",
       "backdrop_color": "#35272a"
     }
   },
