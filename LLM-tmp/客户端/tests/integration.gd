@@ -75,11 +75,20 @@ func _run() -> void:
 		scene._process(0.2)
 		Input.action_release("move_right")
 		assert(scene.player.x > initial_position.x, "Directional movement failed")
+		scene.player = Vector2(0.5, 0.5)
+		Input.action_press("move_up")
+		scene._process(0.4)
+		Input.action_release("move_up")
+		assert(scene.player.y < 0.5 and scene.player.y >= 0.16, "Exploration bounds still block the upper scene")
 		var investigate := InputEventMouseButton.new()
 		investigate.button_index = MOUSE_BUTTON_LEFT
 		investigate.pressed = true
-		investigate.position = scene.size * Vector2(.55,.50)
-		scene._gui_input(investigate)
+		for investigation in scene.investigations:
+			investigate.position = scene.size * Vector2(float(investigation.position[0]), float(investigation.position[1]))
+			scene._gui_input(investigate)
+			scene._process(1.0)
+			await process_frame
+		assert(scene.discovered.size() == scene.investigations.size(), "Not all investigation points were discoverable")
 		assert(main.event_audio.playing, "Investigation did not play event whisper")
 		for erosion in [0,39,40,69,70,99,100]:
 			main._refresh_stats(erosion)
@@ -206,6 +215,15 @@ func _run() -> void:
 			assert(main.battle_elapsed == 0, "Paused battle consumed time")
 			await main._resume()
 			assert(main.arena == active_arena and main.battle_running, "Battle scene reset on resume")
+			if ids_pair[1] == "temple_incense":
+				main._process(2.2)
+				Input.action_press("move_right")
+				main.arena._process(0.1)
+				Input.action_release("move_right")
+				assert(main.battle_actions[-1].skill == "闪身" and main.arena.shield == 1, "Movement did not trigger dodge")
+				main._process(0.8)
+				assert(main.battle_hits == 0 and main.arena.shield == 0, "Dodge did not avoid the telegraphed attack")
+				print("PASS moving battle dodge")
 			if ids_pair[1] == "temple_drum":
 				main._process(3.0)
 				if main.battle_hits != 1:
@@ -262,7 +280,9 @@ func _run() -> void:
 	if not main.memory_audio.playing:
 		quit(6)
 		return
-	await create_timer(0.3).timeout
+	var audio_deadline := Time.get_ticks_msec() + 1500
+	while main.memory_audio.get_playback_position() < 0.1 and Time.get_ticks_msec() < audio_deadline:
+		await process_frame
 	if main.memory_audio.get_playback_position() < 0.1 or main.memory_audio.stream.get_length() < 2:
 		push_error("Narration did not progress")
 		quit(13)

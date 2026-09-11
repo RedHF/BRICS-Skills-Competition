@@ -4,18 +4,22 @@
   "art": {
     "prologue_bridge": {
 	  "whisper_audio": "res://assets/echo/prologue_bridge.wav",
+      "background": "res://assets/generated/bg_01_wind_rain_bridge.png",
       "backdrop_color": "#172b35"
     },
     "temple_incense": {
 	  "whisper_audio": "res://assets/echo/temple_incense.wav",
+      "background": "res://assets/generated/bg_02_village_temple_courtyard.png",
       "backdrop_color": "#2b2724"
     },
     "temple_guest": {
 	  "whisper_audio": "res://assets/echo/temple_guest.wav",
+      "background": "res://assets/generated/bg_02_village_temple_courtyard.png",
       "backdrop_color": "#26333a"
     },
     "temple_drum": {
 	  "whisper_audio": "res://assets/echo/temple_drum.wav",
+      "background": "res://assets/generated/bg_03_temple_white_erosion_battle.png",
       "backdrop_color": "#35272a"
     }
   },
@@ -34,6 +38,11 @@
           "title": "桥上平安",
           "scene": "风雨廊桥",
           "intro": "桥心刻着正在褪色的‘平安’二字。古建呓语从雨幕深处传来：桥记着送别，也记着归来。",
+          "investigations": [
+            {"label": "断裂廊檐", "position": [0.28, 0.44]},
+            {"label": "桥心刻字", "position": [0.55, 0.50]},
+            {"label": "半蚀桥栏", "position": [0.78, 0.64]}
+          ],
           "objectives": [
             "调查桥心刻字",
             "完成墨线拓印",
@@ -225,6 +234,11 @@
           "title": "香火断",
           "scene": "社庙正殿",
           "intro": "香炉倾倒，主梁断裂半悬。呓语说：春社那天，全村的人都来。后来香断了，村子也慢慢空了。",
+          "investigations": [
+            {"label": "断裂主梁", "position": [0.67, 0.38]},
+            {"label": "倾倒香炉", "position": [0.55, 0.50]},
+            {"label": "蒙尘牌位", "position": [0.79, 0.57]}
+          ],
           "objectives": [
             "调查香炉、断梁与牌位",
             "将三块斗拱构件归位",
@@ -303,6 +317,11 @@
           "title": "檐下客",
           "scene": "社庙侧厢",
           "intro": "门楣匾额缺了一字，供桌上的冷饭和旧蓑衣仍在等候过路人。",
+          "investigations": [
+            {"label": "残缺匾额", "position": [0.42, 0.38]},
+            {"label": "旧蓑衣", "position": [0.55, 0.50]},
+            {"label": "冷饭碗", "position": [0.27, 0.67]}
+          ],
           "objectives": [
             "调查匾额、冷饭碗与旧蓑衣",
             "推理匾额缺字",
@@ -494,6 +513,11 @@
           "title": "社鼓声",
           "scene": "社庙前坪",
           "intro": "社鼓蒙灰，鼓面白蚀斑驳。鼓一响，社就开了；鼓声停了，连孩子的声音也听不见了。",
+          "investigations": [
+            {"label": "香樟红绳", "position": [0.27, 0.42]},
+            {"label": "白蚀鼓面", "position": [0.55, 0.50]},
+            {"label": "压住的鼓槌", "position": [0.73, 0.70]}
+          ],
           "objectives": [
             "用藻井净化鼓面",
             "按鼓纹墨线拓印",
@@ -1525,6 +1549,14 @@
     }
   },
   "skills": {
+    "闪身": {
+      "description": "白蚀蓄力变红时保持移动即可闪身，抵消下一次侵袭；冷却 2.5 秒。",
+      "cooldown_ms": 2500,
+      "damage": 0,
+      "shield": 1,
+      "heal": 0,
+      "color": "#b7e7df"
+    },
     "挥墨": {
       "description": "点击攻击白蚀，每次造成 10 点伤害，间隔 0.5 秒。",
       "cooldown_ms": 500,

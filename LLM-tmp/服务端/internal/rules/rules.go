@@ -224,7 +224,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 		seen[action.Skill] = true
 		hp -= skill.Damage
 		if skill.Shield > 0 {
-			shield = skill.Shield
+			shield = max(shield, skill.Shield)
 		}
 		hits = max(0, hits-skill.Heal)
 		if hp <= 0 {

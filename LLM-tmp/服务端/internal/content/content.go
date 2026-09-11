@@ -54,17 +54,23 @@ type StorySpec struct {
 }
 
 type Event struct {
-	Story      StorySpec   `json:"story"`
-	Draft      bool        `json:"draft"`
-	ID         string      `json:"id"`
-	Order      int         `json:"order"`
-	Title      string      `json:"title"`
-	Scene      string      `json:"scene"`
-	Intro      string      `json:"intro"`
-	Objectives []string    `json:"objectives"`
-	Puzzle     PuzzleSpec  `json:"puzzle"`
-	Battle     *BattleSpec `json:"battle,omitempty"`
-	Reward     RewardSpec  `json:"reward"`
+	Story          StorySpec           `json:"story"`
+	Draft          bool                `json:"draft"`
+	ID             string              `json:"id"`
+	Order          int                 `json:"order"`
+	Title          string              `json:"title"`
+	Scene          string              `json:"scene"`
+	Intro          string              `json:"intro"`
+	Objectives     []string            `json:"objectives"`
+	Investigations []InvestigationSpec `json:"investigations,omitempty"`
+	Puzzle         PuzzleSpec          `json:"puzzle"`
+	Battle         *BattleSpec         `json:"battle,omitempty"`
+	Reward         RewardSpec          `json:"reward"`
+}
+
+type InvestigationSpec struct {
+	Label    string     `json:"label"`
+	Position [2]float64 `json:"position"`
 }
 
 type PuzzleSpec struct {
@@ -211,6 +217,16 @@ func (c *Catalog) Validate() error {
 			eventIDs[event.ID] = struct{}{}
 			if len(event.Puzzle.Steps) == 0 {
 				return fmt.Errorf("event %q has no puzzle steps", event.ID)
+			}
+			if !event.Draft {
+				if len(event.Investigations) == 0 {
+					return fmt.Errorf("playable event %q has no investigation points", event.ID)
+				}
+				for _, investigation := range event.Investigations {
+					if investigation.Label == "" || investigation.Position[0] < 0 || investigation.Position[0] > 1 || investigation.Position[1] < 0 || investigation.Position[1] > 1 {
+						return fmt.Errorf("event %q has invalid investigation point", event.ID)
+					}
+				}
 			}
 			stepIDs := make(map[string]struct{}, len(event.Puzzle.Steps))
 			for _, step := range event.Puzzle.Steps {

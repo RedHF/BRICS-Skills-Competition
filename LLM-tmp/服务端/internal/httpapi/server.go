@@ -658,6 +658,7 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 	}
 	availableSkills := s.playerSkills(player)
 	availableSkills["挥墨"] = true
+	availableSkills["闪身"] = true
 	for _, action := range request.Actions {
 		if !availableSkills[strings.TrimSpace(action.Skill)] {
 			writeError(w, http.StatusBadRequest, "skill_unavailable", "battle action uses a skill not held by the player")

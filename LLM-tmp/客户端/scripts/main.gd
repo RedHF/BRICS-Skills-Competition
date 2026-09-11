@@ -5,12 +5,16 @@ signal third_party_login_requested(provider: String)
 const TRACE = preload("res://scripts/trace_canvas.gd")
 const NETWORK = preload("res://scripts/network_client.gd")
 const REPOSITORY = preload("res://scripts/data_repository.gd")
+const MENU_BACKGROUND = preload("res://assets/generated/ui_01_open_scroll_main_menu_base.png")
+const MEMORY_CARD_SHEET = preload("res://assets/generated/ui_02_memory_talisman_cards_sheet.png")
+const SKILL_EMBLEM_SHEET = preload("res://assets/generated/ui_03_skill_emblems_sheet.png")
 var network = NETWORK.new()
 var data = REPOSITORY.new()
 var page: VBoxContainer
 var status: Label
 var stats: Label
 var backdrop: ColorRect
+var backdrop_art: TextureRect
 var scroll: ScrollContainer
 var current_event: Dictionary
 var chapter_id := ""
@@ -88,9 +92,18 @@ func _ready() -> void:
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(root)
+	backdrop_art = TextureRect.new()
+	backdrop_art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop_art.texture = MENU_BACKGROUND
+	backdrop_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	backdrop_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	backdrop_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop_art.modulate = Color(1, 1, 1, 0.82)
+	root.add_child(backdrop_art)
 	backdrop = ColorRect.new()
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.color = Color("#14262b")
+	backdrop.color = Color(0.078, 0.149, 0.169, 0.78)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(backdrop)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -196,7 +209,7 @@ func _show_auth() -> void:
 	flow = "auth"
 	navigation.hide()
 	_clear()
-	backdrop.color = Color("#14262b")
+	backdrop.color = Color(0.078, 0.149, 0.169, 0.78)
 	stats.text = "登录后开启你的古建记忆"
 	var logo := TextureRect.new()
 	logo.texture = preload("res://assets/logo.svg")
@@ -364,7 +377,10 @@ func _refresh_stats(erosion: int = -1) -> void:
 func _apply_erosion(value: int) -> void:
 	var base := Color("#14262b")
 	if not current_event.is_empty(): base = Color(data.catalog.art[current_event.id].backdrop_color)
-	backdrop.color = base.lerp(Color("#535953"), float(value) / 100.0)
+	var mixed := base.lerp(Color("#535953"), float(value) / 100.0)
+	mixed.a = 0.78
+	backdrop.color = mixed
+	backdrop_art.modulate = Color(1, 1, 1, 0.82 - float(value) / 500.0)
 	AudioServer.set_bus_volume_db(echo_bus, -float(value) * 0.12)
 	AudioServer.set_bus_effect_enabled(echo_bus, 0, value >= 40)
 	if is_instance_valid(scene_view):
@@ -376,6 +392,8 @@ func _add_building(interactive: bool = false) -> void:
 	scene_view.interactive = interactive
 	scene_view.bridge = chapter_id == "prologue"
 	scene_view.tint = Color(data.memory(current_event.reward.memory_id).color)
+	scene_view.background = _event_background()
+	scene_view.investigations = current_event.get("investigations", [])
 	scene_view.erosion = int(GameState.player.erosion)
 	var held := false
 	var acquired := false
@@ -385,6 +403,25 @@ func _add_building(interactive: bool = false) -> void:
 		if entry.memory_id == current_event.reward.memory_id and entry.action == "kept": acquired = true
 	scene_view.forgotten = acquired and not held
 	page.add_child(scene_view)
+
+func _event_background() -> Texture2D:
+	if current_event.is_empty(): return null
+	var art: Dictionary = data.catalog.art.get(current_event.id, {})
+	var path := str(art.get("background", ""))
+	if path.is_empty(): return null
+	var texture := load(path) as Texture2D
+	if texture == null: push_error("无法读取事件背景：" + path)
+	return texture
+
+func _art_banner(parent: Node, texture: Texture2D, height: float) -> TextureRect:
+	var banner := TextureRect.new()
+	banner.texture = texture
+	banner.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	banner.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	banner.custom_minimum_size = Vector2(0, height)
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(banner)
+	return banner
 
 func _pause_event() -> void:
 	if flow not in ["puzzle", "choice", "battle"]: return
@@ -486,25 +523,32 @@ func _open_event(chapter: String, event: String) -> void:
 	_label(page, current_event.scene + " · " + current_event.title, 26, Color("#e4c98a"))
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
 	_add_building(true)
-	_label(page, "方向键 / WASD 或左下摇杆移动，点击金色光点调查。", 16)
+	_label(page, "WASD / 方向键或左下摇杆自由移动；靠近金色目标按空格/回车调查，也可点击目标自动走近。", 16)
 	var details := VBoxContainer.new()
 	page.add_child(details)
+	var investigation_progress := _label(details, "调查进度 0/%d" % scene_view.investigations.size(), 17, Color("#b7d8c8"))
+	var discoveries := VBoxContainer.new()
+	details.add_child(discoveries)
+	var story_details := VBoxContainer.new()
+	details.add_child(story_details)
 	var completed: bool = GameState.player.completed_events.has(chapter + ":" + event)
-	scene_view.investigated.connect(func():
-		if details.get_child_count() > 0: return
-		for beat in current_event.story.beats: _label(details, beat, 20)
-		if completed:
-			if scene_view.forgotten: _label(details, memory.forgotten_text, 20)
-			else: _label(details, current_event.story.outro, 20)
-			_button(details, "查看这道墨灵", _memory_detail.bind(memory.id))
-		else: _button(details, "开始修复", _start_event)
-		if not scene_view.forgotten:
+	scene_view.investigated.connect(func(label: String, found: int, total: int):
+		investigation_progress.text = "调查进度 %d/%d" % [found, total]
+		_label(discoveries, "✓ " + label, 16, Color("#9ad5ad"))
+		if found == 1 and not scene_view.forgotten:
 			var sound := load(data.catalog.art[current_event.id].whisper_audio) as AudioStream
 			if sound == null:
 				_error("无法读取调查呓语：" + data.catalog.art[current_event.id].whisper_audio)
 				return
 			event_audio.stream = sound
-			event_audio.play())
+			event_audio.play()
+		if found < total: return
+		for beat in current_event.story.beats: _label(story_details, beat, 20)
+		if completed:
+			if scene_view.forgotten: _label(story_details, memory.forgotten_text, 20)
+			else: _label(story_details, current_event.story.outro, 20)
+			_button(story_details, "查看这道墨灵", _memory_detail.bind(memory.id))
+		else: _button(story_details, "三处调查完成 · 开始修复", _start_event))
 
 func _start_event() -> void:
 	busy = true
@@ -578,7 +622,7 @@ func _show_puzzle() -> void:
 	_label(page, step.prompt, 20)
 	_add_building()
 	if step.kind == "trace":
-		_label(page, "逐字放大描摹：绿点起笔、橙点收笔。金色宽带内均可落墨，短暂手抖可容忍。点击笔画编号可单独重描。", 16)
+		_label(page, "拓印纸已铺开。青印为起笔，朱印为收锋；沿浅金笔势落墨即可，不必压在线心。", 17, Color("#d7c69c"))
 		trace_canvas = TRACE.new()
 		trace_canvas.spec = step.trace
 		page.add_child(trace_canvas)
@@ -586,17 +630,17 @@ func _show_puzzle() -> void:
 		stroke_buttons = HFlowContainer.new()
 		page.add_child(stroke_buttons)
 		for i in range(step.trace.strokes.size()):
-			var button := _button(stroke_buttons, str(i + 1), trace_canvas.select_stroke.bind(i))
+			var button := _button(stroke_buttons, "%02d" % [i + 1], trace_canvas.select_stroke.bind(i))
 			button.custom_minimum_size = Vector2(48, 42)
 		trace_canvas.stroke_finished.connect(_trace_feedback)
 		_trace_feedback()
 		var buttons := HBoxContainer.new()
 		page.add_child(buttons)
-		_button(buttons, "清空当前笔", func():
+		_button(buttons, "重描本笔", func():
 			trace_canvas.strokes[trace_canvas.active] = []
 			trace_canvas.queue_redraw()
 			_trace_feedback())
-		_button(buttons, "提交拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
+		_button(buttons, "核对拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
 	elif step.kind == "join":
 		join_canvas = preload("res://scripts/join_canvas.gd").new()
 		join_canvas.options = step.options
@@ -612,7 +656,7 @@ func _trace_feedback() -> void:
 	var count := 0
 	for stroke in trace_canvas.strokes:
 		if not stroke.is_empty(): count += 1
-	trace_progress.text = "第 %d 笔 · 已描 %d/%d · 红色 × 为未通过" % [trace_canvas.active + 1, count, trace_canvas.strokes.size()]
+	trace_progress.text = "落墨 %d/%d · 当前第 %02d 笔%s" % [count, trace_canvas.strokes.size(), trace_canvas.active + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
 	for i in range(stroke_buttons.get_child_count()):
 		var button: Button = stroke_buttons.get_child(i)
 		button.text = str(i + 1) + (" ×" if trace_canvas.failed.has(i) else "")
@@ -689,7 +733,7 @@ func _choose(action: String, forget_id: String) -> void:
 		return
 	if action == "forget":
 		memory_audio.stop()
-		backdrop.color = Color("#575b59")
+		backdrop.color = Color(0.341, 0.357, 0.349, 0.88)
 		await get_tree().create_timer(0.6).timeout
 	await _resume()
 
@@ -714,10 +758,14 @@ func _start_battle() -> void:
 	battle_buttons = {}
 	next_attack = 3000
 	battle_skills = _learned_skills()
+	battle_ready["闪身"] = 0
+	_art_banner(page, SKILL_EMBLEM_SHEET, 118)
 	_label(page, "白蚀来袭", 26, Color("#e4c98a"))
-	_label(page, "点击挥墨消灭白蚀；红色蓄力时用斗拱防护。白蚀每 3 秒攻击一次。", 16)
+	_label(page, "WASD / 方向键或摇杆移动。白蚀变红锁定时保持移动会自动闪身；也可用斗拱正面防护。", 16)
 	battle_note = _label(page, "", 17)
 	arena = preload("res://scripts/battle_arena.gd").new()
+	arena.background = _event_background()
+	arena.dodge_triggered.connect(_battle_dodge)
 	arena.hp = int(current_event.battle.enemy_hp)
 	arena.max_hp = arena.hp
 	page.add_child(arena)
@@ -733,8 +781,13 @@ func _start_battle() -> void:
 
 func _begin_battle() -> void:
 	battle_running = true
+	arena.active = true
 	battle_start.hide()
 	_battle_update()
+
+func _battle_dodge() -> void:
+	if not battle_running or battle_finished: return
+	_battle_skill("闪身")
 
 func _battle_skill(skill: String) -> void:
 	if busy or battle_finished or not battle_running: return
@@ -745,7 +798,7 @@ func _battle_skill(skill: String) -> void:
 	battle_ready[skill] = at + int(spec.cooldown_ms)
 	if not wave_skills.has(skill): wave_skills.append(skill)
 	arena.hp -= int(spec.damage)
-	if int(spec.shield) > 0: arena.shield = int(spec.shield)
+	if int(spec.shield) > 0: arena.shield = maxi(arena.shield, int(spec.shield))
 	battle_hits = maxi(0, battle_hits - int(spec.heal))
 	var effect := skill
 	if int(spec.damage) > 0: effect += " -%d" % int(spec.damage)
@@ -781,6 +834,7 @@ func _battle_update() -> void:
 	battle_note.text = "第 %d/%d 波 · 剩余 %d 秒 · 受蚀 %d/%d" % [mini(battle_wave + 1, int(current_event.battle.waves)), int(current_event.battle.waves), ceili(float(current_event.battle.duration_sec) - battle_elapsed), battle_hits, int(current_event.battle.max_hits_taken) + 1]
 	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or int(GameState.player.erosion) + battle_hits * 5 >= 100 or battle_elapsed >= float(current_event.battle.duration_sec):
 		battle_finished = true
+		arena.active = false
 		arena.defeated = battle_wave == int(current_event.battle.waves)
 		var complete: bool = arena.defeated
 		for skill in current_event.battle.required_skills: complete = complete and wave_skills.has(skill)
@@ -833,6 +887,7 @@ func _show_memories() -> void:
 	flow = "memories"
 	_clear()
 	_label(page, "心舍 · 记住的墨灵", 26, Color("#e4c98a"))
+	_art_banner(page, MEMORY_CARD_SHEET, 126)
 	var slots := GridContainer.new()
 	slots.columns = 2
 	page.add_child(slots)
@@ -878,7 +933,9 @@ func _memory_detail(id: String) -> void:
 	var remembered := false
 	for held in GameState.player.memories:
 		if held.id == id: remembered = true
-	backdrop.color = Color(memory.color).darkened(0.8) if remembered else Color("#282c2b")
+	var memory_backdrop := Color(memory.color).darkened(0.8) if remembered else Color("#282c2b")
+	memory_backdrop.a = 0.86
+	backdrop.color = memory_backdrop
 	_label(page, memory.title + (" · 记住" if remembered else " · 遗忘"), 28, Color(memory.color) if remembered else Color("#929996"))
 	_label(page, memory.remembered_text if remembered else memory.forgotten_text, 22)
 	var source: PackedStringArray = str(memory.source).split("/")

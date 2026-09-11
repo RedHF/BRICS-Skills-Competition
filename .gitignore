@@ -14,3 +14,4 @@
 /LLM-tmp/客户端/**/*.uid
 /LLM-tmp/.review/
 /LLM-tmp/交付/
+/dist

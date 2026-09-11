@@ -4,7 +4,7 @@
 
 ## 对应关系
 
-`memories[墨灵ID]` 定义名称、摘要、技能、容量、来源、记住/遗忘文案、颜色和回声音频路径 `echo_audio`（旧 `tone_hz` 字段不再用于播放）。`chapters[].events[].reward.memory_id` 指向墨灵；`memory.source` 必须为同一事件的 `章节ID/事件ID`。`event.story` 保存该事件的 beats、outro，以及可选的 chapter_outro。
+`memories[墨灵ID]` 定义名称、摘要、技能、容量、来源、记住/遗忘文案、颜色和回声音频路径 `echo_audio`（旧 `tone_hz` 字段不再用于播放）。`chapters[].events[].reward.memory_id` 指向墨灵；`memory.source` 必须为同一事件的 `章节ID/事件ID`。`event.story` 保存该事件的 beats、outro，以及可选的 chapter_outro。`art[事件ID].background` 可指定客户端 `res://` 背景资源；未配置时客户端回退到程序化古建画面。
 
 新增现有类型的事件：添加墨灵定义，添加对应事件与剧情，再填写 reward.memory_id。加载时会拒绝缺失墨灵、错配来源、缺失剧情和无效拓印线条。不要复用旧 ID 表达另一段记忆，也不要删除已有存档引用的 ID。
 
