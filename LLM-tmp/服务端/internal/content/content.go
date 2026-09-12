@@ -8,9 +8,10 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
-const CurrentVersion = 6
+const CurrentVersion = 7
 
 // Catalog is the complete, versioned game content manifest.
 type SkillSpec struct {
@@ -48,9 +49,19 @@ type Chapter struct {
 }
 
 type StorySpec struct {
-	Beats        []string `json:"beats"`
-	Outro        string   `json:"outro"`
-	ChapterOutro string   `json:"chapter_outro,omitempty"`
+	Dialogue       []DialogueLine `json:"dialogue"`
+	Clues          []string       `json:"clues"`
+	BeforeBattle   string         `json:"before_battle,omitempty"`
+	KeepResponse   string         `json:"keep_response"`
+	ForgetResponse string         `json:"forget_response"`
+	Beats          []string       `json:"beats"`
+	Outro          string         `json:"outro"`
+	ChapterOutro   string         `json:"chapter_outro,omitempty"`
+}
+
+type DialogueLine struct {
+	Speaker string `json:"speaker"`
+	Text    string `json:"text"`
 }
 
 type Event struct {
@@ -112,6 +123,7 @@ type RewardSpec struct {
 }
 
 type MemorySpec struct {
+	Image          string  `json:"image"`
 	EchoAudio      string  `json:"echo_audio"`
 	Source         string  `json:"source"`
 	RememberedText string  `json:"remembered_text"`
@@ -182,8 +194,16 @@ func (c *Catalog) Validate() error {
 			if memory.Title == "" || memory.Summary == "" || memory.RememberedText == "" || memory.ForgottenText == "" {
 				return fmt.Errorf("memory %q missing narrative text", memory.ID)
 			}
-			if len(event.Story.Beats) == 0 || event.Story.Outro == "" {
+			if len(event.Story.Beats) == 0 || event.Story.Outro == "" || len(event.Story.Dialogue) == 0 || len(event.Story.Clues) != len(event.Investigations) {
 				return fmt.Errorf("event %q missing story", event.ID)
+			}
+			for _, line := range event.Story.Dialogue {
+				if line.Speaker == "" || line.Text == "" {
+					return fmt.Errorf("event %q has empty dialogue", event.ID)
+				}
+			}
+			if !strings.HasPrefix(memory.Image, "res://assets/rubbings/") || !strings.HasSuffix(memory.Image, ".png") {
+				return fmt.Errorf("memory %q needs a packaged rubbing image", memory.ID)
 			}
 			if _, ok := c.Skills[memory.Skill]; memory.Skill != "" && !ok {
 				return fmt.Errorf("memory %q references missing skill %q", memory.ID, memory.Skill)
@@ -230,13 +250,16 @@ func (c *Catalog) Validate() error {
 			}
 			stepIDs := make(map[string]struct{}, len(event.Puzzle.Steps))
 			for _, step := range event.Puzzle.Steps {
-				if step.ID == "" || (step.Kind != "trace" && step.Answer == "") {
+				if step.ID == "" || (step.Kind != "trace" && step.Kind != "narrative" && step.Answer == "") {
 					return fmt.Errorf("event %q has puzzle step without id/answer", event.ID)
 				}
 				if _, exists := stepIDs[step.ID]; exists {
 					return fmt.Errorf("event %q has duplicate puzzle step id %q", event.ID, step.ID)
 				}
 				stepIDs[step.ID] = struct{}{}
+				if step.Kind == "narrative" && len(step.Options) < 2 {
+					return fmt.Errorf("step %q missing narrative choices", step.ID)
+				}
 				if step.Kind == "trace" {
 					if step.Trace == nil || len(step.Trace.Strokes) == 0 || step.Trace.Tolerance <= 0 || step.Trace.Tolerance > .2 || step.Trace.AspectRatio <= 0 {
 						return fmt.Errorf("step %q has invalid trace specification", step.ID)

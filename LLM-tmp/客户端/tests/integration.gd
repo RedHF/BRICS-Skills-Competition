@@ -4,6 +4,7 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func _run() -> void:
+	ProjectSettings.set_setting("yanxia/server_url", "http://127.0.0.1:8097")
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	await create_timer(0.3).timeout
@@ -15,49 +16,12 @@ func _run() -> void:
 		RenderingServer.force_draw()
 		root.get_texture().get_image().save_png("user://auth-splash.png")
 	var deadline := Time.get_ticks_msec() + 12000
-	while main.flow != "auth" and Time.get_ticks_msec() < deadline: await process_frame
-	if main.flow != "auth":
-		push_error("Login screen unavailable: " + main.status.text)
-		quit(21)
-		return
-	if main.navigation.visible or not main.network.access_token.is_empty():
-		quit(22)
-		return
-	await process_frame
-	if DisplayServer.get_name() != "headless":
-		RenderingServer.force_draw()
-		root.get_texture().get_image().save_png("user://auth-login.png")
-	var username := "player_" + str(Time.get_ticks_usec())
-	main.registering = true
-	main._show_auth()
-	main.auth_username.text = username
-	main.auth_password.text = "test-password-123"
-	main.auth_confirm.text = "different-password"
-	await main._authenticate()
-	if not main.network.access_token.is_empty():
-		quit(23)
-		return
-	main.auth_confirm.text = "test-password-123"
-	await main._authenticate()
-	if main.flow != "map":
-		push_error("Registration failed: " + main.status.text)
-		quit(24)
-		return
+	while (main.busy or root.get_node("GameState").player.is_empty()) and Time.get_ticks_msec() < deadline: await process_frame
+	assert(main.flow == "map" and main.navigation.visible, "Direct play unavailable: " + main.status.text)
 	var player_id: String = root.get_node("GameState").player.id
-	var old_token: String = main.network.access_token
-	await main._logout()
-	main.auth_username.text = username
-	main.auth_password.text = "incorrect-password"
-	await main._authenticate()
-	if main.flow != "auth" or not main.network.access_token.is_empty() or main.auth_password.text != "":
-		quit(25)
-		return
-	main.auth_password.text = "test-password-123"
-	await main._authenticate()
-	if main.flow != "map" or root.get_node("GameState").player.id != player_id or main.network.access_token == old_token:
-		quit(26)
-		return
-	print("PASS splash, registration confirmation, password login, invalid password, logout and stable identity")
+	await main._load_game()
+	assert(root.get_node("GameState").player.id == player_id, "Local save identity changed")
+	print("PASS direct play and stable local save")
 	main.set_process(false)
 	var game = root.get_node("GameState")
 	await process_frame
@@ -68,6 +32,14 @@ func _run() -> void:
 	var ids := [["prologue", "prologue_bridge"], ["temple", "temple_incense"], ["temple", "temple_guest"], ["temple", "temple_drum"]]
 	for ids_pair in ids:
 		main._open_event(ids_pair[0], ids_pair[1])
+		assert(main.flow == "dialogue" and main.dialogue_lines.size() == 6)
+		main._advance_dialogue()
+		assert(main.dialogue_index == 1)
+		main._show_map()
+		main._open_event(ids_pair[0], ids_pair[1])
+		assert(main.dialogue_index == 1, "Dialogue cursor lost")
+		main._finish_dialogue()
+		assert(main.flow == "intro")
 		await process_frame
 		var scene = main.scene_view
 		var initial_position: Vector2 = scene.player
@@ -102,11 +74,8 @@ func _run() -> void:
 		await main._start_event()
 		if ids_pair[1] == "prologue_bridge":
 			var current_id: String = main.session_id
-			await main._logout()
-			main.auth_username.text = username
-			main.auth_password.text = "test-password-123"
-			await main._authenticate()
-			assert(main.session_id == current_id, "Relogin lost current event")
+			await main._load_game()
+			assert(main.session_id == current_id, "Reopen lost current event")
 			await main._resume()
 			for attempt in range(3):
 				await main.network.request_json("/api/v1/sessions/%s/puzzle" % current_id, HTTPClient.METHOD_POST, {"step_id":"out_of_order","answer":"wrong"})
@@ -269,6 +238,7 @@ func _run() -> void:
 		quit(4)
 		return
 	main._open_event("prologue", "prologue_bridge")
+	main._finish_dialogue()
 	assert(main.scene_view.forgotten, "Forgotten building regained its color")
 	main._show_ledger()
 	main._memory_detail("yan_ping_an")
@@ -310,29 +280,15 @@ func _run() -> void:
 		quit(17)
 		return
 	print("PASS idle defeat")
-	await main._logout()
-	main.registering = true
-	main._show_auth()
-	main.auth_username.text = username + "_b"
-	main.auth_password.text = "test-password-123"
-	main.auth_confirm.text = "test-password-123"
-	await main._authenticate()
-	if game.player.id == player_id or game.player.completed_events.size() != 0 or not main.session_id.is_empty():
-		push_error("Second account inherited first player progress")
-		quit(27)
-		return
-	var response: Dictionary = await main.network.request_json("/api/v1/players/" + player_id)
-	if not response.is_empty() or main.network.last_status != 403:
-		quit(28)
-		return
-	await main._logout()
-	main.network.access_token = old_token
-	response = await main.network.request_json("/api/v1/auth/me")
-	main._error(main.network.last_error)
-	if not response.is_empty() or main.flow != "auth" or not main.network.access_token.is_empty():
-		quit(29)
-		return
-	print("PASS account switch isolates progress, foreign save denied, revoked token returns to login")
+	main._show_journal()
+	assert(main.flow == "journal")
+	main._replay_story("prologue", "prologue_bridge")
+	assert(main.flow == "dialogue" and main.dialogue_lines.size() >= 7)
+	main._finish_dialogue()
+	assert(main.flow == "journal")
+	await main._load_game()
+	assert(game.player.id == player_id and game.player.completed_events.size() == 4)
+	print("PASS journal, dialogue replay and persistent local progress")
 	main.memory_audio.stop()
 	main.memory_audio.stream = null
 	await create_timer(0.1).timeout

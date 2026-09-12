@@ -21,7 +21,7 @@ func _draw() -> void:
 	for i in range(options.size()):
 		var center := Vector2(size.x * (i + 0.5) / options.size(), 65)
 		draw_rect(Rect2(center-Vector2(33,22),Vector2(66,44)),Color("#d6bd85"),false,3)
-		var caption: String = {"left":"左榫口","center":"中央承重","right":"右榫口"}[options[i]]
+		var caption: String = {"left":"左榫口","center":"中央承重","right":"右榫口"}.get(options[i], options[i])
 		draw_string(ThemeDB.fallback_font,center+Vector2(-33,-31),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#e4c98a"))
 	var shape := PackedVector2Array([Vector2(-27,-17),Vector2(-14,-17),Vector2(-20,-29),Vector2(20,-29),Vector2(14,-17),Vector2(27,-17),Vector2(27,17),Vector2(-27,17)])
 	for i in range(shape.size()): shape[i] += piece

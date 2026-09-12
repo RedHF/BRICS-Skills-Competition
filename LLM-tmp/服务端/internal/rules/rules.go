@@ -117,7 +117,18 @@ func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attem
 		result.ActionRecord = record
 		return result
 	}
-	if expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer) {
+	if expected.Kind == "narrative" {
+		allowed := false
+		for _, option := range expected.Options {
+			if option == attempt.Answer {
+				allowed = true
+			}
+		}
+		if !allowed {
+			return rejectPuzzle(event, session, result, record, "invalid_narrative_choice")
+		}
+		session.NarrativeChoice = attempt.Answer
+	} else if expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer) {
 		return rejectPuzzle(event, session, result, record, "answer_incorrect")
 	}
 

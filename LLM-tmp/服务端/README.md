@@ -1,6 +1,6 @@
 # 《檐下千秋》服务端
 
-Go 实现（密码哈希使用 golang.org/x/crypto/bcrypt）的轻量服务器，为 Godot 客户端提供联网存档与服务端结算。内容定义在 `content/chapters.json`，新增章节/事件/谜题只需添加 JSON 数据，不修改 HTTP 或规则代码。客户端项目已将默认地址配置为 `http://127.0.0.1:8090`。内容与墨灵的维护规则详见 `content/README.md`。
+Go 实现的轻量本地服务器，为 Godot 客户端提供剧情目录、规则校验和 JSON 存档。当前版本免登录、单机匿名游玩；不会创建账号、签发令牌或连接第三方身份服务。内容定义在 `content/chapters.json`，新增章节/事件/谜题只需添加 JSON 数据，不修改 HTTP 或规则代码。客户端默认地址为 `http://127.0.0.1:8090`。内容与墨灵的维护规则详见 `content/README.md`。
 
 ## 运行
 
@@ -19,11 +19,11 @@ go run ./cmd/server
 go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/save.json
 ```
 
-`data/save.json` 由服务器独占保存玩家进度、会话、记忆账册与结算结果。写入采用临时文件替换；示例环境不依赖数据库，后续可将 `internal/store` 替换为数据库实现。
+`data/save.json` 由服务器独占保存本地匿名玩家进度、会话、记忆账册与结算结果。写入采用临时文件替换；示例环境不依赖数据库。存档不上传云端，也不包含账号凭证。
 
 ## API
 
-注册/登录协议见 [鉴权与第三方接入](鉴权与第三方接入.md)。除了健康检查和认证入口，以下接口都要求 `Authorization: Bearer <access_token>`，并校验玩家/事件归属。
+以下接口均为本地匿名会话接口，不需要 `Authorization` 请求头；`player_id` 由本地服务首次启动时生成并保存在 JSON 存档中，仅用于恢复同一设备进度。
 
 所有请求和响应均为 JSON；请求体禁止未知字段，单个请求最大 512 KiB。答案键只存在 `content/chapters.json`，`GET /api/v1/catalog` 会隐藏答案。
 
@@ -31,7 +31,7 @@ go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/sa
 |---|---|---|
 | GET | `/healthz` | 健康检查与内容版本 |
 | GET | `/api/v1/catalog` | 获取章节、事件、文本、谜题提示和公开规则 |
-| POST | `/api/v1/players` | 读取/更新当前账号显示名，body `{player_id?,display_name?}`，不能创建匿名玩家 |
+| POST | `/api/v1/players` | 读取/更新本地匿名玩家显示名，body `{player_id?,display_name?}` |
 | GET | `/api/v1/players/{id}` | 获取服务器存档 |
 | GET | `/api/v1/players/{id}/ledger` | 获取记忆账册 |
 | POST | `/api/v1/sessions` | 开始事件，body `{player_id,chapter_id,event_id}` |
@@ -47,7 +47,7 @@ go run ./cmd/server -addr :8090 -content ./content/chapters.json -data ./data/sa
 
 ## 校验规则
 
-内容协议为版本 6。抉择发生在战斗前，获得与遗忘立即原子写入，随后结算发奖。每星对应一点墨痕；解锁章节扣除配置成本。拓印展示与服务器共享 aspect_ratio 和 tolerance，支持宽容差。
+内容协议为版本 7。抉择发生在战斗前，获得与遗忘立即原子写入，随后结算发奖。每星对应一点墨痕；章节按事件顺序开放。拓印展示与服务器共享 aspect_ratio 和 tolerance，支持宽容差。
 
 
 - 章节必须已解锁；谜题按 JSON 定义的步骤顺序提交，答案由服务器比较，非描摹步骤错误增加 10 点侵蚀度并受最大尝试次数限制；描摹失败返回 `failed_strokes` 供单笔修正，不扣侵蚀。
@@ -63,8 +63,12 @@ go test ./...
 go build ./cmd/server
 ```
 
-## 回溯与继续（协议 6）
+## 回溯与继续（协议 7）
 
-GET /api/v1/sessions 返回当前账号最近未完成事件（没有则 session 为 null）。重复开始返回该事件。POST /api/v1/sessions/{id}/rewind 提交当前 retries 整数；失败事件恢复起点侵蚀与谜题并保留已获得墨灵，消耗 1 墨痕，序章在无墨痕时免费。请求重复不会重复扣费。
+GET /api/v1/sessions 返回当前本地玩家最近未完成事件（没有则 session 为 null）。重复开始返回该事件。POST /api/v1/sessions/{id}/rewind 提交当前 retries 整数；失败事件恢复起点侵蚀与谜题并保留已获得墨灵，消耗 1 墨痕，序章在无墨痕时免费。请求重复不会重复扣费。
 
 事件不再执行固定墙钟超时；战斗仍按配置 duration_sec 校验。记忆保留数量和白蚀清除比例额外展示，星级权重本轮不调整。
+
+## 剧情与静态拓印资源
+
+目录当前包含五章十任务（序章廊桥、社庙三任务、戏楼两任务、牌坊两任务、通天塔两任务），任务对话、三条调查线索、结语和终章三种等价回应均由 `chapters.json` 提供。每道拓印绑定 `客户端/assets/rubbings/` 下的一张静态 PNG；服务器只校验轨迹并返回稳定资源路径，不在运行时请求 image2.5 或生成图片。

@@ -1,26 +1,56 @@
 {
-  "version": 6,
+  "version": 7,
   "game_id": "yanxia-qianqiu",
   "art": {
     "prologue_bridge": {
-	  "whisper_audio": "res://assets/echo/prologue_bridge.wav",
+      "whisper_audio": "res://assets/echo/prologue_bridge.wav",
       "background": "res://assets/generated/bg_01_wind_rain_bridge.png",
       "backdrop_color": "#172b35"
     },
     "temple_incense": {
-	  "whisper_audio": "res://assets/echo/temple_incense.wav",
+      "whisper_audio": "res://assets/echo/temple_incense.wav",
       "background": "res://assets/generated/bg_02_village_temple_courtyard.png",
       "backdrop_color": "#2b2724"
     },
     "temple_guest": {
-	  "whisper_audio": "res://assets/echo/temple_guest.wav",
+      "whisper_audio": "res://assets/echo/temple_guest.wav",
       "background": "res://assets/generated/bg_02_village_temple_courtyard.png",
       "backdrop_color": "#26333a"
     },
     "temple_drum": {
-	  "whisper_audio": "res://assets/echo/temple_drum.wav",
+      "whisper_audio": "res://assets/echo/temple_drum.wav",
       "background": "res://assets/generated/bg_03_temple_white_erosion_battle.png",
       "backdrop_color": "#35272a"
+    },
+    "opera_opening": {
+      "background": "res://assets/rubbings/xi_xing_qiang.png",
+      "backdrop_color": "#80b6ce",
+      "whisper_audio": "res://assets/echo/xi_xing_qiang.wav"
+    },
+    "opera_master": {
+      "background": "res://assets/rubbings/xi_jue_chang.png",
+      "backdrop_color": "#80b6ce",
+      "whisper_audio": "res://assets/echo/xi_jue_chang.wav"
+    },
+    "archway_form": {
+      "background": "res://assets/rubbings/fang_wu_ming.png",
+      "backdrop_color": "#80b6ce",
+      "whisper_audio": "res://assets/echo/fang_wu_ming.wav"
+    },
+    "archway_craftsman": {
+      "background": "res://assets/rubbings/fang_jiang_hun.png",
+      "backdrop_color": "#d9ba78",
+      "whisper_audio": "res://assets/echo/fang_jiang_hun.wav"
+    },
+    "tower_ascent": {
+      "background": "res://assets/rubbings/tower_origin.png",
+      "backdrop_color": "#92c5a3",
+      "whisper_audio": "res://assets/echo/tower_origin.wav"
+    },
+    "tower_ledger": {
+      "background": "res://assets/rubbings/tower_epilogue.png",
+      "backdrop_color": "#c1b5db",
+      "whisper_audio": "res://assets/echo/tower_epilogue.wav"
     }
   },
   "chapters": [
@@ -37,16 +67,35 @@
           "order": 1,
           "title": "桥上平安",
           "scene": "风雨廊桥",
-          "intro": "桥心刻着正在褪色的‘平安’二字。古建呓语从雨幕深处传来：桥记着送别，也记着归来。",
+          "intro": "雨停了。你醒在桥心，手中只有一本空白册子，封底写着：请把故事交还给愿意听的人。",
           "investigations": [
-            {"label": "断裂廊檐", "position": [0.28, 0.44]},
-            {"label": "桥心刻字", "position": [0.55, 0.50]},
-            {"label": "半蚀桥栏", "position": [0.78, 0.64]}
+            {
+              "label": "断裂廊檐",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "桥心刻字",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "半蚀桥栏",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
           ],
           "objectives": [
-            "调查桥心刻字",
-            "完成墨线拓印",
-            "以斗拱承重驱散白蚀"
+            "聆听风雨廊桥的求助",
+            "调查三处线索",
+            "沿完整墨线拓印桥心刻字。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "trace",
@@ -210,13 +259,47 @@
           },
           "story": {
             "beats": [
-              "黑屏渐亮，雨声从檐角落下。白蚀像褪色的墨汁，沿桥栏一寸寸爬行。",
-              "拓印师在桥心醒来，身下压着一本空白《檐下谱》。石板上的‘平安’二字正在消退。",
-              "古建呓语：‘桥记着送别……也记着归来。香客、货郎、赶考的书生……他们都从桥上走过。’",
-              "你伸手触到刻痕，空白谱页泛起微光。第一道墨灵，正在等你记住。"
+              "拓印师：我的名字也被雨洗掉了吗？",
+              "廊桥：名字可以慢慢找。先帮我记住两个字——平安。桥栏已经快认不出回家的脚步了。",
+              "拓印师：只要把字重新写上，你就会好起来？"
             ],
-            "outro": "桥身恢复原色，雾后露出通往山间社庙的土路。呓语：‘往前走吧。社庙的香，好像很久没有点起来了……’"
-          }
+            "outro": "你把‘平安’收入檐下谱，桥栏重新染上旧木的暖色。雾后露出一条山路，路尽头的社庙正传来细弱的咳声。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "雨停了。你醒在桥心，手中只有一本空白册子，封底写着：请把故事交还给愿意听的人。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "我的名字也被雨洗掉了吗？"
+              },
+              {
+                "speaker": "廊桥",
+                "text": "名字可以慢慢找。先帮我记住两个字——平安。桥栏已经快认不出回家的脚步了。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "只要把字重新写上，你就会好起来？"
+              },
+              {
+                "speaker": "廊桥",
+                "text": "字是门，走过这里的人才是屋里的灯。去看看断檐、桥心和桥栏，你会知道该留下什么。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "好。我先听你说完，再落笔。"
+              }
+            ],
+            "clues": [
+              "断檐下面留着一块干燥的地方。桥曾替赶路的人遮雨，而不仅是让他们过河。",
+              "刻痕里压着许多细小补笔。‘平安’不是一人写成，而是一代代行人续上的祝愿。",
+              "桥栏磨出了孩子手掌的高度。送别的人总在这里等，直到远处有人挥手。"
+            ],
+            "keep_response": "廊桥：你记住的不是我的年岁，是有人盼着归来。斗拱的力，借你撑下一程。",
+            "forget_response": "廊桥：你也许忘了谁曾在这里等候，但学会的守护还留在手里。",
+            "before_battle": "廊桥：白蚀正扑向刚显影的刻字。别急，先用斗拱承住，再挥墨驱散它。"
+          },
+          "draft": false
         }
       ]
     },
@@ -233,16 +316,37 @@
           "order": 1,
           "title": "香火断",
           "scene": "社庙正殿",
-          "intro": "香炉倾倒，主梁断裂半悬。呓语说：春社那天，全村的人都来。后来香断了，村子也慢慢空了。",
+          "intro": "社庙正殿的主梁悬在半空。梁下并排放着几只大小不同的旧碗。",
           "investigations": [
-            {"label": "断裂主梁", "position": [0.67, 0.38]},
-            {"label": "倾倒香炉", "position": [0.55, 0.50]},
-            {"label": "蒙尘牌位", "position": [0.79, 0.57]}
+            {
+              "label": "倾倒香炉",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "主梁榫口",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "供桌记号",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
           ],
           "objectives": [
-            "调查香炉、断梁与牌位",
-            "将三块斗拱构件归位",
-            "击退一波白蚀"
+            "聆听社庙正殿的求助",
+            "调查三处线索",
+            "将左燕尾榫放入主梁榫口。",
+            "将承重斗放入主梁中央。",
+            "将右燕尾榫归位。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "join",
@@ -304,28 +408,83 @@
           },
           "story": {
             "beats": [
-              "社庙正殿的香炉倾倒，主梁断裂半悬，牌位上还能辨出褪色的村名。",
-              "古建呓语：‘春社那天，全村的人都来。香要烧得旺，庄稼才肯长。’",
-              "‘后来……后来香断了，村子也就慢慢空了。’"
+              "社庙：他们凑不出一根好木头，就把各家的余料抬来。那年春社，屋顶总算没有漏雨。",
+              "拓印师：我以为你记着的是香火。",
+              "社庙：也记着。可香下面，是来修屋顶的人。别只擦亮香炉，抬头看看梁。"
             ],
-            "outro": "最后一块斗拱扣入榫口，香灰重新聚成一缕青烟。"
-          }
+            "outro": "三块构件依次扣合，悬梁终于落稳。你没有凭空点起香火，只扶正了香炉。侧厢忽然传来一句：饭凉了，也请进来坐。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "社庙正殿的主梁悬在半空。梁下并排放着几只大小不同的旧碗。"
+              },
+              {
+                "speaker": "社庙",
+                "text": "他们凑不出一根好木头，就把各家的余料抬来。那年春社，屋顶总算没有漏雨。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "我以为你记着的是香火。"
+              },
+              {
+                "speaker": "社庙",
+                "text": "也记着。可香下面，是来修屋顶的人。别只擦亮香炉，抬头看看梁。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "榫口还在，按左、中、右的承重点归位，就能撑起来。"
+              },
+              {
+                "speaker": "社庙",
+                "text": "替我把这份齐心记住。香可以再点，肯一起动手的人不该被忘掉。"
+              }
+            ],
+            "clues": [
+              "倾倒香炉下有一圈新旧不同的灰。有人在村子渐空后仍回来看过。",
+              "三道榫口由浅至深分布：先左、再中、最后右。受力靠咬合，而不靠把木头硬钉在一起。",
+              "供桌背面刻着捐木、送饭、搬石的记号，没有哪一笔比另一笔更大。"
+            ],
+            "keep_response": "社庙：承住一座屋的，从来不只一根梁。你愿意记住他们，香就没有断。",
+            "forget_response": "社庙：谱页腾出了位置。被放下的人仍曾来过，账册会替你记下这次取舍。",
+            "before_battle": "社庙：梁刚稳住，白蚀还在拉扯榫口。用斗拱守住承重点。"
+          },
+          "draft": false
         },
         {
           "id": "temple_guest",
           "order": 2,
           "title": "檐下客",
           "scene": "社庙侧厢",
-          "intro": "门楣匾额缺了一字，供桌上的冷饭和旧蓑衣仍在等候过路人。",
+          "intro": "侧厢门楣缺了一个字，只剩‘□安’。半碗冷饭旁叠着一件补过的蓑衣。",
           "investigations": [
-            {"label": "残缺匾额", "position": [0.42, 0.38]},
-            {"label": "旧蓑衣", "position": [0.55, 0.50]},
-            {"label": "冷饭碗", "position": [0.27, 0.67]}
+            {
+              "label": "半碗冷饭",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "旧蓑衣",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "残缺门楣",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
           ],
           "objectives": [
-            "调查匾额、冷饭碗与旧蓑衣",
-            "推理匾额缺字",
-            "沿完整字形完成拓印"
+            "聆听社庙侧厢的求助",
+            "调查三处线索",
+            "‘□安’缺少哪个字？",
+            "沿‘宁安’的墨线完成拓印。",
+            "收录墨灵"
           ],
           "puzzle": {
             "type": "trace",
@@ -500,29 +659,83 @@
           },
           "story": {
             "beats": [
-              "侧厢门楣只剩‘□安’，供桌上的冷饭和旧蓑衣仍在等候过路人。",
-              "古建呓语：‘下雨天，行路的、要饭的，都到庙檐下躲雨。’",
-              "‘庙祝说：檐下不拒客。一碗冷饭，也分半碗。’"
+              "社庙·客声：那夜我浑身是雨，不敢跨过门槛。他却先把碗推了过来。",
+              "拓印师：他认得你吗？",
+              "社庙·客声：不认得。庙祝说，先让人安下心，才问他从哪里来。"
             ],
-            "outro": "缺失的字回到匾额，檐下的雨声忽然变得温和。"
-          }
+            "outro": "‘宁安’回到门楣，冷饭的记忆升起一点温热。前坪有孩子敲着空碗喊：开社啦——可回应他的鼓声，迟迟没有响起。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "侧厢门楣缺了一个字，只剩‘□安’。半碗冷饭旁叠着一件补过的蓑衣。"
+              },
+              {
+                "speaker": "社庙·客声",
+                "text": "那夜我浑身是雨，不敢跨过门槛。他却先把碗推了过来。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "他认得你吗？"
+              },
+              {
+                "speaker": "社庙·客声",
+                "text": "不认得。庙祝说，先让人安下心，才问他从哪里来。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "不是热闹的平安，是让陌生人也能宁静下来。缺的是‘宁’。"
+              },
+              {
+                "speaker": "社庙",
+                "text": "把它拓好吧。以后谁路过，都该知道这道门没有关。"
+              }
+            ],
+            "clues": [
+              "旧碗边有两双筷子的磨痕。那碗饭曾被分成两份。",
+              "蓑衣补丁缝得很密，却没有留下主人的名字。这里的照料不以相识为条件。",
+              "门内残纸写着‘心宁而后身安’。缺字的答案就在待客的心意里。"
+            ],
+            "keep_response": "社庙·客声：记住这一点暖，就够我走过后来的长路。藻井的清明交给你。",
+            "forget_response": "社庙·客声：你不再记得我的声音，也别忘了在别人淋雨时留一处屋檐。",
+            "before_battle": "守住檐下这份安宁。"
+          },
+          "draft": false
         },
         {
           "id": "temple_drum",
           "order": 3,
           "title": "社鼓声",
           "scene": "社庙前坪",
-          "intro": "社鼓蒙灰，鼓面白蚀斑驳。鼓一响，社就开了；鼓声停了，连孩子的声音也听不见了。",
+          "intro": "前坪的社鼓蒙着白斑。槌柄上缠着一截褪色红绳，树下有深浅不同的脚印。",
           "investigations": [
-            {"label": "香樟红绳", "position": [0.27, 0.42]},
-            {"label": "白蚀鼓面", "position": [0.55, 0.50]},
-            {"label": "压住的鼓槌", "position": [0.73, 0.70]}
+            {
+              "label": "社鼓纹样",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "红绳鼓槌",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "树下脚印",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
           ],
           "objectives": [
-            "用藻井净化鼓面",
-            "按鼓纹墨线拓印",
-            "击退强化白蚀",
-            "拓印社鼓记忆，回看心舍账册"
+            "聆听社庙前坪的求助",
+            "调查三处线索",
+            "使用藻井净化鼓面白蚀斑。",
+            "沿显影出的鼓纹完成拓印。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "purify_trace",
@@ -742,14 +955,48 @@
           },
           "story": {
             "beats": [
-              "前坪的社鼓蒙灰，白蚀斑驳地覆盖住鼓面纹样；鼓槌还压在鼓下。",
-              "古建呓语：‘鼓一响，社就开了。小孩儿追着鼓点跑……’",
-              "‘后来鼓声停了，连孩子的声音也听不见了。’",
-              "净化显影出一圈旧墨线，鼓声记忆正在等待拓印。"
+              "社庙·童声：大家说我太小，敲不响鼓。我就在边上数：一、二、三！",
+              "拓印师：你等的是春天，还是一起回来的人？",
+              "社庙·童声：都有。鼓一响，卖糖的、唱戏的、在外做工的，就都挤进院子了。"
             ],
-            "outro": "鼓面传出第一声回响，香樟树上的红绳随风轻摆。识海容量扩展为六格。",
-            "chapter_outro": "东南方传来若有若无的锣鼓声。呓语：‘戏楼要开场了。可是那锣鼓，怎么越敲越远……’"
-          }
+            "outro": "鼓声越过空院，枝头红绳轻晃。檐下谱多展开一格，心舍可以容纳六道记忆。远处戏楼以一声锣响回应，仿佛有人终于等到开场。",
+            "chapter_outro": "东南方传来若有若无的锣鼓声。呓语：‘戏楼要开场了。可是那锣鼓，怎么越敲越远……’",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "前坪的社鼓蒙着白斑。槌柄上缠着一截褪色红绳，树下有深浅不同的脚印。"
+              },
+              {
+                "speaker": "社庙·童声",
+                "text": "大家说我太小，敲不响鼓。我就在边上数：一、二、三！"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "你等的是春天，还是一起回来的人？"
+              },
+              {
+                "speaker": "社庙·童声",
+                "text": "都有。鼓一响，卖糖的、唱戏的、在外做工的，就都挤进院子了。"
+              },
+              {
+                "speaker": "社庙",
+                "text": "白蚀遮住了纹样。先用藻井洗去灰白，再沿旧墨线拓印。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "这回不用等谁来敲第一下。我们一起。"
+              }
+            ],
+            "clues": [
+              "鼓面白斑下面藏着回旋纹，说明纹样仍在，先净化才能看清。",
+              "红绳打成三个结，孩子曾用它记鼓点，也记归来的人数。",
+              "树下的旧脚印绕鼓成圈。春社是人重新相聚的日子。"
+            ],
+            "keep_response": "社庙·童声：听见了吗？这一次，我也敲响了！",
+            "forget_response": "社庙：新鼓声响起，旧声音渐远。你失去一段私人的回声，却没有失去继续守护的手艺。",
+            "before_battle": "社庙：鼓声把白蚀引来了。施展藻井净化，再用挥墨护住鼓面。"
+          },
+          "draft": false
         }
       ]
     },
@@ -758,7 +1005,7 @@
       "order": 2,
       "title": "第二章·戏楼",
       "summary": "戏班绝响散在空场，飞檐记忆等待重新入腔。",
-      "unlock_cost": 3,
+      "unlock_cost": 0,
       "next_chapter": "archway",
       "events": [
         {
@@ -766,10 +1013,13 @@
           "order": 1,
           "title": "开场锣",
           "scene": "戏楼后台",
-          "intro": "行头箱错位，锣鼓声被白蚀吞去半拍。",
+          "intro": "戏楼里只亮着一盏台灯。水袖从行头箱垂下，锣鼓声总少了半拍。",
           "objectives": [
-            "按纹样归类戏袍行当",
-            "拓印开场锣的节拍"
+            "聆听戏楼后台的求助",
+            "调查三处线索",
+            "水袖与凤冠属于哪个行当？",
+            "沿锣面纹样拓印开场节拍。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "pattern",
@@ -1019,22 +1269,83 @@
           },
           "story": {
             "beats": [
-              "行头箱错位，锣鼓声被白蚀吞去半拍。"
+              "戏楼：台上的人以为没人来了，不肯开嗓。台下的人以为不开戏了，也不肯落座。",
+              "拓印师：总得有人先开口。",
+              "戏楼·旦角回声：我是旦角，不是箱上那块褪色的标签。先替我找回水袖，再把唱腔里的行墨拓下来。"
             ],
-            "outro": "一腔唱尽台上台下的悲欢。"
+            "outro": "开场锣终于落在完整的一拍上。你抬头看见二楼空座间浮出一点灯火，后台的旧戏服却轻轻落泪：还有半句绝唱，没人敢接。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "戏楼里只亮着一盏台灯。水袖从行头箱垂下，锣鼓声总少了半拍。"
+              },
+              {
+                "speaker": "戏楼",
+                "text": "台上的人以为没人来了，不肯开嗓。台下的人以为不开戏了，也不肯落座。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "总得有人先开口。"
+              },
+              {
+                "speaker": "戏楼·旦角回声",
+                "text": "我是旦角，不是箱上那块褪色的标签。先替我找回水袖，再把唱腔里的行墨拓下来。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "你最想唱给谁听？"
+              },
+              {
+                "speaker": "戏楼·旦角回声",
+                "text": "唱给愿意停下的人。哪怕台下只有一人，这一声也该完整。"
+              }
+            ],
+            "clues": [
+              "水袖柔长，旁边的戏单还辨得‘旦’字。角色线索来自行头与戏单。",
+              "锣边磨出一个小小缺口，许多代开场都敲在同一处。",
+              "台口记着一段起落墨线，唱腔虽散，行腔的节奏还在。"
+            ],
+            "keep_response": "戏楼：飞檐把一口气送得更远。接住它，也替台下的人留一个座位。",
+            "forget_response": "戏楼：你放下了旧回声。没有人能独自装下整座戏楼，唱过的这一声会留在账册。",
+            "before_battle": "戏楼：白蚀吞掉了台口的回声。施展飞檐破开灰幕，再让唱腔回到台上。"
           },
-          "draft": true
+          "draft": false,
+          "investigations": [
+            {
+              "label": "水袖戏单",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "开场旧锣",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "台口墨线",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
+          ]
         },
         {
           "id": "opera_master",
           "order": 2,
           "title": "名角儿",
           "scene": "戏楼舞台",
-          "intro": "台步点位和布景板散成一片，名角儿的绝唱只剩半句。",
+          "intro": "后台并排放着一双大戏鞋和一双小戏鞋。布景散落，旧戏服仍朝着台口。",
           "objectives": [
-            "复原台步点位",
-            "对齐布景板",
-            "选择要守护的戏曲记忆"
+            "聆听戏楼舞台的求助",
+            "调查三处线索",
+            "将第一步落在正确的台步点。",
+            "将水袖纹布景板对齐。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "join",
@@ -1078,18 +1389,76 @@
           "reward": {
             "memory_id": "xi_jue_chang",
             "choices": [
-              "forget_childhood",
-              "keep_childhood"
-            ],
-            "capacity_increase": 1
+              "keep",
+              "forget"
+            ]
           },
           "story": {
             "beats": [
-              "台步点位和布景板散成一片，名角儿的绝唱只剩半句。"
+              "戏楼·师父回声：他们只想记住我最响亮的一声，却不肯留下孩子唱错的那一句。",
+              "拓印师：因为那句不够好听？",
+              "戏楼·师父回声：可我把最后一口气，用来教他接下一句。若只剩我的绝唱，这门手艺便到我为止。"
             ],
-            "outro": "记住绝唱，就要面对被抹去的童年社戏。"
+            "outro": "你没有让绝唱永远循环，而是替它接上了一句尚显稚嫩的新声。通往石牌坊的门打开了，门后有人问：一座留名的坊，为什么没有匠人的名字？",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "后台并排放着一双大戏鞋和一双小戏鞋。布景散落，旧戏服仍朝着台口。"
+              },
+              {
+                "speaker": "戏楼·师父回声",
+                "text": "他们只想记住我最响亮的一声，却不肯留下孩子唱错的那一句。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "因为那句不够好听？"
+              },
+              {
+                "speaker": "戏楼·师父回声",
+                "text": "可我把最后一口气，用来教他接下一句。若只剩我的绝唱，这门手艺便到我为止。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "我会把梅字台步与中央布景归好，也记住那个还在学的人。"
+              },
+              {
+                "speaker": "戏楼",
+                "text": "谱页有限，抉择会痛。但别把‘不完美’误认成‘不值得’。"
+              }
+            ],
+            "clues": [
+              "师父在地上画了一枝梅，弟子的台步总从‘梅’位起。",
+              "中央布景留出一扇门，让后来的人可以登台。",
+              "小戏鞋边的墨迹被改过许多次。练习的痕迹也是传承的一部分。"
+            ],
+            "keep_response": "戏楼·师父回声：别替他唱完。听他慢慢学，会有他自己的声音。",
+            "forget_response": "戏楼：一页旧声退去了。你亲手做过的选择，比一张无瑕的谱更需要被诚实记下。",
+            "before_battle": "戏楼：护住通向后台的门。用飞檐驱散白蚀，给后来的人留出登台的位置。"
           },
-          "draft": true
+          "draft": false,
+          "investigations": [
+            {
+              "label": "梅字台步",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "中央布景",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "弟子戏鞋",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1098,7 +1467,7 @@
       "order": 3,
       "title": "第三章·牌坊",
       "summary": "名与实刻在四柱三间之间，无名匠人的墨线仍未干。",
-      "unlock_cost": 5,
+      "unlock_cost": 0,
       "next_chapter": "tower",
       "events": [
         {
@@ -1106,10 +1475,13 @@
           "order": 1,
           "title": "四柱三间",
           "scene": "官道牌坊",
-          "intro": "牌坊正面褪色，四柱三间的规制只剩轮廓。",
+          "intro": "牌坊横跨旧道，碑额上的名字十分清楚，柱脚的凿痕却几乎消失。",
           "objectives": [
-            "识别牌坊形制",
-            "归位残缺构件"
+            "聆听官道牌坊的求助",
+            "调查三处线索",
+            "这座牌坊的形制是？",
+            "将匾额托斗归位。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "pattern",
@@ -1159,22 +1531,83 @@
           },
           "story": {
             "beats": [
-              "牌坊正面褪色，四柱三间的规制只剩轮廓。"
+              "牌坊：路过的人总仰头念名字，很少低头看我怎么站着。",
+              "拓印师：四根柱子，三处开间。把中央构件归位，重量才传得到两侧。",
+              "牌坊：你看见规制了。再往下看，石脚背面有一排没有署名的手印。"
             ],
-            "outro": "无名匠人的手艺也值得被记住。"
+            "outro": "中央构件归位，牌坊重新立稳。柱脚的手印一一显现，其中一只手指向背面的营造刻痕：那里没有名字，却有一套清楚的做法。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "牌坊横跨旧道，碑额上的名字十分清楚，柱脚的凿痕却几乎消失。"
+              },
+              {
+                "speaker": "牌坊",
+                "text": "路过的人总仰头念名字，很少低头看我怎么站着。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "四根柱子，三处开间。把中央构件归位，重量才传得到两侧。"
+              },
+              {
+                "speaker": "牌坊",
+                "text": "你看见规制了。再往下看，石脚背面有一排没有署名的手印。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "建造它的人，为什么没有自己的位置？"
+              },
+              {
+                "speaker": "牌坊",
+                "text": "也许他们没来得及写。也许有人觉得不必写。你可以从今天开始读。"
+              }
+            ],
+            "clues": [
+              "柱脚完整保存四个承重点，中间形成三个通道，对应四柱三间。",
+              "中央榫槽磨痕最深，是连接两侧构件的受力节点。",
+              "石背留着搬运者的手印，大小不同，没有一只手能独自举起整块石头。"
+            ],
+            "keep_response": "牌坊：你记住了无名者，石头才不只替显赫的人说话。",
+            "forget_response": "牌坊：旧名字的回声离开了心舍。你仍可以选择把无名者的位置留在世界上。",
+            "before_battle": "牌坊：白蚀正抹平柱脚手印。施展飞檐越过灰幕，护住承重节点。"
           },
-          "draft": true
+          "draft": false,
+          "investigations": [
+            {
+              "label": "四柱三间",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "中央榫槽",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "无名手印",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
+          ]
         },
         {
           "id": "archway_craftsman",
           "order": 2,
           "title": "无名匠",
           "scene": "牌坊背面",
-          "intro": "营造记录没有署名，只有一条条与木石共鸣的墨线。",
+          "intro": "背面的营造记录写满尺寸，署名处却空着。凿子与木屑落在石台边。",
           "objectives": [
-            "以斗拱压住构件",
-            "以飞檐触发远端机关",
-            "决定名与实的归属"
+            "聆听牌坊背面的求助",
+            "调查三处线索",
+            "用斗拱承住摇晃的牌坊。",
+            "用飞檐触发远端墨印。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "combo",
@@ -1211,15 +1644,75 @@
             "choices": [
               "keep",
               "forget"
-            ]
+            ],
+            "capacity_increase": 1
           },
           "story": {
             "beats": [
-              "营造记录没有署名，只有一条条与木石共鸣的墨线。"
+              "牌坊·匠人回声：若后人知道怎样修它，不知道我的名字，也不算白做。",
+              "拓印师：可我还是想替你补上。",
+              "牌坊·匠人回声：别猜。猜出来的名字会盖住真正的空白。记下你确实看见的手、工具和做法。"
             ],
-            "outro": "名字可以被风吹散，手艺留下的结构不会。"
+            "outro": "刻痕连成通向七层墨塔的路线。檐下谱扩至七格，却仍装不下所有故事。塔顶传来一个陌生而熟悉的声音：我曾经试过，让世上再无悲伤。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "背面的营造记录写满尺寸，署名处却空着。凿子与木屑落在石台边。"
+              },
+              {
+                "speaker": "牌坊·匠人回声",
+                "text": "若后人知道怎样修它，不知道我的名字，也不算白做。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "可我还是想替你补上。"
+              },
+              {
+                "speaker": "牌坊·匠人回声",
+                "text": "别猜。猜出来的名字会盖住真正的空白。记下你确实看见的手、工具和做法。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "用斗拱承住构件，再借飞檐点亮高处刻痕。让别人也能照着修。"
+              },
+              {
+                "speaker": "牌坊·匠人回声",
+                "text": "这就对了。传下去的不是一块永不坏的石头，是坏了以后仍有人肯修。"
+              }
+            ],
+            "clues": [
+              "凿口有三层深浅，显示构件曾被不同的手修过。",
+              "尺寸记号相互呼应，低处承重点需要斗拱稳住。",
+              "高处刻痕反光微弱，借飞檐的灵动才能让整段记录显影。"
+            ],
+            "keep_response": "牌坊·匠人回声：不必替我编一个响亮的名字。把修它的办法交给下个人。",
+            "forget_response": "牌坊：你亲手抹去一页，也看见留下的人并非完整。愿你承认缺口，而不编造补白。",
+            "before_battle": "牌坊：两波白蚀正冲击梁柱。斗拱承重，飞檐破障，把所学连成一次真正的修复。"
           },
-          "draft": true
+          "draft": false,
+          "investigations": [
+            {
+              "label": "凿口木屑",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "承重点",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "高处刻痕",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1228,17 +1721,21 @@
       "order": 4,
       "title": "第四章·通天塔",
       "summary": "白蚀源头在塔顶，初代拓印师封存的终极记忆等待选择。",
-      "unlock_cost": 8,
+      "unlock_cost": 0,
       "events": [
         {
           "id": "tower_ascent",
           "order": 1,
           "title": "登塔",
           "scene": "通天塔七层",
-          "intro": "每一层都保存着一次被遗忘的修复，七层墨线交叠成白蚀的源头。",
+          "intro": "墨塔每层都收着被删去的谱页。越往上，纸越白，人的轮廓也越淡。",
           "objectives": [
-            "完成综合拓印",
-            "在限次内修复塔心"
+            "聆听通天塔七层的求助",
+            "调查三处线索",
+            "拓印塔心第一道墨线。",
+            "用斗拱承住第七层。",
+            "用藻井净化逆结晶。",
+            "收录墨灵并守住记忆"
           ],
           "puzzle": {
             "type": "combo",
@@ -1356,28 +1853,88 @@
           "reward": {
             "memory_id": "tower_origin",
             "choices": [
-              "restore_all",
-              "preserve_forgetfulness",
-              "restore_chosen"
+              "keep",
+              "forget"
             ]
           },
           "story": {
             "beats": [
-              "每一层都保存着一次被遗忘的修复，七层墨线交叠成白蚀的源头。"
+              "初代拓印师·塔中回声：我抹去战乱，抹去离别，抹去羞耻与失败。我只想让他们不再痛。",
+              "拓印师：可你也抹去了为什么相助，为什么重建，为什么等一个人回来。",
+              "初代拓印师·塔中回声：我留下了完好的屋子，为什么里面越来越空？"
             ],
-            "outro": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。"
+            "outro": "三重白蚀散去，塔心显露一张空桌。初代的声音不再要求原谅，只把笔推向你：这次，由活着的人决定怎样接着写。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "墨塔每层都收着被删去的谱页。越往上，纸越白，人的轮廓也越淡。"
+              },
+              {
+                "speaker": "初代拓印师·塔中回声",
+                "text": "我抹去战乱，抹去离别，抹去羞耻与失败。我只想让他们不再痛。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "可你也抹去了为什么相助，为什么重建，为什么等一个人回来。"
+              },
+              {
+                "speaker": "初代拓印师·塔中回声",
+                "text": "我留下了完好的屋子，为什么里面越来越空？"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "因为活着的人会难过，也会改变。你替他们删掉了再次选择的来路。"
+              },
+              {
+                "speaker": "墨塔",
+                "text": "把第一道墨线接回承重点，再净化逆结晶。不要替我辩解，替后来的人打开门。"
+              }
+            ],
+            "clues": [
+              "第一层谱页记着灾后重建，灾难被删去后，连伸手相助的缘由也消失了。",
+              "第七层承重线断在纸白处，斗拱能稳住结构，不能替它编造过去。",
+              "逆结晶把被删去的情绪压成白蚀。用藻井净化，让记忆重新可以被阅读。"
+            ],
+            "keep_response": "初代回声：请连我的错误一起记下。别让后来的人只看见一座完好的塔。",
+            "forget_response": "墨塔：你又做了一次有限的取舍。承认自己无法全知，才不会把个人的谱当成整个世界。",
+            "before_battle": "墨塔：白蚀有三层。用斗拱护住承点、飞檐破开灰幕、藻井净化逆结晶；每种技艺都要在此回应一次。"
           },
-          "draft": true
+          "draft": false,
+          "investigations": [
+            {
+              "label": "被删谱页",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "第七层墨线",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "逆结晶",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
+          ]
         },
         {
           "id": "tower_ledger",
           "order": 2,
           "title": "千层墨",
           "scene": "通天塔记忆长廊",
-          "intro": "长廊回放拓印师一路记住与遗忘的选择，账册中的每一道灰痕都发出回声。",
+          "intro": "长廊摆着你亲手拓下的记忆，也摆着你亲手放开的空页。两者都没有消失过。",
           "objectives": [
-            "回看记忆账册",
-            "选择要拓印回世界的记忆"
+            "聆听古建与初代的最后回应",
+            "调查记住、遗忘与留白三处线索",
+            "选择交还人间的回答",
+            "装订最后一页檐下谱"
           ],
           "puzzle": {
             "type": "choice",
@@ -1385,14 +1942,14 @@
             "steps": [
               {
                 "id": "tower_choice",
-                "kind": "choice",
-                "prompt": "你愿意将哪些记忆拓印回世界？",
+                "kind": "narrative",
+                "prompt": "这支笔将怎样交还人间？三种回应都可以完成旅程。",
                 "options": [
-                  "all",
-                  "none",
-                  "kept"
+                  "传下修复的方法",
+                  "留下所有取舍的记录",
+                  "留白让后来人续写"
                 ],
-                "answer": "kept",
+                "answer": "",
                 "points": 100
               }
             ]
@@ -1400,18 +1957,76 @@
           "reward": {
             "memory_id": "tower_epilogue",
             "choices": [
-              "all",
-              "none",
-              "kept"
+              "keep",
+              "forget"
             ]
           },
           "story": {
             "beats": [
-              "长廊回放拓印师一路记住与遗忘的选择，账册中的每一道灰痕都发出回声。"
+              "拓印师：我来时想找回自己的名字，后来却一直在替别人留下声音。",
+              "廊桥的回声：你怎样等人归来，就是你的名字。",
+              "戏楼的回声：你肯听下一句，就是你的名字。"
             ],
-            "outro": "只记住值得记住的，让世界自己选择颜色。"
+            "outro": "你把檐下谱放在塔门口。有人补上家门前的桥，有人画出从未登台的孩子，也有人在空白处写下疑问。屋檐不再只收留过去，它开始收留明天。",
+            "dialogue": [
+              {
+                "speaker": "檐下谱",
+                "text": "长廊摆着你亲手拓下的记忆，也摆着你亲手放开的空页。两者都没有消失过。"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "我来时想找回自己的名字，后来却一直在替别人留下声音。"
+              },
+              {
+                "speaker": "廊桥的回声",
+                "text": "你怎样等人归来，就是你的名字。"
+              },
+              {
+                "speaker": "戏楼的回声",
+                "text": "你肯听下一句，就是你的名字。"
+              },
+              {
+                "speaker": "初代拓印师·塔中回声",
+                "text": "这支笔不该替所有人决定。你愿意把它交回去吗？"
+              },
+              {
+                "speaker": "拓印师",
+                "text": "我会留下能够证实的记忆，也留下空白。愿意接笔的人，请从自己的故事开始。"
+              }
+            ],
+            "clues": [
+              "记住的拓印仍有颜色，它们是这趟旅程真实携带的部分。",
+              "遗忘页的账册没有被擦掉。承认取舍，才能看见自己记忆的边界。",
+              "桌上有三支未用的笔。世界的后续应由不止一个人写下。"
+            ],
+            "keep_response": "檐下谱：这本谱终于有了最后一页——但没有写‘终’。",
+            "forget_response": "檐下谱：你为新页放下了一段旧声。它仍在账册里，提醒后来的人：这只是你的一种选择。",
+            "before_battle": ""
           },
-          "draft": true
+          "draft": false,
+          "investigations": [
+            {
+              "label": "彩色拓印",
+              "position": [
+                0.28,
+                0.44
+              ]
+            },
+            {
+              "label": "遗忘账册",
+              "position": [
+                0.55,
+                0.5
+              ]
+            },
+            {
+              "label": "留白之笔",
+              "position": [
+                0.78,
+                0.64
+              ]
+            }
+          ]
         }
       ]
     }
@@ -1428,7 +2043,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：桥记着每一次送别与归来。",
       "color": "#d9ba78",
       "tone_hz": 261.63,
-      "echo_audio": "res://assets/echo/yan_ping_an.wav"
+      "echo_audio": "res://assets/echo/yan_ping_an.wav",
+      "image": "res://assets/rubbings/yan_ping_an.png"
     },
     "she_cheng_xiang": {
       "id": "she_cheng_xiang",
@@ -1441,7 +2057,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：一炷香把一村人的愿望托给屋梁。",
       "color": "#d9ba78",
       "tone_hz": 261.63,
-      "echo_audio": "res://assets/echo/she_cheng_xiang.wav"
+      "echo_audio": "res://assets/echo/she_cheng_xiang.wav",
+      "image": "res://assets/rubbings/she_cheng_xiang.png"
     },
     "she_ning_an": {
       "id": "she_ning_an",
@@ -1454,7 +2071,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：檐下不拒客，一碗冷饭也分半碗。",
       "color": "#92c5a3",
       "tone_hz": 329.63,
-      "echo_audio": "res://assets/echo/she_ning_an.wav"
+      "echo_audio": "res://assets/echo/she_ning_an.wav",
+      "image": "res://assets/rubbings/she_ning_an.png"
     },
     "she_hui_chun": {
       "id": "she_hui_chun",
@@ -1467,7 +2085,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：鼓声唤回春社，也唤回孩子们的脚步。",
       "color": "#92c5a3",
       "tone_hz": 329.63,
-      "echo_audio": "res://assets/echo/she_hui_chun.wav"
+      "echo_audio": "res://assets/echo/she_hui_chun.wav",
+      "image": "res://assets/rubbings/she_hui_chun.png"
     },
     "xi_xing_qiang": {
       "id": "xi_xing_qiang",
@@ -1480,7 +2099,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：一腔唱尽台上台下的悲欢。",
       "color": "#80b6ce",
       "tone_hz": 392,
-      "echo_audio": "res://assets/echo/xi_xing_qiang.wav"
+      "echo_audio": "res://assets/echo/xi_xing_qiang.wav",
+      "image": "res://assets/rubbings/xi_xing_qiang.png"
     },
     "xi_jue_chang": {
       "id": "xi_jue_chang",
@@ -1493,7 +2113,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：记住绝唱，就要面对被抹去的童年社戏。",
       "color": "#80b6ce",
       "tone_hz": 392,
-      "echo_audio": "res://assets/echo/xi_jue_chang.wav"
+      "echo_audio": "res://assets/echo/xi_jue_chang.wav",
+      "image": "res://assets/rubbings/xi_jue_chang.png"
     },
     "fang_wu_ming": {
       "id": "fang_wu_ming",
@@ -1506,7 +2127,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：无名匠人的手艺也值得被记住。",
       "color": "#80b6ce",
       "tone_hz": 392,
-      "echo_audio": "res://assets/echo/fang_wu_ming.wav"
+      "echo_audio": "res://assets/echo/fang_wu_ming.wav",
+      "image": "res://assets/rubbings/fang_wu_ming.png"
     },
     "fang_jiang_hun": {
       "id": "fang_jiang_hun",
@@ -1519,7 +2141,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：名字可以被风吹散，手艺留下的结构不会。",
       "color": "#d9ba78",
       "tone_hz": 261.63,
-      "echo_audio": "res://assets/echo/fang_jiang_hun.wav"
+      "echo_audio": "res://assets/echo/fang_jiang_hun.wav",
+      "image": "res://assets/rubbings/fang_jiang_hun.png"
     },
     "tower_origin": {
       "id": "tower_origin",
@@ -1532,7 +2155,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
       "color": "#92c5a3",
       "tone_hz": 329.63,
-      "echo_audio": "res://assets/echo/tower_origin.wav"
+      "echo_audio": "res://assets/echo/tower_origin.wav",
+      "image": "res://assets/rubbings/tower_origin.png"
     },
     "tower_epilogue": {
       "id": "tower_epilogue",
@@ -1545,7 +2169,8 @@
       "forgotten_text": "这段记忆已从心舍抹去：只记住值得记住的，让世界自己选择颜色。",
       "color": "#c1b5db",
       "tone_hz": 440,
-      "echo_audio": "res://assets/echo/tower_epilogue.wav"
+      "echo_audio": "res://assets/echo/tower_epilogue.wav",
+      "image": "res://assets/rubbings/tower_epilogue.png"
     }
   },
   "skills": {

@@ -39,6 +39,7 @@ type LedgerEntry struct {
 }
 
 type EventResult struct {
+	NarrativeChoice    string    `json:"narrative_choice,omitempty"`
 	MemoriesKept       int       `json:"memories_kept"`
 	MemoriesAcquired   int       `json:"memories_acquired"`
 	BattleClearPercent int       `json:"battle_clear_percent"`
@@ -59,6 +60,7 @@ type EventResult struct {
 // looked up from the content catalog at verification time and are never sent
 // to the client.
 type EventSession struct {
+	NarrativeChoice string         `json:"narrative_choice,omitempty"`
 	StartErosion    int            `json:"start_erosion"`
 	Retries         int            `json:"retries"`
 	ID              string         `json:"id"`

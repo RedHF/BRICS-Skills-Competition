@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/crypto/bcrypt"
 	"os"
 	"path/filepath"
 	"sync"
@@ -20,21 +19,12 @@ import (
 
 const databaseVersion = 2
 
-type Account struct {
-	Username     string `json:"username"`
-	PasswordHash string `json:"password_hash,omitempty"`
-	PlayerID     string `json:"player_id"`
-	Provider     string `json:"provider,omitempty"`
-	Subject      string `json:"subject,omitempty"`
-}
-
-var ErrAccountExists = errors.New("account already exists")
-
 type database struct {
-	Accounts map[string]Account            `json:"accounts"`
-	Version  int                           `json:"version"`
-	Players  map[string]model.Player       `json:"players"`
-	Sessions map[string]model.EventSession `json:"sessions"`
+	LegacyAccounts json.RawMessage               `json:"accounts,omitempty"`
+	LocalPlayerID  string                        `json:"local_player_id,omitempty"`
+	Version        int                           `json:"version"`
+	Players        map[string]model.Player       `json:"players"`
+	Sessions       map[string]model.EventSession `json:"sessions"`
 }
 
 type Store struct {
@@ -65,25 +55,14 @@ func Open(path string) (*Store, error) {
 	if err := json.Unmarshal(b, &s.db); err != nil {
 		return nil, fmt.Errorf("decode store %q: %w", path, err)
 	}
-	if s.db.Version != databaseVersion || s.db.Players == nil || s.db.Sessions == nil || s.db.Accounts == nil {
+	if s.db.Version != databaseVersion || s.db.Players == nil || s.db.Sessions == nil {
 		return nil, fmt.Errorf("invalid store structure or version in %q", path)
-	}
-	for key, account := range s.db.Accounts {
-		if _, exists := s.db.Players[account.PlayerID]; !exists {
-			return nil, fmt.Errorf("account %q references missing player", key)
-		}
-		if account.Provider == "" {
-			if _, err := bcrypt.Cost([]byte(account.PasswordHash)); err != nil {
-				return nil, fmt.Errorf("account %q has invalid password hash: %w", key, err)
-			}
-		}
 	}
 	return s, nil
 }
 
 func newDatabase() database {
 	return database{
-		Accounts: make(map[string]Account),
 		Version:  databaseVersion,
 		Players:  make(map[string]model.Player),
 		Sessions: make(map[string]model.EventSession),
@@ -396,33 +375,32 @@ func newPlayer(newID string) model.Player {
 	}
 }
 
-func (s *Store) GetAccount(key string) (Account, bool) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	account, ok := s.db.Accounts[key]
-	return account, ok
-}
-
-// Account and player are created in one JSON transaction.
-func (s *Store) CreateAccount(key string, account Account, displayName string) (Account, error) {
+// LocalPlayer restores the selected solo save. Legacy records remain intact.
+func (s *Store) LocalPlayer() (model.Player, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	if _, exists := s.db.Accounts[key]; exists {
-		return Account{}, ErrAccountExists
+	if p, ok := s.db.Players[s.db.LocalPlayerID]; ok {
+		return clonePlayer(p), nil
 	}
-	id, err := newIDValue("p")
-	if err != nil {
-		return Account{}, err
+	var selected model.Player
+	for _, p := range s.db.Players {
+		if selected.ID == "" || p.UpdatedAt.After(selected.UpdatedAt) || (p.UpdatedAt.Equal(selected.UpdatedAt) && p.ID < selected.ID) {
+			selected = p
+		}
 	}
-	account.PlayerID = id
-	player := newPlayer(id)
-	player.DisplayName = displayName
-	s.db.Accounts[key] = account
-	s.db.Players[id] = player
+	created := selected.ID == ""
+	if created {
+		selected = newPlayer("local-player")
+		selected.DisplayName = "拓印师"
+		s.db.Players[selected.ID] = selected
+	}
+	s.db.LocalPlayerID = selected.ID
 	if err := s.persistLocked(); err != nil {
-		delete(s.db.Accounts, key)
-		delete(s.db.Players, id)
-		return Account{}, err
+		s.db.LocalPlayerID = ""
+		if created {
+			delete(s.db.Players, selected.ID)
+		}
+		return model.Player{}, err
 	}
-	return account, nil
+	return clonePlayer(selected), nil
 }

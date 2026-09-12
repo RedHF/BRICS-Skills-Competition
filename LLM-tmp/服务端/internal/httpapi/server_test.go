@@ -41,28 +41,27 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 	server := httptest.NewServer(api)
 	defer server.Close()
 
-	player := postJSON(t, server.URL+"/api/v1/auth/register", map[string]any{"username": "flow", "password": "test-password-123"})
-	token := player["access_token"].(string)
+	player := postJSON(t, server.URL+"/api/v1/players", map[string]any{})
 	playerID := player["player"].(map[string]any)["id"].(string)
 	if player["player"].(map[string]any)["id"] != playerID {
 		t.Fatalf("unexpected player response: %+v", player)
 	}
-	public := getJSON(t, server.URL+"/api/v1/catalog", token)
+	public := getJSON(t, server.URL+"/api/v1/catalog")
 	encoded, _ := json.Marshal(public)
 	if bytes.Contains(encoded, []byte(`"answer"`)) {
 		t.Fatal("catalog leaked puzzle answer")
 	}
-	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"}, token)
+	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
-	wrong := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "错"}, token)
+	wrong := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "错"})
 	if wrong["erosion"].(float64) != 0 || len(wrong["failed_strokes"].([]any)) != 11 {
 		t.Fatalf("trace practice must report missing strokes without erosion: %+v", wrong)
 	}
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
-	first := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
-	second := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]))
+	first := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
+	second := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
 	if first["reason"] != "settled" || second["reason"] != "already_settled" {
 		t.Fatalf("finish is not idempotent: first=%+v second=%+v", first, second)
 	}
@@ -89,32 +88,31 @@ func TestFailedSessionRequiresExplicitRewind(t *testing.T) {
 	server := httptest.NewServer(api)
 	defer server.Close()
 
-	login := postJSON(t, server.URL+"/api/v1/auth/register", map[string]any{"username": "retry_flow", "password": "test-password-123"})
-	token := login["access_token"].(string)
+	login := postJSON(t, server.URL+"/api/v1/players", map[string]any{})
 	playerID := login["player"].(map[string]any)["id"].(string)
-	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"}, token)
+	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
 	for attempt := 0; attempt < 3; attempt++ {
-		postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "out_of_order", "answer": "错误"}, token)
+		postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "out_of_order", "answer": "错误"})
 	}
-	failed := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
+	failed := postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
 	if failed.status != http.StatusConflict || failed.body["error"].(map[string]any)["code"] != "session_failed" {
 		t.Fatalf("failed puzzle session was reusable: status=%d body=%+v", failed.status, failed.body)
 	}
 
-	newSession := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"}, token)
+	newSession := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	newSID := newSession["session_id"].(string)
 	if newSID != sid {
 		t.Fatal("start bypassed failed session")
 	}
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/rewind", map[string]any{"retries": 0}, token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/choice", map[string]any{"action": "keep"}, token)
-	failedBattle := postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", map[string]any{"duration_ms": 1000, "waves_cleared": 0, "hits_taken": 0, "actions": []map[string]any{}}, token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/rewind", map[string]any{"retries": 0})
+	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
+	postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/choice", map[string]any{"action": "keep"})
+	failedBattle := postJSON(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", map[string]any{"duration_ms": 1000, "waves_cleared": 0, "hits_taken": 0, "actions": []map[string]any{}})
 	if failedBattle["won"].(bool) || failedBattle["status"] != "failed" {
 		t.Fatalf("expected failed battle session: %+v", failedBattle)
 	}
-	reusedBattle := postJSONStatus(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
+	reusedBattle := postJSONStatus(t, server.URL+"/api/v1/sessions/"+newSID+"/battle", winningBattle(catalog.Chapters[0].Events[0]))
 	if reusedBattle.status != http.StatusConflict || reusedBattle.body["error"].(map[string]any)["code"] != "session_failed" {
 		t.Fatalf("failed battle session was reusable: status=%d body=%+v", reusedBattle.status, reusedBattle.body)
 	}
@@ -136,10 +134,9 @@ func TestReadingAndOldDeadlineDoNotFailEvent(t *testing.T) {
 	server := httptest.NewServer(api)
 	defer server.Close()
 
-	login := postJSON(t, server.URL+"/api/v1/auth/register", map[string]any{"username": "expiry_flow", "password": "test-password-123"})
-	token := login["access_token"].(string)
+	login := postJSON(t, server.URL+"/api/v1/players", map[string]any{})
 	playerID := login["player"].(map[string]any)["id"].(string)
-	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"}, token)
+	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
 	if _, err := persistence.UpdateSession(sid, func(current *model.EventSession) error {
 		current.ExpiresAt = time.Now().UTC().Add(-time.Minute)
@@ -147,10 +144,10 @@ func TestReadingAndOldDeadlineDoNotFailEvent(t *testing.T) {
 	}); err != nil {
 		t.Fatal(err)
 	}
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"})
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(catalog.Chapters[0].Events[0]))
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
 	p, _ := persistence.GetPlayer(playerID)
 	if p.Erosion != 0 {
 		t.Fatalf("reading caused erosion: %d", p.Erosion)
@@ -199,20 +196,19 @@ func TestBattleAcceptsNewCatalogSkillThroughHTTP(t *testing.T) {
 	server := httptest.NewServer(api)
 	defer server.Close()
 
-	login := postJSON(t, server.URL+"/api/v1/auth/register", map[string]any{"username": "custom_skill_flow", "password": "test-password-123"})
-	token := login["access_token"].(string)
+	login := postJSON(t, server.URL+"/api/v1/players", map[string]any{})
 	playerID := login["player"].(map[string]any)["id"].(string)
-	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "custom_skill_event"}, token)
+	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "custom_skill_event"})
 	sid := session["session_id"].(string)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]), token)
-	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"}, token)
-	battle := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(custom), token)
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", map[string]any{"action": "keep"})
+	battle := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(custom))
 	if !battle["won"].(bool) {
 		t.Fatalf("catalog-defined skill was rejected by HTTP flow: %+v", battle)
 	}
 }
 
-func postJSON(t *testing.T, url string, body map[string]any, token ...string) map[string]any {
+func postJSON(t *testing.T, url string, body map[string]any) map[string]any {
 	t.Helper()
 	b, err := json.Marshal(body)
 	if err != nil {
@@ -223,9 +219,6 @@ func postJSON(t *testing.T, url string, body map[string]any, token ...string) ma
 		t.Fatal(err)
 	}
 	request.Header.Set("Content-Type", "application/json")
-	if len(token) > 0 {
-		request.Header.Set("Authorization", "Bearer "+token[0])
-	}
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
 		t.Fatal(err)
@@ -247,7 +240,7 @@ type jsonResponse struct {
 	body   map[string]any
 }
 
-func postJSONStatus(t *testing.T, url string, body map[string]any, token ...string) jsonResponse {
+func postJSONStatus(t *testing.T, url string, body map[string]any) jsonResponse {
 	t.Helper()
 	b, err := json.Marshal(body)
 	if err != nil {
@@ -258,9 +251,6 @@ func postJSONStatus(t *testing.T, url string, body map[string]any, token ...stri
 		t.Fatal(err)
 	}
 	request.Header.Set("Content-Type", "application/json")
-	if len(token) > 0 {
-		request.Header.Set("Authorization", "Bearer "+token[0])
-	}
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
 		t.Fatal(err)
@@ -274,14 +264,11 @@ func postJSONStatus(t *testing.T, url string, body map[string]any, token ...stri
 	return jsonResponse{status: response.StatusCode, body: result}
 }
 
-func getJSON(t *testing.T, url string, token ...string) map[string]any {
+func getJSON(t *testing.T, url string) map[string]any {
 	t.Helper()
 	request, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if len(token) > 0 {
-		request.Header.Set("Authorization", "Bearer "+token[0])
 	}
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
@@ -329,13 +316,12 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 	}
 	server := httptest.NewServer(api)
 	defer server.Close()
-	login := postJSON(t, server.URL+"/api/v1/auth/register", map[string]any{"username": "full_demo", "password": "test-password-123"})
-	token := login["access_token"].(string)
+	login := postJSON(t, server.URL+"/api/v1/players", map[string]any{})
 	playerID := login["player"].(map[string]any)["id"].(string)
 	lastSID := ""
 	for _, chapter := range catalog.Chapters[:2] {
 		for _, event := range chapter.Events {
-			start := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": chapter.ID, "event_id": event.ID}, token)
+			start := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": chapter.ID, "event_id": event.ID})
 			sid := start["session_id"].(string)
 			lastSID = sid
 			for _, step := range event.Puzzle.Steps {
@@ -343,7 +329,7 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 				if step.Kind == "trace" {
 					input = traceRequest(step)
 				}
-				response := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", input, token)
+				response := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", input)
 				if response["accepted"] != true {
 					t.Fatalf("step %s rejected: %+v", step.ID, response)
 				}
@@ -352,13 +338,13 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 			if event.ID == "temple_drum" {
 				input = map[string]any{"action": "forget", "forget_memory_id": "yan_ping_an"}
 			}
-			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input, token)
-			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input, token)
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input)
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/choice", input)
 			if event.Battle != nil {
-				postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(event), token)
+				postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/battle", winningBattle(event))
 			}
-			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
-			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{}, token)
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
+			postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/finish", map[string]any{})
 		}
 	}
 	reloaded, err := store.Open(path)
@@ -367,7 +353,7 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 	}
 	player, _ := reloaded.GetPlayer(playerID)
 	if player.InkMarks != 12 {
-		t.Fatal("draft chapter consumed ink marks")
+		t.Fatal("story chapter progression must not charge ink marks")
 	}
 	if len(player.CompletedEvents) != 4 || len(player.Memories) != 3 || len(player.MemoryLedger) != 5 || player.Capacity != 6 || player.LastSequence != 4 {
 		t.Fatalf("progress lost or duplicated: %+v", player)

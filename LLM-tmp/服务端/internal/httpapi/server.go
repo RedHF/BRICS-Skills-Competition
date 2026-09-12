@@ -4,17 +4,14 @@
 package httpapi
 
 import (
-	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"golang.org/x/crypto/bcrypt"
 	"io"
 	"log"
 	"net/http"
 	"strings"
-	"sync"
 	"time"
 
 	"yanxia-server/internal/content"
@@ -30,15 +27,11 @@ const (
 )
 
 type Server struct {
-	authMu    sync.Mutex
-	tokens    map[[32]byte]loginSession
-	attempts  map[string]loginWindow
-	providers map[string]IdentityProvider
-	dummyHash []byte
-	catalog   *content.Catalog
-	store     *store.Store
-	started   time.Time
-	buildID   string
+	playerID string
+	catalog  *content.Catalog
+	store    *store.Store
+	started  time.Time
+	buildID  string
 }
 
 // Catalog returns the loaded content for embedding in a local admin tool or
@@ -50,25 +43,15 @@ func (s *Server) Catalog() *content.Catalog { return s.catalog }
 // HTTP handlers so validation is applied consistently.
 func (s *Server) Store() *store.Store { return s.store }
 
-func New(catalog *content.Catalog, persistence *store.Store, providers ...IdentityProvider) (*Server, error) {
+func New(catalog *content.Catalog, persistence *store.Store) (*Server, error) {
 	if catalog == nil || persistence == nil {
 		return nil, errors.New("catalog and persistence are required")
 	}
-	dummy, err := bcrypt.GenerateFromPassword([]byte("unavailable-account"), 12)
+	player, err := persistence.LocalPlayer()
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{catalog: catalog, store: persistence, started: time.Now().UTC(), buildID: "dev", tokens: make(map[[32]byte]loginSession), attempts: make(map[string]loginWindow), providers: make(map[string]IdentityProvider), dummyHash: dummy}
-	for _, provider := range providers {
-		if !validID(provider.Name()) {
-			return nil, errors.New("invalid provider name")
-		}
-		if _, exists := s.providers[provider.Name()]; exists {
-			return nil, errors.New("duplicate login provider")
-		}
-		s.providers[provider.Name()] = provider
-	}
-	return s, nil
+	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: "story-v7"}, nil
 }
 
 // ServeHTTP implements routing without a framework so the server remains a
@@ -80,17 +63,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	path := strings.TrimSuffix(r.URL.Path, "/")
-	if strings.HasPrefix(path, "/api/v1/auth/") {
-		s.handleAuth(w, r, strings.TrimPrefix(path, "/api/v1/auth/"))
-		return
-	}
-	if path != "/healthz" {
-		id, ok := s.authenticate(w, r)
-		if !ok {
-			return
-		}
-		r = r.WithContext(context.WithValue(r.Context(), playerContextKey{}, id))
-	}
 	switch {
 	case path == "/healthz":
 		s.handleHealth(w, r)
@@ -117,7 +89,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func setCORS(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Cache-Control", "no-store")
 }
@@ -168,18 +140,19 @@ type publicChapter struct {
 }
 
 type publicEvent struct {
-	Story      content.StorySpec   `json:"story"`
-	Draft      bool                `json:"draft"`
-	Reward     content.RewardSpec  `json:"reward"`
-	ID         string              `json:"id"`
-	Order      int                 `json:"order"`
-	Title      string              `json:"title"`
-	Scene      string              `json:"scene"`
-	Intro      string              `json:"intro"`
-	Objectives []string            `json:"objectives"`
-	Puzzle     publicPuzzle        `json:"puzzle"`
-	Battle     *content.BattleSpec `json:"battle,omitempty"`
-	Memory     publicMemory        `json:"memory"`
+	Investigations []content.InvestigationSpec `json:"investigations"`
+	Story          content.StorySpec           `json:"story"`
+	Draft          bool                        `json:"draft"`
+	Reward         content.RewardSpec          `json:"reward"`
+	ID             string                      `json:"id"`
+	Order          int                         `json:"order"`
+	Title          string                      `json:"title"`
+	Scene          string                      `json:"scene"`
+	Intro          string                      `json:"intro"`
+	Objectives     []string                    `json:"objectives"`
+	Puzzle         publicPuzzle                `json:"puzzle"`
+	Battle         *content.BattleSpec         `json:"battle,omitempty"`
+	Memory         publicMemory                `json:"memory"`
 }
 
 type publicPuzzle struct {
@@ -211,7 +184,7 @@ func publicCatalog(c *content.Catalog) publicCatalogResponse {
 	for _, chapter := range c.Chapters {
 		pc := publicChapter{ID: chapter.ID, Order: chapter.Order, Title: chapter.Title, Summary: chapter.Summary, UnlockCost: chapter.UnlockCost, NextChapter: chapter.NextChapter, Events: make([]publicEvent, 0, len(chapter.Events))}
 		for _, event := range chapter.Events {
-			pe := publicEvent{Story: event.Story, Draft: event.Draft, Reward: event.Reward, ID: event.ID, Order: event.Order, Title: event.Title, Scene: event.Scene, Intro: event.Intro, Objectives: append([]string(nil), event.Objectives...), Puzzle: publicPuzzle{Type: event.Puzzle.Type, MaxAttempts: event.Puzzle.MaxAttempts, Steps: make([]publicPuzzleStep, 0, len(event.Puzzle.Steps))}, Memory: publicMemory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Choices: append([]string(nil), event.Reward.Choices...)}}
+			pe := publicEvent{Investigations: event.Investigations, Story: event.Story, Draft: event.Draft, Reward: event.Reward, ID: event.ID, Order: event.Order, Title: event.Title, Scene: event.Scene, Intro: event.Intro, Objectives: append([]string(nil), event.Objectives...), Puzzle: publicPuzzle{Type: event.Puzzle.Type, MaxAttempts: event.Puzzle.MaxAttempts, Steps: make([]publicPuzzleStep, 0, len(event.Puzzle.Steps))}, Memory: publicMemory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Choices: append([]string(nil), event.Reward.Choices...)}}
 			for _, step := range event.Puzzle.Steps {
 				pe.Puzzle.Steps = append(pe.Puzzle.Steps, publicPuzzleStep{Trace: step.Trace, ID: step.ID, Kind: step.Kind, Prompt: step.Prompt, Options: append([]string(nil), step.Options...), Points: step.Points})
 			}
@@ -241,11 +214,11 @@ func (s *Server) handlePlayers(w http.ResponseWriter, r *http.Request) {
 	if !decodeJSON(w, r, &request) {
 		return
 	}
-	if request.PlayerID != "" && request.PlayerID != r.Context().Value(playerContextKey{}).(string) {
-		writeError(w, http.StatusForbidden, "player_mismatch", "不能访问其他玩家")
+	if request.PlayerID != "" && request.PlayerID != s.playerID {
+		writeError(w, http.StatusForbidden, "player_mismatch", "该进度不属于当前本地存档")
 		return
 	}
-	player, _ := s.store.GetPlayer(r.Context().Value(playerContextKey{}).(string))
+	player, _ := s.store.GetPlayer(s.playerID)
 	var err error
 	created := false
 	if request.DisplayName != "" && player.DisplayName != request.DisplayName {
@@ -297,8 +270,8 @@ func (s *Server) handlePlayerPath(w http.ResponseWriter, r *http.Request, remain
 		return
 	}
 	playerID := parts[0]
-	if playerID != r.Context().Value(playerContextKey{}).(string) {
-		writeError(w, http.StatusForbidden, "player_mismatch", "不能访问其他玩家")
+	if playerID != s.playerID {
+		writeError(w, http.StatusForbidden, "player_mismatch", "该进度不属于当前本地存档")
 		return
 	}
 	if len(parts) > 2 || (len(parts) == 2 && parts[1] != "save" && parts[1] != "ledger") {
@@ -349,7 +322,7 @@ type startSessionRequest struct {
 
 func (s *Server) handleSessionRoot(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		writeJSON(w, http.StatusOK, map[string]any{"session": s.store.CurrentSession(r.Context().Value(playerContextKey{}).(string))})
+		writeJSON(w, http.StatusOK, map[string]any{"session": s.store.CurrentSession(s.playerID)})
 		return
 	}
 	if r.Method != http.MethodPost {
@@ -364,11 +337,11 @@ func (s *Server) handleSessionRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) startSession(w http.ResponseWriter, r *http.Request, request startSessionRequest) {
-	if request.PlayerID != "" && request.PlayerID != r.Context().Value(playerContextKey{}).(string) {
+	if request.PlayerID != "" && request.PlayerID != s.playerID {
 		writeError(w, http.StatusForbidden, "player_mismatch", "不能替其他玩家开始事件")
 		return
 	}
-	request.PlayerID = r.Context().Value(playerContextKey{}).(string)
+	request.PlayerID = s.playerID
 	request.ChapterID = strings.TrimSpace(request.ChapterID)
 	request.EventID = strings.TrimSpace(request.EventID)
 	if !validID(request.PlayerID) || !validID(request.ChapterID) || !validID(request.EventID) {
@@ -443,8 +416,8 @@ func (s *Server) handleSessionPath(w http.ResponseWriter, r *http.Request, remai
 		writeError(w, http.StatusNotFound, "session_not_found", "事件会话不存在")
 		return
 	}
-	if owned.PlayerID != r.Context().Value(playerContextKey{}).(string) {
-		writeError(w, http.StatusForbidden, "session_mismatch", "不能访问其他玩家的事件")
+	if owned.PlayerID != s.playerID {
+		writeError(w, http.StatusForbidden, "session_mismatch", "该进度不属于当前本地存档的事件")
 		return
 	}
 	if len(parts) == 1 {
@@ -923,6 +896,7 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 			return nil
 		}
 		result = calculateResult(current, event, player.Erosion)
+		result.NarrativeChoice = current.NarrativeChoice
 		result.MemoriesKept = len(player.Memories)
 		acquired := make(map[string]bool)
 		for _, entry := range player.MemoryLedger {
