@@ -66,8 +66,10 @@ var echo_bus := 0
 var volume := 1.0
 var muted := false
 var event_audio: AudioStreamPlayer
+var closing := false
 
 func _ready() -> void:
+	get_tree().auto_accept_quit = false
 	add_child(network)
 	soundscape = preload("res://scripts/soundscape.gd").new()
 	add_child(soundscape)
@@ -258,6 +260,17 @@ func _load_game() -> void:
 	flow = "map"
 	_refresh_stats()
 	_show_map()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and not closing:
+		closing = true
+		soundscape.stop_all()
+		for player in [memory_audio, event_audio]:
+			player.stop()
+			player.stream = null
+		# Let the audio server retire playback before the engine shuts down.
+		await get_tree().create_timer(.15).timeout
+		get_tree().quit()
 
 func _exit_tree() -> void:
 	memory_audio.stop()

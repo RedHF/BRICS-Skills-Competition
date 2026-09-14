@@ -6,6 +6,16 @@ var voices: Array[AudioStreamPlayer] = []
 var cursor := 0
 var sounds := {}
 
+func _exit_tree() -> void:
+	stop_all()
+
+func stop_all() -> void:
+	for player in voices + [ambience, music]:
+		if is_instance_valid(player):
+			player.stop()
+			player.stream = null
+	sounds.clear()
+
 func _ready() -> void:
 	for name in ["ui", "ink", "repair", "hit", "win"]:
 		sounds[name] = load("res://assets/audio/" + name + ".wav")
