@@ -11,7 +11,7 @@ if ($null -eq $go) {
 }
 Push-Location $serverDir
 try {
-    & $go.Source run ./cmd/server -addr (":$Port") -content ./content/chapters.json -data $DataPath
+    & $go.Source run ./cmd/server -addr ("127.0.0.1:$Port") -content ./content/chapters.json -data $DataPath
 } finally {
     Pop-Location
 }

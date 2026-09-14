@@ -10,6 +10,12 @@ import (
 )
 
 func TestSoloStoryJourneyAndEndingPersist(t *testing.T) {
+	for choice := 0; choice < 3; choice++ {
+		t.Run([]string{"teach", "record", "blank"}[choice], func(t *testing.T) { testStoryEnding(t, choice) })
+	}
+}
+
+func testStoryEnding(t *testing.T, choice int) {
 	catalog, err := content.Load(filepath.Join("..", "..", "content", "chapters.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -41,12 +47,12 @@ func TestSoloStoryJourneyAndEndingPersist(t *testing.T) {
 			sid := started["session_id"].(string)
 			url := server.URL + "/api/v1/sessions/" + sid
 			for _, step := range event.Puzzle.Steps {
-				input := map[string]any{"step_id": step.ID, "answer": step.Answer}
+				input := map[string]any{"step_id": step.ID, "answer": step.Answer, "target": step.Target}
 				if step.Kind == "trace" {
 					input = traceRequest(step)
 				}
 				if step.Kind == "narrative" {
-					input["answer"] = step.Options[2]
+					input["answer"] = step.Options[choice]
 				}
 				response := postJSON(t, url+"/puzzle", input)
 				if response["accepted"] != true {
@@ -113,7 +119,7 @@ func TestSoloStoryJourneyAndEndingPersist(t *testing.T) {
 	if restored.ID != id || len(restored.CompletedEvents) != 10 || restored.LastSequence != 10 || restored.Capacity != 7 {
 		t.Fatalf("journey did not persist: %+v", restored)
 	}
-	if restored.CompletedEvents["tower:tower_ledger"].NarrativeChoice != "留白让后来人续写" {
+	if restored.CompletedEvents["tower:tower_ledger"].NarrativeChoice != []string{"传下修复的方法", "留下所有取舍的记录", "留白让后来人续写"}[choice] {
 		t.Fatal("ending lost or overwritten by retry")
 	}
 }

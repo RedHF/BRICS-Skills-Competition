@@ -70,7 +70,7 @@ func TestCheckpointPaymentOwnershipAndRetainedChoice(t *testing.T) {
 	if getJSON(t, server.URL+"/api/v1/sessions")["session"] != nil {
 		t.Fatal("completed event still pending")
 	}
-	// Tutorial grace applies only with no ink; later events must not silently waive payment.
+	// Every chapter must remain recoverable when the player has no ink.
 	start = postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"chapter_id": "temple", "event_id": "temple_incense"})
 	sid = start["session_id"].(string)
 	if _, _, err := db.UpdateSessionAndPlayer(sid, id, func(run *model.EventSession, p *model.Player) error {
@@ -80,7 +80,13 @@ func TestCheckpointPaymentOwnershipAndRetainedChoice(t *testing.T) {
 	}); err != nil {
 		t.Fatal(err)
 	}
-	if postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/rewind", map[string]any{"retries": 0}).status != http.StatusConflict {
-		t.Fatal("non-tutorial rewind was free")
+	if postJSONStatus(t, server.URL+"/api/v1/sessions/"+sid+"/rewind", map[string]any{"retries": 0}).status != http.StatusOK {
+		t.Fatal("zero-ink player is stuck")
+	}
+	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/rewind", map[string]any{"retries": 0})
+	p, _ = db.GetPlayer(id)
+	run, _ = db.GetSession(sid)
+	if p.InkMarks != 0 || run.Status != "active" || run.Retries != 1 {
+		t.Fatal("free retry duplicated or not restored")
 	}
 }

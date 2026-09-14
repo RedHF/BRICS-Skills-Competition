@@ -117,9 +117,6 @@ func _draw() -> void:
 	if purification > 0:
 		for i in range(8): draw_circle(size*Vector2(.25+i*.065,.43+sin(i)*.1), 12, Color(0.05,0.08,0.09,purification*.85))
 	if interactive:
-		var walk_rect := Rect2(size * Vector2(0.05, 0.16), size * Vector2(0.90, 0.78))
-		draw_rect(walk_rect, Color(0.72, 0.88, 0.82, 0.28), false, 1.5)
-		draw_string(ThemeDB.fallback_font, walk_rect.position + Vector2(8, 20), "可探索区域", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.86, 0.92, 0.86, 0.72))
 		for i in range(investigations.size()):
 			var point := size * _investigation_point(i)
 			var found := discovered.has(i)
@@ -127,9 +124,12 @@ func _draw() -> void:
 			draw_circle(point, 9 if found else 12, marker_color)
 			if not found: draw_arc(point, 18+ripple*8, 0, TAU, 40, Color(0.9,.78,.5,1-ripple/2),2,true)
 			var caption := "已调查 · " if found else "调查 · "
-			draw_string(ThemeDB.fallback_font, point + Vector2(-42,-22), caption + str(investigations[i].label), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#dff0df") if found else Color("#f4e4bc"))
-		draw_circle(player*size, 10, Color("#dce6d8"))
-		draw_line(player*size,player*size+Vector2(12,15),Color("#e4c98a"),3)
+			var text := caption + str(investigations[i].label)
+			var width := ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x + 16
+			var origin := Vector2(clampf(point.x-width/2,4,size.x-width-4),point.y-54)
+			draw_rect(Rect2(origin,Vector2(width,30)),Color(0.06,0.13,0.14,0.94))
+			draw_string(ThemeDB.fallback_font,origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
+		preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, ripple)
 		draw_circle(Vector2(48,size.y-45),34,Color(.8,.85,.8,.14))
 		draw_circle(Vector2(48,size.y-45)+joystick*23,12,Color("#a9b9a5"))
 

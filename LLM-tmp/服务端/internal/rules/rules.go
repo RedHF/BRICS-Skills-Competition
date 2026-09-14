@@ -22,6 +22,7 @@ const (
 )
 
 type PuzzleAttempt struct {
+	Target  string
 	StepID  string
 	Answer  string
 	Action  string
@@ -116,6 +117,9 @@ func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attem
 		record.Reason = result.Reason
 		result.ActionRecord = record
 		return result
+	}
+	if expected.Kind == "skill" && expected.Target != "" && attempt.Target != expected.Target {
+		return rejectPuzzle(event, session, result, record, "target_incorrect")
 	}
 	if expected.Kind == "narrative" {
 		allowed := false

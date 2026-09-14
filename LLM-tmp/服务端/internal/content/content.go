@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const CurrentVersion = 7
+const CurrentVersion = 9
 
 // Catalog is the complete, versioned game content manifest.
 type SkillSpec struct {
@@ -24,12 +24,20 @@ type SkillSpec struct {
 }
 
 type Catalog struct {
-	Skills   map[string]SkillSpec  `json:"skills"`
-	Memories map[string]MemorySpec `json:"memories"`
-	Version  int                   `json:"version"`
-	GameID   string                `json:"game_id"`
-	Art      map[string]ArtSpec    `json:"art,omitempty"`
-	Chapters []Chapter             `json:"chapters"`
+	FailureScene FailureSceneSpec      `json:"failure_scene"`
+	Skills       map[string]SkillSpec  `json:"skills"`
+	Memories     map[string]MemorySpec `json:"memories"`
+	Version      int                   `json:"version"`
+	GameID       string                `json:"game_id"`
+	Art          map[string]ArtSpec    `json:"art,omitempty"`
+	Chapters     []Chapter             `json:"chapters"`
+}
+
+type FailureSceneSpec struct {
+	Title      string                  `json:"title"`
+	Background string                  `json:"background"`
+	Dialogue   []DialogueLine          `json:"dialogue"`
+	FirstLines map[string]DialogueLine `json:"first_lines"`
 }
 
 type ArtSpec struct {
@@ -49,14 +57,15 @@ type Chapter struct {
 }
 
 type StorySpec struct {
-	Dialogue       []DialogueLine `json:"dialogue"`
-	Clues          []string       `json:"clues"`
-	BeforeBattle   string         `json:"before_battle,omitempty"`
-	KeepResponse   string         `json:"keep_response"`
-	ForgetResponse string         `json:"forget_response"`
-	Beats          []string       `json:"beats"`
-	Outro          string         `json:"outro"`
-	ChapterOutro   string         `json:"chapter_outro,omitempty"`
+	FirstClearWhisper string         `json:"first_clear_whisper,omitempty"`
+	Dialogue          []DialogueLine `json:"dialogue"`
+	Clues             []string       `json:"clues"`
+	BeforeBattle      string         `json:"before_battle,omitempty"`
+	KeepResponse      string         `json:"keep_response"`
+	ForgetResponse    string         `json:"forget_response"`
+	Beats             []string       `json:"beats"`
+	Outro             string         `json:"outro"`
+	ChapterOutro      string         `json:"chapter_outro,omitempty"`
 }
 
 type DialogueLine struct {
@@ -97,6 +106,7 @@ type TraceSpec struct {
 }
 
 type PuzzleStep struct {
+	Target  string     `json:"target,omitempty"`
 	Trace   *TraceSpec `json:"trace,omitempty"`
 	ID      string     `json:"id"`
 	Kind    string     `json:"kind"`
@@ -157,6 +167,20 @@ func Load(path string) (*Catalog, error) {
 func (c *Catalog) Validate() error {
 	if c == nil {
 		return errors.New("catalog is nil")
+	}
+	if c.FailureScene.Title == "" || !strings.HasPrefix(c.FailureScene.Background, "res://assets/") || len(c.FailureScene.Dialogue) == 0 {
+		return errors.New("failure scene requires title, asset background and dialogue")
+	}
+	for _, line := range c.FailureScene.Dialogue {
+		if strings.TrimSpace(line.Speaker) == "" || strings.TrimSpace(line.Text) == "" {
+			return errors.New("empty failure dialogue")
+		}
+	}
+	for _, reason := range []string{"erosion_limit", "puzzle_attempt_limit", "battle_requirements_not_met", "session_expired"} {
+		line := c.FailureScene.FirstLines[reason]
+		if strings.TrimSpace(line.Speaker) == "" || strings.TrimSpace(line.Text) == "" {
+			return fmt.Errorf("missing failure first line: %s", reason)
+		}
 	}
 	if c.Version != CurrentVersion {
 		return fmt.Errorf("content version must be %d", CurrentVersion)
@@ -257,6 +281,9 @@ func (c *Catalog) Validate() error {
 					return fmt.Errorf("event %q has duplicate puzzle step id %q", event.ID, step.ID)
 				}
 				stepIDs[step.ID] = struct{}{}
+				if step.Kind == "skill" && step.Target != "beam" && step.Target != "bell" && step.Target != "inscription" {
+					return fmt.Errorf("step %q missing scene target", step.ID)
+				}
 				if step.Kind == "narrative" && len(step.Options) < 2 {
 					return fmt.Errorf("step %q missing narrative choices", step.ID)
 				}

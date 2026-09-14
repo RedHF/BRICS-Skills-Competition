@@ -80,6 +80,8 @@ func _run() -> void:
 			for attempt in range(3):
 				await main.network.request_json("/api/v1/sessions/%s/puzzle" % current_id, HTTPClient.METHOD_POST, {"step_id":"out_of_order","answer":"wrong"})
 			await main._resume()
+			assert(main.flow == "gameover")
+			for i in range(9): main._advance_dialogue()
 			assert(main.flow == "failed" and int(game.player.erosion) == 30)
 			await main._rewind()
 			assert(main.flow == "puzzle" and int(game.player.erosion) == 0 and int(game.player.ink_marks) == 0)
@@ -112,6 +114,7 @@ func _run() -> void:
 				payload.strokes = canvas.strokes
 			else:
 				# Test answers are fixture data, not bundled in the release client.
+				payload.target = "inscription" if step.id == "drum_purify" else ""
 				payload.answer = {"beam_left":"left","beam_center":"center","beam_right":"right","guest_word":"宁","drum_purify":"藻井"}[step.id]
 			if step.id == "bridge_trace":
 				var canvas = main.trace_canvas
@@ -225,6 +228,7 @@ func _run() -> void:
 				root.get_texture().get_image().save_png("user://portrait-battle-" + ids_pair[1] + ".png")
 			while not main.battle_finished:
 				main._process(0.501)
+				for learned in main.battle_skills: main._battle_skill(learned)
 				main._battle_skill("挥墨")
 			print("PASS actual enemy damage, shield, healing, cooldown and victory")
 			await main._submit_battle()

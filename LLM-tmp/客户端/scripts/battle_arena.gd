@@ -21,7 +21,7 @@ var dodge_armed := false
 var motion_time := 0.0
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(0, 330)
+	custom_minimum_size = Vector2(0, 250)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
 func flash(text: String, color: Color) -> void:
@@ -87,8 +87,7 @@ func _draw() -> void:
 		if phase > 0.7:
 			draw_line(enemy, player, Color(1.0, 0.36, 0.34, 0.58), 3.0, true)
 			draw_string(font, Vector2(12, size.y * 0.52), "白蚀锁定 · 保持移动即可闪身", HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#ff8078"))
-	draw_circle(player, 20, Color("#e4c98a"))
-	draw_line(player + Vector2(-10, 10), player + Vector2(10, -12), Color("#243840"), 5)
+	preload("res://scripts/ink_figure.gd").paint(self, player, 1.0, motion_time)
 	if shield > 0: draw_arc(player, 30, 0, TAU, 48, Color("#9ad5ad"), 4, true)
 	draw_string(font, Vector2(12, size.y - 15), "拓印师 · 护盾 %d · 受蚀 %d" % [shield, hits], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#d9e5df"))
 	var stick_center := Vector2(52, size.y - 54)
@@ -96,6 +95,10 @@ func _draw() -> void:
 	draw_circle(stick_center + joystick * 25, 13, Color("#a9c8bb"))
 	if effect > 0:
 		draw_line(player, enemy, Color(effect_color, effect / 0.7), 6, true)
+		for i in range(12):
+			var angle := TAU * i / 12
+			var distance := (0.7-effect) * 90
+			draw_circle(enemy + Vector2(cos(angle),sin(angle))*distance, 2.5, Color(effect_color, effect/0.7))
 		draw_string(font, Vector2(size.x * 0.5 - 70, size.y * 0.62), effect_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, effect_color)
 
 func _draw_background() -> void:

@@ -1,0 +1,20 @@
+=== RUN   TestAllBattlesPacingAndDelayedInputs
+    review_test.go:72: prologue_bridge input=500 ms duration=31.50s hits=0
+    review_test.go:72: prologue_bridge input=750 ms duration=47.25s hits=0
+    review_test.go:72: temple_incense input=500 ms duration=33.50s hits=0
+    review_test.go:72: temple_incense input=750 ms duration=50.25s hits=0
+    review_test.go:72: temple_drum input=500 ms duration=31.50s hits=0
+    review_test.go:72: temple_drum input=750 ms duration=44.25s hits=0
+    review_test.go:72: opera_opening input=500 ms duration=30.50s hits=0
+    review_test.go:72: opera_opening input=750 ms duration=40.50s hits=0
+    review_test.go:72: opera_master input=500 ms duration=33.00s hits=0
+    review_test.go:72: opera_master input=750 ms duration=45.00s hits=0
+    review_test.go:72: archway_form input=500 ms duration=35.50s hits=0
+    review_test.go:72: archway_form input=750 ms duration=46.50s hits=0
+    review_test.go:72: archway_craftsman input=500 ms duration=36.00s hits=0
+    review_test.go:72: archway_craftsman input=750 ms duration=48.00s hits=0
+    review_test.go:72: tower_ascent input=500 ms duration=36.00s hits=0
+    review_test.go:72: tower_ascent input=750 ms duration=48.75s hits=0
+--- PASS: TestAllBattlesPacingAndDelayedInputs (0.00s)
+PASS
+ok  	yanxia-server/internal/rules	(cached)

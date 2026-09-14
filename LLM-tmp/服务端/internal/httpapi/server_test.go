@@ -47,6 +47,10 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 		t.Fatalf("unexpected player response: %+v", player)
 	}
 	public := getJSON(t, server.URL+"/api/v1/catalog")
+	failure := public["failure_scene"].(map[string]any)
+	if len(failure["dialogue"].([]any)) != 9 || len(failure["first_lines"].(map[string]any)) != 4 {
+		t.Fatal("failure narrative missing from public catalog")
+	}
 	encoded, _ := json.Marshal(public)
 	if bytes.Contains(encoded, []byte(`"answer"`)) {
 		t.Fatal("catalog leaked puzzle answer")
@@ -325,7 +329,7 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 			sid := start["session_id"].(string)
 			lastSID = sid
 			for _, step := range event.Puzzle.Steps {
-				input := map[string]any{"step_id": step.ID, "answer": step.Answer}
+				input := map[string]any{"step_id": step.ID, "answer": step.Answer, "target": step.Target}
 				if step.Kind == "trace" {
 					input = traceRequest(step)
 				}
@@ -371,19 +375,40 @@ func TestFullDemoSurvivesReloadWithoutDuplicateRewards(t *testing.T) {
 }
 
 func winningBattle(event content.Event) map[string]any {
-	actions := []map[string]any{}
-	damage := 0
-	for _, skill := range event.Battle.RequiredSkills {
-		actions = append(actions, map[string]any{"skill": skill, "at_ms": 0})
-		if skill == "藻井" {
-			damage += 18
-		}
+	catalog, err := content.Load(filepath.Join("..", "..", "content", "chapters.json"))
+	if err != nil {
+		panic(err)
 	}
-	at := 0
-	for damage < event.Battle.EnemyHP {
-		actions = append(actions, map[string]any{"skill": "挥墨", "at_ms": at})
-		damage += 10
+	catalog.Skills["木榫"] = catalog.Skills["斗拱"]
+	names := append([]string{}, event.Battle.RequiredSkills...)
+	if event.Reward.Memory.Skill != "木榫" {
+		names = append(names, "斗拱")
+	}
+	names = append(names, "挥墨")
+	ready := map[string]int{}
+	hp, waves, at := event.Battle.EnemyHP, 0, 0
+	actions := []map[string]any{}
+	for waves < event.Battle.Waves && at < event.Battle.DurationSec*1000 {
+		for _, name := range names {
+			if at < ready[name] {
+				continue
+			}
+			spec := catalog.Skills[name]
+			actions = append(actions, map[string]any{"skill": name, "at_ms": at})
+			ready[name] = at + spec.CooldownMS
+			hp -= spec.Damage
+			if hp <= 0 {
+				waves++
+				hp = event.Battle.EnemyHP
+			}
+			if waves == event.Battle.Waves {
+				break
+			}
+		}
+		if waves == event.Battle.Waves {
+			break
+		}
 		at += 500
 	}
-	return map[string]any{"duration_ms": at, "actions": actions}
+	return map[string]any{"duration_ms": at + 1, "actions": actions}
 }

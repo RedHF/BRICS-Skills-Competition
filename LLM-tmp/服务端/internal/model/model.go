@@ -39,21 +39,24 @@ type LedgerEntry struct {
 }
 
 type EventResult struct {
-	NarrativeChoice    string    `json:"narrative_choice,omitempty"`
-	MemoriesKept       int       `json:"memories_kept"`
-	MemoriesAcquired   int       `json:"memories_acquired"`
-	BattleClearPercent int       `json:"battle_clear_percent"`
-	ChapterID          string    `json:"chapter_id"`
-	EventID            string    `json:"event_id"`
-	Stars              int       `json:"stars"`
-	PuzzleScore        int       `json:"puzzle_score"`
-	PuzzleTotal        int       `json:"puzzle_total"`
-	BattleWon          bool      `json:"battle_won"`
-	RepairPercent      int       `json:"repair_percent"`
-	ErosionAtEnd       int       `json:"erosion_at_end"`
-	InkMarksEarned     int       `json:"ink_marks_earned"`
-	CompletedAt        time.Time `json:"completed_at"`
-	Sequence           uint64    `json:"sequence"`
+	ScoringVersion         int       `json:"scoring_version,omitempty"`
+	QualityScore           int       `json:"quality_score"`
+	MemoryRetentionPercent int       `json:"memory_retention_percent"`
+	NarrativeChoice        string    `json:"narrative_choice,omitempty"`
+	MemoriesKept           int       `json:"memories_kept"`
+	MemoriesAcquired       int       `json:"memories_acquired"`
+	BattleClearPercent     int       `json:"battle_clear_percent"`
+	ChapterID              string    `json:"chapter_id"`
+	EventID                string    `json:"event_id"`
+	Stars                  int       `json:"stars"`
+	PuzzleScore            int       `json:"puzzle_score"`
+	PuzzleTotal            int       `json:"puzzle_total"`
+	BattleWon              bool      `json:"battle_won"`
+	RepairPercent          int       `json:"repair_percent"`
+	ErosionAtEnd           int       `json:"erosion_at_end"`
+	InkMarksEarned         int       `json:"ink_marks_earned"`
+	CompletedAt            time.Time `json:"completed_at"`
+	Sequence               uint64    `json:"sequence"`
 }
 
 // EventSession is persisted server state for one event attempt.  Answers are

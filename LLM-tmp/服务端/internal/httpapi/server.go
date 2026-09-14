@@ -51,7 +51,7 @@ func New(catalog *content.Catalog, persistence *store.Store) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: "story-v7"}, nil
+	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: "dialogue-v9"}, nil
 }
 
 // ServeHTTP implements routing without a framework so the server remains a
@@ -121,12 +121,13 @@ func (s *Server) handleCatalog(w http.ResponseWriter, r *http.Request) {
 }
 
 type publicCatalogResponse struct {
-	Skills   map[string]content.SkillSpec  `json:"skills"`
-	Memories map[string]content.MemorySpec `json:"memories"`
-	Version  int                           `json:"version"`
-	GameID   string                        `json:"game_id"`
-	Art      map[string]content.ArtSpec    `json:"art,omitempty"`
-	Chapters []publicChapter               `json:"chapters"`
+	FailureScene content.FailureSceneSpec      `json:"failure_scene"`
+	Skills       map[string]content.SkillSpec  `json:"skills"`
+	Memories     map[string]content.MemorySpec `json:"memories"`
+	Version      int                           `json:"version"`
+	GameID       string                        `json:"game_id"`
+	Art          map[string]content.ArtSpec    `json:"art,omitempty"`
+	Chapters     []publicChapter               `json:"chapters"`
 }
 
 type publicChapter struct {
@@ -180,7 +181,7 @@ type publicMemory struct {
 }
 
 func publicCatalog(c *content.Catalog) publicCatalogResponse {
-	response := publicCatalogResponse{Skills: c.Skills, Memories: c.Memories, Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
+	response := publicCatalogResponse{FailureScene: c.FailureScene, Skills: c.Skills, Memories: c.Memories, Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
 	for _, chapter := range c.Chapters {
 		pc := publicChapter{ID: chapter.ID, Order: chapter.Order, Title: chapter.Title, Summary: chapter.Summary, UnlockCost: chapter.UnlockCost, NextChapter: chapter.NextChapter, Events: make([]publicEvent, 0, len(chapter.Events))}
 		for _, event := range chapter.Events {
@@ -503,6 +504,7 @@ func (s *Server) sessionStartResponse(session model.EventSession, event *content
 }
 
 type puzzleRequest struct {
+	Target   string         `json:"target"`
 	Strokes  [][][2]float64 `json:"strokes"`
 	PlayerID string         `json:"player_id"`
 	StepID   string         `json:"step_id"`
@@ -547,7 +549,7 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 	}
 	var evaluation rules.PuzzleEvaluation
 	updated, player, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-		evaluation = rules.EvaluatePuzzleStep(event, current, rules.PuzzleAttempt{Strokes: request.Strokes, StepID: strings.TrimSpace(request.StepID), Answer: request.Answer, Action: request.Action})
+		evaluation = rules.EvaluatePuzzleStep(event, current, rules.PuzzleAttempt{Target: request.Target, Strokes: request.Strokes, StepID: strings.TrimSpace(request.StepID), Answer: request.Answer, Action: request.Action})
 		current.Actions = append(current.Actions, evaluation.ActionRecord)
 		if evaluation.ErosionDelta > 0 {
 			player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
@@ -895,19 +897,8 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 			current.Status = "completed"
 			return nil
 		}
-		result = calculateResult(current, event, player.Erosion)
+		result = calculateResult(current, event, player)
 		result.NarrativeChoice = current.NarrativeChoice
-		result.MemoriesKept = len(player.Memories)
-		acquired := make(map[string]bool)
-		for _, entry := range player.MemoryLedger {
-			if entry.Action == "kept" {
-				acquired[entry.MemoryID] = true
-			}
-		}
-		result.MemoriesAcquired = len(acquired)
-		if event.Battle != nil {
-			result.BattleClearPercent = current.BattleWaves * 100 / event.Battle.Waves
-		}
 		result.Sequence = player.LastSequence + 1
 		result.CompletedAt = time.Now().UTC()
 		player.LastSequence = result.Sequence
@@ -940,23 +931,29 @@ func finishResponse(session model.EventSession, player model.Player, result mode
 	}
 }
 
-func calculateResult(session *model.EventSession, event *content.Event, erosion int) model.EventResult {
-	puzzlePercent := 0
+// Score the settlement snapshot. Historical results are not recalculated.
+func calculateResult(session *model.EventSession, event *content.Event, player *model.Player) model.EventResult {
+	repair := 0
 	if session.PuzzleTotal > 0 {
-		puzzlePercent = session.PuzzleScore * 50 / session.PuzzleTotal
+		repair = clamp(session.PuzzleScore*100/session.PuzzleTotal, 0, 100)
 	}
-	battlePercent := 50
+	cleared := 100
 	if event.Battle != nil {
-		battlePercent = 0
-		if session.BattleWon {
-			battlePercent = 50
+		cleared = clamp(session.BattleWaves*100/event.Battle.Waves, 0, 100)
+	}
+	acquired := map[string]bool{}
+	for _, entry := range player.MemoryLedger {
+		if entry.Action == "kept" {
+			acquired[entry.MemoryID] = true
 		}
 	}
-	quality := puzzlePercent + battlePercent
-	if session.InvalidAttempts > 0 {
-		quality -= minInt(20, session.InvalidAttempts*5)
+	retention := 0
+	if len(acquired) > 0 {
+		retention = clamp(len(player.Memories)*100/len(acquired), 0, 100)
 	}
-	if erosion >= 70 {
+	quality := (repair*40 + cleared*30 + retention*30) / 100
+	quality -= minInt(20, session.InvalidAttempts*5)
+	if player.Erosion >= 70 {
 		quality -= 15
 	}
 	quality = clamp(quality, 0, 100)
@@ -966,7 +963,11 @@ func calculateResult(session *model.EventSession, event *content.Event, erosion 
 	} else if quality >= 60 {
 		stars = 2
 	}
-	return model.EventResult{ChapterID: session.ChapterID, EventID: session.EventID, Stars: stars, PuzzleScore: session.PuzzleScore, PuzzleTotal: session.PuzzleTotal, BattleWon: session.BattleWon, RepairPercent: quality, ErosionAtEnd: erosion, InkMarksEarned: stars}
+	return model.EventResult{ScoringVersion: 2, QualityScore: quality, MemoryRetentionPercent: retention,
+		MemoriesKept: len(player.Memories), MemoriesAcquired: len(acquired), BattleClearPercent: cleared,
+		ChapterID: session.ChapterID, EventID: session.EventID, Stars: stars, PuzzleScore: session.PuzzleScore,
+		PuzzleTotal: session.PuzzleTotal, BattleWon: session.BattleWon, RepairPercent: repair,
+		ErosionAtEnd: player.Erosion, InkMarksEarned: stars}
 }
 
 func (s *Server) handleEventStartPath(w http.ResponseWriter, r *http.Request, remainder string) {

@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 9,
   "game_id": "yanxia-qianqiu",
   "art": {
     "prologue_bridge": {
@@ -243,9 +243,9 @@
           },
           "battle": {
             "waves": 1,
-            "enemy_hp": 30,
-            "duration_sec": 30,
-            "max_hits_taken": 2,
+            "enemy_hp": 640,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "斗拱"
             ]
@@ -392,9 +392,9 @@
           },
           "battle": {
             "waves": 1,
-            "enemy_hp": 45,
-            "duration_sec": 30,
-            "max_hits_taken": 3,
+            "enemy_hp": 680,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "斗拱"
             ]
@@ -744,9 +744,10 @@
               {
                 "id": "drum_purify",
                 "kind": "skill",
-                "prompt": "使用藻井净化鼓面白蚀斑。",
+                "prompt": "使用藻井净化鼓面白蚀斑。 先选择技艺，再点击场景中的作用位置。",
                 "answer": "藻井",
-                "points": 40
+                "points": 40,
+                "target": "inscription"
               },
               {
                 "id": "drum_trace",
@@ -938,9 +939,9 @@
           },
           "battle": {
             "waves": 1,
-            "enemy_hp": 80,
-            "duration_sec": 45,
-            "max_hits_taken": 4,
+            "enemy_hp": 740,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "藻井"
             ]
@@ -1253,9 +1254,9 @@
           },
           "battle": {
             "waves": 1,
-            "enemy_hp": 90,
-            "duration_sec": 40,
-            "max_hits_taken": 4,
+            "enemy_hp": 920,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "飞檐"
             ]
@@ -1307,7 +1308,8 @@
             ],
             "keep_response": "戏楼：飞檐把一口气送得更远。接住它，也替台下的人留一个座位。",
             "forget_response": "戏楼：你放下了旧回声。没有人能独自装下整座戏楼，唱过的这一声会留在账册。",
-            "before_battle": "戏楼：白蚀吞掉了台口的回声。施展飞檐破开灰幕，再让唱腔回到台上。"
+            "before_battle": "戏楼：白蚀吞掉了台口的回声。施展飞檐破开灰幕，再让唱腔回到台上。",
+            "first_clear_whisper": "锣敲对了。台下多了一个人——他从头到尾没有鼓掌，只在最后轻声问了一句。"
           },
           "draft": false,
           "investigations": [
@@ -1379,9 +1381,9 @@
           },
           "battle": {
             "waves": 1,
-            "enemy_hp": 110,
-            "duration_sec": 45,
-            "max_hits_taken": 5,
+            "enemy_hp": 1000,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "飞檐"
             ]
@@ -1433,7 +1435,8 @@
             ],
             "keep_response": "戏楼·师父回声：别替他唱完。听他慢慢学，会有他自己的声音。",
             "forget_response": "戏楼：一页旧声退去了。你亲手做过的选择，比一张无瑕的谱更需要被诚实记下。",
-            "before_battle": "戏楼：护住通向后台的门。用飞檐驱散白蚀，给后来的人留出登台的位置。"
+            "before_battle": "戏楼：护住通向后台的门。用飞檐驱散白蚀，给后来的人留出登台的位置。",
+            "first_clear_whisper": "唱完了。……为什么要演奏春日影？"
           },
           "draft": false,
           "investigations": [
@@ -1515,9 +1518,9 @@
           },
           "battle": {
             "waves": 2,
-            "enemy_hp": 120,
-            "duration_sec": 50,
-            "max_hits_taken": 5,
+            "enemy_hp": 520,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "飞檐"
             ]
@@ -1616,24 +1619,26 @@
               {
                 "id": "craftsman_anchor",
                 "kind": "skill",
-                "prompt": "用斗拱承住摇晃的牌坊。",
+                "prompt": "用斗拱承住摇晃的牌坊。 先选择技艺，再点击场景中的作用位置。",
                 "answer": "斗拱",
-                "points": 50
+                "points": 50,
+                "target": "beam"
               },
               {
                 "id": "craftsman_trigger",
                 "kind": "skill",
-                "prompt": "用飞檐触发远端墨印。",
+                "prompt": "用飞檐触发远端墨印。 先选择技艺，再点击场景中的作用位置。",
                 "answer": "飞檐",
-                "points": 50
+                "points": 50,
+                "target": "bell"
               }
             ]
           },
           "battle": {
             "waves": 2,
-            "enemy_hp": 135,
-            "duration_sec": 55,
-            "max_hits_taken": 6,
+            "enemy_hp": 540,
+            "duration_sec": 60,
+            "max_hits_taken": 12,
             "required_skills": [
               "斗拱",
               "飞檐"
@@ -1826,24 +1831,26 @@
               {
                 "id": "tower_anchor",
                 "kind": "skill",
-                "prompt": "用斗拱承住第七层。",
+                "prompt": "用斗拱承住第七层。 先选择技艺，再点击场景中的作用位置。",
                 "answer": "斗拱",
-                "points": 30
+                "points": 30,
+                "target": "beam"
               },
               {
                 "id": "tower_purify",
                 "kind": "skill",
-                "prompt": "用藻井净化逆结晶。",
+                "prompt": "用藻井净化逆结晶。 先选择技艺，再点击场景中的作用位置。",
                 "answer": "藻井",
-                "points": 40
+                "points": 40,
+                "target": "inscription"
               }
             ]
           },
           "battle": {
             "waves": 3,
-            "enemy_hp": 180,
+            "enemy_hp": 360,
             "duration_sec": 60,
-            "max_hits_taken": 7,
+            "max_hits_taken": 12,
             "required_skills": [
               "斗拱",
               "飞檐",
@@ -2213,6 +2220,66 @@
       "shield": 0,
       "heal": 1,
       "color": "#d7b1eb"
+    }
+  },
+  "failure_scene": {
+    "title": "失败结局 · 飞鸟山",
+    "background": "res://assets/generated/bg_03_temple_white_erosion_battle.png",
+    "dialogue": [
+      {
+        "speaker": "檐下谱",
+        "text": "你退到了飞鸟山。这条石阶上，落着所有没能带回去的记忆。"
+      },
+      {
+        "speaker": "拓印师",
+        "text": "只差最后一步。构件归位了，墨线描完了，白蚀也散了。"
+      },
+      {
+        "speaker": "飞鸟山",
+        "text": "差的那一步是我。你把我的残迹当成一页脏墨——擦干净，再写上你记得的样子。"
+      },
+      {
+        "speaker": "拓印师",
+        "text": "我把你修回原来的样子，哪里不对？"
+      },
+      {
+        "speaker": "飞鸟山",
+        "text": "你要的不是原来的我，是一个被你修好的我。"
+      },
+      {
+        "speaker": "拓印师",
+        "text": "我只是不想让你们再忘下去。"
+      },
+      {
+        "speaker": "飞鸟山",
+        "text": "你是想让我停在你还记得我的那一天。"
+      },
+      {
+        "speaker": "拓印师",
+        "text": "……"
+      },
+      {
+        "speaker": "飞鸟山",
+        "text": "你这个人，满脑子只想着自己呢。"
+      }
+    ],
+    "first_lines": {
+      "erosion_limit": {
+        "speaker": "檐下谱",
+        "text": "你退到了飞鸟山。墨已经耗干了。"
+      },
+      "puzzle_attempt_limit": {
+        "speaker": "檐下谱",
+        "text": "你退到了飞鸟山。这一回，你的手抖得太厉害了。"
+      },
+      "battle_requirements_not_met": {
+        "speaker": "檐下谱",
+        "text": "你退到了飞鸟山。白蚀还在，你的手已经抬不起来了。"
+      },
+      "session_expired": {
+        "speaker": "檐下谱",
+        "text": "你退到了飞鸟山。这段路，你走得太久了。"
+      }
     }
   }
 }

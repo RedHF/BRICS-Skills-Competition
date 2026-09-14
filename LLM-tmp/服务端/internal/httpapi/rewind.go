@@ -23,7 +23,6 @@ func (s *Server) handleRewind(w http.ResponseWriter, r *http.Request, sessionID 
 	}
 	session, _ := s.store.GetSession(sessionID)
 	var invalid = errors.New("invalid_retry")
-	var insufficient = errors.New("insufficient_ink")
 	updated, player, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
 		if current.Retries == *request.Retries+1 {
 			return nil
@@ -31,9 +30,7 @@ func (s *Server) handleRewind(w http.ResponseWriter, r *http.Request, sessionID 
 		if current.Status != "failed" || current.Retries != *request.Retries {
 			return invalid
 		}
-		if player.InkMarks == 0 && current.ChapterID != "prologue" {
-			return insufficient
-		}
+		// A failed session blocks progression, so every chapter has a zero-ink fallback.
 		if player.InkMarks > 0 {
 			player.InkMarks--
 		}
@@ -51,9 +48,7 @@ func (s *Server) handleRewind(w http.ResponseWriter, r *http.Request, sessionID 
 		return nil
 	})
 	if err != nil {
-		if errors.Is(err, insufficient) {
-			writeError(w, http.StatusConflict, "insufficient_ink", "回溯需要 1 墨痕；仅序章可在墨痕不足时免费重试")
-		} else if errors.Is(err, invalid) {
+		if errors.Is(err, invalid) {
 			writeError(w, http.StatusConflict, "invalid_retry", "事件状态已变化，请刷新后重试")
 		} else {
 			writeError(w, http.StatusInternalServerError, "store_error", err.Error())
