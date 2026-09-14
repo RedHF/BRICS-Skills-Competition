@@ -15,3 +15,9 @@
 /LLM-tmp/.review/
 /LLM-tmp/交付/
 /dist
+
+# AI 配音产物：体积大且可复现，不入库。
+# 用 ChatTTS 重新生成：AI配音台词/工具/generate_voice.py + 工具/speakers.json（固定声线）
+/AI配音台词/生成音频/
+/AI配音台词/试听/
+/AI配音台词/*.zip
