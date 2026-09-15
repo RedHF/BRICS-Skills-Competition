@@ -51,7 +51,7 @@ func New(catalog *content.Catalog, persistence *store.Store) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: "dialogue-v9"}, nil
+	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: "assets-boss-v10"}, nil
 }
 
 // ServeHTTP implements routing without a framework so the server remains a

@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const CurrentVersion = 9
+const CurrentVersion = 10
 
 // Catalog is the complete, versioned game content manifest.
 type SkillSpec struct {
@@ -41,9 +41,10 @@ type FailureSceneSpec struct {
 }
 
 type ArtSpec struct {
-	WhisperAudio  string `json:"whisper_audio,omitempty"`
-	Background    string `json:"background,omitempty"`
-	BackdropColor string `json:"backdrop_color,omitempty"`
+	ErodedBackground string `json:"eroded_background,omitempty"`
+	WhisperAudio     string `json:"whisper_audio,omitempty"`
+	Background       string `json:"background,omitempty"`
+	BackdropColor    string `json:"backdrop_color,omitempty"`
 }
 
 type Chapter struct {
@@ -117,11 +118,33 @@ type PuzzleStep struct {
 }
 
 type BattleSpec struct {
-	Waves          int      `json:"waves"`
-	EnemyHP        int      `json:"enemy_hp"`
-	DurationSec    int      `json:"duration_sec"`
-	MaxHitsTaken   int      `json:"max_hits_taken"`
-	RequiredSkills []string `json:"required_skills,omitempty"`
+	BossName             string   `json:"boss_name,omitempty"`
+	BossHP               int      `json:"boss_hp,omitempty"`
+	BossAttackIntervalMS int      `json:"boss_attack_interval_ms,omitempty"`
+	Waves                int      `json:"waves"`
+	EnemyHP              int      `json:"enemy_hp"`
+	DurationSec          int      `json:"duration_sec"`
+	MaxHitsTaken         int      `json:"max_hits_taken"`
+	RequiredSkills       []string `json:"required_skills,omitempty"`
+}
+
+// The last wave can be a named boss; ordinary waves keep their existing rules.
+func (b *BattleSpec) IsBoss(wave int) bool {
+	return b.BossName != "" && wave == b.Waves-1
+}
+
+func (b *BattleSpec) WaveHP(wave int) int {
+	if b.IsBoss(wave) {
+		return b.BossHP
+	}
+	return b.EnemyHP
+}
+
+func (b *BattleSpec) AttackInterval(wave int) int {
+	if b.IsBoss(wave) {
+		return b.BossAttackIntervalMS
+	}
+	return 3000
 }
 
 type RewardSpec struct {
@@ -319,6 +342,9 @@ func (c *Catalog) Validate() error {
 				return fmt.Errorf("event %q reward memory has no choices", event.ID)
 			}
 			if event.Battle != nil {
+				if event.Battle.BossName != "" && (event.Battle.BossHP <= 0 || event.Battle.BossAttackIntervalMS < 1000) {
+					return fmt.Errorf("event %q has invalid boss settings", event.ID)
+				}
 				for _, skill := range event.Battle.RequiredSkills {
 					if _, ok := c.Skills[skill]; !ok {
 						return fmt.Errorf("event %q references missing battle skill %q", event.ID, skill)

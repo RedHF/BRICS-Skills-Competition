@@ -54,7 +54,7 @@ func TestAllBattlesPacingAndDelayedInputs(t *testing.T) {
 						hp -= spec.Damage
 						if hp <= 0 {
 							waves++
-							hp = event.Battle.EnemyHP
+							hp = event.Battle.WaveHP(waves)
 						}
 						if waves == event.Battle.Waves {
 							break

@@ -12,6 +12,9 @@ func _exit_tree() -> void:
 func stop_all() -> void:
 	for player in voices + [ambience, music]:
 		if is_instance_valid(player):
+			player.stream_paused = false
+			if player.stream is AudioStreamWAV:
+				player.stream.loop_mode = AudioStreamWAV.LOOP_DISABLED
 			player.stop()
 			player.stream = null
 	sounds.clear()
@@ -50,3 +53,7 @@ func cue(name: String) -> void:
 	cursor += 1
 	player.stream = sounds[name]
 	player.play()
+
+func duck(active: bool) -> void:
+	if is_instance_valid(ambience): ambience.volume_db = -32 if active else -24
+	if is_instance_valid(music): music.volume_db = -28 if active else -19

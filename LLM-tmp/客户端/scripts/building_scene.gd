@@ -7,6 +7,7 @@ var bridge := false
 var interactive := false
 var tint := Color("#a38c63")
 var background: Texture2D
+var eroded_background: Texture2D
 var investigations: Array = []
 var discovered: Array = []
 var player := Vector2(0.48, 0.78)
@@ -18,7 +19,7 @@ var dragging_stick := false
 var purification := 0.0
 
 func _ready() -> void:
-	custom_minimum_size.y = 430 if interactive else 240
+	custom_minimum_size.y = 310 if interactive else 240
 	mouse_filter = Control.MOUSE_FILTER_STOP if interactive else Control.MOUSE_FILTER_IGNORE
 	clip_contents = true
 	if investigations.is_empty(): investigations = [{"label":"古建遗痕", "position":[0.55, 0.50]}]
@@ -144,6 +145,9 @@ func _draw_background(fade: float) -> void:
 		source_size.y = texture_size.x / target_aspect
 	var source_rect := Rect2((texture_size - source_size) * 0.5, source_size)
 	draw_texture_rect_region(background, Rect2(Vector2.ZERO, size), source_rect)
+	if eroded_background != null:
+		var erosion_mix := 1.0 if forgotten else fade
+		draw_texture_rect_region(eroded_background, Rect2(Vector2.ZERO, size), source_rect, Color(1,1,1,erosion_mix))
 	draw_rect(Rect2(Vector2.ZERO, size), Color(0.04, 0.09, 0.10, 0.12))
 	var whiteout := 0.64 if forgotten else fade * 0.38
 	if whiteout > 0:

@@ -12,6 +12,8 @@ var effect_color := Color.WHITE
 var effect_text := ""
 var defeated := false
 var background: Texture2D
+var boss_name := ""
+const ENEMY_TEXTURE = preload("res://assets/imported/white_erosion.png")
 var active := false
 var player_position := Vector2(0.50, 0.78)
 var enemy_position := Vector2(0.50, 0.28)
@@ -69,21 +71,14 @@ func _draw() -> void:
 	var player := player_position * size
 	var font := ThemeDB.fallback_font
 	if not defeated:
-		var body := PackedVector2Array()
-		for i in range(12):
-			var angle := TAU * i / 12
-			var pulse := 1.0 + sin(motion_time * 4.0 + i) * 0.08
-			body.append(enemy + Vector2(cos(angle), sin(angle)) * (38 if i % 2 == 0 else 28) * pulse)
-		draw_colored_polygon(body, Color("#f0eae0") if phase < 0.7 else Color("#ff8078"))
-		for i in range(4):
-			var tail_end := enemy + Vector2(sin(motion_time * 2.0 + i) * 54, -34 - i * 8)
-			draw_line(enemy, tail_end, Color(0.88, 0.90, 0.88, 0.42), 3.0)
-		draw_circle(enemy + Vector2(-12, -3), 4, Color("#243840"))
-		draw_circle(enemy + Vector2(12, -3), 4, Color("#243840"))
-		draw_line(enemy + Vector2(-8, 14), enemy + Vector2(8, 14), Color("#243840"), 3)
+		var extent := (126.0 if not boss_name.is_empty() else 76.0) * (1.0 + sin(motion_time * 3.0) * .04)
+		var tint := Color.WHITE if phase < .7 else Color("#ffa78d")
+		draw_texture_rect(ENEMY_TEXTURE, Rect2(enemy-Vector2.ONE*extent*.5,Vector2.ONE*extent),false,tint)
+		if not boss_name.is_empty():
+			draw_arc(enemy, extent*.54, motion_time*.4, motion_time*.4+TAU*.86, 48, Color("#c6ac78"), 2, true)
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6, 7)), Color("#394448"))
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6 * float(hp) / max_hp, 7)), Color("#e6a275"))
-		draw_string(font, Vector2(12, 48), "白蚀 %d/%d" % [hp, max_hp], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#e4c98a"))
+		draw_string(font, Vector2(12, 48), (boss_name if not boss_name.is_empty() else "白蚀") + " %d/%d" % [hp, max_hp], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#e4c98a"))
 		if phase > 0.7:
 			draw_line(enemy, player, Color(1.0, 0.36, 0.34, 0.58), 3.0, true)
 			draw_string(font, Vector2(12, size.y * 0.52), "白蚀锁定 · 保持移动即可闪身", HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#ff8078"))

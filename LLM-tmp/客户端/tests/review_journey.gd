@@ -52,6 +52,18 @@ func capture(name: String) -> void:
 		RenderingServer.force_draw()
 		root.get_texture().get_image().save_png(shots.path_join(name + ".png"))
 
+func key(code: int, echo: bool = false) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.pressed = true
+	event.echo = echo
+	root.push_input(event, true)
+	await process_frame
+	event = event.duplicate()
+	event.pressed = false
+	root.push_input(event, true)
+	await process_frame
+
 func _run() -> void:
 	root.gui_embed_subwindows = true
 	# Assertions stop a coroutine; a deadline also makes failures exit nonzero in CI.
@@ -64,6 +76,12 @@ func _run() -> void:
 	game = root.get_node("GameState")
 	while main.flow != "map" or main.busy: await process_frame
 	main.set_process(false)
+	main.story_progress = ConfigFile.new()
+	assert(main.voice_index.cues.size() == 184)
+	for path in main.voice_index.cues.values():
+		assert(ResourceLoader.exists(path), "Missing packaged voice: " + path)
+		assert(load(path).get_length() > 0)
+	assert(main.voice_index.missing.size() == 1 and main.voice_index.missing[0].text == "……")
 	var fixture_path := ProjectSettings.globalize_path("res://../服务端/content/chapters.json")
 	var fixture: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(fixture_path))
 	await capture("map")
@@ -74,12 +92,17 @@ func _run() -> void:
 				await main._resume()
 			else:
 				main._open_event(chapter.id, event.id)
+				await create_timer(.2).timeout
+				assert(main.event_audio.playing and main.event_audio.get_playback_position() > 0, "Dialogue has no voice")
+				main._advance_dialogue()
+				assert(main.event_audio.stream.resource_path.ends_with(event.id + "_dialogue_02.wav"))
 				await click(main.dialogue_stage.skip)
+				assert(not main.event_audio.playing and main.voice_queue.is_empty(), "Skipped dialogue kept playing")
 				for point in main.scene_view.investigations:
 					await tap(main.scene_view.global_position + main.scene_view.size * Vector2(point.position[0], point.position[1]))
 					main.scene_view._process(2.0)
 				assert(main.scene_view.discovered.size() == 3)
-				if event.id == "prologue_bridge": await capture("investigation")
+				if event.id in ["prologue_bridge","temple_incense","temple_guest","temple_drum"]: await capture(event.id + "-investigation")
 				await click(button("三处调查完成"))
 			for step in event.puzzle.steps:
 				if game.session.accepted_steps.has(step.id): continue
@@ -128,16 +151,34 @@ func _run() -> void:
 			else: await click(button("拓印这道墨灵"))
 			if event.has("battle"):
 				await capture(event.id + "-battle-ready")
+				await key(KEY_1)
+				assert(main.battle_actions.is_empty(), "Keyboard bypassed ready screen")
 				await click(main.battle_start)
+				await key(KEY_4, true)
+				assert(main.battle_actions.is_empty(), "Key repeat fired a skill")
+				if event.id == "opera_opening": assert(main._learned_skills().size() == 3)
+				await key(KEY_KP_5)
+				assert(main.battle_actions.size() == 1 and main.battle_actions[0].skill == "闪身")
+				await key(KEY_5)
+				assert(main.battle_actions.size() == 1, "Cooldown bypassed with another key")
+				if not main.battle_skills.has("飞檐"):
+					await key(KEY_4)
+					assert(main.battle_actions.size() == 1, "Unlearned skill fired")
 				# Every skill must be visible simultaneously without scrolling.
 				for skill in main.battle_buttons:
 					assert(root.get_visible_rect().encloses(main.battle_buttons[skill].get_global_rect()),"Hidden battle skill")
+				var boss_captured := false
 				while not main.battle_finished:
 					for skill in ["斗拱","藻井","飞檐","挥墨"]:
 						if main.battle_buttons.has(skill) and not main.battle_buttons[skill].disabled:
-							await click(main.battle_buttons[skill])
+							await key(KEY_1 + main.BATTLE_KEYS.find(skill))
+					if main._boss_wave() and not boss_captured:
+						boss_captured = true
+						assert(main.arena.max_hp == 620 and main._attack_interval() == 2400)
+						await capture("miniboss-active")
 					if not main.battle_finished: main._process(.75)
 				assert(main.arena.defeated,"Battle failed: " + event.id)
+				if event.id == "opera_opening": assert(boss_captured)
 				print("PACE ",event.id," ",main.battle_elapsed)
 				await click(button("结算白蚀战斗",main.battle_dock))
 			assert(main.flow == "settlement",main.status.text)
@@ -158,7 +199,7 @@ func _run() -> void:
 	await capture("journal")
 	main._show_memories()
 	await capture("heart-room")
-	print("PASS all ten UI tasks, visible battle controls, pattern choices, scene targets, real confirmation buttons")
+	print("PASS all ten UI tasks, 184 voices, dialogue cancellation, 1-5/numpad shortcuts, cooldown, third-skill boss and server settlement")
 	main.queue_free()
 	await create_timer(0.3).timeout
 	quit(0)

@@ -67,6 +67,9 @@ var volume := 1.0
 var muted := false
 var event_audio: AudioStreamPlayer
 var closing := false
+const BATTLE_KEYS := ["挥墨", "斗拱", "藻井", "飞檐", "闪身"]
+var voice_index: Dictionary = {}
+var voice_queue: Array[String] = []
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -94,7 +97,9 @@ func _ready() -> void:
 	AudioServer.set_bus_volume_linear(0, volume)
 	AudioServer.set_bus_mute(0, muted)
 	event_audio = AudioStreamPlayer.new()
-	event_audio.bus = "Echo"
+	# Narrative stays intelligible; the collectible echo retains erosion effects.
+	voice_index = JSON.parse_string(FileAccess.get_file_as_string("res://assets/voice/index.json"))
+	event_audio.finished.connect(_voice_next)
 	add_child(event_audio)
 	memory_audio = AudioStreamPlayer.new()
 	memory_audio.bus = "Echo"
@@ -219,7 +224,7 @@ func _connect_server() -> void:
 	if health.is_empty():
 		_error(network.last_error)
 		return
-	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 9:
+	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 10:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
 		return
 	await _load_game()
@@ -264,12 +269,13 @@ func _load_game() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and not closing:
 		closing = true
+		_stop_voice()
 		soundscape.stop_all()
 		for player in [memory_audio, event_audio]:
 			player.stop()
 			player.stream = null
 		# Let the audio server retire playback before the engine shuts down.
-		await get_tree().create_timer(.15).timeout
+		await get_tree().create_timer(.3).timeout
 		get_tree().quit()
 
 func _exit_tree() -> void:
@@ -324,6 +330,8 @@ func _add_building(interactive: bool = false) -> void:
 	scene_view.bridge = chapter_id == "prologue"
 	scene_view.tint = Color(data.memory(current_event.reward.memory_id).color)
 	scene_view.background = _event_background()
+	var eroded_path := str(_event_art(str(current_event.id)).get("eroded_background", ""))
+	if not eroded_path.is_empty(): scene_view.eroded_background = load(eroded_path)
 	scene_view.investigations = current_event.get("investigations", [])
 	scene_view.erosion = int(GameState.player.erosion)
 	var held := false
@@ -420,7 +428,7 @@ func _clear() -> void:
 	scroll.scroll_vertical = 0
 	memory_audio.stop()
 	memory_audio.stream = null
-	event_audio.stop()
+	_stop_voice()
 	if not GameState.player.is_empty(): _refresh_stats()
 
 func _show_map() -> void:
@@ -468,7 +476,9 @@ func _open_event(chapter: String, event: String) -> void:
 	chapter_id = chapter
 	current_event = data.event(chapter, event)
 	session_id = ""
-	_begin_dialogue(current_event.title, current_event.story.dialogue, _show_investigation, _show_map)
+	var lines: Array = current_event.story.dialogue.duplicate(true)
+	for i in range(lines.size()): lines[i]["audio_cue"] = str(current_event.id) + "_dialogue_%02d" % (i+1)
+	_begin_dialogue(current_event.title, lines, _show_investigation, _show_map)
 
 func _show_investigation() -> void:
 	flow = "intro"
@@ -492,18 +502,16 @@ func _show_investigation() -> void:
 		for i in range(scene_view.investigations.size()):
 			if scene_view.investigations[i].label == label:
 				if i < clues.size(): _label(discoveries, str(clues[i]), 18)
-		if found == 1 and not scene_view.forgotten:
-			var event_art := _event_art(str(current_event.get("id", "")))
-			var whisper_path := str(event_art.get("whisper_audio", ""))
-			var sound: AudioStream = null
-			if not whisper_path.is_empty(): sound = load(whisper_path) as AudioStream
-			if sound == null:
-				_error("无法读取调查呓语：" + whisper_path)
-				return
-			event_audio.stream = sound
-			event_audio.play()
+		for i in range(scene_view.investigations.size()):
+			if scene_view.investigations[i].label == label:
+				_play_cues([str(current_event.id) + "_clue_%02d" % (i+1)], true)
 		if found < total: return
-		for beat in current_event.story.beats: _label(story_details, beat, 20)
+		var beat_cues: Array = []
+		for i in range(current_event.story.beats.size()):
+			_label(story_details, current_event.story.beats[i], 20)
+			beat_cues.append(str(current_event.id) + "_beat_%02d" % (i+1))
+		_play_cues(beat_cues, true)
+		_button(story_details, "重听这段往事", func(): _play_cues(beat_cues))
 		if completed:
 			if scene_view.forgotten: _label(story_details, memory.forgotten_text, 20)
 			else: _label(story_details, current_event.story.outro, 20)
@@ -684,6 +692,7 @@ func _show_choice() -> void:
 	_memory_art(page, memory.id, 320)
 	_label(page, memory.summary, 21)
 	_label(page, current_event.story.keep_response, 18)
+	_play_cues([str(current_event.id) + "_keep"])
 	_label(page, "技能：%s" % memory.skill)
 	if not memory.skill.is_empty(): _label(page, data.catalog.skills[memory.skill].description, 16)
 	var used := 0
@@ -741,14 +750,18 @@ func _start_battle() -> void:
 	next_attack = 3000
 	battle_skills = _learned_skills()
 	battle_ready["闪身"] = 0
-	_label(page, "白蚀来袭", 26, Color("#e4c98a"))
+	var boss_name := str(current_event.battle.get("boss_name", ""))
+	_label(page, "首领战 · " + boss_name if not boss_name.is_empty() else "白蚀来袭", 26, Color("#e4c98a"))
+	if not boss_name.is_empty():
+		_label(page, "第三项技艺 · 飞檐已习得。先清除游蚀，再迎战噤声客；首领每 2.4 秒侵袭，记得护盾与闪身。", 17)
+	_play_cues([str(current_event.id) + "_before_battle"])
 	_label(page, current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
-	_label(page, "移动闪避预警；每 6 秒补斗拱护盾。技能说明可在心舍查看。", 16)
+	_label(page, "1 挥墨　2 斗拱　3 藻井　4 飞檐　5 闪身\n数字键或点击施展；未习得的技艺暂不可用。", 16)
 	battle_note = _label(page, "", 17)
 	arena = preload("res://scripts/battle_arena.gd").new()
 	arena.background = _event_background()
 	arena.dodge_triggered.connect(_battle_dodge)
-	arena.hp = int(current_event.battle.enemy_hp)
+	arena.hp = _wave_hp()
 	arena.max_hp = arena.hp
 	page.add_child(arena)
 	for child in battle_dock.get_children():
@@ -758,7 +771,8 @@ func _start_battle() -> void:
 	battle_controls = GridContainer.new()
 	battle_controls.columns = 2
 	battle_dock.add_child(battle_controls)
-	for skill in ["挥墨"] + battle_skills:
+	for skill in BATTLE_KEYS:
+		if skill not in ["挥墨", "闪身"] and not battle_skills.has(skill): continue
 		battle_ready[skill] = 0
 		battle_buttons[skill] = _button(battle_controls, skill, _battle_skill.bind(skill))
 		battle_buttons[skill].tooltip_text = data.catalog.skills[skill].description
@@ -794,7 +808,12 @@ func _battle_skill(skill: String) -> void:
 	soundscape.cue("ink" if int(spec.damage) > 0 else "repair")
 	if arena.hp <= 0:
 		battle_wave += 1
-		arena.hp = int(current_event.battle.enemy_hp)
+		arena.hp = _wave_hp()
+		arena.max_hp = arena.hp
+		if _boss_wave():
+			next_attack = at + _attack_interval()
+			arena.flash("噤声客现身", Color("#e9b991"))
+			soundscape.cue("hit")
 	_battle_update()
 
 func _process(delta: float) -> void:
@@ -812,13 +831,14 @@ func _process(delta: float) -> void:
 			battle_hits += 1
 			arena.flash("侵蚀 +5", Color("#ff8078"))
 			soundscape.cue("hit")
-		next_attack += 3000
+		next_attack += _attack_interval()
 	_battle_update()
 
 func _battle_update() -> void:
 	_refresh_stats(mini(100, int(GameState.player.erosion) + battle_hits * 5))
 	arena.hits = battle_hits
-	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / 3000.0
+	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / float(_attack_interval())
+	arena.boss_name = str(current_event.battle.get("boss_name", "")) if _boss_wave() else ""
 	battle_note.text = "第 %d/%d 波 · 剩余 %d 秒 · 受蚀 %d/%d" % [mini(battle_wave + 1, int(current_event.battle.waves)), int(current_event.battle.waves), ceili(float(current_event.battle.duration_sec) - battle_elapsed), battle_hits, int(current_event.battle.max_hits_taken) + 1]
 	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or int(GameState.player.erosion) + battle_hits * 5 >= 100 or battle_elapsed >= float(current_event.battle.duration_sec):
 		battle_finished = true
@@ -831,7 +851,7 @@ func _battle_update() -> void:
 		soundscape.cue("win" if complete else "hit")
 	for skill in battle_buttons:
 		var remaining := maxi(0, int(battle_ready[skill]) - int(battle_elapsed * 1000))
-		battle_buttons[skill].text = skill + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
+		battle_buttons[skill].text = "%d · %s" % [BATTLE_KEYS.find(skill)+1, skill] + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
 		battle_buttons[skill].disabled = not battle_running or battle_finished or remaining > 0
 
 func _submit_battle() -> void:
@@ -865,12 +885,16 @@ func _settlement(result: Dictionary, first_clear: bool = false) -> void:
 	reveal.tween_property(stars, "visible_characters", stars.text.length(), 0.9)
 	_memory_art(page, current_event.reward.memory_id, 320)
 	_label(page, current_event.story.outro, 23)
+	var ending_cues: Array = [str(current_event.id) + "_outro", str(current_event.id) + ("_forget" if GameState.session.get("choice_action", "") == "forget" else "_keep")]
+	if current_event.story.has("chapter_outro"): ending_cues.append(str(current_event.id) + "_chapter_outro")
+	_play_cues(ending_cues)
 	var whisper_key := chapter_id + ":" + str(current_event.id)
 	var whisper := str(current_event.story.get("first_clear_whisper",""))
 	if first_clear and not whisper.is_empty() and not bool(story_progress.get_value("whisper",whisper_key,false)):
 		story_progress.set_value("whisper",whisper_key,true)
 		var saved := story_progress.save("user://story-" + str(GameState.player.id) + ".cfg")
 		if saved != OK: status.text = "呓语阅读标记保存失败。"
+		_play_cues([str(current_event.id) + "_first_clear"], true)
 		var aside := _label(page,"戏楼：" + whisper,21,Color("#c5caba"))
 		aside.visible_characters = 0
 		aside.create_tween().tween_property(aside,"visible_characters",aside.text.length(),aside.text.length()/32.0)
@@ -968,6 +992,7 @@ func _memory_detail(id: String) -> void:
 	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
 
 func _play_memory(path: String) -> void:
+	_stop_voice()
 	if memory_audio.playing:
 		memory_audio.stream_paused = not memory_audio.stream_paused
 		return
@@ -1074,6 +1099,7 @@ func _add_current_task(parent: Node) -> void:
 		_button(parent, "继续当前修复", _resume)
 
 func _close_dialogue() -> void:
+	_stop_voice()
 	if is_instance_valid(dialogue_stage):
 		dialogue_stage.dismiss()
 	dialogue_stage = null
@@ -1101,6 +1127,13 @@ func _render_dialogue() -> void:
 		dialogue_stage.previous_requested.connect(_previous_dialogue)
 		dialogue_stage.skip_requested.connect(_finish_dialogue)
 		dialogue_stage.back_requested.connect(func(): dialogue_return.call())
+	if dialogue_mode == "failure":
+		var reason := str(GameState.session.get("failure_reason", ""))
+		var cue := "failure_first_" + reason if dialogue_index == 0 and data.catalog.failure_scene.first_lines.has(reason) else "failure_line_%02d" % (dialogue_index+1)
+		_play_cues([cue])
+	else:
+		var line: Dictionary = dialogue_lines[dialogue_index]
+		_play_cues([str(line.get("audio_cue", voice_index.get("lines", {}).get(str(line.text), "")))])
 	dialogue_stage.show_line(dialogue_title, dialogue_lines[dialogue_index], dialogue_index, dialogue_lines.size(), bool(story_progress.get_value("read",dialogue_key,false)))
 
 func _previous_dialogue() -> void:
@@ -1182,7 +1215,8 @@ func _replay_story(chapter: String, event_id: String) -> void:
 	# Keep active event identity intact while reading completed stories.
 	var event: Dictionary = data.event(chapter, event_id)
 	var lines: Array = event.story.dialogue.duplicate(true)
-	lines.append({"speaker": "檐下谱", "text": event.story.outro})
+	for i in range(lines.size()): lines[i]["audio_cue"] = event_id + "_dialogue_%02d" % (i+1)
+	lines.append({"speaker": "檐下谱", "text": event.story.outro, "audio_cue":event_id + "_outro"})
 	var result: Dictionary = GameState.player.completed_events[chapter + ":" + event_id]
 	if not str(result.get("narrative_choice", "")).is_empty():
 		lines.append({"speaker": "你的回答 · " + str(result.narrative_choice), "text": _ending_response(str(result.narrative_choice))})
@@ -1193,3 +1227,57 @@ func _replay_story(chapter: String, event_id: String) -> void:
 
 func _ending_response(choice: String) -> String:
 	return {"传下修复的方法": "你在塔下开了一间小工坊。第一位学徒没有问什么叫永恒，只问：这块坏木头，还能修吗？", "留下所有取舍的记录": "你把灰页也装订进谱。翻阅的人第一次看见修复者的迟疑，开始在页边写下自己的不同意见。", "留白让后来人续写": "你留下空白与未蘸墨的笔。一个孩子画上了今天新搭的小棚，古建们第一次听见未来的声音。"}.get(choice, "故事由后来的人继续书写。")
+
+func _boss_wave() -> bool:
+	return not str(current_event.battle.get("boss_name", "")).is_empty() and battle_wave == int(current_event.battle.waves)-1
+
+func _wave_hp() -> int:
+	return int(current_event.battle.boss_hp) if _boss_wave() else int(current_event.battle.enemy_hp)
+
+func _attack_interval() -> int:
+	return int(current_event.battle.boss_attack_interval_ms) if _boss_wave() else 3000
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if flow != "battle" or busy or not battle_running or battle_finished: return
+	if event is not InputEventKey or not event.pressed or event.echo: return
+	var number := -1
+	var code: int = event.keycode
+	if code == 0: code = event.physical_keycode
+	if code >= KEY_1 and code <= KEY_5: number = code - KEY_1
+	elif code >= KEY_KP_1 and code <= KEY_KP_5: number = code - KEY_KP_1
+	if number < 0: return
+	get_viewport().set_input_as_handled()
+	var skill: String = BATTLE_KEYS[number]
+	if battle_buttons.has(skill): _battle_skill(skill)
+
+func _stop_voice() -> void:
+	voice_queue.clear()
+	if is_instance_valid(event_audio):
+		event_audio.stop()
+		event_audio.stream = null
+	if is_instance_valid(soundscape): soundscape.duck(false)
+
+func _play_line(text: String) -> void:
+	_play_cues([str(voice_index.get("lines", {}).get(text, ""))])
+
+func _play_cues(cues: Array, append: bool = false) -> void:
+	if not append: _stop_voice()
+	for cue in cues:
+		var path := str(voice_index.get("cues", {}).get(str(cue), ""))
+		if not path.is_empty(): voice_queue.append(path)
+	if not event_audio.playing: _voice_next()
+
+func _voice_next() -> void:
+	if voice_queue.is_empty():
+		soundscape.duck(false)
+		return
+	var path: String = voice_queue.pop_front()
+	var sound := load(path) as AudioStream
+	if sound == null:
+		push_warning("无法播放语音：" + path)
+		_voice_next()
+		return
+	memory_audio.stop()
+	event_audio.stream = sound
+	event_audio.play()
+	soundscape.duck(true)

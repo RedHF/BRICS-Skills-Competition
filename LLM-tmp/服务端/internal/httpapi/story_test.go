@@ -88,7 +88,7 @@ func testStoryEnding(t *testing.T, choice int) {
 						hp -= spec.Damage
 						if hp <= 0 {
 							waves++
-							hp = event.Battle.EnemyHP
+							hp = event.Battle.WaveHP(waves)
 						}
 						if waves == event.Battle.Waves {
 							break

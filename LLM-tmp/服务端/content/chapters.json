@@ -1,25 +1,26 @@
 {
-  "version": 9,
+  "version": 10,
   "game_id": "yanxia-qianqiu",
   "art": {
     "prologue_bridge": {
       "whisper_audio": "res://assets/echo/prologue_bridge.wav",
-      "background": "res://assets/generated/bg_01_wind_rain_bridge.png",
-      "backdrop_color": "#172b35"
+      "background": "res://assets/imported/bridge_restored.jpg",
+      "backdrop_color": "#172b35",
+      "eroded_background": "res://assets/imported/bridge_eroded.jpg"
     },
     "temple_incense": {
       "whisper_audio": "res://assets/echo/temple_incense.wav",
-      "background": "res://assets/generated/bg_02_village_temple_courtyard.png",
+      "background": "res://assets/imported/temple_interior.png",
       "backdrop_color": "#2b2724"
     },
     "temple_guest": {
       "whisper_audio": "res://assets/echo/temple_guest.wav",
-      "background": "res://assets/generated/bg_02_village_temple_courtyard.png",
+      "background": "res://assets/imported/guest_room.png",
       "backdrop_color": "#26333a"
     },
     "temple_drum": {
       "whisper_audio": "res://assets/echo/temple_drum.wav",
-      "background": "res://assets/generated/bg_03_temple_white_erosion_battle.png",
+      "background": "res://assets/imported/drum_courtyard.png",
       "backdrop_color": "#35272a"
     },
     "opera_opening": {
@@ -1020,7 +1021,8 @@
             "调查三处线索",
             "水袖与凤冠属于哪个行当？",
             "沿锣面纹样拓印开场节拍。",
-            "收录墨灵并守住记忆"
+            "收录墨灵并守住记忆",
+            "获得第三项技艺飞檐后，击败小首领「白蚀·噤声客」"
           ],
           "puzzle": {
             "type": "pattern",
@@ -1253,13 +1255,18 @@
             ]
           },
           "battle": {
-            "waves": 1,
-            "enemy_hp": 920,
+            "waves": 2,
+            "enemy_hp": 300,
             "duration_sec": 60,
             "max_hits_taken": 12,
             "required_skills": [
+              "斗拱",
+              "藻井",
               "飞檐"
-            ]
+            ],
+            "boss_name": "白蚀·噤声客",
+            "boss_hp": 620,
+            "boss_attack_interval_ms": 2400
           },
           "reward": {
             "memory_id": "xi_xing_qiang",
@@ -2050,7 +2057,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：桥记着每一次送别与归来。",
       "color": "#d9ba78",
       "tone_hz": 261.63,
-      "echo_audio": "res://assets/echo/yan_ping_an.wav",
+      "echo_audio": "res://assets/voice/yan_ping_an.wav",
       "image": "res://assets/rubbings/yan_ping_an.png"
     },
     "she_cheng_xiang": {
@@ -2064,7 +2071,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：一炷香把一村人的愿望托给屋梁。",
       "color": "#d9ba78",
       "tone_hz": 261.63,
-      "echo_audio": "res://assets/echo/she_cheng_xiang.wav",
+      "echo_audio": "res://assets/voice/she_cheng_xiang.wav",
       "image": "res://assets/rubbings/she_cheng_xiang.png"
     },
     "she_ning_an": {
@@ -2078,7 +2085,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：檐下不拒客，一碗冷饭也分半碗。",
       "color": "#92c5a3",
       "tone_hz": 329.63,
-      "echo_audio": "res://assets/echo/she_ning_an.wav",
+      "echo_audio": "res://assets/voice/she_ning_an.wav",
       "image": "res://assets/rubbings/she_ning_an.png"
     },
     "she_hui_chun": {
@@ -2092,7 +2099,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：鼓声唤回春社，也唤回孩子们的脚步。",
       "color": "#92c5a3",
       "tone_hz": 329.63,
-      "echo_audio": "res://assets/echo/she_hui_chun.wav",
+      "echo_audio": "res://assets/voice/she_hui_chun.wav",
       "image": "res://assets/rubbings/she_hui_chun.png"
     },
     "xi_xing_qiang": {
@@ -2106,7 +2113,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：一腔唱尽台上台下的悲欢。",
       "color": "#80b6ce",
       "tone_hz": 392,
-      "echo_audio": "res://assets/echo/xi_xing_qiang.wav",
+      "echo_audio": "res://assets/voice/xi_xing_qiang.wav",
       "image": "res://assets/rubbings/xi_xing_qiang.png"
     },
     "xi_jue_chang": {
@@ -2120,7 +2127,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：记住绝唱，就要面对被抹去的童年社戏。",
       "color": "#80b6ce",
       "tone_hz": 392,
-      "echo_audio": "res://assets/echo/xi_jue_chang.wav",
+      "echo_audio": "res://assets/voice/xi_jue_chang.wav",
       "image": "res://assets/rubbings/xi_jue_chang.png"
     },
     "fang_wu_ming": {
@@ -2134,7 +2141,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：无名匠人的手艺也值得被记住。",
       "color": "#80b6ce",
       "tone_hz": 392,
-      "echo_audio": "res://assets/echo/fang_wu_ming.wav",
+      "echo_audio": "res://assets/voice/fang_wu_ming.wav",
       "image": "res://assets/rubbings/fang_wu_ming.png"
     },
     "fang_jiang_hun": {
@@ -2148,7 +2155,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：名字可以被风吹散，手艺留下的结构不会。",
       "color": "#d9ba78",
       "tone_hz": 261.63,
-      "echo_audio": "res://assets/echo/fang_jiang_hun.wav",
+      "echo_audio": "res://assets/voice/fang_jiang_hun.wav",
       "image": "res://assets/rubbings/fang_jiang_hun.png"
     },
     "tower_origin": {
@@ -2162,7 +2169,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
       "color": "#92c5a3",
       "tone_hz": 329.63,
-      "echo_audio": "res://assets/echo/tower_origin.wav",
+      "echo_audio": "res://assets/voice/tower_origin.wav",
       "image": "res://assets/rubbings/tower_origin.png"
     },
     "tower_epilogue": {
@@ -2176,7 +2183,7 @@
       "forgotten_text": "这段记忆已从心舍抹去：只记住值得记住的，让世界自己选择颜色。",
       "color": "#c1b5db",
       "tone_hz": 440,
-      "echo_audio": "res://assets/echo/tower_epilogue.wav",
+      "echo_audio": "res://assets/voice/tower_epilogue.wav",
       "image": "res://assets/rubbings/tower_epilogue.png"
     }
   },
