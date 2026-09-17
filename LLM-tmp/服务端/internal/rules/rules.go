@@ -22,6 +22,7 @@ const (
 )
 
 type PuzzleAttempt struct {
+	Target  string
 	StepID  string
 	Answer  string
 	Action  string
@@ -117,7 +118,21 @@ func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attem
 		result.ActionRecord = record
 		return result
 	}
-	if expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer) {
+	if expected.Kind == "skill" && expected.Target != "" && attempt.Target != expected.Target {
+		return rejectPuzzle(event, session, result, record, "target_incorrect")
+	}
+	if expected.Kind == "narrative" {
+		allowed := false
+		for _, option := range expected.Options {
+			if option == attempt.Answer {
+				allowed = true
+			}
+		}
+		if !allowed {
+			return rejectPuzzle(event, session, result, record, "invalid_narrative_choice")
+		}
+		session.NarrativeChoice = attempt.Answer
+	} else if expected.Kind != "trace" && normalize(attempt.Answer) != normalize(expected.Answer) {
 		return rejectPuzzle(event, session, result, record, "answer_incorrect")
 	}
 
@@ -190,7 +205,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 	if input.DurationMS <= 0 || input.DurationMS > battle.DurationSec*1000 {
 		return BattleEvaluation{}, errors.New("duration_ms outside event bounds")
 	}
-	hp, waves, hits, shield, nextAttack := battle.EnemyHP, 0, 0, 0, 3000
+	hp, waves, hits, shield, nextAttack := battle.WaveHP(0), 0, 0, 0, battle.AttackInterval(0)
 	ready := map[string]int{}
 	seen := map[string]bool{}
 	lastAt := -1
@@ -214,7 +229,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 			} else {
 				hits++
 			}
-			nextAttack += 3000
+			nextAttack += battle.AttackInterval(waves)
 		}
 		if hits > battle.MaxHitsTaken || input.StartErosion+hits*HitErosion >= 100 {
 			return BattleEvaluation{}, errors.New("action after player defeat")
@@ -224,12 +239,15 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 		seen[action.Skill] = true
 		hp -= skill.Damage
 		if skill.Shield > 0 {
-			shield = skill.Shield
+			shield = max(shield, skill.Shield)
 		}
 		hits = max(0, hits-skill.Heal)
 		if hp <= 0 {
 			waves++
-			hp = battle.EnemyHP
+			hp = battle.WaveHP(waves)
+			if battle.IsBoss(waves) {
+				nextAttack = action.AtMS + battle.AttackInterval(waves)
+			}
 		}
 	}
 	for nextAttack <= input.DurationMS && waves < battle.Waves && hits <= battle.MaxHitsTaken && input.StartErosion+hits*HitErosion < 100 {
@@ -238,7 +256,7 @@ func EvaluateBattle(event *content.Event, input BattleInput) (BattleEvaluation, 
 		} else {
 			hits++
 		}
-		nextAttack += 3000
+		nextAttack += battle.AttackInterval(waves)
 	}
 	won := waves == battle.Waves && hits <= battle.MaxHitsTaken && input.StartErosion+hits*HitErosion < 100
 	for _, required := range battle.RequiredSkills {

@@ -14,3 +14,10 @@
 /LLM-tmp/客户端/**/*.uid
 /LLM-tmp/.review/
 /LLM-tmp/交付/
+/dist
+
+# AI 配音：生成的 wav 已随仓库提交（AI配音台词/生成音频/），
+# 仍可用 工具/generate_voice.py + 工具/speakers.json（固定声线）重新生成。
+# 试听候选与压缩包属临时产物，不入库。
+/AI配音台词/试听/
+/AI配音台词/*.zip

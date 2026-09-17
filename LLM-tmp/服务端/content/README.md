@@ -1,10 +1,12 @@
 # 内容与墨灵维护
 
-唯一内容源为本目录 `chapters.json`，当前协议版本 6。修改后重启服务端，客户端自动取得公开目录；部署时同步交付目录 `server/content/chapters.json`，文案与技能数值无需重新编译客户端；新增或修改语音资源需要重新导出 EXE。
+唯一内容源为本目录 `chapters.json`，当前协议版本 10。修改后重启服务端，客户端自动取得公开目录；文案与技能数值无需重新编译客户端，新增或修改语音资源需要重新导出 EXE。v10 发行包已同步本目录与客户端。
+
+`art.eroded_background` 为廊桥侵蚀变体。`battle.boss_name`、`boss_hp`、`boss_attack_interval_ms` 将最后一波配置为命名首领；普通波规则不变。客户端与服务端共同使用对应血量、攻击间隔，首领出场重置预警时间。配音索引由 `联调脚本/import_voice_pack.py` 根据源录音生成，修改台词后需要同步录音与索引。
 
 ## 对应关系
 
-`memories[墨灵ID]` 定义名称、摘要、技能、容量、来源、记住/遗忘文案、颜色和回声音频路径 `echo_audio`（旧 `tone_hz` 字段不再用于播放）。`chapters[].events[].reward.memory_id` 指向墨灵；`memory.source` 必须为同一事件的 `章节ID/事件ID`。`event.story` 保存该事件的 beats、outro，以及可选的 chapter_outro。
+`memories[墨灵ID]` 定义名称、摘要、技能、容量、来源、记住/遗忘文案、颜色和回声音频路径 `echo_audio`（旧 `tone_hz` 字段不再用于播放）。`chapters[].events[].reward.memory_id` 指向墨灵；`memory.source` 必须为同一事件的 `章节ID/事件ID`。`event.story` 保存该事件的 beats、outro，以及可选的 chapter_outro。`art[事件ID].background` 可指定客户端 `res://` 背景资源；未配置时客户端回退到程序化古建画面。
 
 新增现有类型的事件：添加墨灵定义，添加对应事件与剧情，再填写 reward.memory_id。加载时会拒绝缺失墨灵、错配来源、缺失剧情和无效拓印线条。不要复用旧 ID 表达另一段记忆，也不要删除已有存档引用的 ID。
 
@@ -12,7 +14,7 @@
 
 技能按钮按取得账册生成；`skills[技能名]` 配置 `description`、`cooldown_ms`、`damage`、`shield`、`heal`、`color`。墨灵的 `skill` 和事件的 `required_skills` 必须引用该表。伤害、护盾、净化的现有机制可以通过 JSON 组合扩展，新机制仍需实现。挥墨是必备基础攻击。
 
-`echo_audio` 指向客户端 `res://assets/echo/<ID>.wav`，当前音频为对应 `remembered_text` 的中文合成朗读。新增墨灵时添加该音频，重新导入并导出客户端；修改记住文案也要同步更新音频。忘却后不播放原记忆回声。
+`echo_audio` 指向客户端 `res://assets/voice/<ID>.wav`，当前音频来自用户提供的生成录音包。新增墨灵时添加该音频，重新导入并导出客户端；修改记住文案也要同步更新音频。忘却后不播放原记忆回声。
 
 ## 拓印参数
 
@@ -30,8 +32,10 @@
 
 ## 已落实与取舍
 
-初始容量 5 道，每道占 1 格；社庙末扩为 6，戏楼末的草稿配置为 7。社庙檐下客取得藻井，后续社鼓净化才可使用。序章加社庙共四道新记忆，不用虚构初始记忆强迫填满五格；演示允许玩家主动抹除旧记忆。
+初始容量5格，每道占1格；社庙末扩为6，牌坊末扩为7。檐下客取得藻井，社鼓声才可使用。五章十任务全部开放，按剧情顺序解锁，章节费用均为0。第七任务首次要求在满容量时替换旧记忆；玩家此前也可主动取舍。
 
-后续章节保留原始分支选项，标记 draft，暂不开放。待确认的结局和永久残迹剧情暂缓。当前加入简化斜视场景移动、调查点、榫卯拖拽与墨痕回溯；战斗为可见敌人的点击攻防。`max_attempts` 延续原型配置，仅限制非描摹谜题的错误次数，描摹可反复修正。
+终章三种回应均有效；满侵蚀残迹可回溯，不代表永久剧情分支。`max_attempts` 仅限制非描摹谜题错误次数，描摹可反复修正。技能步骤配置 answer 和 target，目标仅限 beam、bell、inscription；步骤顺序表达承重后触发/净化的依赖。图式题在客户端按现有图式绘制，新图式需要相应绘图实现，不能只添加任意选项文字。
 
 可玩事件的 art[event_id] 必须配置 backdrop_color 与 whisper_audio，后者指向客户端内对应调查呓语 WAV。新增或更名事件时同步配置；修改 story.beats 后重新生成对应语音并导出客户端。
+
+`failure_scene` 提供失败演出的标题、背景、九句 dialogue 和按失败原因索引的 first_lines；没有匹配原因时用默认首句。`story.first_clear_whisper` 是任务首次通关结语下的呓语；不加入开场 dialogue 或历史回顾。客户端仅在首次 settled 响应后呈现并记录已读，不影响分数。

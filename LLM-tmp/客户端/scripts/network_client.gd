@@ -3,7 +3,6 @@ extends Node
 
 var base_url := "http://127.0.0.1:8090"
 var last_error := ""
-var access_token := ""
 var last_status := 0
 
 func request_json(path: String, method: int = HTTPClient.METHOD_GET, payload: Dictionary = {}) -> Dictionary:
@@ -14,7 +13,6 @@ func request_json(path: String, method: int = HTTPClient.METHOD_GET, payload: Di
 	add_child(request)
 	var body := JSON.stringify(payload) if method == HTTPClient.METHOD_POST else ""
 	var headers := PackedStringArray(["Content-Type: application/json"])
-	if not access_token.is_empty(): headers.append("Authorization: Bearer " + access_token)
 	var error := request.request(base_url + path, headers, method, body)
 	if error != OK:
 		last_error = "无法发起请求：%s" % error

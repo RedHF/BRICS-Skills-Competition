@@ -1,16 +1,17 @@
 extends Node
 
-signal third_party_login_requested(provider: String)
-
 const TRACE = preload("res://scripts/trace_canvas.gd")
 const NETWORK = preload("res://scripts/network_client.gd")
 const REPOSITORY = preload("res://scripts/data_repository.gd")
+const MENU_BACKGROUND = preload("res://assets/generated/ui_01_open_scroll_main_menu_base.png")
+
 var network = NETWORK.new()
 var data = REPOSITORY.new()
 var page: VBoxContainer
 var status: Label
 var stats: Label
 var backdrop: ColorRect
+var backdrop_art: TextureRect
 var scroll: ScrollContainer
 var current_event: Dictionary
 var chapter_id := ""
@@ -38,15 +39,24 @@ var trace_progress: Label
 var battle_finished := false
 var battle_running := false
 var battle_start: Button
-var battle_controls: VBoxContainer
+var battle_controls: GridContainer
+var battle_dock: VBoxContainer
+var erosion_bar: ProgressBar
+var skill_scene: Control
+var soundscape: Node
 var confirmation: ConfirmationDialog
-var auth_username: LineEdit
-var auth_password: LineEdit
-var auth_confirm: LineEdit
-var registering := false
-var auth_providers: Array = []
+var dialogue_lines: Array = []
+var dialogue_index := 0
+var dialogue_done: Callable
+var dialogue_title := ""
+var dialogue_return: Callable
+var dialogue_stage: CanvasLayer
+var dialogue_mode := "story"
+var dialogue_key := ""
+var failure_key := ""
+var story_progress := ConfigFile.new()
 var heading: VBoxContainer
-var navigation: HFlowContainer
+var navigation: GridContainer
 var paused_page: VBoxContainer
 var paused_flow := ""
 var paused_scroll := 0
@@ -56,9 +66,16 @@ var echo_bus := 0
 var volume := 1.0
 var muted := false
 var event_audio: AudioStreamPlayer
+var closing := false
+const BATTLE_KEYS := ["挥墨", "斗拱", "藻井", "飞檐", "闪身"]
+var voice_index: Dictionary = {}
+var voice_queue: Array[String] = []
 
 func _ready() -> void:
+	get_tree().auto_accept_quit = false
 	add_child(network)
+	soundscape = preload("res://scripts/soundscape.gd").new()
+	add_child(soundscape)
 	AudioServer.add_bus()
 	echo_bus = AudioServer.bus_count - 1
 	AudioServer.set_bus_name(echo_bus, "Echo")
@@ -80,7 +97,9 @@ func _ready() -> void:
 	AudioServer.set_bus_volume_linear(0, volume)
 	AudioServer.set_bus_mute(0, muted)
 	event_audio = AudioStreamPlayer.new()
-	event_audio.bus = "Echo"
+	# Narrative stays intelligible; the collectible echo retains erosion effects.
+	voice_index = JSON.parse_string(FileAccess.get_file_as_string("res://assets/voice/index.json"))
+	event_audio.finished.connect(_voice_next)
 	add_child(event_audio)
 	memory_audio = AudioStreamPlayer.new()
 	memory_audio.bus = "Echo"
@@ -88,14 +107,27 @@ func _ready() -> void:
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(root)
+	backdrop_art = TextureRect.new()
+	backdrop_art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop_art.texture = MENU_BACKGROUND
+	backdrop_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	backdrop_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	backdrop_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop_art.modulate = Color(1, 1, 1, 0.82)
+	root.add_child(backdrop_art)
 	backdrop = ColorRect.new()
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.color = Color("#14262b")
+	backdrop.color = Color(0.078, 0.149, 0.169, 0.78)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(backdrop)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 20)
 	root.add_child(margin)
+	root.resized.connect(func():
+		var side := maxi(20, int((root.size.x - 540) / 2))
+		margin.add_theme_constant_override("margin_left", side)
+		margin.add_theme_constant_override("margin_right", side))
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
@@ -104,14 +136,19 @@ func _ready() -> void:
 	_label(heading, "檐 下 千 秋", 32, Color("#e4c98a"))
 	_label(heading, "听古建呓语 · 拓人间记忆", 14, Color("#94b0aa"))
 	stats = _label(heading, "正在连接本地服务…", 17)
-	var nav := HFlowContainer.new()
+	erosion_bar = ProgressBar.new()
+	erosion_bar.custom_minimum_size.y = 12
+	erosion_bar.show_percentage = false
+	heading.add_child(erosion_bar)
+	var nav := GridContainer.new()
+	nav.columns = 5
 	navigation = nav
 	column.add_child(nav)
-	_button(nav, "古建地图", _show_map)
-	_button(nav, "心舍 · 墨灵", _show_memories)
-	_button(nav, "记忆账册", _show_ledger)
+	_button(nav, "地图", _show_map)
+	_button(nav, "心舍", _show_memories)
+	_button(nav, "账册", _show_ledger)
 	_button(nav, "设置", _show_settings)
-	_button(nav, "退出账号", _logout)
+	_button(nav, "剧情", _show_journal)
 	navigation.hide()
 	for button in nav.get_children(): button.disabled = true
 	status = _label(column, "", 16, Color("#e9bb86"))
@@ -123,6 +160,9 @@ func _ready() -> void:
 	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page.add_theme_constant_override("separation", 12)
 	scroll.add_child(page)
+	battle_dock = VBoxContainer.new()
+	column.add_child(battle_dock)
+	battle_dock.hide()
 	column.move_child(nav, column.get_child_count() - 1)
 	confirmation = ConfirmationDialog.new()
 	confirmation.title = "确认抹去记忆"
@@ -151,6 +191,7 @@ func _ready() -> void:
 func _connect_server() -> void:
 	_clear()
 	busy = true
+	network.base_url = str(ProjectSettings.get_setting("yanxia/server_url", "http://127.0.0.1:8090"))
 	var config := ConfigFile.new()
 	var config_path := OS.get_executable_path().get_base_dir().path_join("client.cfg")
 	if FileAccess.file_exists(config_path):
@@ -159,9 +200,11 @@ func _connect_server() -> void:
 			_error("无法读取 client.cfg：%s" % error)
 			return
 		network.base_url = str(config.get_value("server", "url", "http://127.0.0.1:8090"))
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--server-url="): network.base_url = argument.trim_prefix("--server-url=")
 	var local_address := RegEx.create_from_string("^http://(127\\.0\\.0\\.1|localhost)(:[0-9]+)?(/|$)")
-	if not network.base_url.begins_with("https://") and local_address.search(network.base_url) == null:
-		_error("远程账号登录须使用 HTTPS 服务地址。")
+	if local_address.search(network.base_url) == null:
+		_error("游戏使用本地存档，请连接本机配套服务。")
 		return
 	var health: Dictionary = await network.request_json("/healthz")
 	if health.is_empty() and network.base_url == "http://127.0.0.1:8090" and not OS.has_feature("editor"):
@@ -181,88 +224,24 @@ func _connect_server() -> void:
 	if health.is_empty():
 		_error(network.last_error)
 		return
-	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 6:
+	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 10:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
 		return
-	var providers: Dictionary = await network.request_json("/api/v1/auth/providers")
-	if providers.is_empty():
+	await _load_game()
+
+func _load_game() -> void:
+	var response: Dictionary = await network.request_json("/api/v1/players", HTTPClient.METHOD_POST, {})
+	if response.is_empty():
 		_error(network.last_error)
 		return
-	auth_providers = providers.providers
-	busy = false
-	_show_auth()
-
-func _show_auth() -> void:
-	flow = "auth"
-	navigation.hide()
-	_clear()
-	backdrop.color = Color("#14262b")
-	stats.text = "登录后开启你的古建记忆"
-	var logo := TextureRect.new()
-	logo.texture = preload("res://assets/logo.svg")
-	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	logo.custom_minimum_size = Vector2(0, 140)
-	page.add_child(logo)
-	_label(page, "建立你的拓印师账号" if registering else "欢迎归来，拓印师", 26, Color("#e4c98a"))
-	_label(page, "用户名 · 3–24 个汉字、字母、数字或下划线", 16)
-	auth_username = LineEdit.new()
-	auth_username.placeholder_text = "输入用户名"
-	auth_username.max_length = 24
-	auth_username.custom_minimum_size.y = 48
-	page.add_child(auth_username)
-	_label(page, "密码 · 至少 8 位，最多 72 字节", 16)
-	auth_password = LineEdit.new()
-	auth_password.secret = true
-	auth_password.placeholder_text = "输入密码"
-	auth_password.custom_minimum_size.y = 48
-	page.add_child(auth_password)
-	if registering:
-		auth_confirm = LineEdit.new()
-		auth_confirm.secret = true
-		auth_confirm.placeholder_text = "再次输入密码"
-		auth_confirm.custom_minimum_size.y = 48
-		page.add_child(auth_confirm)
-		auth_confirm.text_submitted.connect(func(_text): _authenticate())
-	else: auth_password.text_submitted.connect(func(_text): _authenticate())
-	var reveal := CheckButton.new()
-	reveal.text = "显示密码"
-	reveal.toggled.connect(func(visible):
-		auth_password.secret = not visible
-		if registering: auth_confirm.secret = not visible)
-	page.add_child(reveal)
-	_button(page, "注册并进入游戏" if registering else "登录", _authenticate)
-	_button(page, "已有账号 · 返回登录" if registering else "初次来访 · 注册账号", func():
-		registering = not registering
-		_show_auth())
-	if not registering:
-		_label(page, "其他登录方式", 17, Color("#aac4bd"))
-		if auth_providers.is_empty(): _label(page, "第三方登录暂未开放", 15)
-		for provider in auth_providers:
-			_button(page, "通过 %s 登录" % provider, _request_external_login.bind(provider))
-	auth_username.grab_focus()
-
-func _authenticate() -> void:
-	if busy: return
-	if registering and auth_password.text != auth_confirm.text:
-		status.text = "两次输入的密码不一致。"
-		return
-	busy = true
-	status.text = "正在注册…" if registering else "正在登录…"
-	var payload := {"username": auth_username.text, "password": auth_password.text}
-	var response: Dictionary = await network.request_json("/api/v1/auth/" + ("register" if registering else "login"), HTTPClient.METHOD_POST, payload)
-	payload.clear()
-	auth_password.clear()
-	if registering: auth_confirm.clear()
-	if response.is_empty():
-		busy = false
-		status.text = network.last_error
-		return
-	await _accept_login(response)
-
-func _accept_login(response: Dictionary) -> void:
-	network.access_token = response.access_token
 	GameState.player = response.player
+	story_progress = ConfigFile.new()
+	var progress_path := "user://story-" + str(GameState.player.id) + ".cfg"
+	if FileAccess.file_exists(progress_path):
+		var progress_error := story_progress.load(progress_path)
+		if progress_error != OK:
+			_error("剧情阅读进度读取失败：%s" % progress_error)
+			return
 	var catalog: Dictionary = await network.request_json("/api/v1/catalog")
 	if catalog.is_empty():
 		_error(network.last_error)
@@ -287,42 +266,17 @@ func _accept_login(response: Dictionary) -> void:
 	_refresh_stats()
 	_show_map()
 
-func _logout() -> void:
-	if flow == "battle" and not battle_finished:
-		status.text = "请先完成当前战斗再退出账号。"
-		return
-	busy = true
-	var response: Dictionary = await network.request_json("/api/v1/auth/logout", HTTPClient.METHOD_POST, {})
-	if response.is_empty():
-		_error(network.last_error)
-		return
-	network.access_token = ""
-	if is_instance_valid(paused_page):
-		paused_page.queue_free()
-		paused_page = null
-	GameState.player = {}
-	GameState.session = {}
-	session_id = ""
-	busy = false
-	registering = false
-	_show_auth()
-
-func _request_external_login(provider: String) -> void:
-	if not third_party_login_requested.has_connections():
-		status.text = "此登录方式尚未在当前版本开放。"
-		return
-	third_party_login_requested.emit(provider)
-
-# SDK adapters call this after obtaining a credential; identity is verified by the server.
-func login_external(provider: String, credential: String) -> void:
-	if busy or flow != "auth": return
-	busy = true
-	var response: Dictionary = await network.request_json("/api/v1/auth/external", HTTPClient.METHOD_POST, {"provider": provider, "credential": credential})
-	if response.is_empty():
-		busy = false
-		status.text = network.last_error
-		return
-	await _accept_login(response)
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and not closing:
+		closing = true
+		_stop_voice()
+		soundscape.stop_all()
+		for player in [memory_audio, event_audio]:
+			player.stop()
+			player.stream = null
+		# Let the audio server retire playback before the engine shuts down.
+		await get_tree().create_timer(.3).timeout
+		get_tree().quit()
 
 func _exit_tree() -> void:
 	memory_audio.stop()
@@ -334,17 +288,6 @@ func _exit_tree() -> void:
 
 func _error(message: String) -> void:
 	busy = false
-	if network.last_status == 401 and not network.access_token.is_empty():
-		network.access_token = ""
-		if is_instance_valid(paused_page):
-			paused_page.queue_free()
-			paused_page = null
-		GameState.player = {}
-		GameState.session = {}
-		session_id = ""
-		_show_auth()
-		status.text = "登录已失效，请重新登录。"
-		return
 	status.text = message
 	push_error(message)
 	if data.catalog.is_empty(): _button(page, "重新连接服务端", _connect_server)
@@ -359,12 +302,22 @@ func _refresh_stats(erosion: int = -1) -> void:
 	for memory in p.memories: used += int(memory.capacity)
 	stats.text = str(p.display_name) + " · 识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), erosion, "浸" if erosion < 40 else ("蚀" if erosion < 70 else "竭")]
 
+	erosion_bar.value = erosion
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color("#83bfa4") if erosion < 40 else (Color("#d8b67c") if erosion < 70 else Color("#d78275"))
+	erosion_bar.add_theme_stylebox_override("fill", fill)
 	_apply_erosion(erosion)
 
 func _apply_erosion(value: int) -> void:
 	var base := Color("#14262b")
-	if not current_event.is_empty(): base = Color(data.catalog.art[current_event.id].backdrop_color)
-	backdrop.color = base.lerp(Color("#535953"), float(value) / 100.0)
+	if not current_event.is_empty():
+		var event_art := _event_art(str(current_event.get("id", "")))
+		var backdrop_color := str(event_art.get("backdrop_color", "#14262b"))
+		if not backdrop_color.is_empty(): base = Color(backdrop_color).darkened(0.55)
+	var mixed := base.lerp(Color("#535953"), float(value) / 100.0)
+	mixed.a = 0.78
+	backdrop.color = mixed
+	backdrop_art.modulate = Color(1, 1, 1, 0.82 - float(value) / 500.0)
 	AudioServer.set_bus_volume_db(echo_bus, -float(value) * 0.12)
 	AudioServer.set_bus_effect_enabled(echo_bus, 0, value >= 40)
 	if is_instance_valid(scene_view):
@@ -376,6 +329,10 @@ func _add_building(interactive: bool = false) -> void:
 	scene_view.interactive = interactive
 	scene_view.bridge = chapter_id == "prologue"
 	scene_view.tint = Color(data.memory(current_event.reward.memory_id).color)
+	scene_view.background = _event_background()
+	var eroded_path := str(_event_art(str(current_event.id)).get("eroded_background", ""))
+	if not eroded_path.is_empty(): scene_view.eroded_background = load(eroded_path)
+	scene_view.investigations = current_event.get("investigations", [])
 	scene_view.erosion = int(GameState.player.erosion)
 	var held := false
 	var acquired := false
@@ -385,6 +342,34 @@ func _add_building(interactive: bool = false) -> void:
 		if entry.memory_id == current_event.reward.memory_id and entry.action == "kept": acquired = true
 	scene_view.forgotten = acquired and not held
 	page.add_child(scene_view)
+
+func _event_background() -> Texture2D:
+	if current_event.is_empty(): return null
+	var art: Dictionary = _event_art(str(current_event.get("id", "")))
+	var path := str(art.get("background", ""))
+	if path.is_empty() or not ResourceLoader.exists(path): return MENU_BACKGROUND
+	var texture := load(path) as Texture2D
+	if texture == null: push_error("无法读取事件背景：" + path)
+	return texture
+
+func _event_art(event_id: String) -> Dictionary:
+	# Catalogs from older servers may omit art for newly added events. Keep the
+	# client playable with the neutral fallback instead of indexing a missing key.
+	if data.catalog.is_empty(): return {}
+	var art_catalog: Variant = data.catalog.get("art", {})
+	if not art_catalog is Dictionary: return {}
+	var value: Variant = art_catalog.get(event_id, {})
+	return value if value is Dictionary else {}
+
+func _art_banner(parent: Node, texture: Texture2D, height: float) -> TextureRect:
+	var banner := TextureRect.new()
+	banner.texture = texture
+	banner.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	banner.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	banner.custom_minimum_size = Vector2(0, height)
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(banner)
+	return banner
 
 func _pause_event() -> void:
 	if flow not in ["puzzle", "choice", "battle"]: return
@@ -404,6 +389,8 @@ func _show_settings() -> void:
 	_clear()
 	_label(page, "声音设置", 26, Color("#e4c98a"))
 	_label(page, "总音量（侵蚀还会降低回声强度）", 18)
+	_button(page, "切换全屏 / 窗口", func():
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN else DisplayServer.WINDOW_MODE_FULLSCREEN))
 	var slider := HSlider.new()
 	slider.min_value = 0
 	slider.max_value = 1
@@ -431,6 +418,9 @@ func _show_settings() -> void:
 	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
 
 func _clear() -> void:
+	_close_dialogue()
+	if is_instance_valid(battle_dock): battle_dock.visible = flow == "battle"
+	if is_instance_valid(soundscape): soundscape.set_battle(flow == "battle")
 	status.text = ""
 	for child in page.get_children():
 		page.remove_child(child)
@@ -438,7 +428,7 @@ func _clear() -> void:
 	scroll.scroll_vertical = 0
 	memory_audio.stop()
 	memory_audio.stream = null
-	event_audio.stop()
+	_stop_voice()
 	if not GameState.player.is_empty(): _refresh_stats()
 
 func _show_map() -> void:
@@ -446,7 +436,8 @@ func _show_map() -> void:
 	_pause_event()
 	flow = "map"
 	_clear()
-	status.text = "沿古建呓语前行。序章与社庙为本次可玩篇章。"
+	status.text = "从廊桥走到墨塔，替古建找回仍有人回应的记忆。"
+	_add_current_task(page)
 	for chapter in data.catalog.chapters:
 		var card := PanelContainer.new()
 		var style := StyleBoxFlat.new()
@@ -469,8 +460,12 @@ func _show_map() -> void:
 			var done: bool = GameState.player.completed_events.has(chapter.id + ":" + event.id)
 			var button := _button(entries, event.title + (" · 已修复" if done else "") + (" · 剧情草稿" if event.draft else ""), _open_event.bind(chapter.id, event.id))
 			button.disabled = event.draft or not chapter.id in GameState.player.unlocked_chapters
+			var lock_reason := "完成上一章节后开放"
 			for previous in chapter.events:
-				if int(previous.order) < int(event.order) and not GameState.player.completed_events.has(chapter.id + ":" + previous.id): button.disabled = true
+				if int(previous.order) < int(event.order) and not GameState.player.completed_events.has(chapter.id + ":" + previous.id):
+					button.disabled = true
+					lock_reason = "先完成「%s」" % previous.title
+			if button.disabled: _label(entries, lock_reason, 16, Color("#bac7ba"))
 	if not session_id.is_empty(): _button(page, "继续当前事件", _resume)
 
 func _open_event(chapter: String, event: String) -> void:
@@ -481,30 +476,47 @@ func _open_event(chapter: String, event: String) -> void:
 	chapter_id = chapter
 	current_event = data.event(chapter, event)
 	session_id = ""
+	var lines: Array = current_event.story.dialogue.duplicate(true)
+	for i in range(lines.size()): lines[i]["audio_cue"] = str(current_event.id) + "_dialogue_%02d" % (i+1)
+	_begin_dialogue(current_event.title, lines, _show_investigation, _show_map)
+
+func _show_investigation() -> void:
 	flow = "intro"
 	_clear()
 	_label(page, current_event.scene + " · " + current_event.title, 26, Color("#e4c98a"))
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
 	_add_building(true)
-	_label(page, "方向键 / WASD 或左下摇杆移动，点击金色光点调查。", 16)
+	_label(page, "WASD / 方向键或左下摇杆自由移动；靠近金色目标按空格/回车调查，也可点击目标自动走近。", 16)
 	var details := VBoxContainer.new()
 	page.add_child(details)
-	var completed: bool = GameState.player.completed_events.has(chapter + ":" + event)
-	scene_view.investigated.connect(func():
-		if details.get_child_count() > 0: return
-		for beat in current_event.story.beats: _label(details, beat, 20)
+	var investigation_progress := _label(details, "调查进度 0/%d" % scene_view.investigations.size(), 17, Color("#b7d8c8"))
+	var discoveries := VBoxContainer.new()
+	details.add_child(discoveries)
+	var story_details := VBoxContainer.new()
+	details.add_child(story_details)
+	var completed: bool = GameState.player.completed_events.has(chapter_id + ":" + str(current_event.id))
+	scene_view.investigated.connect(func(label: String, found: int, total: int):
+		investigation_progress.text = "调查进度 %d/%d" % [found, total]
+		_label(discoveries, "✓ " + label, 16, Color("#9ad5ad"))
+		var clues: Array = current_event.get("story", {}).get("clues", [])
+		for i in range(scene_view.investigations.size()):
+			if scene_view.investigations[i].label == label:
+				if i < clues.size(): _label(discoveries, str(clues[i]), 18)
+		for i in range(scene_view.investigations.size()):
+			if scene_view.investigations[i].label == label:
+				_play_cues([str(current_event.id) + "_clue_%02d" % (i+1)], true)
+		if found < total: return
+		var beat_cues: Array = []
+		for i in range(current_event.story.beats.size()):
+			_label(story_details, current_event.story.beats[i], 20)
+			beat_cues.append(str(current_event.id) + "_beat_%02d" % (i+1))
+		_play_cues(beat_cues, true)
+		_button(story_details, "重听这段往事", func(): _play_cues(beat_cues))
 		if completed:
-			if scene_view.forgotten: _label(details, memory.forgotten_text, 20)
-			else: _label(details, current_event.story.outro, 20)
-			_button(details, "查看这道墨灵", _memory_detail.bind(memory.id))
-		else: _button(details, "开始修复", _start_event)
-		if not scene_view.forgotten:
-			var sound := load(data.catalog.art[current_event.id].whisper_audio) as AudioStream
-			if sound == null:
-				_error("无法读取调查呓语：" + data.catalog.art[current_event.id].whisper_audio)
-				return
-			event_audio.stream = sound
-			event_audio.play())
+			if scene_view.forgotten: _label(story_details, memory.forgotten_text, 20)
+			else: _label(story_details, current_event.story.outro, 20)
+			_button(story_details, "查看这道墨灵", _memory_detail.bind(memory.id))
+		else: _button(story_details, "三处调查完成 · 开始修复", _start_event))
 
 func _start_event() -> void:
 	busy = true
@@ -527,6 +539,8 @@ func _resume() -> void:
 		paused_page = null
 		scroll.add_child(page)
 		flow = paused_flow
+		battle_dock.visible = flow == "battle"
+		soundscape.set_battle(flow == "battle")
 		scroll.set_deferred("scroll_vertical", paused_scroll)
 		_refresh_stats()
 		return
@@ -544,15 +558,7 @@ func _resume() -> void:
 	_refresh_stats()
 	busy = false
 	if response.status == "failed":
-		flow = "failed"
-		_clear()
-		_add_building()
-		var reasons := {"erosion_limit":"侵蚀已达 100", "puzzle_attempt_limit":"修复尝试用尽", "session_expired":"旧版本事件已超时", "battle_requirements_not_met":"白蚀未清除或未施展所需技能"}
-		status.text = "事件失败：%s。已拓印记忆仍保留。" % reasons.get(response.failure_reason, response.failure_reason)
-		_label(page, "解谜 %d/%d · 已清除白蚀 %d 波" % [int(response.puzzle_score), int(response.puzzle_total), int(response.battle_waves)], 18)
-		var retry := _button(page, "消耗 1 墨痕 · 回溯事件起点" if int(GameState.player.ink_marks) > 0 else ("序章免费重试" if chapter_id == "prologue" else "回溯需要 1 墨痕，当前不足"), _rewind)
-		retry.disabled = int(GameState.player.ink_marks) == 0 and chapter_id != "prologue"
-		_button(page, "返回古建地图", _show_map)
+		_begin_failure()
 	elif response.status == "completed":
 		_settlement(response.pending_result)
 	elif response.accepted_steps.size() < current_event.puzzle.steps.size(): _show_puzzle()
@@ -576,9 +582,12 @@ func _show_puzzle() -> void:
 	var step: Dictionary = current_event.puzzle.steps[index]
 	_label(page, "修复 %d / %d · %s" % [index + 1, current_event.puzzle.steps.size(), current_event.title], 24, Color("#e4c98a"))
 	_label(page, step.prompt, 20)
-	_add_building()
 	if step.kind == "trace":
-		_label(page, "逐字放大描摹：绿点起笔、橙点收笔。金色宽带内均可落墨，短暂手抖可容忍。点击笔画编号可单独重描。", 16)
+		_memory_art(page, current_event.reward.memory_id, 200)
+	elif step.kind != "skill" and step.id not in ["opera_role", "archway_grade"]:
+		_add_building()
+	if step.kind == "trace":
+		_label(page, "拓印纸已铺开。青印为起笔，朱印为收锋；沿浅金笔势落墨即可，不必压在线心。", 17, Color("#d7c69c"))
 		trace_canvas = TRACE.new()
 		trace_canvas.spec = step.trace
 		page.add_child(trace_canvas)
@@ -586,25 +595,45 @@ func _show_puzzle() -> void:
 		stroke_buttons = HFlowContainer.new()
 		page.add_child(stroke_buttons)
 		for i in range(step.trace.strokes.size()):
-			var button := _button(stroke_buttons, str(i + 1), trace_canvas.select_stroke.bind(i))
+			var button := _button(stroke_buttons, "%02d" % [i + 1], trace_canvas.select_stroke.bind(i))
 			button.custom_minimum_size = Vector2(48, 42)
 		trace_canvas.stroke_finished.connect(_trace_feedback)
 		_trace_feedback()
 		var buttons := HBoxContainer.new()
 		page.add_child(buttons)
-		_button(buttons, "清空当前笔", func():
+		_button(buttons, "重描本笔", func():
 			trace_canvas.strokes[trace_canvas.active] = []
 			trace_canvas.queue_redraw()
 			_trace_feedback())
-		_button(buttons, "提交拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
+		_button(buttons, "核对拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
 	elif step.kind == "join":
 		join_canvas = preload("res://scripts/join_canvas.gd").new()
 		join_canvas.options = step.options
 		page.add_child(join_canvas)
 		join_canvas.placed.connect(func(answer): _submit_puzzle({"step_id": step.id, "answer": answer}))
 	elif step.kind == "skill":
-		scene_view.purification = 1.0
-		for skill in _learned_skills(): _button(page, "使用「%s」" % skill, _submit_puzzle.bind({"step_id": step.id, "answer": skill}))
+		skill_scene = preload("res://scripts/skill_scene.gd").new()
+		skill_scene.accepted = GameState.session.accepted_steps
+		page.add_child(skill_scene)
+		_label(page, "斗拱承重，飞檐触及远端，藻井净化显影。选好技艺后点击构件。", 17)
+		var tools_row := HBoxContainer.new()
+		page.add_child(tools_row)
+		for skill in _learned_skills():
+			_button(tools_row, skill, func():
+				skill_scene.selected = skill
+				status.text = "已选「%s」，请点击作用构件。" % skill)
+		skill_scene.applied.connect(func(skill, target): _submit_puzzle({"step_id":step.id, "answer":skill, "target":target}))
+	elif step.id in ["opera_role", "archway_grade"]:
+		_label(page, "观察图式后选择；线索见本任务调查记录。图式为玩法示意。", 17)
+		var options := HBoxContainer.new()
+		page.add_child(options)
+		for i in range(step.options.size()):
+			var option = preload("res://scripts/pattern_option.gd").new()
+			option.motif = str(step.options[i])
+			option.choice_index = i
+			option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			option.pressed.connect(func(): _submit_puzzle({"step_id":step.id, "answer":step.options[i]}))
+			options.add_child(option)
 	else:
 		for option in step.options: _button(page, str(option), _submit_puzzle.bind({"step_id": step.id, "answer": option}))
 
@@ -612,10 +641,10 @@ func _trace_feedback() -> void:
 	var count := 0
 	for stroke in trace_canvas.strokes:
 		if not stroke.is_empty(): count += 1
-	trace_progress.text = "第 %d 笔 · 已描 %d/%d · 红色 × 为未通过" % [trace_canvas.active + 1, count, trace_canvas.strokes.size()]
+	trace_progress.text = "落墨 %d/%d · 当前第 %02d 笔%s" % [count, trace_canvas.strokes.size(), trace_canvas.active + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
 	for i in range(stroke_buttons.get_child_count()):
 		var button: Button = stroke_buttons.get_child(i)
-		button.text = str(i + 1) + (" ×" if trace_canvas.failed.has(i) else "")
+		button.text = "%02d" % [i + 1] + (" ×" if trace_canvas.failed.has(i) else "")
 		button.modulate = Color("#ff8078") if trace_canvas.failed.has(i) else (Color("#e4c98a") if i == trace_canvas.active else Color.WHITE)
 
 func _submit_puzzle(payload: Dictionary) -> void:
@@ -646,9 +675,12 @@ func _submit_puzzle(payload: Dictionary) -> void:
 			status.text = "修复尚未相合，侵蚀 +10。"
 		return
 	if response.accepted and current_event.puzzle.steps[GameState.session.accepted_steps.size()].kind == "skill":
-		var tween := create_tween()
-		tween.tween_property(scene_view, "purification", 0.0, 0.7)
-		await tween.finished
+		soundscape.cue("repair")
+		skill_scene.accepted = GameState.session.accepted_steps.duplicate()
+		skill_scene.accepted.append(payload.step_id)
+		skill_scene.locked = true
+		skill_scene.queue_redraw()
+		await get_tree().create_timer(0.35).timeout
 	await _resume()
 	if response.accepted: status.text = "墨线相合，记忆显影。"
 
@@ -657,7 +689,10 @@ func _show_choice() -> void:
 	_clear()
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
 	_label(page, "墨灵显影 · " + memory.title, 26, Color(memory.color))
+	_memory_art(page, memory.id, 320)
 	_label(page, memory.summary, 21)
+	_label(page, current_event.story.keep_response, 18)
+	_play_cues([str(current_event.id) + "_keep"])
 	_label(page, "技能：%s" % memory.skill)
 	if not memory.skill.is_empty(): _label(page, data.catalog.skills[memory.skill].description, 16)
 	var used := 0
@@ -689,7 +724,7 @@ func _choose(action: String, forget_id: String) -> void:
 		return
 	if action == "forget":
 		memory_audio.stop()
-		backdrop.color = Color("#575b59")
+		backdrop.color = Color(0.341, 0.357, 0.349, 0.88)
 		await get_tree().create_timer(0.6).timeout
 	await _resume()
 
@@ -714,27 +749,45 @@ func _start_battle() -> void:
 	battle_buttons = {}
 	next_attack = 3000
 	battle_skills = _learned_skills()
-	_label(page, "白蚀来袭", 26, Color("#e4c98a"))
-	_label(page, "点击挥墨消灭白蚀；红色蓄力时用斗拱防护。白蚀每 3 秒攻击一次。", 16)
+	battle_ready["闪身"] = 0
+	var boss_name := str(current_event.battle.get("boss_name", ""))
+	_label(page, "首领战 · " + boss_name if not boss_name.is_empty() else "白蚀来袭", 26, Color("#e4c98a"))
+	if not boss_name.is_empty():
+		_label(page, "第三项技艺 · 飞檐已习得。先清除游蚀，再迎战噤声客；首领每 2.4 秒侵袭，记得护盾与闪身。", 17)
+	_play_cues([str(current_event.id) + "_before_battle"])
+	_label(page, current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
+	_label(page, "1 挥墨　2 斗拱　3 藻井　4 飞檐　5 闪身\n数字键或点击施展；未习得的技艺暂不可用。", 16)
 	battle_note = _label(page, "", 17)
 	arena = preload("res://scripts/battle_arena.gd").new()
-	arena.hp = int(current_event.battle.enemy_hp)
+	arena.background = _event_background()
+	arena.dodge_triggered.connect(_battle_dodge)
+	arena.hp = _wave_hp()
 	arena.max_hp = arena.hp
 	page.add_child(arena)
-	battle_start = _button(page, "开始守护 · 准备好再迎战", _begin_battle)
-	battle_controls = VBoxContainer.new()
-	page.add_child(battle_controls)
-	for skill in ["挥墨"] + battle_skills:
+	for child in battle_dock.get_children():
+		battle_dock.remove_child(child)
+		child.queue_free()
+	battle_start = _button(battle_dock, "开始守护 · 准备好再迎战", _begin_battle)
+	battle_controls = GridContainer.new()
+	battle_controls.columns = 2
+	battle_dock.add_child(battle_controls)
+	for skill in BATTLE_KEYS:
+		if skill not in ["挥墨", "闪身"] and not battle_skills.has(skill): continue
 		battle_ready[skill] = 0
 		battle_buttons[skill] = _button(battle_controls, skill, _battle_skill.bind(skill))
-		_label(battle_controls, data.catalog.skills[skill].description, 15, Color("#aac4bd"))
+		battle_buttons[skill].tooltip_text = data.catalog.skills[skill].description
 	status.text = "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
 	_battle_update()
 
 func _begin_battle() -> void:
 	battle_running = true
+	arena.active = true
 	battle_start.hide()
 	_battle_update()
+
+func _battle_dodge() -> void:
+	if not battle_running or battle_finished: return
+	_battle_skill("闪身")
 
 func _battle_skill(skill: String) -> void:
 	if busy or battle_finished or not battle_running: return
@@ -745,16 +798,22 @@ func _battle_skill(skill: String) -> void:
 	battle_ready[skill] = at + int(spec.cooldown_ms)
 	if not wave_skills.has(skill): wave_skills.append(skill)
 	arena.hp -= int(spec.damage)
-	if int(spec.shield) > 0: arena.shield = int(spec.shield)
+	if int(spec.shield) > 0: arena.shield = maxi(arena.shield, int(spec.shield))
 	battle_hits = maxi(0, battle_hits - int(spec.heal))
 	var effect := skill
 	if int(spec.damage) > 0: effect += " -%d" % int(spec.damage)
 	if int(spec.shield) > 0: effect += " 护盾 +%d" % int(spec.shield)
 	if int(spec.heal) > 0: effect += " 净化"
 	arena.flash(effect, Color(spec.color))
+	soundscape.cue("ink" if int(spec.damage) > 0 else "repair")
 	if arena.hp <= 0:
 		battle_wave += 1
-		arena.hp = int(current_event.battle.enemy_hp)
+		arena.hp = _wave_hp()
+		arena.max_hp = arena.hp
+		if _boss_wave():
+			next_attack = at + _attack_interval()
+			arena.flash("噤声客现身", Color("#e9b991"))
+			soundscape.cue("hit")
 	_battle_update()
 
 func _process(delta: float) -> void:
@@ -771,24 +830,28 @@ func _process(delta: float) -> void:
 		else:
 			battle_hits += 1
 			arena.flash("侵蚀 +5", Color("#ff8078"))
-		next_attack += 3000
+			soundscape.cue("hit")
+		next_attack += _attack_interval()
 	_battle_update()
 
 func _battle_update() -> void:
 	_refresh_stats(mini(100, int(GameState.player.erosion) + battle_hits * 5))
 	arena.hits = battle_hits
-	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / 3000.0
+	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / float(_attack_interval())
+	arena.boss_name = str(current_event.battle.get("boss_name", "")) if _boss_wave() else ""
 	battle_note.text = "第 %d/%d 波 · 剩余 %d 秒 · 受蚀 %d/%d" % [mini(battle_wave + 1, int(current_event.battle.waves)), int(current_event.battle.waves), ceili(float(current_event.battle.duration_sec) - battle_elapsed), battle_hits, int(current_event.battle.max_hits_taken) + 1]
 	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or int(GameState.player.erosion) + battle_hits * 5 >= 100 or battle_elapsed >= float(current_event.battle.duration_sec):
 		battle_finished = true
+		arena.active = false
 		arena.defeated = battle_wave == int(current_event.battle.waves)
 		var complete: bool = arena.defeated
 		for skill in current_event.battle.required_skills: complete = complete and wave_skills.has(skill)
 		status.text = "白蚀已驱散。" if complete else ("白蚀已散，但未施展本关要求的技能。" if arena.defeated else "墨线失守，本次战斗失败。")
-		_button(page, "结算白蚀战斗", _submit_battle)
+		_button(battle_dock, "结算白蚀战斗", _submit_battle)
+		soundscape.cue("win" if complete else "hit")
 	for skill in battle_buttons:
 		var remaining := maxi(0, int(battle_ready[skill]) - int(battle_elapsed * 1000))
-		battle_buttons[skill].text = skill + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
+		battle_buttons[skill].text = "%d · %s" % [BATTLE_KEYS.find(skill)+1, skill] + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
 		battle_buttons[skill].disabled = not battle_running or battle_finished or remaining > 0
 
 func _submit_battle() -> void:
@@ -811,18 +874,43 @@ func _finish() -> void:
 	GameState.player = response.player
 	_refresh_stats()
 	busy = false
-	_settlement(response.result)
+	_settlement(response.result, str(response.get("reason","")) == "settled")
 
-func _settlement(result: Dictionary) -> void:
+func _settlement(result: Dictionary, first_clear: bool = false) -> void:
 	flow = "settlement"
 	_clear()
-	_label(page, "古建修复 · " + "★".repeat(int(result.stars)), 30, Color("#e4c98a"))
-	_add_building()
+	var stars := _label(page, "古建修复 · " + "★".repeat(int(result.stars)), 30, Color("#e4c98a"))
+	stars.visible_characters = 7
+	var reveal := create_tween()
+	reveal.tween_property(stars, "visible_characters", stars.text.length(), 0.9)
+	_memory_art(page, current_event.reward.memory_id, 320)
 	_label(page, current_event.story.outro, 23)
+	var ending_cues: Array = [str(current_event.id) + "_outro", str(current_event.id) + ("_forget" if GameState.session.get("choice_action", "") == "forget" else "_keep")]
+	if current_event.story.has("chapter_outro"): ending_cues.append(str(current_event.id) + "_chapter_outro")
+	_play_cues(ending_cues)
+	var whisper_key := chapter_id + ":" + str(current_event.id)
+	var whisper := str(current_event.story.get("first_clear_whisper",""))
+	if first_clear and not whisper.is_empty() and not bool(story_progress.get_value("whisper",whisper_key,false)):
+		story_progress.set_value("whisper",whisper_key,true)
+		var saved := story_progress.save("user://story-" + str(GameState.player.id) + ".cfg")
+		if saved != OK: status.text = "呓语阅读标记保存失败。"
+		_play_cues([str(current_event.id) + "_first_clear"], true)
+		var aside := _label(page,"戏楼：" + whisper,21,Color("#c5caba"))
+		aside.visible_characters = 0
+		aside.create_tween().tween_property(aside,"visible_characters",aside.text.length(),aside.text.length()/32.0)
+	if GameState.session.get("choice_action", "") == "forget":
+		_label(page, current_event.story.forget_response, 20)
+	else:
+		_label(page, current_event.story.keep_response, 20)
 	_label(page, "修复度 %d%%　侵蚀 %d%%　获得墨痕 %d" % [int(result.repair_percent), int(result.erosion_at_end), int(result.ink_marks_earned)])
 	if result.has("memories_acquired"):
 		_label(page, "解谜 %d/%d　白蚀清除 %s　记忆保留 %d/%d" % [int(result.puzzle_score), int(result.puzzle_total), ("%d%%" % int(result.battle_clear_percent)) if current_event.has("battle") else "本事件无战斗", int(result.memories_kept), int(result.memories_acquired)], 18)
+	if int(result.get("scoring_version", 0)) >= 2:
+		_label(page, "记忆保留度 %d%% · 综合评分 %d/100" % [int(result.memory_retention_percent), int(result.quality_score)], 19)
 	if current_event.story.has("chapter_outro"): _label(page, current_event.story.chapter_outro, 20)
+	if not str(result.get("narrative_choice", "")).is_empty():
+		_label(page, "你交给人间的回答：" + str(result.narrative_choice), 22, Color("#b7d8c8"))
+		_label(page, _ending_response(str(result.narrative_choice)), 21)
 	_button(page, "回看这道墨灵", _memory_detail.bind(current_event.reward.memory_id))
 	_button(page, "继续古建旅程", _show_map)
 	session_id = ""
@@ -833,13 +921,18 @@ func _show_memories() -> void:
 	flow = "memories"
 	_clear()
 	_label(page, "心舍 · 记住的墨灵", 26, Color("#e4c98a"))
+	_label(page, "拓印图录 · 每一张图，都对应一段亲手找回的往事。", 17)
 	var slots := GridContainer.new()
 	slots.columns = 2
 	page.add_child(slots)
 	var used := 0
 	for held in GameState.player.memories:
 		var memory: Dictionary = data.memory(held.id)
-		var card := _button(slots, "%s\n%s · %d 格" % [memory.title, memory.skill, int(memory.capacity)], _memory_detail.bind(held.id))
+		var tile := VBoxContainer.new()
+		tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		slots.add_child(tile)
+		_memory_art(tile, memory.id, 330)
+		var card := _button(tile, "%s\n%s · %d 格" % [memory.title, memory.skill, int(memory.capacity)], _memory_detail.bind(held.id))
 		card.custom_minimum_size.y = 90
 		used += int(memory.capacity)
 	for i in range(int(GameState.player.capacity) - used):
@@ -866,20 +959,26 @@ func _compare_memories(old_id: String, new_id: String) -> void:
 		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		columns.add_child(column)
 		_label(column, ("旧记忆 · " if id == old_id else "新墨灵 · ") + memory.title, 21, Color(memory.color))
+		_memory_art(column, memory.id, 200)
 		_label(column, memory.summary, 18)
 		_label(column, "技能：%s\n占用：%d 格" % [memory.skill, int(memory.capacity)], 17)
 		_label(column, "遗忘后：" + memory.forgotten_text, 17)
 	_button(page, "返回抉择", _resume)
 
 func _memory_detail(id: String) -> void:
+	_pause_event()
 	flow = "memory"
 	_clear()
 	var memory: Dictionary = data.memory(id)
 	var remembered := false
 	for held in GameState.player.memories:
 		if held.id == id: remembered = true
-	backdrop.color = Color(memory.color).darkened(0.8) if remembered else Color("#282c2b")
+	var memory_backdrop := Color(memory.color).darkened(0.8) if remembered else Color("#282c2b")
+	memory_backdrop.a = 0.86
+	backdrop.color = memory_backdrop
 	_label(page, memory.title + (" · 记住" if remembered else " · 遗忘"), 28, Color(memory.color) if remembered else Color("#929996"))
+	var artwork := _memory_art(page, id, 390)
+	if not remembered and artwork != null: artwork.modulate = Color(0.45, 0.45, 0.45, 0.7)
 	_label(page, memory.remembered_text if remembered else memory.forgotten_text, 22)
 	var source: PackedStringArray = str(memory.source).split("/")
 	var event: Dictionary = data.event(source[0], source[1])
@@ -893,6 +992,7 @@ func _memory_detail(id: String) -> void:
 	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
 
 func _play_memory(path: String) -> void:
+	_stop_voice()
 	if memory_audio.playing:
 		memory_audio.stream_paused = not memory_audio.stream_paused
 		return
@@ -956,6 +1056,228 @@ func _button(parent: Node, text: String, callback: Callable) -> Button:
 	button.add_theme_color_override("font_disabled_color", Color("#acb8b3"))
 	button.add_theme_font_size_override("font_size", 18)
 	button.pressed.connect(func():
-		if not busy: callback.call())
+		if not busy:
+			soundscape.cue("ui")
+			callback.call())
 	parent.add_child(button)
 	return button
+
+# Finished rubbing art is a packaged bitmap, never generated at runtime.
+func _memory_art(parent: Node, id: String, height: float) -> TextureRect:
+	var memory := data.memory(id)
+	var title := str(memory.get("title", id))
+	var path := data.memory_image_path(id)
+	if path.is_empty():
+		_label(parent, title + " · 拓印图待装裱", 18, Color("#b7c0b8"))
+		return null
+	var texture := load(path) as Texture2D
+	if texture == null:
+		_label(parent, title + " · 拓印图待装裱", 18, Color("#b7c0b8"))
+		return null
+	var art := _art_banner(parent, texture, height)
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	return art
+
+func _task_event() -> Dictionary:
+	for chapter in data.catalog.chapters:
+		for event in chapter.events:
+			if not event.draft and not GameState.player.completed_events.has(chapter.id + ":" + event.id):
+				return {"chapter": chapter.id, "event": event}
+	return {}
+
+func _add_current_task(parent: Node) -> void:
+	var task := _task_event()
+	if task.is_empty():
+		_label(parent, "全篇已完成 · 檐下的故事仍在继续", 23, Color("#e4c98a"))
+		_label(parent, "你留下了 %d 段记忆、%d 条抉择。可以在剧情册回看旅程。" % [GameState.player.memories.size(), GameState.player.memory_ledger.size()], 18)
+		return
+	_label(parent, "当前任务 · " + str(task.event.title), 23, Color("#e4c98a"))
+	for objective in task.event.objectives: _label(parent, "· " + str(objective), 17)
+	if session_id.is_empty():
+		_button(parent, "前往任务", _open_event.bind(task.chapter, task.event.id))
+	else:
+		_button(parent, "继续当前修复", _resume)
+
+func _close_dialogue() -> void:
+	_stop_voice()
+	if is_instance_valid(dialogue_stage):
+		dialogue_stage.dismiss()
+	dialogue_stage = null
+
+func _begin_dialogue(title: String, lines: Array, done: Callable, back: Callable, mode: String = "story", key: String = "") -> void:
+	_close_dialogue()
+	dialogue_title = title
+	dialogue_key = key if not key.is_empty() else title
+	dialogue_mode = mode
+	dialogue_lines = lines
+	dialogue_done = done
+	dialogue_return = back
+	dialogue_index = clampi(int(story_progress.get_value("dialogue", dialogue_key, 0)), 0, maxi(0, lines.size() - 1))
+	_render_dialogue()
+
+func _render_dialogue() -> void:
+	flow = "gameover" if dialogue_mode == "failure" else "dialogue"
+	if not is_instance_valid(dialogue_stage):
+		_clear()
+		dialogue_stage = preload("res://scripts/dialogue_stage.gd").new()
+		dialogue_stage.failure = dialogue_mode == "failure"
+		dialogue_stage.backdrop = load(str(data.catalog.failure_scene.background)) if dialogue_mode == "failure" else _event_background()
+		add_child(dialogue_stage)
+		dialogue_stage.advance_requested.connect(_advance_dialogue)
+		dialogue_stage.previous_requested.connect(_previous_dialogue)
+		dialogue_stage.skip_requested.connect(_finish_dialogue)
+		dialogue_stage.back_requested.connect(func(): dialogue_return.call())
+	if dialogue_mode == "failure":
+		var reason := str(GameState.session.get("failure_reason", ""))
+		var cue := "failure_first_" + reason if dialogue_index == 0 and data.catalog.failure_scene.first_lines.has(reason) else "failure_line_%02d" % (dialogue_index+1)
+		_play_cues([cue])
+	else:
+		var line: Dictionary = dialogue_lines[dialogue_index]
+		_play_cues([str(line.get("audio_cue", voice_index.get("lines", {}).get(str(line.text), "")))])
+	dialogue_stage.show_line(dialogue_title, dialogue_lines[dialogue_index], dialogue_index, dialogue_lines.size(), bool(story_progress.get_value("read",dialogue_key,false)))
+
+func _previous_dialogue() -> void:
+	if dialogue_index == 0: return
+	dialogue_index -= 1
+	_save_dialogue_cursor()
+	_render_dialogue()
+
+func _save_dialogue_cursor() -> void:
+	story_progress.set_value("dialogue", dialogue_key, dialogue_index)
+	var error := story_progress.save("user://story-" + str(GameState.player.id) + ".cfg")
+	if error != OK: status.text = "剧情阅读位置未能保存；游戏进度不受影响。"
+
+func _advance_dialogue() -> void:
+	if busy or not is_instance_valid(dialogue_stage): return
+	if dialogue_index + 1 >= dialogue_lines.size():
+		_finish_dialogue()
+		return
+	dialogue_index += 1
+	_save_dialogue_cursor()
+	_render_dialogue()
+
+func _finish_dialogue() -> void:
+	# Failure recovery is revealed only after the ninth line; there is no skip control.
+	if dialogue_mode == "failure" and dialogue_index + 1 < dialogue_lines.size(): return
+	story_progress.set_value("read", dialogue_key, true)
+	dialogue_index = 0
+	_save_dialogue_cursor()
+	_close_dialogue()
+	dialogue_done.call()
+
+func _begin_failure() -> void:
+	failure_key = "failure:" + session_id + ":" + str(GameState.session.retries)
+	if bool(story_progress.get_value("read",failure_key,false)):
+		_show_failure_actions()
+		return
+	var scene: Dictionary = data.catalog.failure_scene
+	var lines: Array = scene.dialogue.duplicate(true)
+	var reason := str(GameState.session.failure_reason)
+	if scene.first_lines.has(reason): lines[0] = scene.first_lines[reason].duplicate(true)
+	_begin_dialogue(scene.title,lines,_show_failure_actions,Callable(),"failure",failure_key)
+
+func _show_failure_actions() -> void:
+	flow = "failed"
+	_clear()
+	_art_banner(page,load(str(data.catalog.failure_scene.background)),240)
+	_label(page,"飞鸟山 · 墨迹未尽",26,Color("#e4c98a"))
+	var reasons := {"erosion_limit":"侵蚀已达 100", "puzzle_attempt_limit":"修复尝试用尽", "session_expired":"旧版本事件已超时", "battle_requirements_not_met":"白蚀未清除或未施展所需技能"}
+	var response: Dictionary = GameState.session
+	_label(page,"事件失败：%s。已拓印记忆仍保留。" % reasons.get(response.failure_reason,response.failure_reason),19)
+	_label(page,"解谜 %d/%d · 已清除白蚀 %d 波" % [int(response.puzzle_score),int(response.puzzle_total),int(response.battle_waves)],18)
+	_label(page,"回溯会恢复本次事件开始时的侵蚀与谜题；已拓印记忆、技艺和已确认的取舍保留。墨痕为零时免费回溯。",19)
+	_button(page,"消耗 1 墨痕 · 回溯事件起点" if int(GameState.player.ink_marks)>0 else "墨痕不足 · 免费回溯事件起点",_rewind)
+	_button(page,"返回古建地图",_show_map)
+
+func _show_journal() -> void:
+	if busy: return
+	_pause_event()
+	flow = "journal"
+	_clear()
+	_label(page, "檐下谱 · 剧情与任务", 26, Color("#e4c98a"))
+	_add_current_task(page)
+	_label(page, "旅途回顾", 23, Color("#b7d8c8"))
+	var count := 0
+	for chapter in data.catalog.chapters:
+		for event in chapter.events:
+			if not GameState.player.completed_events.has(chapter.id + ":" + event.id): continue
+			count += 1
+			_button(page, chapter.title + " / " + event.title, _replay_story.bind(chapter.id, event.id))
+			var result: Dictionary = GameState.player.completed_events[chapter.id + ":" + event.id]
+			_label(page, "★".repeat(int(result.stars)) + " · 当时侵蚀 %d%% · 记忆 %d/%d" % [int(result.erosion_at_end), int(result.get("memories_kept",0)), int(result.get("memories_acquired",0))], 17)
+			if int(result.get("scoring_version",0)) >= 2:
+				_label(page, "修复 %d%% · 白蚀清除 %s · 保留 %d%% · 综合 %d" % [int(result.repair_percent), str(result.battle_clear_percent)+"%" if event.has("battle") else "无战斗", int(result.memory_retention_percent), int(result.quality_score)], 16)
+			else: _label(page, "旧版结算记录，保留原星级与评分口径。", 16)
+	if count == 0: _label(page, "完成任务后，对话与结语会收进这里。", 18)
+	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+
+func _replay_story(chapter: String, event_id: String) -> void:
+	# Keep active event identity intact while reading completed stories.
+	var event: Dictionary = data.event(chapter, event_id)
+	var lines: Array = event.story.dialogue.duplicate(true)
+	for i in range(lines.size()): lines[i]["audio_cue"] = event_id + "_dialogue_%02d" % (i+1)
+	lines.append({"speaker": "檐下谱", "text": event.story.outro, "audio_cue":event_id + "_outro"})
+	var result: Dictionary = GameState.player.completed_events[chapter + ":" + event_id]
+	if not str(result.get("narrative_choice", "")).is_empty():
+		lines.append({"speaker": "你的回答 · " + str(result.narrative_choice), "text": _ending_response(str(result.narrative_choice))})
+	for entry in GameState.player.memory_ledger:
+		if entry.chapter_id == chapter and entry.event_id == event_id and entry.action == "forgotten":
+			lines.append({"speaker": "心舍", "text": event.story.forget_response})
+	_begin_dialogue(event.title + " · 回顾", lines, _show_journal, _show_journal)
+
+func _ending_response(choice: String) -> String:
+	return {"传下修复的方法": "你在塔下开了一间小工坊。第一位学徒没有问什么叫永恒，只问：这块坏木头，还能修吗？", "留下所有取舍的记录": "你把灰页也装订进谱。翻阅的人第一次看见修复者的迟疑，开始在页边写下自己的不同意见。", "留白让后来人续写": "你留下空白与未蘸墨的笔。一个孩子画上了今天新搭的小棚，古建们第一次听见未来的声音。"}.get(choice, "故事由后来的人继续书写。")
+
+func _boss_wave() -> bool:
+	return not str(current_event.battle.get("boss_name", "")).is_empty() and battle_wave == int(current_event.battle.waves)-1
+
+func _wave_hp() -> int:
+	return int(current_event.battle.boss_hp) if _boss_wave() else int(current_event.battle.enemy_hp)
+
+func _attack_interval() -> int:
+	return int(current_event.battle.boss_attack_interval_ms) if _boss_wave() else 3000
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if flow != "battle" or busy or not battle_running or battle_finished: return
+	if event is not InputEventKey or not event.pressed or event.echo: return
+	var number := -1
+	var code: int = event.keycode
+	if code == 0: code = event.physical_keycode
+	if code >= KEY_1 and code <= KEY_5: number = code - KEY_1
+	elif code >= KEY_KP_1 and code <= KEY_KP_5: number = code - KEY_KP_1
+	if number < 0: return
+	get_viewport().set_input_as_handled()
+	var skill: String = BATTLE_KEYS[number]
+	if battle_buttons.has(skill): _battle_skill(skill)
+
+func _stop_voice() -> void:
+	voice_queue.clear()
+	if is_instance_valid(event_audio):
+		event_audio.stop()
+		event_audio.stream = null
+	if is_instance_valid(soundscape): soundscape.duck(false)
+
+func _play_line(text: String) -> void:
+	_play_cues([str(voice_index.get("lines", {}).get(text, ""))])
+
+func _play_cues(cues: Array, append: bool = false) -> void:
+	if not append: _stop_voice()
+	for cue in cues:
+		var path := str(voice_index.get("cues", {}).get(str(cue), ""))
+		if not path.is_empty(): voice_queue.append(path)
+	if not event_audio.playing: _voice_next()
+
+func _voice_next() -> void:
+	if voice_queue.is_empty():
+		soundscape.duck(false)
+		return
+	var path: String = voice_queue.pop_front()
+	var sound := load(path) as AudioStream
+	if sound == null:
+		push_warning("无法播放语音：" + path)
+		_voice_next()
+		return
+	memory_audio.stop()
+	event_audio.stream = sound
+	event_audio.play()
+	soundscape.duck(true)

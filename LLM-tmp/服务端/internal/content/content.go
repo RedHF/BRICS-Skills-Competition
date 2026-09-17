@@ -8,9 +8,10 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
-const CurrentVersion = 6
+const CurrentVersion = 10
 
 // Catalog is the complete, versioned game content manifest.
 type SkillSpec struct {
@@ -23,18 +24,27 @@ type SkillSpec struct {
 }
 
 type Catalog struct {
-	Skills   map[string]SkillSpec  `json:"skills"`
-	Memories map[string]MemorySpec `json:"memories"`
-	Version  int                   `json:"version"`
-	GameID   string                `json:"game_id"`
-	Art      map[string]ArtSpec    `json:"art,omitempty"`
-	Chapters []Chapter             `json:"chapters"`
+	FailureScene FailureSceneSpec      `json:"failure_scene"`
+	Skills       map[string]SkillSpec  `json:"skills"`
+	Memories     map[string]MemorySpec `json:"memories"`
+	Version      int                   `json:"version"`
+	GameID       string                `json:"game_id"`
+	Art          map[string]ArtSpec    `json:"art,omitempty"`
+	Chapters     []Chapter             `json:"chapters"`
+}
+
+type FailureSceneSpec struct {
+	Title      string                  `json:"title"`
+	Background string                  `json:"background"`
+	Dialogue   []DialogueLine          `json:"dialogue"`
+	FirstLines map[string]DialogueLine `json:"first_lines"`
 }
 
 type ArtSpec struct {
-	WhisperAudio  string `json:"whisper_audio,omitempty"`
-	Background    string `json:"background,omitempty"`
-	BackdropColor string `json:"backdrop_color,omitempty"`
+	ErodedBackground string `json:"eroded_background,omitempty"`
+	WhisperAudio     string `json:"whisper_audio,omitempty"`
+	Background       string `json:"background,omitempty"`
+	BackdropColor    string `json:"backdrop_color,omitempty"`
 }
 
 type Chapter struct {
@@ -48,23 +58,40 @@ type Chapter struct {
 }
 
 type StorySpec struct {
-	Beats        []string `json:"beats"`
-	Outro        string   `json:"outro"`
-	ChapterOutro string   `json:"chapter_outro,omitempty"`
+	FirstClearWhisper string         `json:"first_clear_whisper,omitempty"`
+	Dialogue          []DialogueLine `json:"dialogue"`
+	Clues             []string       `json:"clues"`
+	BeforeBattle      string         `json:"before_battle,omitempty"`
+	KeepResponse      string         `json:"keep_response"`
+	ForgetResponse    string         `json:"forget_response"`
+	Beats             []string       `json:"beats"`
+	Outro             string         `json:"outro"`
+	ChapterOutro      string         `json:"chapter_outro,omitempty"`
+}
+
+type DialogueLine struct {
+	Speaker string `json:"speaker"`
+	Text    string `json:"text"`
 }
 
 type Event struct {
-	Story      StorySpec   `json:"story"`
-	Draft      bool        `json:"draft"`
-	ID         string      `json:"id"`
-	Order      int         `json:"order"`
-	Title      string      `json:"title"`
-	Scene      string      `json:"scene"`
-	Intro      string      `json:"intro"`
-	Objectives []string    `json:"objectives"`
-	Puzzle     PuzzleSpec  `json:"puzzle"`
-	Battle     *BattleSpec `json:"battle,omitempty"`
-	Reward     RewardSpec  `json:"reward"`
+	Story          StorySpec           `json:"story"`
+	Draft          bool                `json:"draft"`
+	ID             string              `json:"id"`
+	Order          int                 `json:"order"`
+	Title          string              `json:"title"`
+	Scene          string              `json:"scene"`
+	Intro          string              `json:"intro"`
+	Objectives     []string            `json:"objectives"`
+	Investigations []InvestigationSpec `json:"investigations,omitempty"`
+	Puzzle         PuzzleSpec          `json:"puzzle"`
+	Battle         *BattleSpec         `json:"battle,omitempty"`
+	Reward         RewardSpec          `json:"reward"`
+}
+
+type InvestigationSpec struct {
+	Label    string     `json:"label"`
+	Position [2]float64 `json:"position"`
 }
 
 type PuzzleSpec struct {
@@ -80,6 +107,7 @@ type TraceSpec struct {
 }
 
 type PuzzleStep struct {
+	Target  string     `json:"target,omitempty"`
 	Trace   *TraceSpec `json:"trace,omitempty"`
 	ID      string     `json:"id"`
 	Kind    string     `json:"kind"`
@@ -90,11 +118,33 @@ type PuzzleStep struct {
 }
 
 type BattleSpec struct {
-	Waves          int      `json:"waves"`
-	EnemyHP        int      `json:"enemy_hp"`
-	DurationSec    int      `json:"duration_sec"`
-	MaxHitsTaken   int      `json:"max_hits_taken"`
-	RequiredSkills []string `json:"required_skills,omitempty"`
+	BossName             string   `json:"boss_name,omitempty"`
+	BossHP               int      `json:"boss_hp,omitempty"`
+	BossAttackIntervalMS int      `json:"boss_attack_interval_ms,omitempty"`
+	Waves                int      `json:"waves"`
+	EnemyHP              int      `json:"enemy_hp"`
+	DurationSec          int      `json:"duration_sec"`
+	MaxHitsTaken         int      `json:"max_hits_taken"`
+	RequiredSkills       []string `json:"required_skills,omitempty"`
+}
+
+// The last wave can be a named boss; ordinary waves keep their existing rules.
+func (b *BattleSpec) IsBoss(wave int) bool {
+	return b.BossName != "" && wave == b.Waves-1
+}
+
+func (b *BattleSpec) WaveHP(wave int) int {
+	if b.IsBoss(wave) {
+		return b.BossHP
+	}
+	return b.EnemyHP
+}
+
+func (b *BattleSpec) AttackInterval(wave int) int {
+	if b.IsBoss(wave) {
+		return b.BossAttackIntervalMS
+	}
+	return 3000
 }
 
 type RewardSpec struct {
@@ -106,6 +156,7 @@ type RewardSpec struct {
 }
 
 type MemorySpec struct {
+	Image          string  `json:"image"`
 	EchoAudio      string  `json:"echo_audio"`
 	Source         string  `json:"source"`
 	RememberedText string  `json:"remembered_text"`
@@ -139,6 +190,20 @@ func Load(path string) (*Catalog, error) {
 func (c *Catalog) Validate() error {
 	if c == nil {
 		return errors.New("catalog is nil")
+	}
+	if c.FailureScene.Title == "" || !strings.HasPrefix(c.FailureScene.Background, "res://assets/") || len(c.FailureScene.Dialogue) == 0 {
+		return errors.New("failure scene requires title, asset background and dialogue")
+	}
+	for _, line := range c.FailureScene.Dialogue {
+		if strings.TrimSpace(line.Speaker) == "" || strings.TrimSpace(line.Text) == "" {
+			return errors.New("empty failure dialogue")
+		}
+	}
+	for _, reason := range []string{"erosion_limit", "puzzle_attempt_limit", "battle_requirements_not_met", "session_expired"} {
+		line := c.FailureScene.FirstLines[reason]
+		if strings.TrimSpace(line.Speaker) == "" || strings.TrimSpace(line.Text) == "" {
+			return fmt.Errorf("missing failure first line: %s", reason)
+		}
 	}
 	if c.Version != CurrentVersion {
 		return fmt.Errorf("content version must be %d", CurrentVersion)
@@ -176,8 +241,16 @@ func (c *Catalog) Validate() error {
 			if memory.Title == "" || memory.Summary == "" || memory.RememberedText == "" || memory.ForgottenText == "" {
 				return fmt.Errorf("memory %q missing narrative text", memory.ID)
 			}
-			if len(event.Story.Beats) == 0 || event.Story.Outro == "" {
+			if len(event.Story.Beats) == 0 || event.Story.Outro == "" || len(event.Story.Dialogue) == 0 || len(event.Story.Clues) != len(event.Investigations) {
 				return fmt.Errorf("event %q missing story", event.ID)
+			}
+			for _, line := range event.Story.Dialogue {
+				if line.Speaker == "" || line.Text == "" {
+					return fmt.Errorf("event %q has empty dialogue", event.ID)
+				}
+			}
+			if !strings.HasPrefix(memory.Image, "res://assets/rubbings/") || !strings.HasSuffix(memory.Image, ".png") {
+				return fmt.Errorf("memory %q needs a packaged rubbing image", memory.ID)
 			}
 			if _, ok := c.Skills[memory.Skill]; memory.Skill != "" && !ok {
 				return fmt.Errorf("memory %q references missing skill %q", memory.ID, memory.Skill)
@@ -212,15 +285,31 @@ func (c *Catalog) Validate() error {
 			if len(event.Puzzle.Steps) == 0 {
 				return fmt.Errorf("event %q has no puzzle steps", event.ID)
 			}
+			if !event.Draft {
+				if len(event.Investigations) == 0 {
+					return fmt.Errorf("playable event %q has no investigation points", event.ID)
+				}
+				for _, investigation := range event.Investigations {
+					if investigation.Label == "" || investigation.Position[0] < 0 || investigation.Position[0] > 1 || investigation.Position[1] < 0 || investigation.Position[1] > 1 {
+						return fmt.Errorf("event %q has invalid investigation point", event.ID)
+					}
+				}
+			}
 			stepIDs := make(map[string]struct{}, len(event.Puzzle.Steps))
 			for _, step := range event.Puzzle.Steps {
-				if step.ID == "" || (step.Kind != "trace" && step.Answer == "") {
+				if step.ID == "" || (step.Kind != "trace" && step.Kind != "narrative" && step.Answer == "") {
 					return fmt.Errorf("event %q has puzzle step without id/answer", event.ID)
 				}
 				if _, exists := stepIDs[step.ID]; exists {
 					return fmt.Errorf("event %q has duplicate puzzle step id %q", event.ID, step.ID)
 				}
 				stepIDs[step.ID] = struct{}{}
+				if step.Kind == "skill" && step.Target != "beam" && step.Target != "bell" && step.Target != "inscription" {
+					return fmt.Errorf("step %q missing scene target", step.ID)
+				}
+				if step.Kind == "narrative" && len(step.Options) < 2 {
+					return fmt.Errorf("step %q missing narrative choices", step.ID)
+				}
 				if step.Kind == "trace" {
 					if step.Trace == nil || len(step.Trace.Strokes) == 0 || step.Trace.Tolerance <= 0 || step.Trace.Tolerance > .2 || step.Trace.AspectRatio <= 0 {
 						return fmt.Errorf("step %q has invalid trace specification", step.ID)
@@ -253,6 +342,9 @@ func (c *Catalog) Validate() error {
 				return fmt.Errorf("event %q reward memory has no choices", event.ID)
 			}
 			if event.Battle != nil {
+				if event.Battle.BossName != "" && (event.Battle.BossHP <= 0 || event.Battle.BossAttackIntervalMS < 1000) {
+					return fmt.Errorf("event %q has invalid boss settings", event.ID)
+				}
 				for _, skill := range event.Battle.RequiredSkills {
 					if _, ok := c.Skills[skill]; !ok {
 						return fmt.Errorf("event %q references missing battle skill %q", event.ID, skill)

@@ -1,0 +1,22 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 566.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Laptop GPU
+
+PACE prologue_bridge 47.25
+PASS UI journey prologue_bridge
+PACE temple_incense 51.75
+PASS UI journey temple_incense
+PASS UI journey temple_guest
+PACE temple_drum 44.25
+PASS UI journey temple_drum
+PACE opera_opening 40.5
+PASS UI journey opera_opening
+PACE opera_master 45.0
+PASS UI journey opera_master
+PACE archway_form 47.25
+PASS UI journey archway_form
+PACE archway_craftsman 48.0
+PASS UI journey archway_craftsman
+PACE tower_ascent 49.5
+PASS UI journey tower_ascent
+PASS UI journey tower_ledger
+PASS all ten UI tasks, visible battle controls, pattern choices, scene targets, real confirmation buttons

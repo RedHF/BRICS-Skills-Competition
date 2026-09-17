@@ -1,14 +1,15 @@
 param([string]$BaseUrl = "http://127.0.0.1:8090")
 $ErrorActionPreference = "Stop"
-$playerId = "smoke_$(Get-Random)"
-$authHeaders = @{}
 function Post-Json([string]$Path, [hashtable]$Body) {
-    Invoke-RestMethod -Method Post -Uri ($BaseUrl + $Path) -Headers $authHeaders -ContentType 'application/json; charset=utf-8' -Body ($Body | ConvertTo-Json -Depth 12)
+    Invoke-RestMethod -Method Post -Uri ($BaseUrl + $Path) -ContentType 'application/json; charset=utf-8' -Body ($Body | ConvertTo-Json -Depth 12)
 }
 $health = Invoke-RestMethod ($BaseUrl + '/healthz')
 if ($health.status -ne 'ok') { throw 'health check failed' }
-$player = Post-Json '/api/v1/auth/register' @{ username = $playerId; password = [guid]::NewGuid().ToString() }
-$authHeaders = @{ Authorization = 'Bearer ' + $player.access_token }
+if ($health.content_version -ne 9) { throw 'requires content v9' }
+$player = Post-Json '/api/v1/players' @{}
+if ($player.player.completed_events.PSObject.Properties.Count -gt 0 -or $player.player.memory_ledger.Count -gt 0) { throw 'Use a fresh isolated test save; smoke does not overwrite existing progress.' }
+$active = Invoke-RestMethod ($BaseUrl + '/api/v1/sessions')
+if ($null -ne $active.session) { throw 'Use a fresh isolated test save; an event is already active.' }
 $playerId = $player.player.id
 $session = Post-Json '/api/v1/events/prologue/prologue_bridge/start' @{ player_id = $playerId }
 $sid = $session.session_id
@@ -29,9 +30,24 @@ foreach ($stroke in $session.puzzle.steps[0].trace.strokes) {
 $puzzle = Post-Json "/api/v1/sessions/$sid/puzzle" @{ step_id = 'bridge_trace'; strokes = $strokes }
 if (-not $puzzle.complete) { throw 'trace validation failed' }
 $choice = Post-Json "/api/v1/sessions/$sid/choice" @{ action = 'keep' }
-$battle = Post-Json "/api/v1/sessions/$sid/battle" @{ duration_ms = 1000; actions = @(@{ skill = '斗拱'; at_ms = 0 }, @{ skill = '挥墨'; at_ms = 0 }, @{ skill = '挥墨'; at_ms = 500 }, @{ skill = '挥墨'; at_ms = 1000 }) }
+$catalog = Invoke-RestMethod ($BaseUrl + '/api/v1/catalog')
+$actions = [System.Collections.Generic.List[object]]::new()
+$hp = [int]$session.battle.enemy_hp
+$ready = @{'斗拱'=0; '挥墨'=0}
+$at = 0
+while ($hp -gt 0 -and $at -lt ([int]$session.battle.duration_sec * 1000)) {
+    foreach ($skill in @('斗拱','挥墨')) {
+        if ($at -lt $ready[$skill]) { continue }
+        $spec = $catalog.skills.$skill
+        $actions.Add(@{skill=$skill; at_ms=$at})
+        $ready[$skill] = $at + [int]$spec.cooldown_ms
+        $hp -= [int]$spec.damage
+    }
+    if ($hp -le 0) { break }
+    $at += 500
+}
+$battle = Post-Json "/api/v1/sessions/$sid/battle" @{ duration_ms = $at + 1; actions = $actions.ToArray() }
 $settled = Post-Json "/api/v1/sessions/$sid/finish" @{}
 $repeat = Post-Json "/api/v1/sessions/$sid/finish" @{}
 if (-not $battle.won -or -not $settled.settled -or $repeat.reason -ne 'already_settled') { throw 'settlement verification failed' }
-$logout = Post-Json '/api/v1/auth/logout' @{}
 [pscustomobject]@{ player = $playerId; trace = $puzzle.complete; choice = $choice.accepted; battle = $battle.won; stars = $settled.result.stars; repeat = $repeat.reason } | ConvertTo-Json
