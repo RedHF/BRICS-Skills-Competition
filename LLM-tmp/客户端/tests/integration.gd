@@ -276,6 +276,8 @@ func _run() -> void:
 		return
 	print("PASS narration duration, playback progress, pause/resume, memory source, capacity and ledger")
 	print("TEST_PLAYER=", game.player.id)
+	# Restore the suspended exploration before replacing it with a battle fixture.
+	if is_instance_valid(main.paused_page): await main._resume()
 	main._start_battle()
 	main._begin_battle()
 	main._process(float(main.current_event.battle.duration_sec))

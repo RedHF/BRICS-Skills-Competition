@@ -23,6 +23,23 @@ func _run() -> void:
 	if main.dialogue_stage.text_label.visible_characters <= 0: return fail("Dialogue reveal")
 	main._finish_dialogue()
 	if main.event_audio.playing: return fail("Voice cancellation")
+	for code in [KEY_ENTER, KEY_KP_ENTER]:
+		var key := InputEventKey.new()
+		key.keycode = code
+		if not InputMap.event_is_action(key, "advance"): return fail("Investigation Enter binding")
+	var scene = main.scene_view
+	scene._discover(0)
+	main._show_settings()
+	if not main._has_current_event(): return fail("Investigation return entry")
+	await main._resume()
+	if main.flow != "intro" or main.scene_view != scene or scene.discovered != [0]: return fail("Investigation restoration")
+	main._show_map()
+	var game = root.get_node("GameState")
+	game.player.completed_events["prologue:prologue_bridge"] = {"narrative_choice":""}
+	main.current_event = main.data.event("tower", "tower_ascent")
+	main._replay_story("prologue", "prologue_bridge")
+	if main.dialogue_stage.backdrop.resource_path != main._event_art("prologue_bridge").background: return fail("Replay backdrop")
+	print("PASS EXPORTED playability fixes: both Enter bindings, investigation restoration, independent replay backdrop")
 	print("PASS EXPORTED v10: fresh local save, auto-started server, 184 voices, six adopted images, rejected asset excluded, dialogue voice and animation")
 	root.propagate_notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
 

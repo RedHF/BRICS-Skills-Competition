@@ -1,0 +1,1444 @@
+{
+  "audio_files": 205,
+  "voice_cues": 184,
+  "narrative_cues_checked": 162,
+  "resource_references": 226,
+  "issues": [],
+  "audio": [
+    {
+      "file": "assets\\audio\\ambience.wav",
+      "seconds": 16.0,
+      "peak": 915,
+      "rms": 372.5,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\audio\\battle.wav",
+      "seconds": 16.0,
+      "peak": 15276,
+      "rms": 2507.42,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\audio\\hit.wav",
+      "seconds": 0.3,
+      "peak": 17752,
+      "rms": 4439.01,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\audio\\ink.wav",
+      "seconds": 0.23,
+      "peak": 6468,
+      "rms": 2641.24,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\audio\\repair.wav",
+      "seconds": 0.6,
+      "peak": 15881,
+      "rms": 2722.03,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\audio\\ui.wav",
+      "seconds": 0.12,
+      "peak": 11094,
+      "rms": 5185.23,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\audio\\win.wav",
+      "seconds": 1.4,
+      "peak": 8970,
+      "rms": 2104.66,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\fang_jiang_hun.wav",
+      "seconds": 5.678,
+      "peak": 18855,
+      "rms": 1606.12,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\fang_wu_ming.wav",
+      "seconds": 3.963,
+      "peak": 19210,
+      "rms": 1480.0,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\prologue_bridge.wav",
+      "seconds": 37.737,
+      "peak": 31273,
+      "rms": 2121.64,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\she_cheng_xiang.wav",
+      "seconds": 4.317,
+      "peak": 23244,
+      "rms": 2119.6,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\she_hui_chun.wav",
+      "seconds": 5.039,
+      "peak": 28728,
+      "rms": 1866.97,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\she_ning_an.wav",
+      "seconds": 4.709,
+      "peak": 27879,
+      "rms": 2306.62,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\temple_drum.wav",
+      "seconds": 25.241,
+      "peak": 27985,
+      "rms": 1972.42,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\temple_guest.wav",
+      "seconds": 19.728,
+      "peak": 30924,
+      "rms": 2279.8,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\temple_incense.wav",
+      "seconds": 21.282,
+      "peak": 27185,
+      "rms": 2221.73,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\tower_epilogue.wav",
+      "seconds": 5.509,
+      "peak": 24086,
+      "rms": 1439.09,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\tower_origin.wav",
+      "seconds": 5.795,
+      "peak": 20040,
+      "rms": 2041.27,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\xi_jue_chang.wav",
+      "seconds": 5.298,
+      "peak": 24329,
+      "rms": 1724.68,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\xi_xing_qiang.wav",
+      "seconds": 3.815,
+      "peak": 29448,
+      "rms": 2521.07,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\echo\\yan_ping_an.wav",
+      "seconds": 3.911,
+      "peak": 22700,
+      "rms": 1783.1,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_beat_01.wav",
+      "seconds": 4.361,
+      "peak": 25804,
+      "rms": 3821.78,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_beat_02.wav",
+      "seconds": 1.82,
+      "peak": 23962,
+      "rms": 2836.81,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_beat_03.wav",
+      "seconds": 6.276,
+      "peak": 27978,
+      "rms": 4536.98,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_before_battle.wav",
+      "seconds": 6.492,
+      "peak": 32439,
+      "rms": 4320.3,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_clue_01.wav",
+      "seconds": 3.889,
+      "peak": 27266,
+      "rms": 4218.77,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_clue_02.wav",
+      "seconds": 3.944,
+      "peak": 32439,
+      "rms": 3575.15,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_clue_03.wav",
+      "seconds": 4.588,
+      "peak": 31348,
+      "rms": 3997.72,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_dialogue_01.wav",
+      "seconds": 5.597,
+      "peak": 32439,
+      "rms": 4398.61,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_dialogue_02.wav",
+      "seconds": 4.671,
+      "peak": 19188,
+      "rms": 3047.32,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_dialogue_03.wav",
+      "seconds": 1.861,
+      "peak": 17495,
+      "rms": 2829.76,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_dialogue_04.wav",
+      "seconds": 6.06,
+      "peak": 25721,
+      "rms": 2888.61,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_dialogue_05.wav",
+      "seconds": 5.878,
+      "peak": 16497,
+      "rms": 2385.18,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_dialogue_06.wav",
+      "seconds": 5.576,
+      "peak": 26535,
+      "rms": 4708.94,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_forget.wav",
+      "seconds": 6.394,
+      "peak": 17353,
+      "rms": 3015.34,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_keep.wav",
+      "seconds": 4.791,
+      "peak": 24729,
+      "rms": 4483.34,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_craftsman_outro.wav",
+      "seconds": 11.8,
+      "peak": 24925,
+      "rms": 3379.45,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_beat_01.wav",
+      "seconds": 4.072,
+      "peak": 23117,
+      "rms": 3046.29,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_beat_02.wav",
+      "seconds": 4.84,
+      "peak": 16663,
+      "rms": 1585.15,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_beat_03.wav",
+      "seconds": 5.51,
+      "peak": 19930,
+      "rms": 3271.96,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_before_battle.wav",
+      "seconds": 4.839,
+      "peak": 20097,
+      "rms": 3551.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_clue_01.wav",
+      "seconds": 5.505,
+      "peak": 26056,
+      "rms": 3453.46,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_clue_02.wav",
+      "seconds": 4.173,
+      "peak": 32439,
+      "rms": 4962.64,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_clue_03.wav",
+      "seconds": 6.397,
+      "peak": 32439,
+      "rms": 3992.76,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_dialogue_01.wav",
+      "seconds": 5.319,
+      "peak": 16996,
+      "rms": 2182.23,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_dialogue_02.wav",
+      "seconds": 4.611,
+      "peak": 20986,
+      "rms": 3997.27,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_dialogue_03.wav",
+      "seconds": 4.845,
+      "peak": 14987,
+      "rms": 1375.12,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_dialogue_04.wav",
+      "seconds": 5.595,
+      "peak": 22805,
+      "rms": 3793.22,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_dialogue_05.wav",
+      "seconds": 2.991,
+      "peak": 21934,
+      "rms": 2044.68,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_dialogue_06.wav",
+      "seconds": 5.64,
+      "peak": 19652,
+      "rms": 3747.91,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_forget.wav",
+      "seconds": 6.15,
+      "peak": 26033,
+      "rms": 3958.75,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_keep.wav",
+      "seconds": 3.737,
+      "peak": 18532,
+      "rms": 3113.84,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\archway_form_outro.wav",
+      "seconds": 10.01,
+      "peak": 32439,
+      "rms": 3908.21,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_first_battle_requirements_not_met.wav",
+      "seconds": 4.784,
+      "peak": 16987,
+      "rms": 2489.2,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_first_erosion_limit.wav",
+      "seconds": 3.227,
+      "peak": 32439,
+      "rms": 4901.09,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_first_puzzle_attempt_limit.wav",
+      "seconds": 4.358,
+      "peak": 31678,
+      "rms": 4164.57,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_first_session_expired.wav",
+      "seconds": 3.781,
+      "peak": 24208,
+      "rms": 3182.83,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_01.wav",
+      "seconds": 4.828,
+      "peak": 21815,
+      "rms": 3794.78,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_02.wav",
+      "seconds": 5.331,
+      "peak": 16247,
+      "rms": 1727.48,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_03.wav",
+      "seconds": 7.011,
+      "peak": 30076,
+      "rms": 2717.04,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_04.wav",
+      "seconds": 3.333,
+      "peak": 15913,
+      "rms": 1942.22,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_05.wav",
+      "seconds": 4.029,
+      "peak": 19957,
+      "rms": 1974.42,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_06.wav",
+      "seconds": 3.398,
+      "peak": 24641,
+      "rms": 3467.57,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_07.wav",
+      "seconds": 3.191,
+      "peak": 16097,
+      "rms": 1417.25,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\failure_line_09.wav",
+      "seconds": 2.732,
+      "peak": 22074,
+      "rms": 2831.64,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\fang_jiang_hun.wav",
+      "seconds": 3.714,
+      "peak": 21704,
+      "rms": 3713.03,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\fang_wu_ming.wav",
+      "seconds": 2.707,
+      "peak": 22036,
+      "rms": 3786.7,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_beat_01.wav",
+      "seconds": 5.615,
+      "peak": 26857,
+      "rms": 2915.21,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_beat_02.wav",
+      "seconds": 1.647,
+      "peak": 12462,
+      "rms": 2094.46,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_beat_03.wav",
+      "seconds": 6.45,
+      "peak": 32439,
+      "rms": 3422.71,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_before_battle.wav",
+      "seconds": 5.481,
+      "peak": 31133,
+      "rms": 5254.16,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_clue_01.wav",
+      "seconds": 4.56,
+      "peak": 32439,
+      "rms": 3905.12,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_clue_02.wav",
+      "seconds": 3.561,
+      "peak": 30336,
+      "rms": 2871.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_clue_03.wav",
+      "seconds": 5.202,
+      "peak": 26067,
+      "rms": 3755.51,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_dialogue_01.wav",
+      "seconds": 6.125,
+      "peak": 18917,
+      "rms": 1906.15,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_dialogue_02.wav",
+      "seconds": 5.252,
+      "peak": 30732,
+      "rms": 3505.0,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_dialogue_03.wav",
+      "seconds": 1.707,
+      "peak": 22656,
+      "rms": 2385.88,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_dialogue_04.wav",
+      "seconds": 6.45,
+      "peak": 32439,
+      "rms": 3206.9,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_dialogue_05.wav",
+      "seconds": 4.739,
+      "peak": 27078,
+      "rms": 2767.39,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_dialogue_06.wav",
+      "seconds": 4.711,
+      "peak": 18411,
+      "rms": 2955.77,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_first_clear.wav",
+      "seconds": 3.179,
+      "peak": 24551,
+      "rms": 3031.67,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_forget.wav",
+      "seconds": 5.762,
+      "peak": 17522,
+      "rms": 2565.39,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_keep.wav",
+      "seconds": 4.295,
+      "peak": 30647,
+      "rms": 3792.37,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_master_outro.wav",
+      "seconds": 11.123,
+      "peak": 31568,
+      "rms": 3578.97,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_beat_01.wav",
+      "seconds": 5.64,
+      "peak": 14464,
+      "rms": 1985.39,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_beat_02.wav",
+      "seconds": 1.432,
+      "peak": 13818,
+      "rms": 1988.67,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_beat_03.wav",
+      "seconds": 7.075,
+      "peak": 32439,
+      "rms": 4685.08,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_before_battle.wav",
+      "seconds": 5.346,
+      "peak": 21399,
+      "rms": 2796.45,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_clue_01.wav",
+      "seconds": 5.119,
+      "peak": 32439,
+      "rms": 4534.9,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_clue_02.wav",
+      "seconds": 4.157,
+      "peak": 22787,
+      "rms": 2574.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_clue_03.wav",
+      "seconds": 4.741,
+      "peak": 32439,
+      "rms": 4343.84,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_dialogue_01.wav",
+      "seconds": 5.597,
+      "peak": 32439,
+      "rms": 3216.21,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_dialogue_02.wav",
+      "seconds": 5.87,
+      "peak": 23645,
+      "rms": 3576.24,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_dialogue_03.wav",
+      "seconds": 1.435,
+      "peak": 25094,
+      "rms": 3195.45,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_dialogue_04.wav",
+      "seconds": 6.595,
+      "peak": 32439,
+      "rms": 3617.59,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_dialogue_05.wav",
+      "seconds": 1.437,
+      "peak": 12392,
+      "rms": 2225.01,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_dialogue_06.wav",
+      "seconds": 4.766,
+      "peak": 20479,
+      "rms": 2514.42,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_first_clear.wav",
+      "seconds": 6.437,
+      "peak": 27022,
+      "rms": 2873.97,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_forget.wav",
+      "seconds": 6.142,
+      "peak": 28892,
+      "rms": 5513.24,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_keep.wav",
+      "seconds": 4.595,
+      "peak": 20083,
+      "rms": 3233.5,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\opera_opening_outro.wav",
+      "seconds": 9.863,
+      "peak": 27980,
+      "rms": 3842.95,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_beat_01.wav",
+      "seconds": 2.122,
+      "peak": 12904,
+      "rms": 2413.0,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_beat_02.wav",
+      "seconds": 6.189,
+      "peak": 25015,
+      "rms": 2726.11,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_beat_03.wav",
+      "seconds": 2.862,
+      "peak": 21401,
+      "rms": 2660.07,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_before_battle.wav",
+      "seconds": 5.231,
+      "peak": 23982,
+      "rms": 2997.94,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_clue_01.wav",
+      "seconds": 6.254,
+      "peak": 32439,
+      "rms": 4241.64,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_clue_02.wav",
+      "seconds": 6.343,
+      "peak": 32439,
+      "rms": 4203.75,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_clue_03.wav",
+      "seconds": 5.758,
+      "peak": 32439,
+      "rms": 4826.44,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_dialogue_01.wav",
+      "seconds": 7.176,
+      "peak": 32439,
+      "rms": 3591.28,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_dialogue_02.wav",
+      "seconds": 2.173,
+      "peak": 10308,
+      "rms": 1924.2,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_dialogue_03.wav",
+      "seconds": 5.886,
+      "peak": 18363,
+      "rms": 1970.32,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_dialogue_04.wav",
+      "seconds": 2.824,
+      "peak": 27802,
+      "rms": 2182.84,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_dialogue_05.wav",
+      "seconds": 6.812,
+      "peak": 13871,
+      "rms": 1356.86,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_dialogue_06.wav",
+      "seconds": 2.627,
+      "peak": 9470,
+      "rms": 1482.05,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_forget.wav",
+      "seconds": 4.364,
+      "peak": 19418,
+      "rms": 2018.79,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_keep.wav",
+      "seconds": 5.386,
+      "peak": 15075,
+      "rms": 2059.97,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\prologue_bridge_outro.wav",
+      "seconds": 9.165,
+      "peak": 13962,
+      "rms": 1822.37,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\she_cheng_xiang.wav",
+      "seconds": 2.88,
+      "peak": 32439,
+      "rms": 4279.15,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\she_hui_chun.wav",
+      "seconds": 3.241,
+      "peak": 27725,
+      "rms": 3330.09,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\she_ning_an.wav",
+      "seconds": 2.666,
+      "peak": 16780,
+      "rms": 2669.48,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_beat_01.wav",
+      "seconds": 5.83,
+      "peak": 25776,
+      "rms": 3367.59,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_beat_02.wav",
+      "seconds": 3.184,
+      "peak": 25627,
+      "rms": 2965.75,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_beat_03.wav",
+      "seconds": 6.451,
+      "peak": 29395,
+      "rms": 4720.05,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_before_battle.wav",
+      "seconds": 4.528,
+      "peak": 28689,
+      "rms": 3292.44,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_chapter_outro.wav",
+      "seconds": 7.627,
+      "peak": 28072,
+      "rms": 4742.4,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_clue_01.wav",
+      "seconds": 5.233,
+      "peak": 32439,
+      "rms": 5381.77,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_clue_02.wav",
+      "seconds": 4.503,
+      "peak": 28872,
+      "rms": 4023.27,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_clue_03.wav",
+      "seconds": 4.397,
+      "peak": 32439,
+      "rms": 3925.58,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_dialogue_01.wav",
+      "seconds": 6.472,
+      "peak": 23088,
+      "rms": 3152.03,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_dialogue_02.wav",
+      "seconds": 4.977,
+      "peak": 32439,
+      "rms": 4093.98,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_dialogue_03.wav",
+      "seconds": 3.309,
+      "peak": 29106,
+      "rms": 3174.99,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_dialogue_04.wav",
+      "seconds": 6.451,
+      "peak": 32439,
+      "rms": 4174.52,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_dialogue_05.wav",
+      "seconds": 4.763,
+      "peak": 32439,
+      "rms": 5274.65,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_dialogue_06.wav",
+      "seconds": 3.056,
+      "peak": 22500,
+      "rms": 2563.34,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_forget.wav",
+      "seconds": 6.657,
+      "peak": 9342,
+      "rms": 1459.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_keep.wav",
+      "seconds": 3.72,
+      "peak": 31511,
+      "rms": 4569.29,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_drum_outro.wav",
+      "seconds": 10.172,
+      "peak": 18873,
+      "rms": 2234.38,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_beat_01.wav",
+      "seconds": 4.902,
+      "peak": 28139,
+      "rms": 2801.52,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_beat_02.wav",
+      "seconds": 1.072,
+      "peak": 13242,
+      "rms": 2249.78,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_beat_03.wav",
+      "seconds": 4.028,
+      "peak": 29707,
+      "rms": 1689.12,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_before_battle.wav",
+      "seconds": 1.621,
+      "peak": 24693,
+      "rms": 3089.81,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_clue_01.wav",
+      "seconds": 3.964,
+      "peak": 32439,
+      "rms": 3771.3,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_clue_02.wav",
+      "seconds": 6.041,
+      "peak": 31085,
+      "rms": 4441.34,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_clue_03.wav",
+      "seconds": 5.248,
+      "peak": 32191,
+      "rms": 3815.22,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_dialogue_01.wav",
+      "seconds": 6.208,
+      "peak": 17356,
+      "rms": 2397.26,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_dialogue_02.wav",
+      "seconds": 4.428,
+      "peak": 21874,
+      "rms": 2308.18,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_dialogue_03.wav",
+      "seconds": 1.094,
+      "peak": 17406,
+      "rms": 3097.03,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_dialogue_04.wav",
+      "seconds": 4.221,
+      "peak": 32439,
+      "rms": 2412.97,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_dialogue_05.wav",
+      "seconds": 4.509,
+      "peak": 19134,
+      "rms": 2600.41,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_dialogue_06.wav",
+      "seconds": 4.933,
+      "peak": 25605,
+      "rms": 2855.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_forget.wav",
+      "seconds": 4.835,
+      "peak": 17561,
+      "rms": 2364.3,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_keep.wav",
+      "seconds": 4.432,
+      "peak": 14143,
+      "rms": 1229.65,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_guest_outro.wav",
+      "seconds": 9.034,
+      "peak": 32439,
+      "rms": 4658.76,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_beat_01.wav",
+      "seconds": 6.702,
+      "peak": 32439,
+      "rms": 4733.73,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_beat_02.wav",
+      "seconds": 1.945,
+      "peak": 23227,
+      "rms": 3033.46,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_beat_03.wav",
+      "seconds": 5.422,
+      "peak": 25704,
+      "rms": 3621.84,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_before_battle.wav",
+      "seconds": 4.124,
+      "peak": 32439,
+      "rms": 4503.48,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_clue_01.wav",
+      "seconds": 5.559,
+      "peak": 32439,
+      "rms": 4652.09,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_clue_02.wav",
+      "seconds": 6.459,
+      "peak": 32439,
+      "rms": 5272.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_clue_03.wav",
+      "seconds": 5.884,
+      "peak": 26069,
+      "rms": 3770.82,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_dialogue_01.wav",
+      "seconds": 5.552,
+      "peak": 24100,
+      "rms": 2808.92,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_dialogue_02.wav",
+      "seconds": 6.251,
+      "peak": 32439,
+      "rms": 3549.33,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_dialogue_03.wav",
+      "seconds": 1.965,
+      "peak": 15392,
+      "rms": 2351.76,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_dialogue_04.wav",
+      "seconds": 5.553,
+      "peak": 18696,
+      "rms": 2507.5,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_dialogue_05.wav",
+      "seconds": 4.333,
+      "peak": 23496,
+      "rms": 1957.86,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_dialogue_06.wav",
+      "seconds": 5.486,
+      "peak": 22960,
+      "rms": 3158.26,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_forget.wav",
+      "seconds": 5.66,
+      "peak": 32439,
+      "rms": 4331.42,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_keep.wav",
+      "seconds": 5.271,
+      "peak": 16667,
+      "rms": 2561.83,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\temple_incense_outro.wav",
+      "seconds": 9.14,
+      "peak": 30149,
+      "rms": 3386.32,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_beat_01.wav",
+      "seconds": 5.501,
+      "peak": 11663,
+      "rms": 2136.39,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_beat_02.wav",
+      "seconds": 5.06,
+      "peak": 30478,
+      "rms": 3479.2,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_beat_03.wav",
+      "seconds": 3.753,
+      "peak": 17058,
+      "rms": 4066.87,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_before_battle.wav",
+      "seconds": 7.777,
+      "peak": 32439,
+      "rms": 3606.52,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_clue_01.wav",
+      "seconds": 6.015,
+      "peak": 10863,
+      "rms": 1931.04,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_clue_02.wav",
+      "seconds": 5.529,
+      "peak": 32439,
+      "rms": 3843.72,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_clue_03.wav",
+      "seconds": 5.903,
+      "peak": 14253,
+      "rms": 1570.11,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_dialogue_01.wav",
+      "seconds": 5.573,
+      "peak": 26867,
+      "rms": 4605.72,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_dialogue_02.wav",
+      "seconds": 5.112,
+      "peak": 17353,
+      "rms": 3498.39,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_dialogue_03.wav",
+      "seconds": 4.952,
+      "peak": 26166,
+      "rms": 2818.87,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_dialogue_04.wav",
+      "seconds": 3.796,
+      "peak": 15774,
+      "rms": 3535.58,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_dialogue_05.wav",
+      "seconds": 5.528,
+      "peak": 17624,
+      "rms": 2235.13,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_dialogue_06.wav",
+      "seconds": 6.621,
+      "peak": 32439,
+      "rms": 2563.96,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_forget.wav",
+      "seconds": 6.901,
+      "peak": 30732,
+      "rms": 2740.56,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_keep.wav",
+      "seconds": 5.287,
+      "peak": 23646,
+      "rms": 4190.99,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ascent_outro.wav",
+      "seconds": 9.715,
+      "peak": 22677,
+      "rms": 3304.45,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_epilogue.wav",
+      "seconds": 3.696,
+      "peak": 17572,
+      "rms": 3100.93,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_beat_01.wav",
+      "seconds": 4.825,
+      "peak": 13412,
+      "rms": 1776.75,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_beat_02.wav",
+      "seconds": 2.781,
+      "peak": 32439,
+      "rms": 4936.06,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_beat_03.wav",
+      "seconds": 2.954,
+      "peak": 32439,
+      "rms": 5070.13,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_clue_01.wav",
+      "seconds": 4.577,
+      "peak": 32439,
+      "rms": 2823.95,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_clue_02.wav",
+      "seconds": 5.22,
+      "peak": 32439,
+      "rms": 5150.47,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_clue_03.wav",
+      "seconds": 5.271,
+      "peak": 22617,
+      "rms": 2831.03,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_dialogue_01.wav",
+      "seconds": 6.364,
+      "peak": 30510,
+      "rms": 3633.64,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_dialogue_02.wav",
+      "seconds": 4.827,
+      "peak": 32439,
+      "rms": 4259.19,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_dialogue_03.wav",
+      "seconds": 2.581,
+      "peak": 32439,
+      "rms": 4535.58,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_dialogue_04.wav",
+      "seconds": 2.591,
+      "peak": 32439,
+      "rms": 4293.36,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_dialogue_05.wav",
+      "seconds": 4.119,
+      "peak": 18734,
+      "rms": 4464.35,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_dialogue_06.wav",
+      "seconds": 6.277,
+      "peak": 23946,
+      "rms": 2998.58,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_forget.wav",
+      "seconds": 6.771,
+      "peak": 28394,
+      "rms": 3558.55,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_keep.wav",
+      "seconds": 3.718,
+      "peak": 21646,
+      "rms": 2404.73,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_ledger_outro.wav",
+      "seconds": 11.994,
+      "peak": 32356,
+      "rms": 3624.95,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\tower_origin.wav",
+      "seconds": 4.293,
+      "peak": 21032,
+      "rms": 4390.0,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\xi_jue_chang.wav",
+      "seconds": 3.653,
+      "peak": 18423,
+      "rms": 2908.87,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\xi_xing_qiang.wav",
+      "seconds": 2.45,
+      "peak": 15267,
+      "rms": 2760.86,
+      "clipped_samples": 0
+    },
+    {
+      "file": "assets\\voice\\yan_ping_an.wav",
+      "seconds": 2.489,
+      "peak": 16209,
+      "rms": 2059.61,
+      "clipped_samples": 0
+    }
+  ]
+}

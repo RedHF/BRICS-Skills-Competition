@@ -64,6 +64,25 @@ func key(code: int, echo: bool = false) -> void:
 	root.push_input(event, true)
 	await process_frame
 
+func drag_path(points: Array) -> void:
+	var event := InputEventMouseButton.new()
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = true
+	event.position = points[0]
+	root.push_input(event, true)
+	await process_frame
+	for point in points.slice(1):
+		var motion := InputEventMouseMotion.new()
+		motion.position = point
+		motion.button_mask = MOUSE_BUTTON_MASK_LEFT
+		root.push_input(motion, true)
+	event = event.duplicate()
+	event.pressed = false
+	event.position = points[-1]
+	root.push_input(event, true)
+	await process_frame
+	while main.busy: await process_frame
+
 func _run() -> void:
 	root.gui_embed_subwindows = true
 	# Assertions stop a coroutine; a deadline also makes failures exit nonzero in CI.
@@ -120,24 +139,38 @@ func _run() -> void:
 						if child.get("motif") == step.answer: option = child
 					await click(option)
 				elif step.kind == "trace":
-					# Use authored paths as fixture; button selection and submission go through input routing.
+					# Drive the real drawing canvas through viewport mouse events.
 					for index in range(step.trace.strokes.size()):
 						await click(button("%02d" % [index+1],main.stroke_buttons))
 						assert(main.trace_canvas.active == index)
-						var points: Array = step.trace.strokes[index]
-						var samples: Array = [points[0]]
-						for j in range(1, points.size()):
-							var a := Vector2(points[j-1][0], points[j-1][1])
-							var b := Vector2(points[j][0], points[j][1])
-							for k in range(1, 33):
-								var p := a.lerp(b,float(k)/32)
-								samples.append([p.x,p.y])
-						main.trace_canvas.strokes[index] = samples
+						main.scroll.ensure_control_visible(main.trace_canvas)
+						await process_frame
+						await process_frame
+						var canvas = main.trace_canvas
+						var samples: Array = []
+						for point in step.trace.strokes[index]:
+							samples.append(canvas.global_position + canvas.canvas_rect.position + Vector2((point[0] - canvas.view_x) * canvas.characters, point[1]) * canvas.canvas_rect.size)
+						for point in samples:
+							assert(main.scroll.get_global_rect().has_point(point), "Trace path outside visible scroll area")
+						await drag_path(samples)
+						assert(not canvas.strokes[index].is_empty(), "Viewport drawing did not reach canvas")
 					await click(button("核对拓印"))
+					if not game.session.accepted_steps.has(step.id):
+						print("TRACE_REJECTED ", step.id, " failed=", main.trace_canvas.failed)
+						var diagnostic := FileAccess.open(shots.path_join("rejected-" + step.id + ".json"), FileAccess.WRITE)
+						diagnostic.store_string(JSON.stringify(main.trace_canvas.strokes))
+						await capture("rejected-" + step.id)
+				elif step.kind == "join":
+					main.scroll.ensure_control_visible(main.join_canvas)
+					await process_frame
+					await process_frame
+					var canvas = main.join_canvas
+					var slot: int = step.options.find(step.answer)
+					await drag_path([canvas.global_position + canvas.piece, canvas.global_position + Vector2(canvas.size.x * (slot+.5) / step.options.size(),65)])
 				elif step.kind == "narrative":
 					await click(button(step.options[0]))
 				else:
-					await main._submit_puzzle({"step_id":step.id,"answer":step.answer})
+					await click(button(step.answer))
 			assert(main.flow == "choice",main.status.text)
 			if game.player.memories.size() >= int(game.player.capacity):
 				await click(button("抹去"))
@@ -181,6 +214,7 @@ func _run() -> void:
 				if event.id == "opera_opening": assert(boss_captured)
 				print("PACE ",event.id," ",main.battle_elapsed)
 				await click(button("结算白蚀战斗",main.battle_dock))
+				assert(int(game.session.battle_hits) == main.battle_hits and int(game.session.battle_waves) == main.battle_wave, "Client/server battle values differ: " + event.id)
 			assert(main.flow == "settlement",main.status.text)
 			var whisper: String = event.story.get("first_clear_whisper","")
 			if not whisper.is_empty():

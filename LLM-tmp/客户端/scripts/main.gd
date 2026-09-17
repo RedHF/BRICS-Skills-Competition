@@ -51,6 +51,7 @@ var dialogue_done: Callable
 var dialogue_title := ""
 var dialogue_return: Callable
 var dialogue_stage: CanvasLayer
+var dialogue_background: Texture2D
 var dialogue_mode := "story"
 var dialogue_key := ""
 var failure_key := ""
@@ -343,9 +344,11 @@ func _add_building(interactive: bool = false) -> void:
 	scene_view.forgotten = acquired and not held
 	page.add_child(scene_view)
 
-func _event_background() -> Texture2D:
-	if current_event.is_empty(): return null
-	var art: Dictionary = _event_art(str(current_event.get("id", "")))
+func _event_background(event_id: String = "") -> Texture2D:
+	if event_id.is_empty():
+		if current_event.is_empty(): return null
+		event_id = str(current_event.id)
+	var art: Dictionary = _event_art(event_id)
 	var path := str(art.get("background", ""))
 	if path.is_empty() or not ResourceLoader.exists(path): return MENU_BACKGROUND
 	var texture := load(path) as Texture2D
@@ -372,7 +375,7 @@ func _art_banner(parent: Node, texture: Texture2D, height: float) -> TextureRect
 	return banner
 
 func _pause_event() -> void:
-	if flow not in ["puzzle", "choice", "battle"]: return
+	if flow not in ["intro", "puzzle", "choice", "battle"]: return
 	paused_flow = flow
 	paused_scroll = scroll.scroll_vertical
 	paused_page = page
@@ -415,7 +418,10 @@ func _show_settings() -> void:
 		var error := config.save("user://settings.cfg")
 		if error != OK: _error("设置保存失败：%s" % error)
 		else: status.text = "声音设置已保存。")
-	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+	if _has_current_event(): _button(page, "返回当前事件", _resume)
+
+func _has_current_event() -> bool:
+	return not session_id.is_empty() or is_instance_valid(paused_page)
 
 func _clear() -> void:
 	_close_dialogue()
@@ -466,10 +472,17 @@ func _show_map() -> void:
 					button.disabled = true
 					lock_reason = "先完成「%s」" % previous.title
 			if button.disabled: _label(entries, lock_reason, 16, Color("#bac7ba"))
-	if not session_id.is_empty(): _button(page, "继续当前事件", _resume)
+	if _has_current_event(): _button(page, "继续当前事件", _resume)
 
 func _open_event(chapter: String, event: String) -> void:
 	if busy: return
+	if is_instance_valid(paused_page) and chapter == chapter_id and event == str(current_event.id):
+		await _resume()
+		return
+	if is_instance_valid(paused_page) and session_id.is_empty():
+		# An unstarted investigation may be left for another unlocked scene.
+		paused_page.free()
+		paused_page = null
 	if not session_id.is_empty():
 		status.text = "请先继续并完成当前事件；失败后可使用回溯。"
 		return
@@ -943,7 +956,7 @@ func _show_memories() -> void:
 	_label(page, "战斗中点击挥墨攻击，技能冷却结束后可再次施展。遗忘记忆后，习得的技艺仍然保留。", 16)
 	for skill in ["挥墨"] + _learned_skills():
 		_label(page, skill + " · " + data.catalog.skills[skill].description, 18)
-	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+	if _has_current_event(): _button(page, "返回当前事件", _resume)
 
 func _compare_memories(old_id: String, new_id: String) -> void:
 	_pause_event()
@@ -989,7 +1002,7 @@ func _memory_detail(id: String) -> void:
 		echo_note = _label(page, "点击聆听这段记忆的中文回声。", 16)
 	else: _label(page, "色调与音色已随记忆褪去；习得的技艺仍可用于修复。", 16)
 	_button(page, "返回心舍", _show_memories)
-	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+	if _has_current_event(): _button(page, "返回当前事件", _resume)
 
 func _play_memory(path: String) -> void:
 	_stop_voice()
@@ -1016,7 +1029,7 @@ func _show_ledger() -> void:
 		_label(page, "%s「%s」 · 在「%s」作出抉择" % ["记住" if entry.action == "kept" else "遗忘", entry.title, trigger.title], 20, Color(memory.color) if entry.action == "kept" else Color("#929996"))
 		_label(page, "原生记忆：%s\n%s" % [memory.source, memory.remembered_text if entry.action == "kept" else memory.forgotten_text], 16)
 		_button(page, "查看当前回声", _memory_detail.bind(entry.memory_id))
-	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+	if _has_current_event(): _button(page, "返回当前事件", _resume)
 
 func _label(parent: Node, text: String, font_size: int = 18, color: Color = Color("#d9e5df")) -> Label:
 	var label := Label.new()
@@ -1090,10 +1103,11 @@ func _add_current_task(parent: Node) -> void:
 	if task.is_empty():
 		_label(parent, "全篇已完成 · 檐下的故事仍在继续", 23, Color("#e4c98a"))
 		_label(parent, "你留下了 %d 段记忆、%d 条抉择。可以在剧情册回看旅程。" % [GameState.player.memories.size(), GameState.player.memory_ledger.size()], 18)
+		if _has_current_event(): _button(parent, "继续当前修复", _resume)
 		return
 	_label(parent, "当前任务 · " + str(task.event.title), 23, Color("#e4c98a"))
 	for objective in task.event.objectives: _label(parent, "· " + str(objective), 17)
-	if session_id.is_empty():
+	if not _has_current_event():
 		_button(parent, "前往任务", _open_event.bind(task.chapter, task.event.id))
 	else:
 		_button(parent, "继续当前修复", _resume)
@@ -1104,8 +1118,9 @@ func _close_dialogue() -> void:
 		dialogue_stage.dismiss()
 	dialogue_stage = null
 
-func _begin_dialogue(title: String, lines: Array, done: Callable, back: Callable, mode: String = "story", key: String = "") -> void:
+func _begin_dialogue(title: String, lines: Array, done: Callable, back: Callable, mode: String = "story", key: String = "", background: Texture2D = null) -> void:
 	_close_dialogue()
+	dialogue_background = background
 	dialogue_title = title
 	dialogue_key = key if not key.is_empty() else title
 	dialogue_mode = mode
@@ -1122,6 +1137,7 @@ func _render_dialogue() -> void:
 		dialogue_stage = preload("res://scripts/dialogue_stage.gd").new()
 		dialogue_stage.failure = dialogue_mode == "failure"
 		dialogue_stage.backdrop = load(str(data.catalog.failure_scene.background)) if dialogue_mode == "failure" else _event_background()
+		if dialogue_background != null: dialogue_stage.backdrop = dialogue_background
 		add_child(dialogue_stage)
 		dialogue_stage.advance_requested.connect(_advance_dialogue)
 		dialogue_stage.previous_requested.connect(_previous_dialogue)
@@ -1209,7 +1225,7 @@ func _show_journal() -> void:
 				_label(page, "修复 %d%% · 白蚀清除 %s · 保留 %d%% · 综合 %d" % [int(result.repair_percent), str(result.battle_clear_percent)+"%" if event.has("battle") else "无战斗", int(result.memory_retention_percent), int(result.quality_score)], 16)
 			else: _label(page, "旧版结算记录，保留原星级与评分口径。", 16)
 	if count == 0: _label(page, "完成任务后，对话与结语会收进这里。", 18)
-	if not session_id.is_empty(): _button(page, "返回当前事件", _resume)
+	if _has_current_event(): _button(page, "返回当前事件", _resume)
 
 func _replay_story(chapter: String, event_id: String) -> void:
 	# Keep active event identity intact while reading completed stories.
@@ -1223,7 +1239,7 @@ func _replay_story(chapter: String, event_id: String) -> void:
 	for entry in GameState.player.memory_ledger:
 		if entry.chapter_id == chapter and entry.event_id == event_id and entry.action == "forgotten":
 			lines.append({"speaker": "心舍", "text": event.story.forget_response})
-	_begin_dialogue(event.title + " · 回顾", lines, _show_journal, _show_journal)
+	_begin_dialogue(event.title + " · 回顾", lines, _show_journal, _show_journal, "story", "", _event_background(event_id))
 
 func _ending_response(choice: String) -> String:
 	return {"传下修复的方法": "你在塔下开了一间小工坊。第一位学徒没有问什么叫永恒，只问：这块坏木头，还能修吗？", "留下所有取舍的记录": "你把灰页也装订进谱。翻阅的人第一次看见修复者的迟疑，开始在页边写下自己的不同意见。", "留白让后来人续写": "你留下空白与未蘸墨的笔。一个孩子画上了今天新搭的小棚，古建们第一次听见未来的声音。"}.get(choice, "故事由后来的人继续书写。")

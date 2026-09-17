@@ -44,7 +44,7 @@ move_right={
 }
 advance={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"physical_keycode":32,"unicode":32), Object(InputEventKey,"physical_keycode":13,"unicode":13)]
+"events": [Object(InputEventKey,"keycode":32,"unicode":32), Object(InputEventKey,"keycode":4194309), Object(InputEventKey,"keycode":4194310)]
 }
 
 [rendering]
