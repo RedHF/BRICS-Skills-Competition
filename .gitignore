@@ -31,6 +31,7 @@
 # 正式展开材料完整保留；约 674 MiB 的总提交包只在本地交付。
 # Gitignore 不能按大小过滤；提交前运行 tools/check_git_size.py。
 /output/参赛材料/*.zip
+/output/参赛材料/*.zip.part
 /output/参赛材料/*/Task03/Final/*_核心可玩实体/Windows-x64/*.exe
 /output/参赛材料/*/Task03/Final/*_核心可玩实体/Windows-x64/server/*.exe
 

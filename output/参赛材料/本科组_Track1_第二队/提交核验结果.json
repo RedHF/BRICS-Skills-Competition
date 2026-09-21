@@ -172,5 +172,9 @@
   "privacy_scan": {
     "credential_pattern_hits": 0,
     "scope": "文本、Word XML和PDF可提取文本；图片保留原始记录"
+  },
+  "temporary_file_cleanup": {
+    "thumbnail_cache_files": 0,
+    "documents_and_assets_unchanged": true
   }
 }

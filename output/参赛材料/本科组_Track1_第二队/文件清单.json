@@ -4188,11 +4188,6 @@
       "sha256": "74bd3d6631ee0a5a9416517cfd8b1b6b56499a0ba78c29d7d2d79443e945e2e3"
     },
     {
-      "path": "Task02/Original/美术源文件/Official/首届AI赋能数字创意设计与应用赛项-波克IP素材/灵画师/Thumbs.db",
-      "bytes": 120832,
-      "sha256": "138ab5430abe9eda894bc015ae5d09cc3bd86b647379161ba9ef40ca9f5ce749"
-    },
-    {
       "path": "Task02/Original/美术源文件/Official/首届AI赋能数字创意设计与应用赛项-波克IP素材/灵画师/横屏尺寸参考.png",
       "bytes": 1514930,
       "sha256": "b1f19352bd81d11e4d8e2da7efe753ed09a96ea3ca2623bfdb541a17d685a3e5"
@@ -4531,6 +4526,11 @@
       "path": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/server/yanxia-server.exe",
       "bytes": 10205184,
       "sha256": "617e73abb499a74436391e734280597cac03123469be61cf6a5ba56506400db1"
+    },
+    {
+      "path": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/SHA256.txt",
+      "bytes": 611,
+      "sha256": "e6138a915445257bf5ba8e8b62ddd837914104b0f004b964462b3fc24326193b"
     },
     {
       "path": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/檐下千秋.exe",
@@ -8149,8 +8149,8 @@
     },
     {
       "path": "提交核验结果.json",
-      "bytes": 4888,
-      "sha256": "37662ab15d16a9125b5bdeae60e1c3c044469b11c421ec2b794c73e4f9950965"
+      "bytes": 5004,
+      "sha256": "2b0b1e9581f8a90abd341f8e8cb6089302b7e64dce01194a2970c437b3161bbe"
     }
   ]
 }
