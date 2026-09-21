@@ -21,3 +21,6 @@
 # 试听候选与压缩包属临时产物，不入库。
 /AI配音台词/试听/
 /AI配音台词/*.zip
+/tmp
+output/参赛材料/本科组_Track1_第二队/Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/檐下千秋.exe
+output/参赛材料/本科组_Track1_第二队/Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/server/yanxia-server.exe

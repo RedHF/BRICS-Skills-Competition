@@ -1,0 +1,164 @@
+{
+  "documents": [
+    {
+      "file": "Task01/Final/Track01_Task01_第二队_檐下千秋_AI协作记录.docx",
+      "pages": 9,
+      "format_ok": true,
+      "footnotes": 8,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "FAAAAA+SegoeUIEmoji",
+        "GAAAAA+SimSun",
+        "SegoeUIEmoji"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    },
+    {
+      "file": "Task01/Final/Track01_Task01_第二队_檐下千秋_游戏策划案.docx",
+      "pages": 8,
+      "format_ok": true,
+      "footnotes": 7,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "EAAAAA+SimSun",
+        "FAAAAA+SegoeUI"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    },
+    {
+      "file": "Task01/Original/开发修订/Track01_Task01_第二队_檐下千秋_章节叙事脚本.docx",
+      "pages": 17,
+      "format_ok": true,
+      "footnotes": 5,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "EAAAAA+SimSun",
+        "FAAAAA+SimSun"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    },
+    {
+      "file": "Task02/Final/Track01_Task02_第二队_檐下千秋_AI协作记录.docx",
+      "pages": 11,
+      "format_ok": true,
+      "footnotes": 6,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "EAAAAA+SimSun"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    },
+    {
+      "file": "Task03/Final/Track01_Task03_第二队_檐下千秋_测试与迭代记录.docx",
+      "pages": 6,
+      "format_ok": true,
+      "footnotes": 4,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "EAAAAA+SimSun"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    },
+    {
+      "file": "Task03/Final/Track01_Task03_第二队_檐下千秋_运行逻辑说明.docx",
+      "pages": 6,
+      "format_ok": true,
+      "footnotes": 6,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "EAAAAA+SimSun"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    },
+    {
+      "file": "Task03/Original/AI协作记录/Track01_Task03_第二队_檐下千秋_AI协作记录.docx",
+      "pages": 9,
+      "format_ok": true,
+      "footnotes": 7,
+      "pdf_fonts": [
+        "BAAAAA+SimSun",
+        "CAAAAA+SimHei",
+        "DAAAAA+SimSun",
+        "EAAAAA+SimSun"
+      ],
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": []
+    }
+  ],
+  "jpg": {
+    "count": 88,
+    "invalid": [],
+    "interpolated_from_smaller_raster": 68
+  },
+  "release": {
+    "original_zip_sha256": "a7021fe9f01e80f86ed59085855706cfe23b6560a6af85ee24bdd6b3420d942f",
+    "zip_crc_ok": true,
+    "package_hashes_ok": true,
+    "file_hash_count": 7,
+    "content_matches_source": true,
+    "exported_smoke_ok": true,
+    "server_auto_shutdown": true,
+    "process_exit": 0
+  },
+  "source_go_tests": "passed on submission copy 2026-09-17",
+  "asset_audit": {
+    "audio_files": 205,
+    "voice_cues": 184,
+    "narrative_cues": 162,
+    "references": 226,
+    "issues": []
+  },
+  "identity": {
+    "group": "本科组",
+    "track": "交互赛道 小游戏开发",
+    "school": "上海商学院",
+    "team_id": "第二队",
+    "numeric_suffix_rule": "按用户明确要求使用第二队，不声称符合官方后五位数字规则"
+  },
+  "video": "按用户要求暂不制作",
+  "ai_export": {
+    "Codex": 20,
+    "DeepSeek_Harness": 5,
+    "visible_messages": 358,
+    "secrets_redacted": true
+  },
+  "known_gaps": [
+    "后期六任务独立场景",
+    "飞鸟山独立背景",
+    "主角独立精灵与动画",
+    "部分JPG为低分辨率原图插值输出",
+    "系统字体回退仍依赖运行环境"
+  ]
+}

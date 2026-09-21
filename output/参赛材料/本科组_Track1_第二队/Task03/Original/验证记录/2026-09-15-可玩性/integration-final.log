@@ -1,0 +1,21 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 566.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Laptop GPU
+
+PASS direct play and stable local save
+PASS reconnect and tutorial free rewind restore checkpoint
+PASS failed stroke marked; other strokes preserved; single-stroke repair
+CAPTURE battle: prologue_bridge
+PASS actual enemy damage, shield, healing, cooldown and victory
+PASS event: prologue_bridge
+PASS moving battle dodge
+CAPTURE battle: temple_incense
+PASS actual enemy damage, shield, healing, cooldown and victory
+PASS event: temple_incense
+PASS event: temple_guest
+CAPTURE battle: temple_drum
+PASS actual enemy damage, shield, healing, cooldown and victory
+PASS event: temple_drum
+PASS narration duration, playback progress, pause/resume, memory source, capacity and ledger
+TEST_PLAYER=local-player
+PASS idle defeat
+PASS journal, dialogue replay and persistent local progress

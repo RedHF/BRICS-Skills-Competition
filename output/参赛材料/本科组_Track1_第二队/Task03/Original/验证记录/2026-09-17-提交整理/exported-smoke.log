@@ -1,0 +1,56 @@
+WorkerThreadPool: 32 threads, 9 max low-priority.
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+Unrecognized output string "misc2" in mapping:
+030000000d0f00000202000000000000,Horipad O Nintendo Switch 2 Controller,a:b1,b:b0,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,misc1:b13,misc2:b14,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b3,y:b2,platform:Windows,
+Unrecognized output string "misc2" in mapping:
+030000000d0f00009601000000000000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:b8,leftx:a0,lefty:a1,misc2:b2,paddle1:b5,paddle2:b15,paddle3:b18,paddle4:b19,rightshoulder:b7,rightstick:b14,righttrigger:b9,rightx:a3,righty:a4,start:b11,x:b3,y:b4,platform:Windows,
+Unrecognized output string "misc2" in mapping:
+030000007e0500006920000000000000,Nintendo Switch 2 Pro Controller,a:b0,b:b1,back:b14,dpdown:b8,dpleft:b10,dpright:b9,dpup:b11,guide:b16,leftshoulder:b12,leftstick:b15,lefttrigger:b13,leftx:a0,lefty:a1~,misc1:b17,misc2:b20,paddle1:b18,paddle2:b19,rightshoulder:b4,rightstick:b7,righttrigger:b5,rightx:a2,righty:a3~,start:b6,x:b2,y:b3,platform:Windows,
+Using "default" pen tablet driver...
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+CORE API HASH: 0
+EDITOR API HASH: 0
+Loading resource: C:/Users/Admin/Documents/GitHub/BRICS-Skills-Competition/LLM-tmp/客户端/tests/release_smoke.gd
+SceneTreeFTI: traversal method DEFAULT
+Loading resource: res://scripts/game_state.gdc
+Loaded system CA certificates
+Loading resource: res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn
+Loading resource: res://scripts/main.gdc
+Loading resource: res://assets/generated/ui_01_open_scroll_main_menu_base.png
+Loading resource: res://.godot/imported/ui_01_open_scroll_main_menu_base.png-c02a617c38d5ec88f59400db3098f368.ctex
+Loading resource: res://assets/logo.svg
+Loading resource: res://.godot/imported/logo.svg-01597fe4b7eb446be26a49e8a22b6f42.ctex
+Loading resource: res://assets/imported/white_erosion.png
+Loading resource: res://.godot/imported/white_erosion.png-ac7a9b3b9ec62f51de50cb218e6d5296.ctex
+Loading resource: res://assets/audio/ui.wav
+Loading resource: res://.godot/imported/ui.wav-d54e8bc37b8ccee18240932350cecc18.sample
+Loading resource: res://assets/audio/ink.wav
+Loading resource: res://.godot/imported/ink.wav-1b740df01bcd109deb50e37cb5351292.sample
+Loading resource: res://assets/audio/repair.wav
+Loading resource: res://.godot/imported/repair.wav-8a2cf68f778f018ee037ee623bf556eb.sample
+Loading resource: res://assets/audio/hit.wav
+Loading resource: res://.godot/imported/hit.wav-96dc477cdf4a42f381370dba6e3f75ce.sample
+Loading resource: res://assets/audio/win.wav
+Loading resource: res://.godot/imported/win.wav-ed9b591a574a24bf30e29686ed78ad6a.sample
+Loading resource: res://assets/audio/ambience.wav
+Loading resource: res://.godot/imported/ambience.wav-c4e6e35e7a9e0e868516f43e62765e9c.sample
+Loading resource: res://assets/audio/battle.wav
+Loading resource: res://.godot/imported/battle.wav-591619e226ad72dffbfe813ea62f286f.sample
+Loading resource: res://assets/imported/bridge_restored.jpg
+Loading resource: res://.godot/imported/bridge_restored.jpg-41aeaecf008550ca969e200af5ecc4e4.ctex
+Loading resource: res://assets/voice/prologue_bridge_dialogue_01.wav
+Loading resource: res://.godot/imported/prologue_bridge_dialogue_01.wav-66fd308e99bc5e8633b5adb81bfcdfd7.sample
+Loading resource: res://assets/imported/bridge_eroded.jpg
+Loading resource: res://.godot/imported/bridge_eroded.jpg-0a8b5f8478b977a97609625c16130b75.ctex
+Loading resource: res://assets/voice/prologue_bridge_clue_01.wav
+Loading resource: res://.godot/imported/prologue_bridge_clue_01.wav-5a1c0170becc2f1eedfc184ab5e44e43.sample
+Loading resource: res://assets/rubbings/tower_origin.png
+Loading resource: res://.godot/imported/tower_origin.png-fa96d61451ff937fd3781959c32c410d.ctex
+PASS EXPORTED playability fixes: both Enter bindings, investigation restoration, independent replay backdrop
+PASS EXPORTED v10: fresh local save, auto-started server, 184 voices, six adopted images, rejected asset excluded, dialogue voice and animation
+XR: Clearing primary interface
+XR: Removed interface "Native mobile"
+XR: Removed interface "OpenXR"

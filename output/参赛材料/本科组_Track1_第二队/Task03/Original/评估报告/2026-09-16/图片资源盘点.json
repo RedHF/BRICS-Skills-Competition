@@ -1,0 +1,280 @@
+[
+  {
+    "path": "LLM-tmp/客户端/assets/generated/bg_01_wind_rain_bridge.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/generated/bg_02_village_temple_courtyard.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/generated/bg_03_temple_white_erosion_battle.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/generated/ui_01_open_scroll_main_menu_base.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/generated/ui_02_memory_talisman_cards_sheet.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/generated/ui_03_skill_emblems_sheet.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/generated/ui_04_frames_buttons_kit.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/bridge_eroded.jpg",
+    "width": 2267,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/bridge_restored.jpg",
+    "width": 2267,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/drum_courtyard.png",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/guest_room.png",
+    "width": 1672,
+    "height": 940,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/rubbing_master.png",
+    "width": 986,
+    "height": 1595,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/temple_interior.png",
+    "width": 1673,
+    "height": 940,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/imported/white_erosion.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "dpi": null,
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/logo.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "dpi": null,
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/fang_jiang_hun.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/fang_wu_ming.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/she_cheng_xiang.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/she_hui_chun.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/she_ning_an.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/tower_epilogue.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/tower_origin.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/xi_jue_chang.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/xi_xing_qiang.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "LLM-tmp/客户端/assets/rubbings/yan_ping_an.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/26d63ca6186efdd3446e7dea8b4dc990.jpg",
+    "width": 1897,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/46df14772e06d3b29f6f655cb3ad74fe.jpg",
+    "width": 2276,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/4ed4f939d1ff32e48e8b78ffd8f55e06.jpg",
+    "width": 2276,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/71e5e4a0b9396a52ef48e9982e7f6427.jpg",
+    "width": 2267,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/735376cdfdbce048fa5cd319502b097f.jpg",
+    "width": 2267,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/8703ec79f5eabf7129b40cd0c1476823.jpg",
+    "width": 2267,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/8dd617f3059ab140f9e1b11c759d3600.png",
+    "width": 2560,
+    "height": 1440,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/b33ca35867e7830379aa9ac044bad3ce.jpg",
+    "width": 848,
+    "height": 1371,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  },
+  {
+    "path": "Art_Material/Generation/图像/e5bd9bb2cc45c7718d22d4a534f1fe69.jpg",
+    "width": 2276,
+    "height": 1280,
+    "mode": "RGB",
+    "dpi": null,
+    "alpha_extrema": null
+  }
+]

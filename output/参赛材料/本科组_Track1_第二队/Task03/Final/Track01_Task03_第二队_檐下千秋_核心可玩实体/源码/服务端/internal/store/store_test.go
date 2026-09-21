@@ -1,0 +1,100 @@
+package store
+
+import (
+	"errors"
+	"os"
+	"path/filepath"
+	"testing"
+
+	"yanxia-server/internal/model"
+)
+
+func TestSnapshotsKeepCompletedEventsAndRollbackSlices(t *testing.T) {
+	s, err := Open(filepath.Join(t.TempDir(), "save.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, _, err = s.EnsurePlayer("p")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = s.UpdatePlayer("p", func(p *model.Player) error {
+		p.CompletedEvents["prologue:bridge"] = model.EventResult{Stars: 3}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, _ := s.GetPlayer("p")
+	if len(p.CompletedEvents) != 1 {
+		t.Fatal("completed events lost in clone")
+	}
+	delete(p.CompletedEvents, "prologue:bridge")
+	p, _ = s.GetPlayer("p")
+	if len(p.CompletedEvents) != 1 {
+		t.Fatal("caller mutated store")
+	}
+	_, err = s.StartSession(model.EventSession{ID: "s", PlayerID: "p", AcceptedSteps: []string{"first"}, Actions: []model.ActionRecord{{StepID: "first"}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = s.UpdateSession("s", func(run *model.EventSession) error {
+		run.AcceptedSteps[0] = "corrupt"
+		run.Actions[0].StepID = "corrupt"
+		return errors.New("abort")
+	})
+	if err == nil {
+		t.Fatal("expected transaction error")
+	}
+	run, _ := s.GetSession("s")
+	if run.AcceptedSteps[0] != "first" || run.Actions[0].StepID != "first" {
+		t.Fatal("failed transaction mutated slices")
+	}
+}
+
+func TestEmptySaveFailsInsteadOfErasingProgress(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "save.json")
+	if err := os.WriteFile(path, []byte{}, 0600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Open(path); err == nil {
+		t.Fatal("empty save silently reset")
+	}
+}
+
+func TestStoreRoundTripsPlayerAndSession(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "save.json")
+	s, err := Open(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	player, created, err := s.EnsurePlayer("test")
+	if err != nil || !created {
+		t.Fatalf("create player: %+v %v", player, err)
+	}
+	if _, created, err = s.EnsurePlayer("test"); err != nil || created {
+		t.Fatal("player creation is not idempotent")
+	}
+	session := model.EventSession{ID: "session", PlayerID: player.ID, ChapterID: "prologue", EventID: "bridge", Status: "active"}
+	if _, err := s.StartSession(session); err != nil {
+		t.Fatal(err)
+	}
+	if _, _, err := s.UpdateSessionAndPlayer(session.ID, player.ID, func(run *model.EventSession, p *model.Player) error {
+		run.Status = "completed"
+		p.InkMarks = 2
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	got, ok := s.GetPlayer(player.ID)
+	if !ok || got.InkMarks != 2 {
+		t.Fatalf("player did not persist: %+v", got)
+	}
+	reloaded, err := Open(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got, ok := reloaded.GetSession(session.ID); !ok || got.Status != "completed" {
+		t.Fatalf("session did not round trip: %+v", got)
+	}
+}

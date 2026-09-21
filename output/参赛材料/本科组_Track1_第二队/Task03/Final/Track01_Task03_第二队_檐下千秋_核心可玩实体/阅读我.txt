@@ -1,0 +1,21 @@
+檐下千秋
+上海商学院  本科组  交互赛道 小游戏开发
+队伍 ID：第二队
+版本：内容协议 v10，2026-09-15 可玩性修复版
+
+体验：完整解压后进入 Windows-x64，双击 檐下千秋.exe。
+不需要账号或联网，不需要安装开发工具。保留 server 及全部文件。
+操作：鼠标点击和拖拽；WASD/方向键移动；空格/回车推进对白和调查。
+战斗：1 挥墨，2 斗拱，3 藻井，4 飞檐，5 闪身（含数字小键盘）。
+游戏启动即为地图与关卡入口。可从设置调音量、静音和全屏。
+详细运行说明见 Windows-x64/运行说明.txt。
+
+源码：源码/客户端/project.godot，源码/服务端/go.mod。
+开发环境：Godot 4.5.2（标准版）；Go 版本要求以 go.mod 为准。
+先在服务端目录执行 go run ./cmd/server -addr 127.0.0.1:8090 -content content/chapters.json -data ./dev-save.json。
+再用 Godot 导入客户端 project.godot 并运行。
+构建：在服务端目录 go build -o ../build/server/yanxia-server.exe ./cmd/server。
+安装 Godot 对应版本导出模板后，在客户端目录导出 Windows Desktop；本包 export_presets.cfg 已移除开发机模板路径。
+复制服务端 content/chapters.json 到 build/server/content，保留本包附带运行时许可证。
+自动检查：服务端 go test ./...；客户端测试脚本位于客户端/tests，测试需要隔离 APPDATA 和独立端口。
+工程源码与运行包均提供；本次整理未改变游戏玩法或运行资源。

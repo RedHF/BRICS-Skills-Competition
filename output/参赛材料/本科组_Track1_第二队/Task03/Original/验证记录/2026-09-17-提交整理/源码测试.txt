@@ -1,0 +1,9 @@
+2026-09-17 在提交副本源码/服务端运行 go test -count=1 ./...
+PASS internal/content 3.560s
+PASS internal/httpapi 5.546s
+PASS internal/rules 2.165s
+PASS internal/store 2.196s
+cmd/server、internal/model 无测试文件
+退出码0
+
+资源审计：205个WAV、184个voice cue、162个剧情cue、226条资源路径，issues=[]。

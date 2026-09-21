@@ -1,0 +1,6 @@
+?   	yanxia-server/cmd/server	[no test files]
+ok  	yanxia-server/internal/content	(cached)
+ok  	yanxia-server/internal/httpapi	(cached)
+?   	yanxia-server/internal/model	[no test files]
+ok  	yanxia-server/internal/rules	(cached)
+ok  	yanxia-server/internal/store	(cached)
