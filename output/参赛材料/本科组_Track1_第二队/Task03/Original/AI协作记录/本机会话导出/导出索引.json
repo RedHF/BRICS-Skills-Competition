@@ -13,7 +13,8 @@
       "messages": 10,
       "records": 49,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a03e0f-7fdc-72c0-990d-68709ff23af5.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "f5e95a671d376e1dbd5f45081cc461128d96ab0595dd57df6a1f4ac9c2161e93"
     },
     {
       "platform": "Codex",
@@ -25,7 +26,8 @@
       "messages": 1,
       "records": 2,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0771e-9623-7243-a5a8-69c2ad2f62c2.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "9865d20a278c42f14cfdc89c88b9ff82b69b4492ba85eca6159b493473bc9d0b"
     },
     {
       "platform": "Codex",
@@ -37,7 +39,8 @@
       "messages": 58,
       "records": 433,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0771e-d61a-70d1-a610-8ab99a5b1471.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "a77e9efc8d115a3c1c42bbb182c5a294204ac44a2b0286ea4f15b131418e9d6b"
     },
     {
       "platform": "Codex",
@@ -49,7 +52,8 @@
       "messages": 4,
       "records": 27,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a08f25-2ce0-7e01-bcfd-161af07c8c06.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "fa9a547d0cc83c7f75de222e00a11458f55b1f2017e456ea6431c0390e242c16"
     },
     {
       "platform": "Codex",
@@ -61,7 +65,8 @@
       "messages": 34,
       "records": 251,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a08f63-1c00-7bd2-9956-af5990c71525.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "b6b68f54897c43729b0f20bc1cc03a4d341dff721dfd8a93c5f5755aa5d83eed"
     },
     {
       "platform": "Codex",
@@ -73,7 +78,8 @@
       "messages": 2,
       "records": 3,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a093ac-c983-7550-a8c8-cd63c68c7880.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "e196b2a7fc5aae22c005099f161a66c8b282c26065ca5979fffcd2792da6e996"
     },
     {
       "platform": "Codex",
@@ -85,7 +91,8 @@
       "messages": 9,
       "records": 210,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09424-488a-7ad0-beae-6aedec67ef3f.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "5a2effe819ad37296e84724ae44cc2207c6232ef2f8e31e52b6cc4d5c206f669"
     },
     {
       "platform": "Codex",
@@ -97,7 +104,8 @@
       "messages": 2,
       "records": 8,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09425-2810-7e61-8eb9-cdb6482b49da.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "f5e4b0af037748f66d3b2008d1a9f066adef4e70a1163922ac9c088aebcf626f"
     },
     {
       "platform": "Codex",
@@ -109,7 +117,8 @@
       "messages": 2,
       "records": 6,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09425-50b2-78a2-a51a-9a0dbaff890b.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "19cb0a0aaf228c0388bbef9678b3d94d3634785d886300defa25a225eb9c97d7"
     },
     {
       "platform": "Codex",
@@ -121,7 +130,8 @@
       "messages": 6,
       "records": 98,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0942c-b653-7531-9333-9637684d926d.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "0d0add79a68319d58810e34fd9e9debb3301812a2551eb2d339b5bd6576dccff"
     },
     {
       "platform": "Codex",
@@ -133,7 +143,8 @@
       "messages": 5,
       "records": 91,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0942c-dac1-71e0-b566-896171b3e89a.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "9b690b7360e2e8ea1c867157b37a15a2c654eaa96531ce9d5a1db1cb1642d201"
     },
     {
       "platform": "Codex",
@@ -145,7 +156,8 @@
       "messages": 5,
       "records": 83,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09434-72fd-7bd2-b032-ec602bfd9499.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "57762b243066916f1bfe1e0628faf7e280de35b30b2dbf21a16c79ae89cd6723"
     },
     {
       "platform": "Codex",
@@ -157,7 +169,8 @@
       "messages": 5,
       "records": 74,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09554-fd9a-7402-ad08-728dbedfbec1.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "fe93486aeb94be6ee776afb9f60b024e6334e2d152b664dc6dea1177f764e229"
     },
     {
       "platform": "Codex",
@@ -169,7 +182,8 @@
       "messages": 3,
       "records": 19,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09556-8e91-7a72-8ecb-11b0cb0444e2.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "3f77f87523fbfa1e143214f554510edba0b28e4c44ae0bd239306b98f7de5727"
     },
     {
       "platform": "Codex",
@@ -181,7 +195,8 @@
       "messages": 3,
       "records": 141,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09556-de18-7f70-9243-13e549a4c4ff.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "ed9ed55fc369d7689016a69c56edf0d6904ffd05f89a99ba1066bce7577ae4e1"
     },
     {
       "platform": "Codex",
@@ -193,7 +208,8 @@
       "messages": 3,
       "records": 91,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09557-3fa6-7971-bebd-6f6e16c2770d.md",
-      "origin": "subagent"
+      "origin": "subagent",
+      "readable_md_sha256": "5b237223ab2754f23a191eaa63ce13f672806de3f49c881c20387faac3d1200b"
     },
     {
       "platform": "Codex",
@@ -205,7 +221,8 @@
       "messages": 32,
       "records": 301,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a09e5e-eeb8-7133-b809-eb42cc7353a3.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "a5b11091b4d54f7d521747c4c7c30eca4335df748c4d9b43ee7def97d80937ee"
     },
     {
       "platform": "Codex",
@@ -217,7 +234,8 @@
       "messages": 12,
       "records": 127,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0a05a-b9d1-7980-ab64-bbe11635a921.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "69782e95baabcc3d09db7eb0842f8147c9e433ca2f1daea8cba7103d0cb925c3"
     },
     {
       "platform": "Codex",
@@ -229,7 +247,8 @@
       "messages": 15,
       "records": 156,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0a21a-efe9-7f31-b472-014ea265a1c9.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "2ee4527e51f124bcf0d8b3650c2330406ea35ab2b2b915235642b6eff667e5ed"
     },
     {
       "platform": "Codex",
@@ -237,11 +256,12 @@
       "title": "我需要一个完整的评估报告，主要是关于美术素材等缺失的问题，根据规划和代码实际 告诉我我还需要提供什么",
       "source": "C:\\Users\\Admin\\.codex\\sessions\\2026\\09\\16\\rollout-2026-09-16T09-58-55-01a0a7f0-41b0-7581-9f12-8fde524eb7e1.jsonl",
       "source_sha256": "233e926171b624832177e876628f36921b329974b6d046ec89bb0edcdf2f485b",
-      "export_sha256": "0e033700ffcd39eaab224d8b69e65a9bcf6243f629c915fbd36d903cc6e05e09",
+      "export_sha256": "8ed487161458268ded488b9766d981610f03798d79e7d0d53287f7e39b2b8ced",
       "messages": 8,
       "records": 47,
       "path": "Task03/Original/AI协作记录/本机会话导出/Codex/01a0a7f0-41b0-7581-9f12-8fde524eb7e1.md",
-      "origin": "main"
+      "origin": "main",
+      "readable_md_sha256": "c464c60314a50b8da3498f270c27850e4fbad820409068408662bbbc8c0e2e65"
     },
     {
       "platform": "DeepSeek-Harness",
@@ -256,7 +276,8 @@
       "origin": "main",
       "legacy_files": [
         "session.jsonl.zstd"
-      ]
+      ],
+      "readable_md_sha256": "c1c7a3503a99cf0f2b7e17586ab82ffee45f857c6d7fc944747b6b152c0cca41"
     },
     {
       "platform": "DeepSeek-Harness",
@@ -271,7 +292,8 @@
       "origin": "main",
       "legacy_files": [
         "session.jsonl.zstd"
-      ]
+      ],
+      "readable_md_sha256": "c98c4ce4a72237917924f4504b8e676ba89d173dea5399ef8c3ffd1df4388cdf"
     },
     {
       "platform": "DeepSeek-Harness",
@@ -284,7 +306,8 @@
       "records": 544,
       "path": "Task03/Original/AI协作记录/本机会话导出/DeepSeek-Harness/741b6213-a96d-45bb-ac94-0082a6c34c98.md",
       "origin": "main",
-      "legacy_files": []
+      "legacy_files": [],
+      "readable_md_sha256": "d239405ec5012182b7a8d2f6001292613f01d54dde89a846667482e2ba50c1ac"
     },
     {
       "platform": "DeepSeek-Harness",
@@ -299,7 +322,8 @@
       "origin": "main",
       "legacy_files": [
         "session.jsonl.zstd"
-      ]
+      ],
+      "readable_md_sha256": "34373f9ae72021e651aa4b14a57b0b41a19f90a5b796665225572431d2b07118"
     },
     {
       "platform": "DeepSeek-Harness",
@@ -312,7 +336,8 @@
       "records": 335,
       "path": "Task03/Original/AI协作记录/本机会话导出/DeepSeek-Harness/c15fdde8-5d82-4937-819a-e2079735bf79.md",
       "origin": "main",
-      "legacy_files": []
+      "legacy_files": [],
+      "readable_md_sha256": "8b8593d54ea149440da273fdad9d32e38e4f8b1ce54dfaa74e05bba7da211c4a"
     }
   ],
   "excluded": [
@@ -362,5 +387,7 @@
       "reason": "同工作目录下的无关会话或空会话",
       "title": "session-bc2604fe-0582-4d01-8115-f33d89781cc8"
     }
-  ]
+  ],
+  "final_verification_date": "2026-09-21",
+  "hash_note": "export_sha256为最终脱敏JSONL字节哈希；readable_md_sha256为对应可读MD哈希。嵌套工具输出中的密钥同样脱敏。"
 }

@@ -1,0 +1,19 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 566.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Laptop GPU
+
+PACE temple_drum 44.25
+PASS UI journey temple_drum
+PACE opera_opening 41.25
+PASS UI journey opera_opening
+PACE opera_master 45.0
+PASS UI journey opera_master
+PACE archway_form 46.5
+PASS UI journey archway_form
+PACE archway_craftsman 48.0
+PASS UI journey archway_craftsman
+SCRIPT ERROR: Invalid access to property or key 'failed' on a base object of type 'previously freed'.
+   at: _run (res://tests/review_journey.gd:156)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/review_journey.gd:156)
+       [1] click (res://tests/review_journey.gd:21)
+       [2] tap (res://tests/review_journey.gd:39)

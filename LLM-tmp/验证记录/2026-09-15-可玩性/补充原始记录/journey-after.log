@@ -1,0 +1,14 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 566.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Laptop GPU
+
+PACE prologue_bridge 47.25
+PASS UI journey prologue_bridge
+PACE temple_incense 50.25
+PASS UI journey temple_incense
+PASS UI journey temple_guest
+SCRIPT ERROR: Assertion failed: 未通过的笔画已标红，点击编号重描即可。描摹练习不扣侵蚀。
+   at: _run (res://tests/review_journey.gd:165)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/review_journey.gd:165)
+       [1] click (res://tests/review_journey.gd:21)
+       [2] tap (res://tests/review_journey.gd:39)

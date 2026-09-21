@@ -1,0 +1,10 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 566.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Laptop GPU
+
+READY manual keyboard probe, player beside first clue
+KEY code=4194309 physical=4194313 pressed=true advance=false pos=(0.28, 0.44) points=[{ "label": "断裂廊檐", "position": [0.28, 0.44] }, { "label": "桥心刻字", "position": [0.55, 0.5] }, { "label": "半蚀桥栏", "position": [0.78, 0.64] }]
+KEY code=4194309 physical=4194313 pressed=false advance=false pos=(0.28, 0.44) points=[{ "label": "断裂廊檐", "position": [0.28, 0.44] }, { "label": "桥心刻字", "position": [0.55, 0.5] }, { "label": "半蚀桥栏", "position": [0.78, 0.64] }]
+KEY code=4194328 physical=4194313 pressed=true advance=false pos=(0.28, 0.44) points=[{ "label": "断裂廊檐", "position": [0.28, 0.44] }, { "label": "桥心刻字", "position": [0.55, 0.5] }, { "label": "半蚀桥栏", "position": [0.78, 0.64] }]
+KEY code=4194335 physical=4194313 pressed=true advance=false pos=(0.28, 0.44) points=[{ "label": "断裂廊檐", "position": [0.28, 0.44] }, { "label": "桥心刻字", "position": [0.55, 0.5] }, { "label": "半蚀桥栏", "position": [0.78, 0.64] }]
+KEY code=4194335 physical=4194313 pressed=false advance=false pos=(0.28, 0.44) points=[{ "label": "断裂廊檐", "position": [0.28, 0.44] }, { "label": "桥心刻字", "position": [0.55, 0.5] }, { "label": "半蚀桥栏", "position": [0.78, 0.64] }]
+KEY code=4194328 physical=4194313 pressed=false advance=false pos=(0.28, 0.44) points=[{ "label": "断裂廊檐", "position": [0.28, 0.44] }, { "label": "桥心刻字", "position": [0.55, 0.5] }, { "label": "半蚀桥栏", "position": [0.78, 0.64] }]

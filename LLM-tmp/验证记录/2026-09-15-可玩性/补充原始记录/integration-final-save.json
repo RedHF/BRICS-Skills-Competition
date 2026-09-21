@@ -1,0 +1,477 @@
+{
+  "local_player_id": "local-player",
+  "version": 2,
+  "players": {
+    "local-player": {
+      "id": "local-player",
+      "display_name": "拓印师",
+      "created_at": "2026-09-15T02:58:47.548657Z",
+      "updated_at": "2026-09-15T02:59:16.5982156Z",
+      "ink_marks": 12,
+      "capacity": 6,
+      "erosion": 0,
+      "unlocked_chapters": [
+        "prologue",
+        "temple",
+        "opera"
+      ],
+      "completed_events": {
+        "prologue:prologue_bridge": {
+          "scoring_version": 2,
+          "quality_score": 100,
+          "memory_retention_percent": 100,
+          "memories_kept": 1,
+          "memories_acquired": 1,
+          "battle_clear_percent": 100,
+          "chapter_id": "prologue",
+          "event_id": "prologue_bridge",
+          "stars": 3,
+          "puzzle_score": 100,
+          "puzzle_total": 100,
+          "battle_won": true,
+          "repair_percent": 100,
+          "erosion_at_end": 0,
+          "ink_marks_earned": 3,
+          "completed_at": "2026-09-15T02:59:07.2070302Z",
+          "sequence": 1
+        },
+        "temple:temple_drum": {
+          "scoring_version": 2,
+          "quality_score": 92,
+          "memory_retention_percent": 75,
+          "memories_kept": 3,
+          "memories_acquired": 4,
+          "battle_clear_percent": 100,
+          "chapter_id": "temple",
+          "event_id": "temple_drum",
+          "stars": 3,
+          "puzzle_score": 100,
+          "puzzle_total": 100,
+          "battle_won": true,
+          "repair_percent": 100,
+          "erosion_at_end": 0,
+          "ink_marks_earned": 3,
+          "completed_at": "2026-09-15T02:59:16.5982156Z",
+          "sequence": 4
+        },
+        "temple:temple_guest": {
+          "scoring_version": 2,
+          "quality_score": 100,
+          "memory_retention_percent": 100,
+          "memories_kept": 3,
+          "memories_acquired": 3,
+          "battle_clear_percent": 100,
+          "chapter_id": "temple",
+          "event_id": "temple_guest",
+          "stars": 3,
+          "puzzle_score": 100,
+          "puzzle_total": 100,
+          "battle_won": false,
+          "repair_percent": 100,
+          "erosion_at_end": 0,
+          "ink_marks_earned": 3,
+          "completed_at": "2026-09-15T02:59:12.5869852Z",
+          "sequence": 3
+        },
+        "temple:temple_incense": {
+          "scoring_version": 2,
+          "quality_score": 100,
+          "memory_retention_percent": 100,
+          "memories_kept": 2,
+          "memories_acquired": 2,
+          "battle_clear_percent": 100,
+          "chapter_id": "temple",
+          "event_id": "temple_incense",
+          "stars": 3,
+          "puzzle_score": 100,
+          "puzzle_total": 100,
+          "battle_won": true,
+          "repair_percent": 100,
+          "erosion_at_end": 0,
+          "ink_marks_earned": 3,
+          "completed_at": "2026-09-15T02:59:10.4980726Z",
+          "sequence": 2
+        }
+      },
+      "memories": [
+        {
+          "id": "she_cheng_xiang",
+          "title": "社·承香",
+          "summary": "一炷香把一村人的愿望托给屋梁。",
+          "skill": "斗拱",
+          "capacity": 1,
+          "source": "temple/temple_incense",
+          "added_at": "2026-09-15T02:59:09.5827115Z"
+        },
+        {
+          "id": "she_ning_an",
+          "title": "社·宁安",
+          "summary": "檐下不拒客，一碗冷饭也分半碗。",
+          "skill": "藻井",
+          "capacity": 1,
+          "source": "temple/temple_guest",
+          "added_at": "2026-09-15T02:59:12.2363827Z"
+        },
+        {
+          "id": "she_hui_chun",
+          "title": "社·回春",
+          "summary": "鼓声唤回春社，也唤回孩子们的脚步。",
+          "skill": "藻井",
+          "capacity": 1,
+          "source": "temple/temple_drum",
+          "added_at": "2026-09-15T02:59:14.9955163Z"
+        }
+      ],
+      "memory_ledger": [
+        {
+          "memory_id": "yan_ping_an",
+          "title": "檐·平安",
+          "action": "kept",
+          "chapter_id": "prologue",
+          "event_id": "prologue_bridge",
+          "occurred_at": "2026-09-15T02:59:06.0467239Z"
+        },
+        {
+          "memory_id": "she_cheng_xiang",
+          "title": "社·承香",
+          "action": "kept",
+          "chapter_id": "temple",
+          "event_id": "temple_incense",
+          "occurred_at": "2026-09-15T02:59:09.5827115Z"
+        },
+        {
+          "memory_id": "she_ning_an",
+          "title": "社·宁安",
+          "action": "kept",
+          "chapter_id": "temple",
+          "event_id": "temple_guest",
+          "occurred_at": "2026-09-15T02:59:12.2363827Z"
+        },
+        {
+          "memory_id": "yan_ping_an",
+          "title": "檐·平安",
+          "action": "forgotten",
+          "chapter_id": "temple",
+          "event_id": "temple_drum",
+          "occurred_at": "2026-09-15T02:59:14.9955163Z"
+        },
+        {
+          "memory_id": "she_hui_chun",
+          "title": "社·回春",
+          "action": "kept",
+          "chapter_id": "temple",
+          "event_id": "temple_drum",
+          "occurred_at": "2026-09-15T02:59:14.9955163Z"
+        }
+      ],
+      "last_sequence": 4
+    }
+  },
+  "sessions": {
+    "s_0623298ca8c76b2069275a9f708540f5": {
+      "start_erosion": 0,
+      "retries": 0,
+      "id": "s_0623298ca8c76b2069275a9f708540f5",
+      "player_id": "local-player",
+      "chapter_id": "temple",
+      "event_id": "temple_drum",
+      "started_at": "2026-09-15T02:59:13.2190101Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-09-15T02:59:16.5982156Z",
+      "status": "completed",
+      "attempt_count": 2,
+      "invalid_attempts": 0,
+      "puzzle_score": 100,
+      "puzzle_total": 100,
+      "accepted_steps": [
+        "drum_purify",
+        "drum_trace"
+      ],
+      "actions": [
+        {
+          "step_id": "drum_purify",
+          "action": "",
+          "answer_hash": "1ba1fcb18fed67a27a1397de77a4685952cd72b985f90cd9a5f41d50711ffa98",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:13.6055845Z"
+        },
+        {
+          "step_id": "drum_trace",
+          "action": "trace",
+          "answer_hash": "0bfeecda55788877bc5af3e125444d92bc1ea9d6c043fbf2dced44b7aa953431",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:14.5632763Z"
+        }
+      ],
+      "battle_won": true,
+      "battle_checked": true,
+      "battle_waves": 1,
+      "battle_hits": 0,
+      "repair_percent": 100,
+      "choice_done": true,
+      "choice_action": "forget",
+      "forgotten_memory": "yan_ping_an",
+      "reward_applied": true,
+      "pending_memory": {
+        "id": "she_hui_chun",
+        "title": "社·回春",
+        "summary": "鼓声唤回春社，也唤回孩子们的脚步。",
+        "skill": "藻井",
+        "capacity": 1,
+        "source": "temple/temple_drum",
+        "added_at": "0001-01-01T00:00:00Z"
+      },
+      "pending_result": {
+        "scoring_version": 2,
+        "quality_score": 92,
+        "memory_retention_percent": 75,
+        "memories_kept": 3,
+        "memories_acquired": 4,
+        "battle_clear_percent": 100,
+        "chapter_id": "temple",
+        "event_id": "temple_drum",
+        "stars": 3,
+        "puzzle_score": 100,
+        "puzzle_total": 100,
+        "battle_won": true,
+        "repair_percent": 100,
+        "erosion_at_end": 0,
+        "ink_marks_earned": 3,
+        "completed_at": "2026-09-15T02:59:16.5982156Z",
+        "sequence": 4
+      }
+    },
+    "s_4585f9ae0e18d3d89c0756a3893dc761": {
+      "start_erosion": 0,
+      "retries": 0,
+      "id": "s_4585f9ae0e18d3d89c0756a3893dc761",
+      "player_id": "local-player",
+      "chapter_id": "temple",
+      "event_id": "temple_guest",
+      "started_at": "2026-09-15T02:59:11.1698788Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-09-15T02:59:12.5869852Z",
+      "status": "completed",
+      "attempt_count": 2,
+      "invalid_attempts": 0,
+      "puzzle_score": 100,
+      "puzzle_total": 100,
+      "accepted_steps": [
+        "guest_word",
+        "guest_trace"
+      ],
+      "actions": [
+        {
+          "step_id": "guest_word",
+          "action": "",
+          "answer_hash": "ed7b13fc9eadc2eee22008cb1957500ab1df0cca6bc244a1711e7f7d15b0e480",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:11.4197876Z"
+        },
+        {
+          "step_id": "guest_trace",
+          "action": "trace",
+          "answer_hash": "87808144b7a458b914c4f4ef1dc623b3102fa19bca50e9fe28940937c71e510d",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:11.9216363Z"
+        }
+      ],
+      "battle_won": false,
+      "battle_checked": false,
+      "battle_waves": 0,
+      "battle_hits": 0,
+      "repair_percent": 50,
+      "choice_done": true,
+      "choice_action": "keep",
+      "reward_applied": true,
+      "pending_memory": {
+        "id": "she_ning_an",
+        "title": "社·宁安",
+        "summary": "檐下不拒客，一碗冷饭也分半碗。",
+        "skill": "藻井",
+        "capacity": 1,
+        "source": "temple/temple_guest",
+        "added_at": "0001-01-01T00:00:00Z"
+      },
+      "pending_result": {
+        "scoring_version": 2,
+        "quality_score": 100,
+        "memory_retention_percent": 100,
+        "memories_kept": 3,
+        "memories_acquired": 3,
+        "battle_clear_percent": 100,
+        "chapter_id": "temple",
+        "event_id": "temple_guest",
+        "stars": 3,
+        "puzzle_score": 100,
+        "puzzle_total": 100,
+        "battle_won": false,
+        "repair_percent": 100,
+        "erosion_at_end": 0,
+        "ink_marks_earned": 3,
+        "completed_at": "2026-09-15T02:59:12.5869852Z",
+        "sequence": 3
+      }
+    },
+    "s_4befdb4a463dc965d99d11714ae6c055": {
+      "start_erosion": 0,
+      "retries": 0,
+      "id": "s_4befdb4a463dc965d99d11714ae6c055",
+      "player_id": "local-player",
+      "chapter_id": "temple",
+      "event_id": "temple_incense",
+      "started_at": "2026-09-15T02:59:08.3354054Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-09-15T02:59:10.4980726Z",
+      "status": "completed",
+      "attempt_count": 3,
+      "invalid_attempts": 0,
+      "puzzle_score": 100,
+      "puzzle_total": 100,
+      "accepted_steps": [
+        "beam_left",
+        "beam_center",
+        "beam_right"
+      ],
+      "actions": [
+        {
+          "step_id": "beam_left",
+          "action": "",
+          "answer_hash": "360f84035942243c6a36537ae2f8673485e6c04455a0a85a0db19690f2541480",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:08.6590831Z"
+        },
+        {
+          "step_id": "beam_center",
+          "action": "",
+          "answer_hash": "f179a509d32bd92c923f236324daef85551c03a761bf0188be286a585281b4ac",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:08.9255892Z"
+        },
+        {
+          "step_id": "beam_right",
+          "action": "",
+          "answer_hash": "27042f4e6eca7d0b2a7ee4026df2ecfa51d3339e6d122aa099118ecd8563bad9",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:09.1925778Z"
+        }
+      ],
+      "battle_won": true,
+      "battle_checked": true,
+      "battle_waves": 1,
+      "battle_hits": 0,
+      "repair_percent": 100,
+      "choice_done": true,
+      "choice_action": "keep",
+      "reward_applied": true,
+      "pending_memory": {
+        "id": "she_cheng_xiang",
+        "title": "社·承香",
+        "summary": "一炷香把一村人的愿望托给屋梁。",
+        "skill": "斗拱",
+        "capacity": 1,
+        "source": "temple/temple_incense",
+        "added_at": "0001-01-01T00:00:00Z"
+      },
+      "pending_result": {
+        "scoring_version": 2,
+        "quality_score": 100,
+        "memory_retention_percent": 100,
+        "memories_kept": 2,
+        "memories_acquired": 2,
+        "battle_clear_percent": 100,
+        "chapter_id": "temple",
+        "event_id": "temple_incense",
+        "stars": 3,
+        "puzzle_score": 100,
+        "puzzle_total": 100,
+        "battle_won": true,
+        "repair_percent": 100,
+        "erosion_at_end": 0,
+        "ink_marks_earned": 3,
+        "completed_at": "2026-09-15T02:59:10.4980726Z",
+        "sequence": 2
+      }
+    },
+    "s_781f63c41ee4e1df0add702698068eb9": {
+      "start_erosion": 0,
+      "retries": 1,
+      "id": "s_781f63c41ee4e1df0add702698068eb9",
+      "player_id": "local-player",
+      "chapter_id": "prologue",
+      "event_id": "prologue_bridge",
+      "started_at": "2026-09-15T02:59:02.3015397Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-09-15T02:59:07.2070302Z",
+      "status": "completed",
+      "attempt_count": 2,
+      "invalid_attempts": 0,
+      "puzzle_score": 100,
+      "puzzle_total": 100,
+      "accepted_steps": [
+        "bridge_trace"
+      ],
+      "actions": [
+        {
+          "step_id": "bridge_trace",
+          "action": "trace",
+          "answer_hash": "aa38c061031b0c943fe8b499b8d866cbb26c086c503d5e14fd18bad4116798ca",
+          "accepted": false,
+          "reason": "trace_incomplete",
+          "occurred_at": "2026-09-15T02:59:05.0824357Z"
+        },
+        {
+          "step_id": "bridge_trace",
+          "action": "trace",
+          "answer_hash": "d54105de95b70e5e1787eb852f86551a4823b5b3e07c33268df583655a0df471",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-09-15T02:59:05.4321295Z"
+        }
+      ],
+      "battle_won": true,
+      "battle_checked": true,
+      "battle_waves": 1,
+      "battle_hits": 0,
+      "repair_percent": 100,
+      "choice_done": true,
+      "choice_action": "keep",
+      "reward_applied": true,
+      "pending_memory": {
+        "id": "yan_ping_an",
+        "title": "檐·平安",
+        "summary": "桥记着每一次送别与归来。",
+        "skill": "斗拱",
+        "capacity": 1,
+        "source": "prologue/prologue_bridge",
+        "added_at": "0001-01-01T00:00:00Z"
+      },
+      "pending_result": {
+        "scoring_version": 2,
+        "quality_score": 100,
+        "memory_retention_percent": 100,
+        "memories_kept": 1,
+        "memories_acquired": 1,
+        "battle_clear_percent": 100,
+        "chapter_id": "prologue",
+        "event_id": "prologue_bridge",
+        "stars": 3,
+        "puzzle_score": 100,
+        "puzzle_total": 100,
+        "battle_won": true,
+        "repair_percent": 100,
+        "erosion_at_end": 0,
+        "ink_marks_earned": 3,
+        "completed_at": "2026-09-15T02:59:07.2070302Z",
+        "sequence": 1
+      }
+    }
+  }
+}

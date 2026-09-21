@@ -1,0 +1,84 @@
+{
+  "local_player_id": "local-player",
+  "version": 2,
+  "players": {
+    "local-player": {
+      "id": "local-player",
+      "display_name": "拓印师",
+      "created_at": "2026-09-15T02:51:22.4668696Z",
+      "updated_at": "2026-09-15T02:52:04.0188448Z",
+      "ink_marks": 0,
+      "capacity": 5,
+      "erosion": 30,
+      "unlocked_chapters": [
+        "prologue"
+      ],
+      "completed_events": {},
+      "memories": [],
+      "memory_ledger": [],
+      "last_sequence": 0
+    }
+  },
+  "sessions": {
+    "s_77cf186eaf34a234c36c4d4e727f676f": {
+      "start_erosion": 0,
+      "retries": 1,
+      "id": "s_77cf186eaf34a234c36c4d4e727f676f",
+      "player_id": "local-player",
+      "chapter_id": "prologue",
+      "event_id": "prologue_bridge",
+      "started_at": "2026-09-15T02:51:56.2726286Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-09-15T02:52:04.0188448Z",
+      "status": "failed",
+      "attempt_count": 3,
+      "invalid_attempts": 3,
+      "puzzle_score": 0,
+      "puzzle_total": 100,
+      "accepted_steps": [],
+      "actions": [
+        {
+          "step_id": "out_of_order",
+          "action": "trace",
+          "answer_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "accepted": false,
+          "reason": "step_out_of_order",
+          "occurred_at": "2026-09-15T02:52:03.8497605Z"
+        },
+        {
+          "step_id": "out_of_order",
+          "action": "trace",
+          "answer_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "accepted": false,
+          "reason": "step_out_of_order",
+          "occurred_at": "2026-09-15T02:52:03.9356023Z"
+        },
+        {
+          "step_id": "out_of_order",
+          "action": "trace",
+          "answer_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "accepted": false,
+          "reason": "puzzle_attempt_limit",
+          "occurred_at": "2026-09-15T02:52:04.0188448Z"
+        }
+      ],
+      "battle_won": false,
+      "battle_checked": false,
+      "battle_waves": 0,
+      "battle_hits": 0,
+      "repair_percent": 0,
+      "choice_done": false,
+      "reward_applied": false,
+      "pending_memory": {
+        "id": "yan_ping_an",
+        "title": "檐·平安",
+        "summary": "桥记着每一次送别与归来。",
+        "skill": "斗拱",
+        "capacity": 1,
+        "source": "prologue/prologue_bridge",
+        "added_at": "0001-01-01T00:00:00Z"
+      },
+      "failure_reason": "puzzle_attempt_limit"
+    }
+  }
+}

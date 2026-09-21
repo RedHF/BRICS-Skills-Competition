@@ -1,0 +1,998 @@
+[
+  {
+    "source": "LLM-tmp/.review/qa-20260915/export-final.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/export-final.log",
+    "sha256": "089951dff16b34c5647a26dedb5ffd56ec11edf7aee62f8454f298ab29392969",
+    "bytes": 52822
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/export.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/export.log",
+    "sha256": "465ea97c241f80e17b21eada010517622c8394aef0fd9cf7c251654d5c9990f3",
+    "bytes": 52892
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/export_licenses.gd",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/export_licenses.gd",
+    "sha256": "431ebc14af73a8884dd73bfe49e853e5d6a968a73f3927f2674a4095b00a19c2",
+    "bytes": 493
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-save.json",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-save.json",
+    "sha256": "f275ec04059229fc943f925d15bd10330a64a3ad48240aa2b47d6c01383bc206",
+    "bytes": 35894
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit.log",
+    "sha256": "73c690d136e26dad1a09bfd47ad71b7643412bbb4f86575c8effb18539fc5dd1",
+    "bytes": 345
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/integration-final-save.json",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/integration-final-save.json",
+    "sha256": "b33c5a8689efc2be1829d5c8d5f0bf6e440b89921e03529b06e31b8e315ea97e",
+    "bytes": 14884
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/integration-save.json",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/integration-save.json",
+    "sha256": "49d19143dc7016a341bca85711972aade4450fe91c170212cf5a3f2e784cc23c",
+    "bytes": 14884
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/integration.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/integration.log",
+    "sha256": "348177cf801c3f3e4a723eae0f5c1c2492272a2194a19c5b6544460c207d4b8b",
+    "bytes": 1929
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after-save.json",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after-save.json",
+    "sha256": "ab850550138594d9b57ea5a486eafa56fcace20134ead888ddd694a1175382eb",
+    "bytes": 30409
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after.log",
+    "sha256": "170f35ca1d996e11019b862464febd3630c4a2efbcf455d4eef88e67e8bec412",
+    "bytes": 692
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-resume.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-resume.log",
+    "sha256": "ae4fd29ba0130dec812ee8fb615016a7a086306602eab83bd089dc02b7a180b4",
+    "bytes": 804
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-save.json",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-save.json",
+    "sha256": "c188cf1cb021b9c9a30bfa462b1cd322274b3552b892b3d271c5e1f73cb456b3",
+    "bytes": 35910
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/manual-probe.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/manual-probe.log",
+    "sha256": "45c6ab44c775f9c28893ca81a700ff978387257059f30bdca03d371d475111ca",
+    "bytes": 1737
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/manual_probe.gd",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/manual_probe.gd",
+    "sha256": "c7dd34b5d52d5e8707f5e876014b657c6ff5952374222faf450fac5326391a36",
+    "bytes": 1012
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/narrative-save.json",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/narrative-save.json",
+    "sha256": "4635dba96a45729920fd4a8462affc053d3d688b20440cf5b9f873da74bec179",
+    "bytes": 2560
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/package_qa.py",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/package_qa.py",
+    "sha256": "ae006cd6f61a98624a999b1d95c1db2621cdfa2494da60f9edec2a4aa5ec1098",
+    "bytes": 3704
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/playability.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/playability.log",
+    "sha256": "7cfb25de722657e2e4635127e669d1537abc7c43ce0d0f7579f1586d6b19ebce",
+    "bytes": 309
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/server.err.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/server.err.log",
+    "sha256": "b700106bff435acf55a26eb7668f8bb9c896c6feb2613c2e819c1a6737c8ccf2",
+    "bytes": 291
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/server.out.log",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/server.out.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/dialogue-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/dialogue-1280x720.png",
+    "sha256": "c0cef0fb094c88e71ebe3d6c091ffe35056464d8259d3bf364175a5899e562b6",
+    "bytes": 325343
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/dialogue-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/dialogue-1920x1080.png",
+    "sha256": "3e4998c9ac1cbc745afc7993b24cfdd4150a1ae5749139fd39b561b1a84c9613",
+    "bytes": 609859
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/dialogue-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/dialogue-450x800.png",
+    "sha256": "d10def0a53275ed5f1511fc81034b7fe876a2db785795e09e676fa29dc69e7c7",
+    "bytes": 380782
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/journal-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/journal-1280x720.png",
+    "sha256": "cbf69aaca188e2275f77602e71cc5b87231b38a0bd006895e594f49fc5e49d53",
+    "bytes": 305370
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/journal-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/journal-1920x1080.png",
+    "sha256": "44556a008032eed405b39177cf68e6167d45facb5a6fe4a709a0452b17977f42",
+    "bytes": 578250
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/journal-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/journal-450x800.png",
+    "sha256": "c96a93bfa2bf59ee7aaf32532c3d569180d34411e28ff8a7daecc35a4ff9ce22",
+    "bytes": 359334
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/ledger-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/ledger-1280x720.png",
+    "sha256": "8c1a6aee4207894fece64722e7076c5d361bb86f7019c3060cc753f2c932d6b8",
+    "bytes": 303046
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/ledger-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/ledger-1920x1080.png",
+    "sha256": "7e7f5f35e63c5192b1b300de8223d5f93846561f89d9e5c88bb7b0847e5809f3",
+    "bytes": 569885
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/ledger-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/ledger-450x800.png",
+    "sha256": "34ea8a2dd19a3b04e8adc43c8714ac0c3891d41aed5c0fe1e8b40a00e58f53ec",
+    "bytes": 354685
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/map-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/map-1280x720.png",
+    "sha256": "04afd070d95d63b1c931bff0f691612d8ee0269749e683746d5989c822bcd8fd",
+    "bytes": 199044
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/map-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/map-1920x1080.png",
+    "sha256": "f01509b07f36abde68b64071f8d702e71d0b832a9c0639bd97c5bc7613000b52",
+    "bytes": 363403
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/memories-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/memories-1280x720.png",
+    "sha256": "db73b0961cd003df1c569243566f677950fd4d4c8d131c4bbdaa8c74f8705efc",
+    "bytes": 507245
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/memories-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/memories-1920x1080.png",
+    "sha256": "cfa465a44d318ed04295c3a65234623ded2a1dc5940fd363e1a21eacf59e5244",
+    "bytes": 1063499
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/memories-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/memories-450x800.png",
+    "sha256": "7efd3a531e5df9b7cee184965130f6fb3dad9b9dc2d12d4f1c279259d6b0bc54",
+    "bytes": 615980
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/settings-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/settings-1280x720.png",
+    "sha256": "c251953a2a6c4489131f8126ec750811f1955684619eaa038a9d7d802708b4be",
+    "bytes": 277163
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/settings-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/settings-1920x1080.png",
+    "sha256": "b7f11146a786c3a37f1f6d999c4c5d36b271dbe8a7a95ad6200a27003a13650f",
+    "bytes": 543436
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/settings-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/settings-450x800.png",
+    "sha256": "df542f0c91d697aa708c46484f0a7d534489851d33d7485d55c5bdc41e9ea318",
+    "bytes": 331540
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/trace-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/trace-1280x720.png",
+    "sha256": "a6593dd4a946e8f0629cafbc8abba4eb48db16ad02bfd93ab9f232d9c1b1d331",
+    "bytes": 254454
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/trace-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/trace-1920x1080.png",
+    "sha256": "ed9dc6f4b1de630806f3d3b61715b44b3684ffd7c8b9872af1790685a9a09306",
+    "bytes": 504628
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-after/trace-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-after/trace-450x800.png",
+    "sha256": "dbcb47d61efbcfce72e558e61460ca262d9fa6867d437b4314daa044a9b43c5b",
+    "bytes": 304702
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/dialogue-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/dialogue-1280x720.png",
+    "sha256": "6d71f5fc8293c821ead103a97d4c24a641317683c8627bee981ae07037982187",
+    "bytes": 325362
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/dialogue-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/dialogue-1920x1080.png",
+    "sha256": "50632dd3db18d1ae2ed183c0d36980bdae5b529a4e45a154b29045c1c021855e",
+    "bytes": 609824
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/dialogue-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/dialogue-450x800.png",
+    "sha256": "6e35b2185c93b810b6ce0f708415d63ec6c5188e01f0d3dca40716e312796596",
+    "bytes": 380871
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/journal-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/journal-1280x720.png",
+    "sha256": "caff9e041d6ca9901cf29f492a97eb9caf5fe674dd105a62ed907e54475aafe0",
+    "bytes": 305326
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/journal-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/journal-1920x1080.png",
+    "sha256": "96bca051f5281960941fbcf371496f314c8b4d6299480d0a8d20e808f19ffe8a",
+    "bytes": 578214
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/journal-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/journal-450x800.png",
+    "sha256": "dd9e8139ff7e01db56800ac8786643e147499f05510707dd3e4d55dc5a7a01b9",
+    "bytes": 359335
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/ledger-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/ledger-1280x720.png",
+    "sha256": "668af83b6d90280d4647c8568dcaf731fca16dd44228770922881c8d330e9946",
+    "bytes": 302979
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/ledger-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/ledger-1920x1080.png",
+    "sha256": "13077d65ad1c4349a286428920c9f1c6360433f38fb6abc59ad0e3013cd71279",
+    "bytes": 569813
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/ledger-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/ledger-450x800.png",
+    "sha256": "f55e723b9df3253fb29aac11ec6b3cc900c1d6997bca6ef4c95aa4768beccd08",
+    "bytes": 354678
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/map-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/map-1280x720.png",
+    "sha256": "08e3b105bbc2014d5f3c6f6ed25a31ec6c6ab8a67798af0da03e0a19d2a2f6be",
+    "bytes": 199018
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/map-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/map-1920x1080.png",
+    "sha256": "c0f57e764895fa0acf8f5aa046fa99b2e605b33d484b8938bbd3cfbbe3776838",
+    "bytes": 363347
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/map-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/map-450x800.png",
+    "sha256": "0eaff8bcd1d809d5e0d655db0d71ccc9e6ec3f963e631d1280b4e3021cfad727",
+    "bytes": 231437
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/memories-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/memories-1280x720.png",
+    "sha256": "0fea3a888cfce3ea7df548db1ddbf9999b44dd8656226d0873ec417e0d25f812",
+    "bytes": 507202
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/memories-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/memories-1920x1080.png",
+    "sha256": "79b4129e244a297c91ee089957a759d7ac2d7eb7e30ba11bcd746fdc88d9a67b",
+    "bytes": 1063452
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/memories-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/memories-450x800.png",
+    "sha256": "83bdb4cc365f1d29c49877d58a10b15112121d82b3c59ec24c6138317ec70b7e",
+    "bytes": 615975
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/settings-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/settings-1280x720.png",
+    "sha256": "f24d334e6ec892c103bea0985a0a5bc58a5684125e0664e87000317eb6befd6a",
+    "bytes": 277138
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/settings-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/settings-1920x1080.png",
+    "sha256": "1097439bc07a42be57d9d2062f49e6ee98c2431fc00b7c09210488ecbfa06a9c",
+    "bytes": 543444
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/settings-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/settings-450x800.png",
+    "sha256": "8d366eb1f46641a225883f67e5a3ee299a8d2f404be6eb283dc1feab7093c6b4",
+    "bytes": 331581
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/trace-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/trace-1280x720.png",
+    "sha256": "8a7910a8c0ae62fa07d1ce7519c8f8976e7f95500c246909204a2b12613d1db9",
+    "bytes": 254426
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/trace-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/trace-1920x1080.png",
+    "sha256": "4a16f56086618846f4b1eef245ec3aa50857b63b11ac800ae26eb7a7156c7e27",
+    "bytes": 504592
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-before/trace-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-before/trace-450x800.png",
+    "sha256": "68f22991842d2895969e3c96aaf797ac2f4d5abfbd7871d5d1466ac7858baa03",
+    "bytes": 304724
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-final/dialogue-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-final/dialogue-1280x720.png",
+    "sha256": "84378d9bdeda21c4529734ba28602455f5efc6455ae2ebdc003ad4050b21d51b",
+    "bytes": 325429
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-final/dialogue-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-final/dialogue-1920x1080.png",
+    "sha256": "87695bace2e57e502d5b10e7edef75fffaa9081c071bcb60e6443a9e0bd481bf",
+    "bytes": 609848
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/audit-final/dialogue-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/audit-final/dialogue-450x800.png",
+    "sha256": "bdf1ba56a9dcee328b20ed144090ddd9dc07bad45c74bf5196abda6132e4ebb8",
+    "bytes": 380774
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/archway_craftsman-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/archway_craftsman-battle-ready.png",
+    "sha256": "3cd53e3c231bd9fdf889061771f67a4bace3d418de2a0c3f11ddc8c2e9cc0cb9",
+    "bytes": 464110
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/archway_craftsman-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/archway_craftsman-settlement.png",
+    "sha256": "47e2d1640b7d67ed1186217a363e49036433626ef60293ba7ad53f873da4e7bc",
+    "bytes": 486476
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/archway_form-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/archway_form-battle-ready.png",
+    "sha256": "97a3127afba5369badf111d6e1764ee782061a67bc2dbb547ac7ab1abf8db6d5",
+    "bytes": 442267
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/archway_form-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/archway_form-settlement.png",
+    "sha256": "258d9b949ff69f3cdd5a5a9e7795573bfeba187cd5a4cf0f565b8f56483150f8",
+    "bytes": 480333
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/archway_grade.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/archway_grade.png",
+    "sha256": "7ba504d6aeeea95a024da68118aa1bcfd2add998c9f8d2892cecb974ebeef3d2",
+    "bytes": 345883
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/confirmation-after.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/confirmation-after.png",
+    "sha256": "0525d3c49338521b532077a2f3cd0c9d80deee2def516b0acc65c63781a67392",
+    "bytes": 428351
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/craftsman_anchor.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/craftsman_anchor.png",
+    "sha256": "80fe222f650541c062625aa0609a1d80b9390f7ed08a5ff2bd6cc9f459a76887",
+    "bytes": 304180
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/craftsman_trigger.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/craftsman_trigger.png",
+    "sha256": "4fb5a72788cf44e8ca1a0e513d4258bf3a6ce4811a862dd040c1e488bf4971f5",
+    "bytes": 303248
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/drum_purify.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/drum_purify.png",
+    "sha256": "b0fd2c1c8f130308c276c551bdc0ad0e74ff81a8e829a4f9b018d72f9d48d702",
+    "bytes": 304013
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/heart-room.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/heart-room.png",
+    "sha256": "6f2ccd4bf2954439b0b994463a30f4501aece35a629f0fb57c7bbcdaf6c4f72c",
+    "bytes": 616763
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/journal.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/journal.png",
+    "sha256": "c4b3419b7565d28f32f22fee43d7af9dc55001501d128b1e856721e0cb31c51c",
+    "bytes": 359470
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/map.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/map.png",
+    "sha256": "4516b5fd417045e8eec58047dc219e1d988f33ad5b9d2c7c8c62d7e50b3a0963",
+    "bytes": 248957
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/miniboss-active.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/miniboss-active.png",
+    "sha256": "dad73abd2c003d18db214ea2063a0df675970797906eb05c0badf4139677738f",
+    "bytes": 486125
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/opera_master-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/opera_master-battle-ready.png",
+    "sha256": "3d1ea86d564077edd7af0b33a0023fc1776e1ad200c3510568588045ac8538f4",
+    "bytes": 464717
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/opera_master-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/opera_master-settlement.png",
+    "sha256": "0b3113922ca772b0b3976db355a61b17224c739824afa478b024764ce7d15653",
+    "bytes": 502692
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/opera_opening-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/opera_opening-battle-ready.png",
+    "sha256": "690d99a5c6e598593d2157d766ce265937ecdcec4dfeda039a926abacfbfae87",
+    "bytes": 454225
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/opera_opening-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/opera_opening-settlement.png",
+    "sha256": "481c3f170515d5875bba2d316444cf7386f77549aafa394b7210001c247cbc0c",
+    "bytes": 491942
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/opera_role.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/opera_role.png",
+    "sha256": "a72c3c5ea6e849779b1a3102af89662ff5a423aab48b03ce1fad06583fda6ef4",
+    "bytes": 350236
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/prologue_bridge-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/prologue_bridge-battle-ready.png",
+    "sha256": "23bd61ae9413a10d7ac0005ca5ad9b691e6f82a59c9dd4be37d6a4b134f84ec3",
+    "bytes": 440085
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/prologue_bridge-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/prologue_bridge-investigation.png",
+    "sha256": "8e525c2552304e7e09109bbdebcf555cf5f638602d01fed80d72b628ff652812",
+    "bytes": 520439
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/prologue_bridge-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/prologue_bridge-settlement.png",
+    "sha256": "3e333808144e6385069fe58a8388f485ea49ec682c6a728e02575ca5c0488a8e",
+    "bytes": 503364
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_drum-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_drum-battle-ready.png",
+    "sha256": "9b1cddc72f18f2eba370ab13840b289f9a252a5c35da0d51b5f97b53e82305e6",
+    "bytes": 443467
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_drum-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_drum-investigation.png",
+    "sha256": "5e8e39f9a0d2511c6fb27aece852fcf21863b940026f74c544373a5231bc2d81",
+    "bytes": 545941
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_drum-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_drum-settlement.png",
+    "sha256": "9c745c5aad9ae0dd79e80d64a89898103c028dd5c447fb242b4ecceb543441a8",
+    "bytes": 497379
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_guest-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_guest-investigation.png",
+    "sha256": "7132ea01cd316e718f860798d63c85901cf8418321e396beaf7703c2181f13db",
+    "bytes": 505758
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_guest-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_guest-settlement.png",
+    "sha256": "0a83bbfb05ecae07bdec590cabae679e1e731a1973b110e64340b036a8bd62f2",
+    "bytes": 494423
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_incense-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_incense-battle-ready.png",
+    "sha256": "8f0ac2efe4160ee4e767e31508d85b3577ede6ca98b5d799a1538aff3e0dadc0",
+    "bytes": 444277
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_incense-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_incense-investigation.png",
+    "sha256": "8461156e17e67c9e284cf1c2f1b858a6516a7c89d600fbfc7171473a623f2f01",
+    "bytes": 527726
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/temple_incense-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/temple_incense-settlement.png",
+    "sha256": "653832a61682e6e4fa292a4960d36b2c936c221e65e0e29e684a0f57365393dc",
+    "bytes": 486611
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/tower_anchor.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/tower_anchor.png",
+    "sha256": "11942581dc76b3f276734ecbe25dc075a6374fc2d3622d1aa53a46e2bceaf1a0",
+    "bytes": 303647
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/tower_ascent-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/tower_ascent-battle-ready.png",
+    "sha256": "0ccc9aed691898c89eb8a07fa20f83d2b1101899547cf53bc024f2d1beab9865",
+    "bytes": 470710
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/tower_ascent-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/tower_ascent-settlement.png",
+    "sha256": "618d856d70ce4ec8e81b3c1fabed3260ecdc5f9e7653de8888a17080cd45ce2c",
+    "bytes": 489224
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/tower_ledger-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/tower_ledger-settlement.png",
+    "sha256": "74c7f306d922362e3b05b1ebebc25bc15b631e82a2e06890f3dd189a85bd8694",
+    "bytes": 494132
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/baseline/tower_purify.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/baseline/tower_purify.png",
+    "sha256": "b1224a7926e12d3a02b4a4916580acb4889a4a6c8fc4f710d2de1c828d8b8352",
+    "bytes": 303120
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/archway_craftsman-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/archway_craftsman-battle-ready.png",
+    "sha256": "45c84316ea32e3573c57d484a10b4b9a8a83b54b917524efe2a86a9e639c7bf9",
+    "bytes": 464109
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/archway_craftsman-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/archway_craftsman-settlement.png",
+    "sha256": "bfe7436773938cf5930723e25f387e15b4a77175606e44947ade8a591c4628f6",
+    "bytes": 486476
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/archway_form-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/archway_form-battle-ready.png",
+    "sha256": "bdc717fea2030ab88e267964ae88c990a05b23d2ca1da94b644a4f70406207ef",
+    "bytes": 442316
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/archway_grade.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/archway_grade.png",
+    "sha256": "4a66f9d3fc20f038c703b84acb5461a047a37bfbc03a229ea0cf5a05965b35ad",
+    "bytes": 345879
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/craftsman_trigger.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/craftsman_trigger.png",
+    "sha256": "a275614ba45b4ebea171187754edeb537a3eb73182c8391e0ec9c966f60bddcb",
+    "bytes": 303249
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/opera_master-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/opera_master-battle-ready.png",
+    "sha256": "05ec1fc3bdff824ac2a58492bc6129624ea6d50636aff0e98954a32c152a752b",
+    "bytes": 464739
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/opera_master-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/opera_master-settlement.png",
+    "sha256": "ac9378a8f8b4aa95e058632cf75b55ced80be5d44cc4cf5b8e218ec18730c0cf",
+    "bytes": 502689
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/opera_opening-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/opera_opening-battle-ready.png",
+    "sha256": "e0897b1fc9dc38d53055514eff94654c0fb41cb8d55f5329c45d75a563cdb437",
+    "bytes": 454225
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/opera_opening-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/opera_opening-settlement.png",
+    "sha256": "8c74d17e83a1fb7285564fcfb9933a55d195fa598b18cdf3bf8beba688006bc6",
+    "bytes": 491940
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/opera_role.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/opera_role.png",
+    "sha256": "6eea9da714a9a764a87a015515492d49073d959258f8d8523b3995c5e7244f4b",
+    "bytes": 350236
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/prologue_bridge-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/prologue_bridge-battle-ready.png",
+    "sha256": "b6bcfe60c79fce92c648460a27d22c1fa7a54d3c98116c30224be8ac01e37253",
+    "bytes": 440221
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/prologue_bridge-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/prologue_bridge-investigation.png",
+    "sha256": "4ef8410b51999d214e4a723405be6d5b28365f5b73f6a554c2c3bd222c8f9ad3",
+    "bytes": 520440
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_drum-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_drum-battle-ready.png",
+    "sha256": "289b559ca2cd84c7d93ad69a130a133cfc3b1b271ebf62cdd1583d2a03d864bf",
+    "bytes": 443474
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_drum-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_drum-investigation.png",
+    "sha256": "e9365b8bbb06ac9508e5803d7374de27b838fb1f4ec4dabffa749f3473b6b0f0",
+    "bytes": 545966
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_drum-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_drum-settlement.png",
+    "sha256": "c7f241e57ba32f2173bf047125a904ff35f4c33aa8c800c70a54eecf563e6251",
+    "bytes": 497707
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_guest-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_guest-investigation.png",
+    "sha256": "2bbb7015996045b47c3305ae3ae7f2f5f0684f22acc6069426cf9715bd20db06",
+    "bytes": 505759
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_guest-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_guest-settlement.png",
+    "sha256": "7abd29e77a29a198a02a287f0d3146f809480fda31badf2b1966c27c4b67abc5",
+    "bytes": 494422
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_incense-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_incense-battle-ready.png",
+    "sha256": "34e447ac01c0232aa77d513bc50601a2c6f36c6ac3965c66badc93c757b891c6",
+    "bytes": 444277
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_incense-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_incense-investigation.png",
+    "sha256": "2ee219af82dc79f715c45280fff4915aa26134b7431d15df4384916d9946b862",
+    "bytes": 527715
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/temple_incense-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/temple_incense-settlement.png",
+    "sha256": "e1b29d7fd6fb4d2477cf9ffb50524f4e4023ccae94ad027376cec86326063597",
+    "bytes": 486965
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/tower_anchor.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/tower_anchor.png",
+    "sha256": "093052f0e8bd09de79e6470321538d0f6c1b3d3870e0b9d2072de70b414bd6c2",
+    "bytes": 303647
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/tower_ascent-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/tower_ascent-battle-ready.png",
+    "sha256": "32dc43a246fded760eadeb4670113dfe38a7852a93df28793d9096981329ba42",
+    "bytes": 470724
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/tower_ascent-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/tower_ascent-settlement.png",
+    "sha256": "42cba7d4515614b40b2f6177bbf501f3fcba4e940e2b88deea9f04f8d6644d70",
+    "bytes": 489224
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/tower_ledger-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/tower_ledger-settlement.png",
+    "sha256": "4d697df2107631b515f192c02ffbbe8a626bc862d4e0e8b0c643632a5a4edfab",
+    "bytes": 494139
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/final-journey/tower_purify.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/final-journey/tower_purify.png",
+    "sha256": "3b5b2087e7edade9b2ef0bd356377fe9fe8b436279ef4198536886b9c25ab660",
+    "bytes": 303120
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/dialogue-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/dialogue-1280x720.png",
+    "sha256": "07ae87b9973be8a11240ebdb3fc337348b9f1ecc0ab5fa848fad09700bea91be",
+    "bytes": 325375
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/dialogue-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/dialogue-1920x1080.png",
+    "sha256": "a9bb587e9581680bc21031cda6f110ae000cb7a33546af89390c9940e509b386",
+    "bytes": 609783
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/dialogue-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/dialogue-450x800.png",
+    "sha256": "b7c68bd9211c76ff0fed9dc355557d832660090f59bcabea252d2193c80860e7",
+    "bytes": 380721
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/journal-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/journal-1920x1080.png",
+    "sha256": "d15148190c624f9b8d7dfc83f3e014fead4cf07e44b6cb883488f26fe1a9f674",
+    "bytes": 578238
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/journal-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/journal-450x800.png",
+    "sha256": "149c21bb9397c1e09d20a95f2a48455b89ac3a95e974d086c3cbf859dcfa0636",
+    "bytes": 359332
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/ledger-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/ledger-1280x720.png",
+    "sha256": "0ce56e11a054c5b903bdfad5b876e5b92f00c2d82b98d248175302d94bd10c1f",
+    "bytes": 303046
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/ledger-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/ledger-1920x1080.png",
+    "sha256": "7918822e68c97c05217c90c67232c464593c16334eb55eb63488b268617a8fa0",
+    "bytes": 569877
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/ledger-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/ledger-450x800.png",
+    "sha256": "eb4e716dc0f12ecee63ae0c2ee74d363f4bba4a007ddabb26883396c51c12961",
+    "bytes": 354686
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/memories-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/memories-1280x720.png",
+    "sha256": "87ec61c388eea9fbc712f43c4dbd9de719d670bef37f14b415a36eca495efed4",
+    "bytes": 507245
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/memories-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/memories-1920x1080.png",
+    "sha256": "282f050ba82deb4bea2dabfe25c92da27ba9ed1d3c49117998396d3984cfd39d",
+    "bytes": 1063500
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/settings-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/settings-1920x1080.png",
+    "sha256": "b50eab1b96991f5c00c2f41c1f3c404806c3debc7cae18b1d997197fe397c455",
+    "bytes": 543434
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/settings-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/settings-450x800.png",
+    "sha256": "00179f218e71715c9e83734059064e50433dfe30ceed34c2b37b0f1f46ff777e",
+    "bytes": 331540
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/glyph-audit/trace-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/glyph-audit/trace-1920x1080.png",
+    "sha256": "a88200d9e5700e243935a54d43875c2c26ada2ee1006c356dab15be3c9d96005",
+    "bytes": 504628
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/archway_craftsman-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/archway_craftsman-battle-ready.png",
+    "sha256": "bee5f84b4beef51e650048f83a2c0c28a7bd088fda2d11856c8efe018dfa47ed",
+    "bytes": 464114
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/archway_craftsman-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/archway_craftsman-settlement.png",
+    "sha256": "8561dfc4b4e16b75805a596c62d15dd42aabaf5ae34bc6eba4a29012f02da5dd",
+    "bytes": 486779
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/archway_form-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/archway_form-battle-ready.png",
+    "sha256": "3c95b298d213096b2fb0291f43f584bf28e64e7412162412f6d1954dc6f89a0b",
+    "bytes": 442317
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/archway_form-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/archway_form-settlement.png",
+    "sha256": "208f9a57d61bc2aebef47ca8676821404f0c27ef53711a3cd7c8d800281dad65",
+    "bytes": 480653
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/archway_grade.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/archway_grade.png",
+    "sha256": "6767e84d0ee2f9df9a60d3a3bbfcf70394c10c1989305ffb6653a0fce17a3eeb",
+    "bytes": 345880
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/confirmation-after.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/confirmation-after.png",
+    "sha256": "2812346c08ffdaa67642817a94ee74869410358455edd44caa76789878994af2",
+    "bytes": 425238
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/confirmation-before.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/confirmation-before.png",
+    "sha256": "407b9c1e4d9524860da22d6657651a53b13c383d0eabddb81c81a1c65d65e447",
+    "bytes": 298906
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/craftsman_anchor.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/craftsman_anchor.png",
+    "sha256": "c772ea058ce139edf6a16ea7476b450a2917d473761f25b791401225ef71aba1",
+    "bytes": 304181
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/craftsman_trigger.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/craftsman_trigger.png",
+    "sha256": "ea0a1c9b552255f7d0004c61f0181c1ba395e6d23f1ff4f521b8036432e22042",
+    "bytes": 303247
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/drum_purify.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/drum_purify.png",
+    "sha256": "3fd20321fad302ccc952676d302b614386477d0c878d09f7b88b927f8cfe2272",
+    "bytes": 303952
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/map.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/map.png",
+    "sha256": "7220df8b07bfd6d51f122d16b6cac03155a3c19107f5779e49304f81fd7b20dc",
+    "bytes": 264463
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/miniboss-active.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/miniboss-active.png",
+    "sha256": "a72b6ce4571800d1c3ead59236da961d478ced435a4e1e5a7eb68a5cb21b02cf",
+    "bytes": 485923
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/opera_master-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/opera_master-battle-ready.png",
+    "sha256": "6bfcc8ffdfd7974971336ea47da6504c6901534efee878bc5fcf1ab91c3eb09c",
+    "bytes": 464736
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/opera_master-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/opera_master-settlement.png",
+    "sha256": "893b151ae6483c91129c5400735303dac86ddc05b3c9ccc317adef9fc8d6cd2f",
+    "bytes": 502692
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/opera_opening-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/opera_opening-battle-ready.png",
+    "sha256": "8129c4f3124c592a95b0710e552ca310f51de4cbf877820fef125b0a19b6a219",
+    "bytes": 454232
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/opera_opening-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/opera_opening-settlement.png",
+    "sha256": "93e5dcda4caf173befcd1ad90ddb788f0c79a68975b7a470c4665bd9eda9d1a8",
+    "bytes": 491943
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/opera_role.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/opera_role.png",
+    "sha256": "8ff8a5a00dec69ca16a28a01c1335d26be4f23ec70bffe546b62eb1c3c5a2433",
+    "bytes": 350239
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/prologue_bridge-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/prologue_bridge-battle-ready.png",
+    "sha256": "4648bf57a41c92b59ab3d64efab8d91e2b55627ef62dab3a6be54bc1adb7b896",
+    "bytes": 440150
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/prologue_bridge-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/prologue_bridge-investigation.png",
+    "sha256": "d2102f5b2b87cc40f32a5911e822032052362a9a10efdd21f5747d1ced3e7325",
+    "bytes": 520437
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/temple_drum-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/temple_drum-battle-ready.png",
+    "sha256": "eecc740bc039ca00c60fd448ca500041bced9a9c8c15020809a91c041d798b8e",
+    "bytes": 443501
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/temple_drum-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/temple_drum-investigation.png",
+    "sha256": "9e848a8fcd5ebae48de9535656a42223ae7d2cc2e3527dc9775727bef9bc3f5f",
+    "bytes": 545928
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/temple_drum-settlement.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/temple_drum-settlement.png",
+    "sha256": "7cc7cea2d57efed0fa85622dc28172b622950191ce82030e6b65ee2d49c120d4",
+    "bytes": 497718
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/temple_guest-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/temple_guest-investigation.png",
+    "sha256": "3036082560274719f69b24dd72ded40d55475f9d24b3d373a9588d1aaffac0a0",
+    "bytes": 505760
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/temple_incense-battle-ready.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/temple_incense-battle-ready.png",
+    "sha256": "f9a2c1ad89334b06d9902dd6b2fdfb4a3e3538af034ab170fa814b7d23626ef2",
+    "bytes": 444320
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/journey-after/temple_incense-investigation.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/journey-after/temple_incense-investigation.png",
+    "sha256": "a5985cea5ce0f59fbfe5e180af3dd402d8369895c3cd2510b08e77200742ea2f",
+    "bytes": 527738
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/narrative/dialogue-full.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/narrative/dialogue-full.png",
+    "sha256": "2bfa1b2af4272490d343b16ca11337da50ce0b03820ebe6f4dd812b3f137172b",
+    "bytes": 379394
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/narrative/dialogue-reveal.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/narrative/dialogue-reveal.png",
+    "sha256": "db6ea9660367e4bc92f2f0aba025751e7fa62c1b9ba351a804cef9da516f6d1a",
+    "bytes": 395799
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/narrative/gameover-last-line.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/narrative/gameover-last-line.png",
+    "sha256": "fcde05a934ac4cf8c42f08cf74586b98c6154df6914fdd381cee860fbf523c09",
+    "bytes": 362933
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/settings-audit/dialogue-1280x720.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/settings-audit/dialogue-1280x720.png",
+    "sha256": "06fb2e1167ea45eb462be19196b104b041e267a9e5c232ebe676d27f5dc13dc0",
+    "bytes": 325450
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/settings-audit/dialogue-1920x1080.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/settings-audit/dialogue-1920x1080.png",
+    "sha256": "063493a8fcd920dc7e2a937a110548bbc2645a2937e84563f29c2bb3dd742741",
+    "bytes": 609845
+  },
+  {
+    "source": "LLM-tmp/.review/qa-20260915/settings-audit/dialogue-450x800.png",
+    "retained": "LLM-tmp/验证记录/2026-09-15-可玩性/补充原始记录/settings-audit/dialogue-450x800.png",
+    "sha256": "32588ba18710a815bde43d4f0dfd26baf51b8db0a95454c501df558e59fdb1b3",
+    "bytes": 380856
+  }
+]

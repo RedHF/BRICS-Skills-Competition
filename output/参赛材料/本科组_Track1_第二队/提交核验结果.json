@@ -152,7 +152,9 @@
     "Codex": 20,
     "DeepSeek_Harness": 5,
     "visible_messages": 358,
-    "secrets_redacted": true
+    "secrets_redacted": true,
+    "jsonl_records_validated": 3619,
+    "final_hashes_verified": true
   },
   "known_gaps": [
     "后期六任务独立场景",
@@ -160,5 +162,15 @@
     "主角独立精灵与动画",
     "部分JPG为低分辨率原图插值输出",
     "系统字体回退仍依赖运行环境"
-  ]
+  ],
+  "final_package_date": "2026-09-21",
+  "visual_review": {
+    "documents": 7,
+    "pages": 66,
+    "status": "逐页检查通过；未发现裁切、覆盖或缺字。"
+  },
+  "privacy_scan": {
+    "credential_pattern_hits": 0,
+    "scope": "文本、Word XML和PDF可提取文本；图片保留原始记录"
+  }
 }
