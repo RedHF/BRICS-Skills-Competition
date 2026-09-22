@@ -21,9 +21,11 @@
 !/dist/檐下千秋-v10-可玩性修复版-20260915.zip
 !/dist/檐下千秋-v10-可玩性修复版-20260915.zip.sha256
 
-# AI 配音：生成的 wav 已随仓库提交（AI配音台词/生成音频/），
-# 仍可用 工具/generate_voice.py + 工具/speakers.json（固定声线）重新生成。
-# 试听候选与压缩包属临时产物，不入库。
+# AI 配音：184 段 wav 的正式位置是
+#   LLM-tmp/客户端/assets/voice/       —— 游戏运行时读取
+#   Art_Material/Generation/生成音频/  —— 素材溯源
+# 本目录不再保留副本；需要时用 工具/generate_voice.py + 工具/speakers.json 重新生成。
+/AI配音台词/生成音频/
 /AI配音台词/试听/
 /AI配音台词/*.zip
 /tmp/
