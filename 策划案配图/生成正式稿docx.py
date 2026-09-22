@@ -386,7 +386,6 @@ def cover_xml():
 
     out = ['<w:p><w:pPr><w:spacing w:line="360"/></w:pPr></w:p>'] * 3
     out.append(line("《檐下千秋》游戏策划案", SZ_COVER_T, True, F_TITLE))
-    out.append(line("（正式稿）", SZ_COVER_S, True, F_TITLE))
     for _ in range(3):
         out.append(line("", SZ_BODY))
     for k in ("作品名称", "队伍 ID", "组别", "日期"):
