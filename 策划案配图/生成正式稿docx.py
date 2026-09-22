@@ -40,8 +40,8 @@ SHADE_HEAD = "E8EDEB"  # 表头底纹
 # ---- 封面信息（队伍确认后修改这里即可） ----
 COVER = {
     "作品名称": "《檐下千秋》",
-    "队伍 ID": "【待确认】",
-    "组别": "【待确认】",
+    "队伍 ID": "第二队",
+    "组别": "本科组",
     "日期": "2026 年 9 月",
     "subtitle": "依据 2026 一带一路暨金砖国家技能发展与技术创新大赛\n"
                 "首届 AI 赋能数字创意设计与应用赛项\n"
@@ -307,7 +307,8 @@ def parse(md_lines):
 
         m = re.fullmatch(r"!\[([^\]]*)\]\(([^)]+)\)", ln)
         if m:
-            p = ROOT / m.group(2)
+            # 图片路径按 md 所在目录解析（md 与配图不在同一级目录）
+            p = (SRC.parent / m.group(2)).resolve()
             if p.exists():
                 b.body.append(b.image(p))
                 b.body.append(b.caption("图　" + m.group(1) if m.group(1) else ""))
