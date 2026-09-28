@@ -66,7 +66,7 @@ func _ready() -> void:
 	card.add_child(text_column)
 	speaker_label = _label(text_column,"",24,Color("#d7bd85"))
 	text_label = _label(text_column,"",26,Color("#eee8d8"))
-	text_label.custom_minimum_size.y = 168
+	text_label.custom_minimum_size.y = 84
 	text_label.add_theme_constant_override("line_spacing",9)
 	hint = _label(text_column,"点击任意位置 · 下一句",15,Color("#9caaa3"))
 	var utilities := HBoxContainer.new()

@@ -13,7 +13,8 @@ func _run() -> void:
 	create_timer(30).timeout.connect(func(): quit(99))
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	while main.flow != "map" or main.busy: await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	var game = root.get_node("GameState")
 	# Read an existing QA save; these display fixtures never send state mutations to the service.
 	main.chapter_id = "archway"

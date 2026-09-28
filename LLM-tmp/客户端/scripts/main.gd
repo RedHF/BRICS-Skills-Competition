@@ -3,8 +3,9 @@ extends Node
 const TRACE = preload("res://scripts/trace_canvas.gd")
 const NETWORK = preload("res://scripts/network_client.gd")
 const REPOSITORY = preload("res://scripts/data_repository.gd")
-const MENU_BACKGROUND = preload("res://assets/generated/ui_01_open_scroll_main_menu_base.png")
+const MENU_BACKGROUND = preload("res://assets/landscape/chapters.png")
 
+var front: RefCounted
 var network = NETWORK.new()
 var data = REPOSITORY.new()
 var page: VBoxContainer
@@ -74,6 +75,7 @@ var voice_queue: Array[String] = []
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
+	front = preload("res://scripts/front_pages.gd").new(self)
 	add_child(network)
 	soundscape = preload("res://scripts/soundscape.gd").new()
 	add_child(soundscape)
@@ -126,7 +128,7 @@ func _ready() -> void:
 	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 20)
 	root.add_child(margin)
 	root.resized.connect(func():
-		var side := maxi(20, int((root.size.x - 540) / 2))
+		var side := maxi(20, int((root.size.x - 1440) / 2))
 		margin.add_theme_constant_override("margin_left", side)
 		margin.add_theme_constant_override("margin_right", side))
 	var column := VBoxContainer.new()
@@ -134,8 +136,7 @@ func _ready() -> void:
 	margin.add_child(column)
 	heading = VBoxContainer.new()
 	column.add_child(heading)
-	_label(heading, "檐 下 千 秋", 32, Color("#e4c98a"))
-	_label(heading, "听古建呓语 · 拓人间记忆", 14, Color("#94b0aa"))
+	_label(heading, "檐下千秋  /  檐下谱", 20, Color("#e4c98a"))
 	stats = _label(heading, "正在连接本地服务…", 17)
 	erosion_bar = ProgressBar.new()
 	erosion_bar.custom_minimum_size.y = 12
@@ -145,7 +146,7 @@ func _ready() -> void:
 	nav.columns = 5
 	navigation = nav
 	column.add_child(nav)
-	_button(nav, "地图", _show_map)
+	_button(nav, "关卡", _show_map)
 	_button(nav, "心舍", _show_memories)
 	_button(nav, "账册", _show_ledger)
 	_button(nav, "设置", _show_settings)
@@ -170,27 +171,13 @@ func _ready() -> void:
 	confirmation.ok_button_text = "亲手抹去"
 	confirmation.cancel_button_text = "留下这段记忆"
 	add_child(confirmation)
-	heading.hide()
-	flow = "splash"
-	var spacer := Control.new()
-	spacer.custom_minimum_size.y = 170
-	page.add_child(spacer)
-	var logo := TextureRect.new()
-	logo.texture = preload("res://assets/logo.svg")
-	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	logo.custom_minimum_size = Vector2(0, 220)
-	page.add_child(logo)
-	var title := _label(page, "檐 下 千 秋", 36, Color("#e4c98a"))
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var subtitle := _label(page, "一笔留住千秋，一念守住人间", 18)
-	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	await get_tree().create_timer(1.2).timeout
-	heading.show()
 	await _connect_server()
 
 func _connect_server() -> void:
 	_clear()
+	front.loading()
+	await get_tree().process_frame
+	front.stage(15, "正在连接本地存档…")
 	busy = true
 	network.base_url = str(ProjectSettings.get_setting("yanxia/server_url", "http://127.0.0.1:8090"))
 	var config := ConfigFile.new()
@@ -228,6 +215,7 @@ func _connect_server() -> void:
 	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 10:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
 		return
+	front.stage(45, "正在读取旅程…")
 	await _load_game()
 
 func _load_game() -> void:
@@ -243,6 +231,7 @@ func _load_game() -> void:
 		if progress_error != OK:
 			_error("剧情阅读进度读取失败：%s" % progress_error)
 			return
+	front.stage(65, "正在展开五章古建…")
 	var catalog: Dictionary = await network.request_json("/api/v1/catalog")
 	if catalog.is_empty():
 		_error(network.last_error)
@@ -251,6 +240,7 @@ func _load_game() -> void:
 	session_id = ""
 	GameState.session = {}
 	current_event = {}
+	front.stage(85, "正在恢复未完的记忆…")
 	var pending: Dictionary = await network.request_json("/api/v1/sessions")
 	if pending.is_empty():
 		_error(network.last_error)
@@ -265,7 +255,16 @@ func _load_game() -> void:
 	for button in navigation.get_children(): button.disabled = false
 	flow = "map"
 	_refresh_stats()
-	_show_map()
+	front.select_current()
+	front.stage(100, "檐下谱已就绪")
+	await get_tree().process_frame
+	_show_welcome()
+
+func _show_welcome() -> void:
+	if busy: return
+	_pause_event()
+	_clear()
+	front.welcome()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and not closing:
@@ -291,7 +290,8 @@ func _error(message: String) -> void:
 	busy = false
 	status.text = message
 	push_error(message)
-	if data.catalog.is_empty(): _button(page, "重新连接服务端", _connect_server)
+	if flow == "loading": front.connection_error(message)
+	elif data.catalog.is_empty(): _button(page, "重新连接服务端", _connect_server)
 
 func _refresh_stats(erosion: int = -1) -> void:
 	var p: Dictionary = GameState.player
@@ -356,6 +356,9 @@ func _event_background(event_id: String = "") -> Texture2D:
 	return texture
 
 func _event_art(event_id: String) -> Dictionary:
+	var landscape := "res://assets/landscape/" + event_id + ".jpeg"
+	if ResourceLoader.exists(landscape):
+		return {"background": landscape, "backdrop_color": "#263331"}
 	# Catalogs from older servers may omit art for newly added events. Keep the
 	# client playable with the neutral fallback instead of indexing a missing key.
 	if data.catalog.is_empty(): return {}
@@ -419,12 +422,16 @@ func _show_settings() -> void:
 		if error != OK: _error("设置保存失败：%s" % error)
 		else: status.text = "声音设置已保存。")
 	if _has_current_event(): _button(page, "返回当前事件", _resume)
+	_button(page, "返回关卡选择", _show_map)
+	_button(page, "返回欢迎页", _show_welcome)
 
 func _has_current_event() -> bool:
 	return not session_id.is_empty() or is_instance_valid(paused_page)
 
 func _clear() -> void:
 	_close_dialogue()
+	if flow not in ["map", "loading", "welcome", "splash"]: front.enter_game()
+	_layout_landscape.call_deferred()
 	if is_instance_valid(battle_dock): battle_dock.visible = flow == "battle"
 	if is_instance_valid(soundscape): soundscape.set_battle(flow == "battle")
 	status.text = ""
@@ -442,40 +449,11 @@ func _show_map() -> void:
 	_pause_event()
 	flow = "map"
 	_clear()
-	status.text = "从廊桥走到墨塔，替古建找回仍有人回应的记忆。"
-	_add_current_task(page)
-	for chapter in data.catalog.chapters:
-		var card := PanelContainer.new()
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("#1c3235")
-		style.border_color = Color("#9a8960")
-		style.border_width_left = 3
-		style.set_corner_radius_all(8)
-		style.content_margin_left = 16
-		style.content_margin_right = 16
-		style.content_margin_top = 14
-		style.content_margin_bottom = 14
-		card.add_theme_stylebox_override("panel", style)
-		page.add_child(card)
-		var entries := VBoxContainer.new()
-		entries.add_theme_constant_override("separation", 12)
-		card.add_child(entries)
-		_label(entries, chapter.title, 24, Color("#e4c98a"))
-		_label(entries, chapter.summary, 17)
-		for event in chapter.events:
-			var done: bool = GameState.player.completed_events.has(chapter.id + ":" + event.id)
-			var button := _button(entries, event.title + (" · 已修复" if done else "") + (" · 剧情草稿" if event.draft else ""), _open_event.bind(chapter.id, event.id))
-			button.disabled = event.draft or not chapter.id in GameState.player.unlocked_chapters
-			var lock_reason := "完成上一章节后开放"
-			for previous in chapter.events:
-				if int(previous.order) < int(event.order) and not GameState.player.completed_events.has(chapter.id + ":" + previous.id):
-					button.disabled = true
-					lock_reason = "先完成「%s」" % previous.title
-			if button.disabled: _label(entries, lock_reason, 16, Color("#bac7ba"))
-	if _has_current_event(): _button(page, "继续当前事件", _resume)
+	front.map_page()
 
 func _open_event(chapter: String, event: String) -> void:
 	if busy: return
+	front.enter_game()
 	if is_instance_valid(paused_page) and chapter == chapter_id and event == str(current_event.id):
 		await _resume()
 		return
@@ -544,6 +522,8 @@ func _start_event() -> void:
 	await _resume()
 
 func _resume() -> void:
+	front.enter_game()
+	backdrop_art.texture = _event_background()
 	if is_instance_valid(paused_page):
 		_clear()
 		scroll.remove_child(page)
@@ -782,7 +762,7 @@ func _start_battle() -> void:
 		child.queue_free()
 	battle_start = _button(battle_dock, "开始守护 · 准备好再迎战", _begin_battle)
 	battle_controls = GridContainer.new()
-	battle_controls.columns = 2
+	battle_controls.columns = 5
 	battle_dock.add_child(battle_controls)
 	for skill in BATTLE_KEYS:
 		if skill not in ["挥墨", "闪身"] and not battle_skills.has(skill): continue
@@ -1136,7 +1116,7 @@ func _render_dialogue() -> void:
 		_clear()
 		dialogue_stage = preload("res://scripts/dialogue_stage.gd").new()
 		dialogue_stage.failure = dialogue_mode == "failure"
-		dialogue_stage.backdrop = load(str(data.catalog.failure_scene.background)) if dialogue_mode == "failure" else _event_background()
+		dialogue_stage.backdrop = load("res://assets/landscape/failure.jpeg") if dialogue_mode == "failure" else _event_background()
 		if dialogue_background != null: dialogue_stage.backdrop = dialogue_background
 		add_child(dialogue_stage)
 		dialogue_stage.advance_requested.connect(_advance_dialogue)
@@ -1195,7 +1175,7 @@ func _begin_failure() -> void:
 func _show_failure_actions() -> void:
 	flow = "failed"
 	_clear()
-	_art_banner(page,load(str(data.catalog.failure_scene.background)),240)
+	_art_banner(page,load("res://assets/landscape/failure.jpeg"),240)
 	_label(page,"飞鸟山 · 墨迹未尽",26,Color("#e4c98a"))
 	var reasons := {"erosion_limit":"侵蚀已达 100", "puzzle_attempt_limit":"修复尝试用尽", "session_expired":"旧版本事件已超时", "battle_requirements_not_met":"白蚀未清除或未施展所需技能"}
 	var response: Dictionary = GameState.session
@@ -1297,3 +1277,37 @@ func _voice_next() -> void:
 	event_audio.stream = sound
 	event_audio.play()
 	soundscape.duck(true)
+
+## Reparent the active canvas into a wide stage. The right-hand notes scroll
+## independently, so investigation targets and puzzle input stay visible.
+func _layout_landscape() -> void:
+	if flow not in ["intro", "puzzle", "battle"] or page.has_node("LandscapeBody"): return
+	var visual: Control
+	for child in page.get_children():
+		if child is Control and child.get_script() in [preload("res://scripts/building_scene.gd"), TRACE, preload("res://scripts/join_canvas.gd"), preload("res://scripts/skill_scene.gd"), preload("res://scripts/battle_arena.gd")]:
+			visual = child
+	if visual == null: return
+	var children := page.get_children()
+	var body := HBoxContainer.new()
+	body.name = "LandscapeBody"
+	body.add_theme_constant_override("separation", 24)
+	body.custom_minimum_size.y = 330 if flow == "battle" else 430
+	page.add_child(body)
+	page.remove_child(visual)
+	visual.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	visual.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	visual.size_flags_stretch_ratio = 1.8
+	body.add_child(visual)
+	var notes_scroll := ScrollContainer.new()
+	notes_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	notes_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.add_child(notes_scroll)
+	var notes := VBoxContainer.new()
+	notes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	notes.add_theme_constant_override("separation", 12)
+	notes_scroll.add_child(notes)
+	for child in children:
+		if child == visual: continue
+		page.remove_child(child)
+		notes.add_child(child)
+	backdrop_art.texture = _event_background()

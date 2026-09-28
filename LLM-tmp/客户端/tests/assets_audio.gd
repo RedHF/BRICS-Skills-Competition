@@ -7,7 +7,8 @@ func _run() -> void:
 	create_timer(40).timeout.connect(func(): quit(99))
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	while main.busy or main.data.catalog.is_empty(): await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	assert(main.flow == "map")
 	main.current_event = {}
 	main._replay_story("prologue", "prologue_bridge")

@@ -36,7 +36,8 @@ func _run() -> void:
 	shots = OS.get_environment("YANXIA_REVIEW_SHOTS")
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	while main.busy or main.data.catalog.is_empty(): await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	game = root.get_node("GameState")
 	assert(main.session_id.is_empty(),"Use a fresh isolated save")
 	main._open_event("prologue","prologue_bridge")

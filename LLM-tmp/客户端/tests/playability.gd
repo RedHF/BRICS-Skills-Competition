@@ -51,7 +51,8 @@ func _run() -> void:
 	DirAccess.make_dir_recursive_absolute(shots)
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	while main.flow != "map" or main.busy: await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	main.set_process(false)
 	game = root.get_node("GameState")
 	check_glyphs()
@@ -79,8 +80,8 @@ func _run() -> void:
 		await click(return_button)
 		check(main.flow == "intro" and main.scene_view == original_scene and original_scene.discovered.size() == 1, "Investigation progress lost after settings")
 		# Return through the main task entry as well.
-		await click(button("地图", main.navigation))
-		await click(button("继续当前修复"))
+		await click(button("关卡", main.navigation))
+		await click(button("继续当前事件"))
 		check(main.flow == "intro" and main.scene_view == original_scene, "Map failed to resume investigation")
 		await capture("investigation-restored")
 	if is_instance_valid(main.paused_page):
@@ -98,7 +99,7 @@ func _run() -> void:
 	await capture("replay-correct-background")
 	main._show_map()
 	game.player = player_snapshot.duplicate(true)
-	for dimensions in [Vector2i(450,800),Vector2i(1280,720),Vector2i(1920,1080)]:
+	for dimensions in [Vector2i(960,540),Vector2i(1280,720),Vector2i(1920,1080)]:
 		DisplayServer.window_set_size(dimensions)
 		await create_timer(.2).timeout
 		var suffix := "-%dx%d" % [dimensions.x,dimensions.y]

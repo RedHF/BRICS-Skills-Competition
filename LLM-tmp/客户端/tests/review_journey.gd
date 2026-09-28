@@ -11,7 +11,10 @@ func click(button: Button) -> void:
 	assert(is_instance_valid(button) and not button.disabled)
 	await process_frame
 	await process_frame
-	if main.scroll.is_ancestor_of(button): main.scroll.ensure_control_visible(button)
+	var ancestor: Node = button.get_parent()
+	while ancestor != null:
+		if ancestor is ScrollContainer: ancestor.ensure_control_visible(button)
+		ancestor = ancestor.get_parent()
 	await process_frame
 	await process_frame
 	var point := button.get_global_rect().get_center()
@@ -93,7 +96,8 @@ func _run() -> void:
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	game = root.get_node("GameState")
-	while main.flow != "map" or main.busy: await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	main.set_process(false)
 	main.story_progress = ConfigFile.new()
 	assert(main.voice_index.cues.size() == 184)

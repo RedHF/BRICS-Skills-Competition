@@ -1,0 +1,15 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+ERROR: 连接服务端失败（13）。进度以服务端存档为准，请恢复连接后重试。
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _error (res://scripts/main.gd:292)
+       [1] _connect_server (res://scripts/main.gd:213)
+       [2] request_json (res://scripts/network_client.gd:25)
+ERROR: 连接服务端失败（13）。进度以服务端存档为准，请恢复连接后重试。
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _error (res://scripts/main.gd:292)
+       [1] _connect_server (res://scripts/main.gd:213)
+       [2] request_json (res://scripts/network_client.gd:25)
+PASS actual refused connection and clean retry; no fake welcome or offline progress

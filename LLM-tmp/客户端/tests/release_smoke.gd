@@ -9,7 +9,8 @@ func _run() -> void:
 	create_timer(40).timeout.connect(func(): quit(99))
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	while main.busy or main.data.catalog.is_empty(): await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	if main.flow != "map" or main.data.catalog.version != 10: return fail("Map/version")
 	if main.voice_index.cues.size() != 184: return fail("Voice count")
 	for path in main.voice_index.cues.values():

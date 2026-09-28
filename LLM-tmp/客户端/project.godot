@@ -6,8 +6,9 @@ config_version=5
 [application]
 
 config/name="檐下千秋"
-config/icon="res://assets/logo.svg"
-boot_splash/image="res://assets/logo.png"
+config/icon="res://assets/landscape/logo.png"
+boot_splash/image="res://assets/landscape/welcome.png"
+boot_splash/fullsize=true
 boot_splash/bg_color=Color(0.078, 0.149, 0.169, 1)
 config/description="Data-driven online puzzle adventure demo"
 run/main_scene="res://scenes/main.tscn"
@@ -18,11 +19,15 @@ GameState="*res://scripts/game_state.gd"
 
 [display]
 
-window/size/viewport_width=540
-window/size/viewport_height=960
-window/size/window_width_override=450
-window/size/window_height_override=800
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=0
+window/size/min_width=960
+window/size/min_height=540
 
 [input]
 
