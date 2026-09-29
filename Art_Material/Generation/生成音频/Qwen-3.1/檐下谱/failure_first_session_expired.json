@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure_first.04",
+  "file": "檐下谱\\failure_first_session_expired.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你退到了飞鸟山。这段路，你走得太久了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "7e965018-ae1f-978d-bce3-acdfb2759107",
+  "usage": {
+    "input_tokens": 19,
+    "output_tokens": 62,
+    "total_tokens": 81,
+    "characters": 35
+  },
+  "fingerprint": "de82fc0742b95bebb7333a4272e94cc8bb8ce1aacce2725cd851b1ffe69fa8d5",
+  "sha256": "4860bfe95bfe1ff00b5201523a61e74b9e252a5108d895192fc3e7ba60193b04",
+  "seconds": 4.862,
+  "peak_dbfs": -7.57,
+  "gain_db": -3.42,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.outro.01",
+  "file": "旁白\\archway_craftsman_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "刻痕连成通向七层墨塔的路线。檐下谱扩至七格，却仍装不下所有故事。塔顶传来一个陌生而熟悉的声音：我曾经试过，让世上再无悲伤。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "745d2270-16db-93b2-8b9c-cd09193b89e7",
+  "usage": {
+    "input_tokens": 61,
+    "output_tokens": 194,
+    "total_tokens": 255,
+    "characters": 116
+  },
+  "fingerprint": "95a837866a50d345cd11a7e40704cef09a415334e79bda880f9dd048a1ef3aff",
+  "sha256": "35f7813b98cc8de2c17fce79ca5ff9a6485a50ea8949a6022db9ae61ccf87918",
+  "seconds": 15.391,
+  "peak_dbfs": -6.2,
+  "gain_db": -2.43,
+  "sample_rate": 24000,
+  "channels": 1
+}

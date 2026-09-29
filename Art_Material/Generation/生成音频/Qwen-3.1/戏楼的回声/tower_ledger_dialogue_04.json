@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.dialogue.04",
+  "file": "戏楼的回声\\tower_ledger_dialogue_04.wav",
+  "role": "戏楼的回声",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你肯听下一句，就是你的名字。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "d7c565ee-6cd7-9cbf-bc39-e0f110decbf6",
+  "usage": {
+    "input_tokens": 14,
+    "output_tokens": 32,
+    "total_tokens": 46,
+    "characters": 26
+  },
+  "fingerprint": "7b244d90b0647a34b0c561ef1b1325ea0e30a8edd19f1d7323218b4318f105e5",
+  "sha256": "35b7c01625797593b462fe46bfe613d9095ce8f103736718ce3f0d25693dedf3",
+  "seconds": 2.511,
+  "peak_dbfs": -5.95,
+  "gain_db": -1.44,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.dialogue.01",
+  "file": "檐下谱\\tower_ledger_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "长廊摆着你亲手拓下的记忆，也摆着你亲手放开的空页。两者都没有消失过。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "8f363e48-d442-9954-8352-f0d2e6645dcf",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 94,
+    "total_tokens": 128,
+    "characters": 65
+  },
+  "fingerprint": "168a56adef38132c63c57619f02742210d29082ea2064ab9d732bfc41c255c6d",
+  "sha256": "3781fab4278ac4019f5e9287f759fa7343f87fb74fae1c4d15d55de37dc31ced",
+  "seconds": 7.491,
+  "peak_dbfs": -4.97,
+  "gain_db": -2.29,
+  "sample_rate": 24000,
+  "channels": 1
+}

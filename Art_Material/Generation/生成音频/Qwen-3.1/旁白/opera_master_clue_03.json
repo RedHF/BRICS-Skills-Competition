@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.clue.03",
+  "file": "旁白\\opera_master_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "小戏鞋边的墨迹被改过许多次。练习的痕迹也是传承的一部分。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "ba66ecb2-965d-9ab6-afae-9579165ba291",
+  "usage": {
+    "input_tokens": 28,
+    "output_tokens": 82,
+    "total_tokens": 110,
+    "characters": 54
+  },
+  "fingerprint": "2d33d2af87fd12a73f95c977fce3840c51d6578659f70ef34c57e409cc3d6e86",
+  "sha256": "19e030a596cbe63cc326cfa7e55d00dc8f2d8f9d06a8a262b8a1a1494fff1fe9",
+  "seconds": 6.485,
+  "peak_dbfs": -5.99,
+  "gain_db": -3.46,
+  "sample_rate": 24000,
+  "channels": 1
+}

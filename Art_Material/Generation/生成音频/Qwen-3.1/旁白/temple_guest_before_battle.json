@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.before_battle.01",
+  "file": "旁白\\temple_guest_before_battle.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "守住檐下这份安宁。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "bd1f7770-c923-9b1e-b039-68fb81091a70",
+  "usage": {
+    "input_tokens": 9,
+    "output_tokens": 30,
+    "total_tokens": 39,
+    "characters": 17
+  },
+  "fingerprint": "b1162380ff2c74c969001c9ef8654f8a461fb80a8926b579ef45c26101f6e89f",
+  "sha256": "e5396d47790ff97bb4b5eb06b23e7e05d9fda13057739c500d42ae1c403e9656",
+  "seconds": 2.264,
+  "peak_dbfs": -7.71,
+  "gain_db": -3.11,
+  "sample_rate": 24000,
+  "channels": 1
+}

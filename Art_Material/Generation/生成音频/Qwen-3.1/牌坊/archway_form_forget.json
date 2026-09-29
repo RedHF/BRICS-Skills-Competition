@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.forget_response.01",
+  "file": "牌坊\\archway_form_forget.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "旧名字的回声离开了心舍。你仍可以选择把无名者的位置留在世界上。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "4cac455c-1e5a-9326-ad5e-3a719d238073",
+  "usage": {
+    "input_tokens": 31,
+    "output_tokens": 74,
+    "total_tokens": 105,
+    "characters": 60
+  },
+  "fingerprint": "4386e37d3be15dfc62f06ed930c02e7f40e2654431ba232b7b03b31b66f4297b",
+  "sha256": "17109c2da4ebaced73ca9e642441ede160b8b6a59c2b7ba45e372d754102a29a",
+  "seconds": 5.876,
+  "peak_dbfs": -4.26,
+  "gain_db": -2.9,
+  "sample_rate": 24000,
+  "channels": 1
+}

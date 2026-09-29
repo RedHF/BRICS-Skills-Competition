@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.first_clear.01",
+  "file": "旁白\\opera_master_first_clear.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "唱完了。……为什么要演奏春日影？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "2b10a95c-c2fe-9b94-a1f7-8a177013f531",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 40,
+    "total_tokens": 55,
+    "characters": 28
+  },
+  "fingerprint": "af12c3867dd7e027db2c894c081e3bd63cce7221ccc0e3106a74702f772f0462",
+  "sha256": "2899e86fbc643ec1e6ebf779c8b37c03eb7ebf1e2ab6c2be8630727bf0ebec4c",
+  "seconds": 3.022,
+  "peak_dbfs": -7.3,
+  "gain_db": -3.11,
+  "sample_rate": 24000,
+  "channels": 1
+}

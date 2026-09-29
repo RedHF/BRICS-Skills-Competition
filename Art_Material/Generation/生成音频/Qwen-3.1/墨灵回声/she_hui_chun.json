@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.echo.01",
+  "file": "墨灵回声\\she_hui_chun.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "鼓声唤回春社，也唤回孩子们的脚步。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "061a5377-73de-9426-997c-0b46f6284280",
+  "usage": {
+    "input_tokens": 17,
+    "output_tokens": 49,
+    "total_tokens": 66,
+    "characters": 32
+  },
+  "fingerprint": "21ed29fb3762ce37bbea29ee68898a99fcf7e80c203d05b933b4d9ddfe2e0aa1",
+  "sha256": "4ad412b5381d6e633f2c666c2cd11905448aba59471e71fcabc2810b247966f2",
+  "seconds": 3.81,
+  "peak_dbfs": -7.57,
+  "gain_db": -3.03,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.beat.01",
+  "file": "牌坊\\archway_form_beat_01.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "路过的人总仰头念名字，很少低头看我怎么站着。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "082d6729-978f-954d-a215-5c46b9abec66",
+  "usage": {
+    "input_tokens": 22,
+    "output_tokens": 55,
+    "total_tokens": 77,
+    "characters": 42
+  },
+  "fingerprint": "2c000bdbcbcb3cfdff2f8cc6ab703ab18686ab85463afe4afad982680c83ddfa",
+  "sha256": "c4a668db217b528a633dc96c146e462b733716283365b82ace014ea67accc8bc",
+  "seconds": 4.279,
+  "peak_dbfs": -3.97,
+  "gain_db": -1.75,
+  "sample_rate": 24000,
+  "channels": 1
+}

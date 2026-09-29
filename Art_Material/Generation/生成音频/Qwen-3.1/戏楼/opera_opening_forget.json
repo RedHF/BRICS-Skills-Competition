@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.forget_response.01",
+  "file": "戏楼\\opera_opening_forget.wav",
+  "role": "戏楼",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你放下了旧回声。没有人能独自装下整座戏楼，唱过的这一声会留在账册。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "512b6d96-da97-9a6f-a764-0b7457d41e8c",
+  "usage": {
+    "input_tokens": 33,
+    "output_tokens": 73,
+    "total_tokens": 106,
+    "characters": 63
+  },
+  "fingerprint": "e0ff3008606b15b9f49ad255673d327c53e66b2f02064b4d04410228602773cb",
+  "sha256": "1258c5ef481d649b2dd2fa400ba24f26a763bbc8227e6335108420ec7e3f9c99",
+  "seconds": 5.716,
+  "peak_dbfs": -4.15,
+  "gain_db": -2.38,
+  "sample_rate": 24000,
+  "channels": 1
+}

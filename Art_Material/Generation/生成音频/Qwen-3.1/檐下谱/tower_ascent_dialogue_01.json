@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.dialogue.01",
+  "file": "檐下谱\\tower_ascent_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "墨塔每层都收着被删去的谱页。越往上，纸越白，人的轮廓也越淡。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5fa9ae47-4ed5-96d9-8276-24d8272daf95",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 88,
+    "total_tokens": 118,
+    "characters": 56
+  },
+  "fingerprint": "20509caac6341bf8abe9db1476d6b6596488bbed248ee50ff91e9ecff48f77a0",
+  "sha256": "8e5bdfd2ef3bf8e427141a86a6f153d0e896ff50532ead7433ad25ca1570cb5f",
+  "seconds": 6.899,
+  "peak_dbfs": -5.7,
+  "gain_db": -3.16,
+  "sample_rate": 24000,
+  "channels": 1
+}

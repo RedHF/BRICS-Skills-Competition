@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.clue.01",
+  "file": "旁白\\tower_ascent_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "第一层谱页记着灾后重建，灾难被删去后，连伸手相助的缘由也消失了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3f23872c-a45e-9d82-92be-b8dcf3cfd876",
+  "usage": {
+    "input_tokens": 32,
+    "output_tokens": 93,
+    "total_tokens": 125,
+    "characters": 61
+  },
+  "fingerprint": "83c9741842cf68308ff1f94d51d8f2265a1a5757739e181c111969ed118f11b3",
+  "sha256": "2a9140281157f639d7a962fb29b50ab41367d8474f700642ea7e8722918976b1",
+  "seconds": 7.386,
+  "peak_dbfs": -6.56,
+  "gain_db": -2.59,
+  "sample_rate": 24000,
+  "channels": 1
+}

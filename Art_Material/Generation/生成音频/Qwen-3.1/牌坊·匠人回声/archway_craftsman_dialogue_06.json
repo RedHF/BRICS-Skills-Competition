@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.dialogue.06",
+  "file": "牌坊·匠人回声\\archway_craftsman_dialogue_06.wav",
+  "role": "牌坊·匠人回声",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "这就对了。传下去的不是一块永不坏的石头，是坏了以后仍有人肯修。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "28862551-3c18-9c54-9a80-fd1f3de3ee0b",
+  "usage": {
+    "input_tokens": 31,
+    "output_tokens": 88,
+    "total_tokens": 119,
+    "characters": 59
+  },
+  "fingerprint": "7a22cc94cb192213a36b0fbe0fcf9299880fe574237f2a7f4d3455101d128565",
+  "sha256": "2296d46594f97ee3251f61a1fc6a60fed565fade7f80dfdd46e9acd1000d57ad",
+  "seconds": 6.964,
+  "peak_dbfs": -3.0,
+  "gain_db": -3.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

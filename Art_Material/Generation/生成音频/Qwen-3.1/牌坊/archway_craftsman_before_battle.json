@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.before_battle.01",
+  "file": "牌坊\\archway_craftsman_before_battle.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "两波白蚀正冲击梁柱。斗拱承重，飞檐破障，把所学连成一次真正的修复。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "e84a763e-d295-927b-ac52-2924b48ce23b",
+  "usage": {
+    "input_tokens": 33,
+    "output_tokens": 100,
+    "total_tokens": 133,
+    "characters": 62
+  },
+  "fingerprint": "76ffc582d0ac34dac59fc9a4ebecb7a76da425ec6a429a6e83bccadebdd2516e",
+  "sha256": "f435b425de99fb9a69dcb1e4b176bd07edc20eb1d679688f5dbf2f035ed12467",
+  "seconds": 7.951,
+  "peak_dbfs": -4.64,
+  "gain_db": -3.79,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.clue.03",
+  "file": "旁白\\tower_ledger_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "桌上有三支未用的笔。世界的后续应由不止一个人写下。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "d01cbd3c-f0da-9473-911b-1de86129aab5",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 71,
+    "total_tokens": 96,
+    "characters": 48
+  },
+  "fingerprint": "79aa797f30f7df3645b932dfe83f2dc44f6197db11f62e1b1aa4d92c1678f8f7",
+  "sha256": "64dec464baa8eee6d0248aad18190061c7781afe52c129d4346fb5391ff3797e",
+  "seconds": 5.558,
+  "peak_dbfs": -6.07,
+  "gain_db": -2.79,
+  "sample_rate": 24000,
+  "channels": 1
+}

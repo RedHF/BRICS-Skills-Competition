@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.before_battle.01",
+  "file": "社庙\\temple_incense_before_battle.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "梁刚稳住，白蚀还在拉扯榫口。用斗拱守住承重点。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "78eb88c6-6646-9f88-b2d5-23485e00b3e5",
+  "usage": {
+    "input_tokens": 24,
+    "output_tokens": 69,
+    "total_tokens": 93,
+    "characters": 43
+  },
+  "fingerprint": "3153fff979906af94fbda79b998fd757f973769b724ef017e0a0ca8832ad21fb",
+  "sha256": "75bc1b56651a9cb15c41ddd4ac747149cdf27e7aa0d8370c38ed2d8a9b62b4bd",
+  "seconds": 5.447,
+  "peak_dbfs": -5.77,
+  "gain_db": -2.16,
+  "sample_rate": 24000,
+  "channels": 1
+}

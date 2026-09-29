@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.clue.02",
+  "file": "旁白\\temple_drum_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "红绳打成三个结，孩子曾用它记鼓点，也记归来的人数。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "03b2d78b-bad2-9e2b-bbf5-bdc01471bbb6",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 81,
+    "total_tokens": 106,
+    "characters": 47
+  },
+  "fingerprint": "b7a047ac603f3f4d51488f9f6cef871367c24dfb9d6e0fd26f42e6e46c770ff6",
+  "sha256": "ecef76ba933ac91b8fd8ae32c2af0a064adcd5c09842eff2fc9dae72d24079ad",
+  "seconds": 6.425,
+  "peak_dbfs": -6.73,
+  "gain_db": -1.91,
+  "sample_rate": 24000,
+  "channels": 1
+}

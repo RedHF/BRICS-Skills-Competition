@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.echo.01",
+  "file": "墨灵回声\\yan_ping_an.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "桥记着每一次送别与归来。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "ee933527-202a-9183-b45d-6d4a9f1b1c07",
+  "usage": {
+    "input_tokens": 12,
+    "output_tokens": 40,
+    "total_tokens": 52,
+    "characters": 23
+  },
+  "fingerprint": "ecbb4445668f63e74421c1870b3557296041b29f99fd9cadb099ba18f8237479",
+  "sha256": "5efdd318d97d55885ab1fd14c62130ad97ed30b9b9428495e873cfd39945ad4f",
+  "seconds": 3.098,
+  "peak_dbfs": -7.96,
+  "gain_db": -2.4,
+  "sample_rate": 24000,
+  "channels": 1
+}

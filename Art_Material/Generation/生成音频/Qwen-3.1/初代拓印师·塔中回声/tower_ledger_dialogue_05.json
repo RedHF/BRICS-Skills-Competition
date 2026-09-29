@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.dialogue.05",
+  "file": "初代拓印师·塔中回声\\tower_ledger_dialogue_05.wav",
+  "role": "初代拓印师·塔中回声",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "这支笔不该替所有人决定。你愿意把它交回去吗？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "b9e84bf9-2f16-9392-921f-e1d75a0bf592",
+  "usage": {
+    "input_tokens": 22,
+    "output_tokens": 66,
+    "total_tokens": 88,
+    "characters": 42
+  },
+  "fingerprint": "3da4f233d1e231ac61ebd12083d9aae8bcb0e80354de5a6da56f038c5126672b",
+  "sha256": "1ae786c1aea420241b9befd62b185b4923b2ff605dae14c1a46522d13ef00d05",
+  "seconds": 5.126,
+  "peak_dbfs": -4.08,
+  "gain_db": -4.08,
+  "sample_rate": 24000,
+  "channels": 1
+}

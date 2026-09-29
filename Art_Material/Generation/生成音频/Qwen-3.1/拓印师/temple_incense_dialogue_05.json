@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.dialogue.05",
+  "file": "拓印师\\temple_incense_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "榫口还在，按左、中、右的承重点归位，就能撑起来。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "e1b7c067-94b8-9b29-8830-d5d85d5dbda8",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 57,
+    "total_tokens": 82,
+    "characters": 43
+  },
+  "fingerprint": "c1865ad571eea5334c99178f04eda90277f76780a5c76983ad55e4c7b91df6e6",
+  "sha256": "c8f35dc2e432f62124f350e0b721f6df6c3f71a7a0728141b376b26642bbc5da",
+  "seconds": 4.536,
+  "peak_dbfs": -5.57,
+  "gain_db": -2.04,
+  "sample_rate": 24000,
+  "channels": 1
+}

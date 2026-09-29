@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.dialogue.06",
+  "file": "拓印师\\tower_ledger_dialogue_06.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我会留下能够证实的记忆，也留下空白。愿意接笔的人，请从自己的故事开始。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "6b935587-9e29-9a0a-87ed-309380113b04",
+  "usage": {
+    "input_tokens": 35,
+    "output_tokens": 96,
+    "total_tokens": 131,
+    "characters": 66
+  },
+  "fingerprint": "31243000ef436b4cd89df7fae12244e25ed7c1325f83caaad880cd7341c5ab59",
+  "sha256": "cf89a8c822ae33295b1f382b269761f7a7072b83d69cbdaaea7a1098d7b2c630",
+  "seconds": 7.57,
+  "peak_dbfs": -4.03,
+  "gain_db": -2.03,
+  "sample_rate": 24000,
+  "channels": 1
+}

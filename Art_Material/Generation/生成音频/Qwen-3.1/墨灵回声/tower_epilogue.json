@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.echo.01",
+  "file": "墨灵回声\\tower_epilogue.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "只记住值得记住的，让世界自己选择颜色。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "c7602624-c1cb-94c2-8c0d-100d7e9c42e8",
+  "usage": {
+    "input_tokens": 19,
+    "output_tokens": 51,
+    "total_tokens": 70,
+    "characters": 36
+  },
+  "fingerprint": "3323a19f717f2f767eda625783058dc2a909a880a9be38a44f2e3fb8a753d8ed",
+  "sha256": "952eb63af4f522dcdb4bc401454f162bf72ff152c6828088bc6cc1af5c8662de",
+  "seconds": 3.961,
+  "peak_dbfs": -5.9,
+  "gain_db": -1.97,
+  "sample_rate": 24000,
+  "channels": 1
+}

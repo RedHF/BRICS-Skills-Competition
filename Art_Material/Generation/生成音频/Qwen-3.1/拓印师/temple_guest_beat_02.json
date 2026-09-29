@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.beat.02",
+  "file": "拓印师\\temple_guest_beat_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "他认得你吗？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "820295f2-70be-90a7-b0e7-ad3984f4955e",
+  "usage": {
+    "input_tokens": 6,
+    "output_tokens": 23,
+    "total_tokens": 29,
+    "characters": 11
+  },
+  "fingerprint": "280c68ebcfb2b4c1cb4b6e62c549c5a09bd649f81e6bd0ed7ae0f42c350e39a3",
+  "sha256": "52caa3c7ec6ce650c4451c61693eea32f2dca55741b3f3fa1a5aed3fdff320c8",
+  "seconds": 1.785,
+  "peak_dbfs": -6.59,
+  "gain_db": -3.72,
+  "sample_rate": 24000,
+  "channels": 1
+}

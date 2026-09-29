@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.clue.02",
+  "file": "旁白\\archway_craftsman_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "尺寸记号相互呼应，低处承重点需要斗拱稳住。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "b7d43437-8f5b-9f2d-8903-98f468a50b41",
+  "usage": {
+    "input_tokens": 21,
+    "output_tokens": 62,
+    "total_tokens": 83,
+    "characters": 40
+  },
+  "fingerprint": "c9e742d090750c4caa3b2ee5235c467b281212af3b961b2bcacdaf3975a3da62",
+  "sha256": "2e3deb85aab7ca122ddf4ec0bd588ba087e763a7f56d2bbe440a039de7e3a031",
+  "seconds": 4.863,
+  "peak_dbfs": -7.12,
+  "gain_db": -1.96,
+  "sample_rate": 24000,
+  "channels": 1
+}

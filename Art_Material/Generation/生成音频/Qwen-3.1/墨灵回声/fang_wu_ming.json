@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.echo.01",
+  "file": "墨灵回声\\fang_wu_ming.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "无名匠人的手艺也值得被记住。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "b73ccaec-ff31-94df-b4ec-af33a7fdb4a0",
+  "usage": {
+    "input_tokens": 14,
+    "output_tokens": 37,
+    "total_tokens": 51,
+    "characters": 27
+  },
+  "fingerprint": "d3d0517ff57f72d04ce1e0d0629abb88d437983f600ca12043a65cbd9991a211",
+  "sha256": "48725e41c219aba8d7e8e03a5cf2ceb0c2b646cf407daf4c3266473c9d09b4c1",
+  "seconds": 2.86,
+  "peak_dbfs": -5.23,
+  "gain_db": -1.94,
+  "sample_rate": 24000,
+  "channels": 1
+}

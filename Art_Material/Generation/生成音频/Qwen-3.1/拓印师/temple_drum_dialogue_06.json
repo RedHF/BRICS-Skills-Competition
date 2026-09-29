@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.dialogue.06",
+  "file": "拓印师\\temple_drum_dialogue_06.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "这回不用等谁来敲第一下。我们一起。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "c69e4eac-d287-9f68-a809-336d1854d6e8",
+  "usage": {
+    "input_tokens": 17,
+    "output_tokens": 35,
+    "total_tokens": 52,
+    "characters": 32
+  },
+  "fingerprint": "c5e63c808e173b6f2c14ec824d6f1d638a73f2e3a622d95de9056d1806b7dc5f",
+  "sha256": "288de6ef1e8e25738cfa0479b478952724ad6495e1ba47821ea6d1806bcfe514",
+  "seconds": 2.726,
+  "peak_dbfs": -4.39,
+  "gain_db": -2.44,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.dialogue.04",
+  "file": "社庙\\temple_incense_dialogue_04.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "也记着。可香下面，是来修屋顶的人。别只擦亮香炉，抬头看看梁。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5499f971-306c-9473-b42c-4f1f95e579e1",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 71,
+    "total_tokens": 101,
+    "characters": 55
+  },
+  "fingerprint": "a91325f8e7b584fc67c7ffce93e5aa163e7a5c5ee9be1bac269d07bde2db5731",
+  "sha256": "d5cd231b1c6b3903e02149d1bb7da934e053d6c8b64687055249165121212b69",
+  "seconds": 5.543,
+  "peak_dbfs": -6.36,
+  "gain_db": -1.98,
+  "sample_rate": 24000,
+  "channels": 1
+}

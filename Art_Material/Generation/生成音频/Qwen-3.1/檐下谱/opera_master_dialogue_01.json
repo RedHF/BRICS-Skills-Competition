@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.dialogue.01",
+  "file": "檐下谱\\opera_master_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "后台并排放着一双大戏鞋和一双小戏鞋。布景散落，旧戏服仍朝着台口。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5041c811-a03a-938f-ae0b-46b8baafdabb",
+  "usage": {
+    "input_tokens": 32,
+    "output_tokens": 108,
+    "total_tokens": 140,
+    "characters": 61
+  },
+  "fingerprint": "d0b5d967ce590411c2843b85127e224a89b85a714e13cbaf93435947a8f90622",
+  "sha256": "49d25848e8eec58f60e1f0e2299b7f226be6cb386320699424124ee5390abd6d",
+  "seconds": 8.64,
+  "peak_dbfs": -5.85,
+  "gain_db": -2.09,
+  "sample_rate": 24000,
+  "channels": 1
+}

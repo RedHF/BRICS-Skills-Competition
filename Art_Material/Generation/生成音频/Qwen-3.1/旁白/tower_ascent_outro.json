@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.outro.01",
+  "file": "旁白\\tower_ascent_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "三重白蚀散去，塔心显露一张空桌。初代的声音不再要求原谅，只把笔推向你：这次，由活着的人决定怎样接着写。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "b5f75b42-5690-9f43-8343-4b83ca4a1cb9",
+  "usage": {
+    "input_tokens": 51,
+    "output_tokens": 160,
+    "total_tokens": 211,
+    "characters": 96
+  },
+  "fingerprint": "b1235ed1604fb9eee6b37d51bb88431055203f909644e8bb95d51dde1f285e92",
+  "sha256": "107d9136aacbe749cb1742a556d816728ff337e82b06cf941ce2f7ca2871f4b7",
+  "seconds": 12.767,
+  "peak_dbfs": -6.44,
+  "gain_db": -2.32,
+  "sample_rate": 24000,
+  "channels": 1
+}

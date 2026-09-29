@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.beat.01",
+  "file": "戏楼\\opera_opening_beat_01.wav",
+  "role": "戏楼",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "台上的人以为没人来了，不肯开嗓。台下的人以为不开戏了，也不肯落座。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1bc0acdf-a9ba-9c02-9a3a-b23414a9171f",
+  "usage": {
+    "input_tokens": 33,
+    "output_tokens": 78,
+    "total_tokens": 111,
+    "characters": 62
+  },
+  "fingerprint": "e947893559a118bde9767f2b1e4e0a1ea3e3a1490e8e4648773ab125919950c2",
+  "sha256": "1c2d3b9db3c88a945744a0cdcc67e2dc734d3e968422e0b1b0c499a9a02024de",
+  "seconds": 6.141,
+  "peak_dbfs": -4.9,
+  "gain_db": -1.93,
+  "sample_rate": 24000,
+  "channels": 1
+}

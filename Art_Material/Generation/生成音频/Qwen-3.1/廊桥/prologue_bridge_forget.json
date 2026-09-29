@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.forget_response.01",
+  "file": "廊桥\\prologue_bridge_forget.wav",
+  "role": "廊桥",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你也许忘了谁曾在这里等候，但学会的守护还留在手里。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "b23078f6-e3a7-924a-8185-5449ec06ec24",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 76,
+    "total_tokens": 101,
+    "characters": 48
+  },
+  "fingerprint": "95af2e9c4d725c84f264050b4c83f53fbac5c7f8e71a544eae5a01db8f2e9066",
+  "sha256": "e5bd79a9f531648a35f0053e7e3ca526466746ff14c63ec3a791c51269e3a35f",
+  "seconds": 5.659,
+  "peak_dbfs": -3.33,
+  "gain_db": -1.24,
+  "sample_rate": 24000,
+  "channels": 1
+}

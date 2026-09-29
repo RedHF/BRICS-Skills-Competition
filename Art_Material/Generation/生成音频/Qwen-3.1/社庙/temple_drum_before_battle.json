@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.before_battle.01",
+  "file": "社庙\\temple_drum_before_battle.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "鼓声把白蚀引来了。施展藻井净化，再用挥墨护住鼓面。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3d59ae96-545d-9932-9c17-70609718ccbe",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 76,
+    "total_tokens": 101,
+    "characters": 47
+  },
+  "fingerprint": "58c47c002be861c7725a3abb6459747fb331b9f57e482494a7208dab812ed57d",
+  "sha256": "d1c8afb2881576736bd14c14918a51957443da14b81e92504244b2426c33f631",
+  "seconds": 6.024,
+  "peak_dbfs": -5.99,
+  "gain_db": -1.73,
+  "sample_rate": 24000,
+  "channels": 1
+}

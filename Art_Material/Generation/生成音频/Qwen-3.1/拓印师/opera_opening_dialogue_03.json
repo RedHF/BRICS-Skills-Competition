@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.dialogue.03",
+  "file": "拓印师\\opera_opening_dialogue_03.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "总得有人先开口。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1fcc10db-6ed5-9acd-b2f7-7143f1c61e5c",
+  "usage": {
+    "input_tokens": 8,
+    "output_tokens": 25,
+    "total_tokens": 33,
+    "characters": 15
+  },
+  "fingerprint": "705930393be531774797d98f5b9958b1dd2d718aa81bd0389a78f76a031dcfd0",
+  "sha256": "67d4b1765036d37d9fba88ed7cb70fec7bdf0d4a1554c5902ada968039d65dbd",
+  "seconds": 1.942,
+  "peak_dbfs": -7.39,
+  "gain_db": -1.3,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.forget_response.01",
+  "file": "社庙·客声\\temple_guest_forget.wav",
+  "role": "社庙·客声",
+  "voice": "anmingyuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你不再记得我的声音，也别忘了在别人淋雨时留一处屋檐。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "91d287ad-505f-92b0-84b8-fccad3a1202f",
+  "usage": {
+    "input_tokens": 26,
+    "output_tokens": 61,
+    "total_tokens": 87,
+    "characters": 50
+  },
+  "fingerprint": "1072da9e18e76146a308d68335016bf9432576808a8c3db8dcf6a380f8c789a1",
+  "sha256": "0a955f2027b7dce52b1b2641b3911ff7b9bcb9c2a06940d476111335063b3f31",
+  "seconds": 4.764,
+  "peak_dbfs": -3.0,
+  "gain_db": -2.22,
+  "sample_rate": 24000,
+  "channels": 1
+}

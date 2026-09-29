@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.09",
+  "file": "飞鸟山\\failure_line_09.wav",
+  "role": "飞鸟山",
+  "voice": "longzhe_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你这个人，满脑子只想着自己呢。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "a092e3c5-f346-92d6-86b2-359402782a7e",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 39,
+    "total_tokens": 54,
+    "characters": 28
+  },
+  "fingerprint": "65201e3e81ea296226a880afc9066fb8872cbca5cca2c86db031586c99747d54",
+  "sha256": "8d98755b34b567ad037121d3b0e8e661edec02649a43e0388803b96f8bbe7536",
+  "seconds": 3.009,
+  "peak_dbfs": -3.0,
+  "gain_db": -3.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

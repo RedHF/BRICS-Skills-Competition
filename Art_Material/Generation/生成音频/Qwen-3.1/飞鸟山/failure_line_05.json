@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.05",
+  "file": "飞鸟山\\failure_line_05.wav",
+  "role": "飞鸟山",
+  "voice": "longzhe_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你要的不是原来的我，是一个被你修好的我。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "6f0e10c9-98c2-96aa-b802-d049f7e35a85",
+  "usage": {
+    "input_tokens": 20,
+    "output_tokens": 51,
+    "total_tokens": 71,
+    "characters": 38
+  },
+  "fingerprint": "4990814b7a2c0c96595d9190f84ec99549cdd1a2d51e3ed492a5b3662ae149d2",
+  "sha256": "30a084d314f119d0860fb461804b5851a78ea0bc69b17415952810f655b61153",
+  "seconds": 4.037,
+  "peak_dbfs": -3.0,
+  "gain_db": -2.15,
+  "sample_rate": 24000,
+  "channels": 1
+}

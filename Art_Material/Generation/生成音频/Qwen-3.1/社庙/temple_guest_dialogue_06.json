@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.dialogue.06",
+  "file": "社庙\\temple_guest_dialogue_06.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "把它拓好吧。以后谁路过，都该知道这道门没有关。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3ddedfc6-005b-900e-a133-377c4b046b10",
+  "usage": {
+    "input_tokens": 23,
+    "output_tokens": 52,
+    "total_tokens": 75,
+    "characters": 43
+  },
+  "fingerprint": "4b71991c4b5973876bfc780961b9450eb6c546bb5b6ce970a12a131951155aa6",
+  "sha256": "5152474bcf7b05147b61ee7472fcfafde0b77baf94fe5266cba38bd5c3294984",
+  "seconds": 4.088,
+  "peak_dbfs": -3.45,
+  "gain_db": -2.68,
+  "sample_rate": 24000,
+  "channels": 1
+}

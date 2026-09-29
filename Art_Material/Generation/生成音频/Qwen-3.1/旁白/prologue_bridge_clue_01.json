@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.clue.01",
+  "file": "旁白\\prologue_bridge_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "断檐下面留着一块干燥的地方。桥曾替赶路的人遮雨，而不仅是让他们过河。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "96db5133-f628-94f1-b97c-a63506e6350a",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 96,
+    "total_tokens": 130,
+    "characters": 65
+  },
+  "fingerprint": "2d7bd9f90fe2f5f23fbe702a70e634bc4a714c432a16f85b816a3aa97c56e6cc",
+  "sha256": "d5769360cc562df847ed69e715cba003509ced90de61372c33f54c8039656a4e",
+  "seconds": 7.632,
+  "peak_dbfs": -4.8,
+  "gain_db": -2.5,
+  "sample_rate": 24000,
+  "channels": 1
+}

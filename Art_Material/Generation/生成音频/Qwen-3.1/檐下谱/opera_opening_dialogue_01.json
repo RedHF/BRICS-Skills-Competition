@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.dialogue.01",
+  "file": "檐下谱\\opera_opening_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "戏楼里只亮着一盏台灯。水袖从行头箱垂下，锣鼓声总少了半拍。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "0f3a91d0-c239-99bc-9069-c9d7269570d1",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 104,
+    "total_tokens": 133,
+    "characters": 55
+  },
+  "fingerprint": "0114cf28857903f5f3cb7d181a9ffa4ac4c53dbc88a67908131351072b832868",
+  "sha256": "ff79e8e87f47e363fdcc10e51f245da25a7123c619b79627abff71567a675b3c",
+  "seconds": 8.271,
+  "peak_dbfs": -7.13,
+  "gain_db": -2.23,
+  "sample_rate": 24000,
+  "channels": 1
+}

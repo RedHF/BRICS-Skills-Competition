@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.dialogue.02",
+  "file": "拓印师\\prologue_bridge_dialogue_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我的名字也被雨洗掉了吗？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "a3ad923a-2b7f-9450-aa05-5dce26d20759",
+  "usage": {
+    "input_tokens": 12,
+    "output_tokens": 22,
+    "total_tokens": 34,
+    "characters": 23
+  },
+  "fingerprint": "fb7eb1ea83d0061ef969ea514ba8f87b902382c33156ff6a06524a6ef8fe4718",
+  "sha256": "372164d40dbfd0b9473104924b9523b2c1e3ab6f9aa0c3247c2c9a53a56b017c",
+  "seconds": 1.636,
+  "peak_dbfs": -8.42,
+  "gain_db": -1.94,
+  "sample_rate": 24000,
+  "channels": 1
+}

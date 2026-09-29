@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.chapter_outro.01",
+  "file": "旁白\\temple_drum_chapter_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "东南方传来若有若无的锣鼓声。呓语：‘戏楼要开场了。可是那锣鼓，怎么越敲越远……’",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "0906e729-c00d-9e9e-9195-97422a2e5290",
+  "usage": {
+    "input_tokens": 40,
+    "output_tokens": 111,
+    "total_tokens": 151,
+    "characters": 72
+  },
+  "fingerprint": "48612bd4e822b46eeb4e605fac8ad457adf4f9ad5961bac0c277a421e4728524",
+  "sha256": "5db4918668c172394686db734976fb1611f319a7aa15107c85e3384914b8cf03",
+  "seconds": 8.829,
+  "peak_dbfs": -6.5,
+  "gain_db": -3.05,
+  "sample_rate": 24000,
+  "channels": 1
+}

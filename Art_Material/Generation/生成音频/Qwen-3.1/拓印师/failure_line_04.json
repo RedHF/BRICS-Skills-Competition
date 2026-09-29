@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.04",
+  "file": "拓印师\\failure_line_04.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我把你修回原来的样子，哪里不对？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "f926aff7-325c-9343-9e23-5a981a009b7f",
+  "usage": {
+    "input_tokens": 16,
+    "output_tokens": 48,
+    "total_tokens": 64,
+    "characters": 30
+  },
+  "fingerprint": "bb768b327655eeb2c17633a8794de4b2ead91501a8e74871a996e44510914453",
+  "sha256": "355bf8bc3ffec0f36456499c9ca1e7601199c0f6e1a9fcbf2787ebf78480bd78",
+  "seconds": 3.784,
+  "peak_dbfs": -5.84,
+  "gain_db": -1.91,
+  "sample_rate": 24000,
+  "channels": 1
+}

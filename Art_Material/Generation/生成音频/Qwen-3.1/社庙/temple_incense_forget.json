@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.forget_response.01",
+  "file": "社庙\\temple_incense_forget.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "谱页腾出了位置。被放下的人仍曾来过，账册会替你记下这次取舍。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "10f49a46-b578-9881-81b8-0903b5222a6f",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 77,
+    "total_tokens": 107,
+    "characters": 57
+  },
+  "fingerprint": "52be8b3c5b88f6170b8fcdf688ca0f1d8581798c59824a48863aedfdce029768",
+  "sha256": "37b72de5bf904c503fa9bbb15a6f6f2f9a32af67bd263ef4aba3d514b403931e",
+  "seconds": 6.121,
+  "peak_dbfs": -5.21,
+  "gain_db": -2.73,
+  "sample_rate": 24000,
+  "channels": 1
+}

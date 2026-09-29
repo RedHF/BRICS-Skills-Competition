@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.clue.03",
+  "file": "旁白\\opera_opening_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "台口记着一段起落墨线，唱腔虽散，行腔的节奏还在。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "296b127a-8f72-9469-b189-b48a616e53ef",
+  "usage": {
+    "input_tokens": 24,
+    "output_tokens": 80,
+    "total_tokens": 104,
+    "characters": 45
+  },
+  "fingerprint": "968cf9f05e094122f1347616619283b7f4f0a313cfa7adce98f3c830dea96d29",
+  "sha256": "2616bcc9057c8594f57da3de55842d87061d36377189a70dc1b73fc076ad7991",
+  "seconds": 6.299,
+  "peak_dbfs": -6.92,
+  "gain_db": -2.94,
+  "sample_rate": 24000,
+  "channels": 1
+}

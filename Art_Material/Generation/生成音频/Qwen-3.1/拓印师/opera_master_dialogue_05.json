@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.dialogue.05",
+  "file": "拓印师\\opera_master_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我会把梅字台步与中央布景归好，也记住那个还在学的人。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "e600572f-4441-970c-ad8c-b1af604e4f4a",
+  "usage": {
+    "input_tokens": 26,
+    "output_tokens": 66,
+    "total_tokens": 92,
+    "characters": 50
+  },
+  "fingerprint": "035b2254cb3923bc3cd9f95070df8df767cd918469ee0c6878b804309555f9cb",
+  "sha256": "879d282fca78796a7e52e5fdf92d496eddc653eb47ae43bc525ff070b226ec9f",
+  "seconds": 5.164,
+  "peak_dbfs": -4.61,
+  "gain_db": -2.27,
+  "sample_rate": 24000,
+  "channels": 1
+}

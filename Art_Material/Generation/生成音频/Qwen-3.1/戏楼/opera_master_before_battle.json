@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.before_battle.01",
+  "file": "戏楼\\opera_master_before_battle.wav",
+  "role": "戏楼",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "护住通向后台的门。用飞檐驱散白蚀，给后来的人留出登台的位置。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "22263af9-f443-9ef1-8306-01e4f207a817",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 70,
+    "total_tokens": 100,
+    "characters": 57
+  },
+  "fingerprint": "83ba4a380cd459934a323a24f5fdcb26d2135bea2f25cd21ced438d13e2a0ae4",
+  "sha256": "83931de6bc790bc096d1da8176d7bea3639dcd62a7143024a988da24d9c7dd64",
+  "seconds": 5.497,
+  "peak_dbfs": -5.82,
+  "gain_db": -2.44,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure_first.01",
+  "file": "檐下谱\\failure_first_erosion_limit.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你退到了飞鸟山。墨已经耗干了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "21f23b3a-0d65-984a-9524-f0cc3730c9f6",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 43,
+    "total_tokens": 58,
+    "characters": 28
+  },
+  "fingerprint": "d878a0d948105a5d0ecd6f651ddd3943f01387b087bcd62129b0f7829b0a7af7",
+  "sha256": "2e8c0eb0dbed7bbe339156b9a504b925d87bf253d63cc28d7cc555c15874583f",
+  "seconds": 3.183,
+  "peak_dbfs": -7.51,
+  "gain_db": -4.92,
+  "sample_rate": 24000,
+  "channels": 1
+}

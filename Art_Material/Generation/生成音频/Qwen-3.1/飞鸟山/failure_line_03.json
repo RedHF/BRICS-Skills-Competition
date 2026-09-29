@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.03",
+  "file": "飞鸟山\\failure_line_03.wav",
+  "role": "飞鸟山",
+  "voice": "longzhe_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "差的那一步是我。你把我的残迹当成一页脏墨——擦干净，再写上你记得的样子。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "20c28b49-a6ad-9d82-b2fc-7c7b80cf7ac6",
+  "usage": {
+    "input_tokens": 35,
+    "output_tokens": 105,
+    "total_tokens": 140,
+    "characters": 67
+  },
+  "fingerprint": "21eff11dd3bcaf8f4f3060946adbc4e30195995fb3d8a8c65424cebcdda23251",
+  "sha256": "085059d843b1c5f7a799cdaa603ffa9f8ef6db85b6a109cf27f5e4d8d9510f75",
+  "seconds": 8.377,
+  "peak_dbfs": -3.0,
+  "gain_db": -3.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.dialogue.04",
+  "file": "社庙·童声\\temple_drum_dialogue_04.wav",
+  "role": "社庙·童声",
+  "voice": "longniuniu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "都有。鼓一响，卖糖的、唱戏的、在外做工的，就都挤进院子了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "977d0ebb-3a70-96d3-909b-880b363f8d87",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 81,
+    "total_tokens": 110,
+    "characters": 52
+  },
+  "fingerprint": "cd6c4a85fe10edf2a9c0f4f67a5e0c05586552e587e21674ef2ae0e6a7338e68",
+  "sha256": "8c80fd0455cfd4d67f50d5975ac9fb628516fb18a3ae096083eeb6383e77f09c",
+  "seconds": 6.431,
+  "peak_dbfs": -6.8,
+  "gain_db": -2.36,
+  "sample_rate": 24000,
+  "channels": 1
+}

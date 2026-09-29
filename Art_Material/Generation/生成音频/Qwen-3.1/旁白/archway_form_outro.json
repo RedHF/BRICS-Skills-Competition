@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.outro.01",
+  "file": "旁白\\archway_form_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "中央构件归位，牌坊重新立稳。柱脚的手印一一显现，其中一只手指向背面的营造刻痕：那里没有名字，却有一套清楚的做法。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3065527c-1d0b-9861-9515-a0c1a58d33fc",
+  "usage": {
+    "input_tokens": 56,
+    "output_tokens": 173,
+    "total_tokens": 229,
+    "characters": 106
+  },
+  "fingerprint": "c5ad9ee793f49e2139a2c2b6f331b7bdcf970e708390bd88c06561156f44d450",
+  "sha256": "6296b9bdd6de90c5589c989ee0dcd16b0c9d9a1b270f338a14cfc9bb4ef6bd73",
+  "seconds": 13.746,
+  "peak_dbfs": -6.5,
+  "gain_db": -1.56,
+  "sample_rate": 24000,
+  "channels": 1
+}

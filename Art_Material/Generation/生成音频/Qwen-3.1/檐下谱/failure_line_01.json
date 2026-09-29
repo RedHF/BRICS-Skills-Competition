@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.01",
+  "file": "檐下谱\\failure_line_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你退到了飞鸟山。这条石阶上，落着所有没能带回去的记忆。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "8897b1ae-9933-9240-985d-ad16c7927c24",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 82,
+    "total_tokens": 109,
+    "characters": 51
+  },
+  "fingerprint": "30b7e67aca0699b425755757de5404624a3e3afe3e15f8a2ab70a822eb1dbade",
+  "sha256": "f3088732dd8ffd9fc44431e228525ae9ad170c5afe9a4ab67c3b839b23f7d387",
+  "seconds": 6.458,
+  "peak_dbfs": -7.44,
+  "gain_db": -3.31,
+  "sample_rate": 24000,
+  "channels": 1
+}

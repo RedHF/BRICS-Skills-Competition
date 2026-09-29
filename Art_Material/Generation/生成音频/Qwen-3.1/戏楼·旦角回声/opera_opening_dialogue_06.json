@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.dialogue.06",
+  "file": "戏楼·旦角回声\\opera_opening_dialogue_06.wav",
+  "role": "戏楼·旦角回声",
+  "voice": "longanya_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "唱给愿意停下的人。哪怕台下只有一人，这一声也该完整。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "ba56f8d9-4eb1-9b6f-876e-48a086d49905",
+  "usage": {
+    "input_tokens": 26,
+    "output_tokens": 75,
+    "total_tokens": 101,
+    "characters": 49
+  },
+  "fingerprint": "0d7aa48344579ca5a18cb9f9ef5b50909be0c6a2cf01cd6b5de4e2480a0182c9",
+  "sha256": "0bee51592d6527f0e730e52bca456f2051c8d6e842adcf22e260757a1c4503e5",
+  "seconds": 5.902,
+  "peak_dbfs": -6.87,
+  "gain_db": -0.21,
+  "sample_rate": 24000,
+  "channels": 1
+}

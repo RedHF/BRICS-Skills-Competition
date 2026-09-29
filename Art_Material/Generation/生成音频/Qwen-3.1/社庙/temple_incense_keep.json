@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.keep_response.01",
+  "file": "社庙\\temple_incense_keep.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "承住一座屋的，从来不只一根梁。你愿意记住他们，香就没有断。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5091003d-0944-9cb4-897e-9e01309eb1cf",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 87,
+    "total_tokens": 116,
+    "characters": 54
+  },
+  "fingerprint": "800fb709a913a718e9c67f2af092e908c1ae2bad619649b6e8879bf09919ce11",
+  "sha256": "43b875f00d5dc85a432e0fcd488b2a5d712ef88beab1910691a297e4851fe609",
+  "seconds": 6.846,
+  "peak_dbfs": -5.49,
+  "gain_db": -2.38,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.dialogue.06",
+  "file": "牌坊\\archway_form_dialogue_06.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "也许他们没来得及写。也许有人觉得不必写。你可以从今天开始读。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "c549d1c9-5e5a-9c78-8ada-56f6b0b308d1",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 83,
+    "total_tokens": 113,
+    "characters": 57
+  },
+  "fingerprint": "2f435c3b763198ddf6be28364f0398fd86265c25b1cba0736b5ccfb38941ef85",
+  "sha256": "af144c26f7723f1aa6a4a10f22225322e311cbc0c391e7090cd13892069100fe",
+  "seconds": 6.582,
+  "peak_dbfs": -4.8,
+  "gain_db": -3.39,
+  "sample_rate": 24000,
+  "channels": 1
+}

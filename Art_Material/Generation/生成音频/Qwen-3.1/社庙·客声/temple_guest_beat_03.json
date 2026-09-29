@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.beat.03",
+  "file": "社庙·客声\\temple_guest_beat_03.wav",
+  "role": "社庙·客声",
+  "voice": "anmingyuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "不认得。庙祝说，先让人安下心，才问他从哪里来。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "455f1db2-2b4c-9609-839e-3b9233ae1c69",
+  "usage": {
+    "input_tokens": 23,
+    "output_tokens": 63,
+    "total_tokens": 86,
+    "characters": 42
+  },
+  "fingerprint": "85cfcdbf1937021e0bd775464f6fcbd7637b1ced4284cfc6cf1bc37bc077821f",
+  "sha256": "c16b983ccce8947296ba7abc6419ed1d06dfce2a34a98d5af237d7bc686fd719",
+  "seconds": 4.931,
+  "peak_dbfs": -3.22,
+  "gain_db": -2.29,
+  "sample_rate": 24000,
+  "channels": 1
+}

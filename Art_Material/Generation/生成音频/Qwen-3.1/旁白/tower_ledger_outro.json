@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.outro.01",
+  "file": "旁白\\tower_ledger_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你把檐下谱放在塔门口。有人补上家门前的桥，有人画出从未登台的孩子，也有人在空白处写下疑问。屋檐不再只收留过去，它开始收留明天。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "b408aca4-0162-9c33-b1a4-e365531085f3",
+  "usage": {
+    "input_tokens": 63,
+    "output_tokens": 189,
+    "total_tokens": 252,
+    "characters": 120
+  },
+  "fingerprint": "7cb07c5597220c80012cb9619e03c0555269f76a003baf2063f6d9373da03565",
+  "sha256": "cd1c4ff4f02f5efb2085fd60efde1459234e5139b8f62211263e7c4f92de96e8",
+  "seconds": 15.014,
+  "peak_dbfs": -4.58,
+  "gain_db": -2.28,
+  "sample_rate": 24000,
+  "channels": 1
+}

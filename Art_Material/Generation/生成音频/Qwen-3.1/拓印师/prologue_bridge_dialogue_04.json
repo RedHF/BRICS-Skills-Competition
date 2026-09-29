@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.dialogue.04",
+  "file": "拓印师\\prologue_bridge_dialogue_04.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "只要把字重新写上，你就会好起来？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5612b0c4-4800-9119-a7da-59f6a8ce2fc9",
+  "usage": {
+    "input_tokens": 16,
+    "output_tokens": 36,
+    "total_tokens": 52,
+    "characters": 30
+  },
+  "fingerprint": "4c0ca4d9c8171f241b5c4e175facf95a51f466d1a79512e245533cccbbfdb95c",
+  "sha256": "ea063b04aa3aa729686a51b12c1e507a8b15fae6bdf2c8021644664f22127dc4",
+  "seconds": 2.771,
+  "peak_dbfs": -3.99,
+  "gain_db": -1.97,
+  "sample_rate": 24000,
+  "channels": 1
+}

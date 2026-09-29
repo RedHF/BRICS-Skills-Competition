@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.keep_response.01",
+  "file": "廊桥\\prologue_bridge_keep.wav",
+  "role": "廊桥",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你记住的不是我的年岁，是有人盼着归来。斗拱的力，借你撑下一程。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "9a26883e-176e-9d26-9b1f-6076a9e4b084",
+  "usage": {
+    "input_tokens": 31,
+    "output_tokens": 88,
+    "total_tokens": 119,
+    "characters": 58
+  },
+  "fingerprint": "3ee8cde1868ff435195cedbf9564b61af33e40e302a6503fb6cf0092ff5e5170",
+  "sha256": "61f54f6f987f589ad20780c33159e1256a5df837c97eefa55d061e7912547e43",
+  "seconds": 6.963,
+  "peak_dbfs": -4.07,
+  "gain_db": -3.95,
+  "sample_rate": 24000,
+  "channels": 1
+}

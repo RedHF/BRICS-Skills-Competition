@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.dialogue.03",
+  "file": "廊桥\\prologue_bridge_dialogue_03.wav",
+  "role": "廊桥",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "名字可以慢慢找。先帮我记住两个字——平安。桥栏已经快认不出回家的脚步了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "461674d8-4148-9b80-b158-486f622cb13e",
+  "usage": {
+    "input_tokens": 35,
+    "output_tokens": 98,
+    "total_tokens": 133,
+    "characters": 67
+  },
+  "fingerprint": "1b09ace1baaf9456000eab881408b35ce0283f312b719a3dc23a50e80543d8a7",
+  "sha256": "2ac38b46f508cb49fa55ea6149e55b1674b7cde75a1d334b60ecca85b2d2bc72",
+  "seconds": 7.725,
+  "peak_dbfs": -3.11,
+  "gain_db": -3.11,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.clue.03",
+  "file": "旁白\\temple_guest_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "门内残纸写着‘心宁而后身安’。缺字的答案就在待客的心意里。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "cd7f1201-9864-9c90-9b3c-3c7ff2471fb3",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 99,
+    "total_tokens": 128,
+    "characters": 54
+  },
+  "fingerprint": "eea5a8a0fb51d2ffc25b2f7ce48ff446eeea89458088cc149b5d226d7b31fcc2",
+  "sha256": "46e00b74227e80b05c89020fe9a6dae6e4ea2bcbd76218223f5299ec2351fc14",
+  "seconds": 7.873,
+  "peak_dbfs": -7.17,
+  "gain_db": -2.99,
+  "sample_rate": 24000,
+  "channels": 1
+}

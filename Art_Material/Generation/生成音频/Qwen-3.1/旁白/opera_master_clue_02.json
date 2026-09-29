@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.clue.02",
+  "file": "旁白\\opera_master_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "中央布景留出一扇门，让后来的人可以登台。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1718d90e-402f-9e60-b61b-8f0ded3edeea",
+  "usage": {
+    "input_tokens": 20,
+    "output_tokens": 60,
+    "total_tokens": 80,
+    "characters": 38
+  },
+  "fingerprint": "b34e15528784fcc47f4d8df20dcfbbefb60ccf2f244a258c3d6d4e58164f253f",
+  "sha256": "ec36c9ddce6b786686cbcd9b8081e652cd23e76daedfa5a36cac830510f3a42f",
+  "seconds": 4.738,
+  "peak_dbfs": -5.0,
+  "gain_db": -1.5,
+  "sample_rate": 24000,
+  "channels": 1
+}

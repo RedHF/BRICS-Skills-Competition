@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.outro.01",
+  "file": "旁白\\temple_drum_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "鼓声越过空院，枝头红绳轻晃。檐下谱多展开一格，心舍可以容纳六道记忆。远处戏楼以一声锣响回应，仿佛有人终于等到开场。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "22e9e4bd-d852-904f-bbd1-cda04a371de5",
+  "usage": {
+    "input_tokens": 57,
+    "output_tokens": 196,
+    "total_tokens": 253,
+    "characters": 108
+  },
+  "fingerprint": "d67074052e2589fb230dc5a6754fe1c55eee92a7efb725df9165802a26f1b908",
+  "sha256": "b33a78d938758b063e978a76a023a9ae17c0f97ce9f8b4175fe8f34f48edf953",
+  "seconds": 15.578,
+  "peak_dbfs": -4.71,
+  "gain_db": -2.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

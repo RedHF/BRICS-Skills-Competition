@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.clue.01",
+  "file": "旁白\\temple_drum_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "鼓面白斑下面藏着回旋纹，说明纹样仍在，先净化才能看清。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "bcf8394f-ad66-9986-ae25-9680eaf12212",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 86,
+    "total_tokens": 113,
+    "characters": 51
+  },
+  "fingerprint": "f92a299863256f03d24a2fb671557752af19338b7e5fde9f442c7b8176c389db",
+  "sha256": "22beef3ca85c7e5adb3a9598354ffaf64551168138b4a10bfa513b5822d91619",
+  "seconds": 6.639,
+  "peak_dbfs": -6.96,
+  "gain_db": -3.33,
+  "sample_rate": 24000,
+  "channels": 1
+}

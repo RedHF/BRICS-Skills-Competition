@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.keep_response.01",
+  "file": "初代回声\\tower_ascent_keep.wav",
+  "role": "初代回声",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "请连我的错误一起记下。别让后来的人只看见一座完好的塔。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "a0dec556-adb9-93c1-b432-5aaeb0343f33",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 82,
+    "total_tokens": 109,
+    "characters": 52
+  },
+  "fingerprint": "e4b140676269743f95906a9bb7e97a44913412568c20edf9cbe25613fa94923e",
+  "sha256": "1793bb33c8bd25ac09f703525c8bb72bfacf9c146b486381009e4459284d872d",
+  "seconds": 6.132,
+  "peak_dbfs": -3.75,
+  "gain_db": -0.01,
+  "sample_rate": 24000,
+  "channels": 1
+}

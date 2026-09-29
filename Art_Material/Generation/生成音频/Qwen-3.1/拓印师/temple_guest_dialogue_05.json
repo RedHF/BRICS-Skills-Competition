@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.dialogue.05",
+  "file": "拓印师\\temple_guest_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "不是热闹的平安，是让陌生人也能宁静下来。缺的是‘宁’。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "83b160ed-b3ea-966f-ad52-bbea44c61f15",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 60,
+    "total_tokens": 87,
+    "characters": 49
+  },
+  "fingerprint": "bc67f62b741d7ea0e7f512d54f795e912c10fdd1a4ad40de03c4f2c8864b12df",
+  "sha256": "9c839e2cfc0a4ce057ef55be63013eb3f3113ae96caa065f4a543b9649e804d0",
+  "seconds": 4.719,
+  "peak_dbfs": -4.84,
+  "gain_db": -1.65,
+  "sample_rate": 24000,
+  "channels": 1
+}

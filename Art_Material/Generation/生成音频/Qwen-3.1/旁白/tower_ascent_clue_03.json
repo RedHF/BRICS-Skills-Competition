@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.clue.03",
+  "file": "旁白\\tower_ascent_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "逆结晶把被删去的情绪压成白蚀。用藻井净化，让记忆重新可以被阅读。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "9562e48a-e0e9-919f-a904-7f41f4f3082f",
+  "usage": {
+    "input_tokens": 32,
+    "output_tokens": 109,
+    "total_tokens": 141,
+    "characters": 61
+  },
+  "fingerprint": "f55c884ac1ae15301ca9f9e0aa270ff6f18f964a5b1405e57805d76bbd2cb4d4",
+  "sha256": "fe9b4c95e6a8fbcce4c03107033c822a0297b1883de20e5387694ceeec9e3b73",
+  "seconds": 8.663,
+  "peak_dbfs": -6.63,
+  "gain_db": -1.41,
+  "sample_rate": 24000,
+  "channels": 1
+}

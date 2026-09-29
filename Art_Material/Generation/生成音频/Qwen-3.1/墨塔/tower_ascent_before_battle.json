@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.before_battle.01",
+  "file": "墨塔\\tower_ascent_before_battle.wav",
+  "role": "墨塔",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "白蚀有三层。用斗拱护住承点、飞檐破开灰幕、藻井净化逆结晶；每种技艺都要在此回应一次。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "a54f0b4d-27ae-9515-b6b3-8169d17dac88",
+  "usage": {
+    "input_tokens": 42,
+    "output_tokens": 121,
+    "total_tokens": 163,
+    "characters": 79
+  },
+  "fingerprint": "5d1fdac682db58e236b615a2eed7c2b4318fc944f49c158638c6910db3dd8b75",
+  "sha256": "96dcc0ac140a2e1a8d4386ee00b4c48074d9ba504310e5a513df1dbdaf096748",
+  "seconds": 9.653,
+  "peak_dbfs": -3.17,
+  "gain_db": -3.17,
+  "sample_rate": 24000,
+  "channels": 1
+}

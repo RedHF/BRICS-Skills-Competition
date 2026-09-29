@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.02",
+  "file": "拓印师\\failure_line_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "只差最后一步。构件归位了，墨线描完了，白蚀也散了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "083b7f29-cb27-9e82-b13a-b79842c8159f",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 86,
+    "total_tokens": 111,
+    "characters": 46
+  },
+  "fingerprint": "d71d6a62e37a1987a729d31315257d9aac79799239fca44a531858c43092a96b",
+  "sha256": "d7786d69087bfb98f7e99fe48b6f00a4232203291b5e85d20fbc2caa9dda5fbf",
+  "seconds": 6.848,
+  "peak_dbfs": -5.36,
+  "gain_db": -2.05,
+  "sample_rate": 24000,
+  "channels": 1
+}

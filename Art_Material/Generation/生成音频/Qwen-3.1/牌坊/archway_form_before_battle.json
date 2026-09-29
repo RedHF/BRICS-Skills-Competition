@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.before_battle.01",
+  "file": "牌坊\\archway_form_before_battle.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "白蚀正抹平柱脚手印。施展飞檐越过灰幕，护住承重节点。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "15de5346-5e6a-97d4-8e0e-1dc535e92047",
+  "usage": {
+    "input_tokens": 26,
+    "output_tokens": 64,
+    "total_tokens": 90,
+    "characters": 49
+  },
+  "fingerprint": "9ffa86c5dc7a3ecd8354bb2f61e9b4bd45524321301487787b84ca11cc47e504",
+  "sha256": "ff5a2657e31d5f342922d6b2bb9a28fbad0fc07afc13b52e0c9eb57b46cddbfa",
+  "seconds": 5.061,
+  "peak_dbfs": -4.5,
+  "gain_db": -3.57,
+  "sample_rate": 24000,
+  "channels": 1
+}

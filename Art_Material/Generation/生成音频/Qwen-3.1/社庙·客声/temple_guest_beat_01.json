@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.beat.01",
+  "file": "社庙·客声\\temple_guest_beat_01.wav",
+  "role": "社庙·客声",
+  "voice": "anmingyuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "那夜我浑身是雨，不敢跨过门槛。他却先把碗推了过来。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "2f9e1353-6a62-987b-a468-e5abd195c075",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 60,
+    "total_tokens": 85,
+    "characters": 47
+  },
+  "fingerprint": "9ea8bd45e43f922dde0e85f888e179c942a718e0624345e4c7088394a2ff7634",
+  "sha256": "b7429b8fb9a997cc633945c3e311fc22f794ba8bf58ab852dfcf9121b63a9693",
+  "seconds": 4.751,
+  "peak_dbfs": -3.32,
+  "gain_db": -2.09,
+  "sample_rate": 24000,
+  "channels": 1
+}

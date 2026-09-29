@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.dialogue.01",
+  "file": "檐下谱\\archway_form_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "牌坊横跨旧道，碑额上的名字十分清楚，柱脚的凿痕却几乎消失。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "ad8ebb3a-28f0-9ffa-97ee-b3275a0e0ea9",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 96,
+    "total_tokens": 125,
+    "characters": 55
+  },
+  "fingerprint": "4d3c5a8af8fd7867614dc487645e3ad0585cbc09dcf2e11f5cb313028376071d",
+  "sha256": "d25de42cfcc8417278c4427a779174e2e3e280b63de865fa6c3277057843c654",
+  "seconds": 7.546,
+  "peak_dbfs": -4.85,
+  "gain_db": -2.54,
+  "sample_rate": 24000,
+  "channels": 1
+}

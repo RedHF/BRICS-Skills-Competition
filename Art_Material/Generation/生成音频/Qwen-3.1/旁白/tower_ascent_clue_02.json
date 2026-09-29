@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.clue.02",
+  "file": "旁白\\tower_ascent_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "第七层承重线断在纸白处，斗拱能稳住结构，不能替它编造过去。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "91c2cb27-decb-964e-9490-1e4bab3699d7",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 77,
+    "total_tokens": 106,
+    "characters": 55
+  },
+  "fingerprint": "1ca11a982912b42e452bfeea3b987ec590654c8ba09fe4c55c4f743d742a748e",
+  "sha256": "03562c295a950c6dead3f8dbbba9290dd8c58065c4628bd2a3da23317acd84ca",
+  "seconds": 6.039,
+  "peak_dbfs": -6.27,
+  "gain_db": -3.11,
+  "sample_rate": 24000,
+  "channels": 1
+}

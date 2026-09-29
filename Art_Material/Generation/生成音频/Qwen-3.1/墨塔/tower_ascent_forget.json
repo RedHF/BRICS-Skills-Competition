@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.forget_response.01",
+  "file": "墨塔\\tower_ascent_forget.wav",
+  "role": "墨塔",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你又做了一次有限的取舍。承认自己无法全知，才不会把个人的谱当成整个世界。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "7eef570d-bb07-9a72-ba39-222095f07459",
+  "usage": {
+    "input_tokens": 36,
+    "output_tokens": 87,
+    "total_tokens": 123,
+    "characters": 69
+  },
+  "fingerprint": "09e3e8e40684267d184923ac996d131dab79146421c4d2050b7c561ecfc96d96",
+  "sha256": "65eb4b5e26cceed6f4fa4ce09a0bf6b4769fe9bf80c43cb9bfd5c055cecfd2ad",
+  "seconds": 6.922,
+  "peak_dbfs": -3.0,
+  "gain_db": -3.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

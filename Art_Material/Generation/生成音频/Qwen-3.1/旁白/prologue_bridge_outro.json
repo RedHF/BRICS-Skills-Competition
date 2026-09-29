@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.outro.01",
+  "file": "旁白\\prologue_bridge_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你把‘平安’收入檐下谱，桥栏重新染上旧木的暖色。雾后露出一条山路，路尽头的社庙正传来细弱的咳声。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "436712fa-b268-98bd-bfe0-d6460813977b",
+  "usage": {
+    "input_tokens": 48,
+    "output_tokens": 155,
+    "total_tokens": 203,
+    "characters": 90
+  },
+  "fingerprint": "2e47e078261a01d1d425070dce11972856d1fe5b44fc53711ab042d148aa8f66",
+  "sha256": "7b739eecd12e4783ec89308daf0ef5779a9769e03e5d1ab1bf863018bf1c1c75",
+  "seconds": 12.325,
+  "peak_dbfs": -7.04,
+  "gain_db": -2.78,
+  "sample_rate": 24000,
+  "channels": 1
+}

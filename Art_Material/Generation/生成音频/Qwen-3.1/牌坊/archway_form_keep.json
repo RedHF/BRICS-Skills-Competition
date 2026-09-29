@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.keep_response.01",
+  "file": "牌坊\\archway_form_keep.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你记住了无名者，石头才不只替显赫的人说话。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "6eead7ef-1742-98be-a99f-148ba29e59ab",
+  "usage": {
+    "input_tokens": 21,
+    "output_tokens": 48,
+    "total_tokens": 69,
+    "characters": 40
+  },
+  "fingerprint": "d232c6326084cd6937f8ad36707ada47976c48f135937d6a64e5245e7f63ace9",
+  "sha256": "069ceef043a625a20667202bb0d436af8adcf765b37124e904fb0fd341c19f8c",
+  "seconds": 3.764,
+  "peak_dbfs": -3.55,
+  "gain_db": -1.87,
+  "sample_rate": 24000,
+  "channels": 1
+}

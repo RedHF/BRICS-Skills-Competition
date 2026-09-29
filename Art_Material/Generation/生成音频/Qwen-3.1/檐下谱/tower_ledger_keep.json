@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.keep_response.01",
+  "file": "檐下谱\\tower_ledger_keep.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "这本谱终于有了最后一页——但没有写‘终’。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "4990b5cb-dab5-9279-a87a-3c8b8d4b603e",
+  "usage": {
+    "input_tokens": 20,
+    "output_tokens": 54,
+    "total_tokens": 74,
+    "characters": 37
+  },
+  "fingerprint": "5c617715fbedb3ec4733e1600c3622c62ad9f2bf6e09988298ad90c927295ce7",
+  "sha256": "db2662b78d5a7a13a4aa7e0ed17240022a8e26a5aeb8b6a6e80939d1e0fba383",
+  "seconds": 4.172,
+  "peak_dbfs": -7.63,
+  "gain_db": -3.39,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.echo.01",
+  "file": "墨灵回声\\she_cheng_xiang.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "一炷香把一村人的愿望托给屋梁。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1c47acdb-5706-99d8-9cb7-926546e3a9a2",
+  "usage": {
+    "input_tokens": 16,
+    "output_tokens": 47,
+    "total_tokens": 63,
+    "characters": 29
+  },
+  "fingerprint": "47c271e9bde0d1a03b97c171c25aef67b8c74fa66440fd777d3cb17241cac004",
+  "sha256": "95bbaac5daf6d38eb2433e2f30f4ee5fcf5ca5ecc421349d8ae5c7d4d83c1719",
+  "seconds": 3.639,
+  "peak_dbfs": -6.63,
+  "gain_db": -3.06,
+  "sample_rate": 24000,
+  "channels": 1
+}

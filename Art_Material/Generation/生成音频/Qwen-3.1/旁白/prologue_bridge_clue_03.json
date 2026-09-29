@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.clue.03",
+  "file": "旁白\\prologue_bridge_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "桥栏磨出了孩子手掌的高度。送别的人总在这里等，直到远处有人挥手。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "037f3a8b-0504-9c32-8896-2c48e59d0bfc",
+  "usage": {
+    "input_tokens": 32,
+    "output_tokens": 95,
+    "total_tokens": 127,
+    "characters": 61
+  },
+  "fingerprint": "1ff3184f6240c12c186bfaafb10bbed66247eeb405d330e2450cf3df23582ba9",
+  "sha256": "bab81897f0c678641b9756b73d607965a2a3848ac18925a1f25f094df453d1a7",
+  "seconds": 7.508,
+  "peak_dbfs": -5.37,
+  "gain_db": -2.1,
+  "sample_rate": 24000,
+  "channels": 1
+}

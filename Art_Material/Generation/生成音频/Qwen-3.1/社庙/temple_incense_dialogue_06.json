@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.dialogue.06",
+  "file": "社庙\\temple_incense_dialogue_06.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "替我把这份齐心记住。香可以再点，肯一起动手的人不该被忘掉。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "8c5eb613-beb8-9544-96ca-c4802f070d67",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 80,
+    "total_tokens": 109,
+    "characters": 55
+  },
+  "fingerprint": "f0e50b08d131b66eefecb1c648452c0b4459f8cdfe47336b1a6bca847361664f",
+  "sha256": "a06d4801454a3d52448dcbab113edea78ebb2f760d5c1991f12d316f28c70dcc",
+  "seconds": 6.363,
+  "peak_dbfs": -6.17,
+  "gain_db": -2.4,
+  "sample_rate": 24000,
+  "channels": 1
+}

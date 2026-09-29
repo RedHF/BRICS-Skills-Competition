@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.dialogue.01",
+  "file": "檐下谱\\archway_craftsman_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "背面的营造记录写满尺寸，署名处却空着。凿子与木屑落在石台边。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "428b3d7e-d3a3-9bad-af6a-36bd12403dea",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 98,
+    "total_tokens": 128,
+    "characters": 57
+  },
+  "fingerprint": "d6bc60fddc3af57412c205cb3605110cfcd5f2ccbff4070dbc41afe2b30deffb",
+  "sha256": "84e909c228198c0f52369395720cc522ced19de5f792da1bc0c91e0fa490d303",
+  "seconds": 7.764,
+  "peak_dbfs": -6.39,
+  "gain_db": -2.52,
+  "sample_rate": 24000,
+  "channels": 1
+}

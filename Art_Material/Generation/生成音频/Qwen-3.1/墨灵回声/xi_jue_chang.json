@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.echo.01",
+  "file": "墨灵回声\\xi_jue_chang.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "记住绝唱，就要面对被抹去的童年社戏。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "8d4b9c9d-a66c-9edd-b053-35e8066201e5",
+  "usage": {
+    "input_tokens": 18,
+    "output_tokens": 52,
+    "total_tokens": 70,
+    "characters": 34
+  },
+  "fingerprint": "5ae018d91b9fab13f6782cdf8de22b997b73d33fa9c71024e027586aa3d6c964",
+  "sha256": "862cc9c0b88610b817e89046991c8e10fbdea7920341342ce5b355d84c74d0dd",
+  "seconds": 4.065,
+  "peak_dbfs": -7.47,
+  "gain_db": -3.16,
+  "sample_rate": 24000,
+  "channels": 1
+}

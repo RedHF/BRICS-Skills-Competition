@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.dialogue.03",
+  "file": "廊桥的回声\\tower_ledger_dialogue_03.wav",
+  "role": "廊桥的回声",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你怎样等人归来，就是你的名字。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5c7b1605-bc57-9914-a35d-589448a48a1a",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 42,
+    "total_tokens": 57,
+    "characters": 28
+  },
+  "fingerprint": "73613dec44c92628a6eaf23ebf07917a02c859008b9d0b78d1e9f62a242a25db",
+  "sha256": "ccb19f45fab01a31d762a41feadb2e3177cbdc3a6d76c41d9c03c9dac418238d",
+  "seconds": 3.252,
+  "peak_dbfs": -4.82,
+  "gain_db": -1.96,
+  "sample_rate": 24000,
+  "channels": 1
+}

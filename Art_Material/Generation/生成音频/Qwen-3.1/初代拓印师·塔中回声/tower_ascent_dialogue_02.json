@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.dialogue.02",
+  "file": "初代拓印师·塔中回声\\tower_ascent_dialogue_02.wav",
+  "role": "初代拓印师·塔中回声",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我抹去战乱，抹去离别，抹去羞耻与失败。我只想让他们不再痛。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "21e578e6-3d3a-9a92-9eee-dadcffed26b3",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 89,
+    "total_tokens": 118,
+    "characters": 54
+  },
+  "fingerprint": "227a621b6c3f302b2c6b4f351c7a3907fc410030c8216c86374a2f415b2cc34b",
+  "sha256": "067c28bcacebc2cd98f427ab14da511e1fe81dde2654d86fe009c52600389387",
+  "seconds": 6.772,
+  "peak_dbfs": -4.92,
+  "gain_db": -1.07,
+  "sample_rate": 24000,
+  "channels": 1
+}

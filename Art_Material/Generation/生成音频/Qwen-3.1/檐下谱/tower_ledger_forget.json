@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.forget_response.01",
+  "file": "檐下谱\\tower_ledger_forget.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你为新页放下了一段旧声。它仍在账册里，提醒后来的人：这只是你的一种选择。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "78943193-7f1a-9328-b6fa-8dd8c7ff408f",
+  "usage": {
+    "input_tokens": 36,
+    "output_tokens": 105,
+    "total_tokens": 141,
+    "characters": 68
+  },
+  "fingerprint": "bce66f56dd173f0fd6fb1f1098058d285f2cb6014af4e3f71deeb4d7b0095b49",
+  "sha256": "3cca4f73f77b845e9ab4a285acf25d98bb50702f3d4598b0d6a93654107c40a4",
+  "seconds": 8.32,
+  "peak_dbfs": -6.73,
+  "gain_db": -3.05,
+  "sample_rate": 24000,
+  "channels": 1
+}

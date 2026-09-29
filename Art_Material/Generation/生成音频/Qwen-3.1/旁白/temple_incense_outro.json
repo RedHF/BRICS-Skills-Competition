@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.outro.01",
+  "file": "旁白\\temple_incense_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "三块构件依次扣合，悬梁终于落稳。你没有凭空点起香火，只扶正了香炉。侧厢忽然传来一句：饭凉了，也请进来坐。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3e3a0224-796a-9d67-bc28-ff5a4769e156",
+  "usage": {
+    "input_tokens": 52,
+    "output_tokens": 163,
+    "total_tokens": 215,
+    "characters": 97
+  },
+  "fingerprint": "e33cd02ede3cc10b1d8645495ba1d4756a9d86cd76e28a8fcd5aa7acdc381793",
+  "sha256": "928646fed2bf37ab36df263695a7cfee09fa6559a4bc449700bd89689c057307",
+  "seconds": 12.926,
+  "peak_dbfs": -4.43,
+  "gain_db": -2.7,
+  "sample_rate": 24000,
+  "channels": 1
+}

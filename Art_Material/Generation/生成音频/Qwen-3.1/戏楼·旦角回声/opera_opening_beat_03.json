@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.beat.03",
+  "file": "戏楼·旦角回声\\opera_opening_beat_03.wav",
+  "role": "戏楼·旦角回声",
+  "voice": "longanya_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我是旦角，不是箱上那块褪色的标签。先替我找回水袖，再把唱腔里的行墨拓下来。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1d9dd554-9ca8-9f65-a9f1-aa7f6459b453",
+  "usage": {
+    "input_tokens": 37,
+    "output_tokens": 107,
+    "total_tokens": 144,
+    "characters": 70
+  },
+  "fingerprint": "17d1a658c869d5292db90a0fdbcfef8eca455b6bc9d9ea6c5040b4e32f51243b",
+  "sha256": "af143cda75dc946dbef1c0694f5cf6e9a81b3cb17e9737359a10d44158b6df1e",
+  "seconds": 8.414,
+  "peak_dbfs": -7.03,
+  "gain_db": -0.28,
+  "sample_rate": 24000,
+  "channels": 1
+}

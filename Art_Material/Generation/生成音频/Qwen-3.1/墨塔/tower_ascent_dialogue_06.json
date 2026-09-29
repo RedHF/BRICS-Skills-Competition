@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.dialogue.06",
+  "file": "墨塔\\tower_ascent_dialogue_06.wav",
+  "role": "墨塔",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "把第一道墨线接回承重点，再净化逆结晶。不要替我辩解，替后来的人打开门。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3753bc10-a932-934e-9fd1-c52049c12d68",
+  "usage": {
+    "input_tokens": 35,
+    "output_tokens": 89,
+    "total_tokens": 124,
+    "characters": 66
+  },
+  "fingerprint": "7baba37541818c4d7643f533dcd288072046f6df4df69b2403b322f276b757ed",
+  "sha256": "f6a36a51655414b7ff77ff9094637927a9e1c361d28625dbac82c2c3df642c6d",
+  "seconds": 7.062,
+  "peak_dbfs": -3.44,
+  "gain_db": -3.44,
+  "sample_rate": 24000,
+  "channels": 1
+}

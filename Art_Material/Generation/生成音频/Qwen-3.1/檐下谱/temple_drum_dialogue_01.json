@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.dialogue.01",
+  "file": "檐下谱\\temple_drum_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "前坪的社鼓蒙着白斑。槌柄上缠着一截褪色红绳，树下有深浅不同的脚印。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "306a4489-7858-927d-8255-65ecd45ff017",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 114,
+    "total_tokens": 148,
+    "characters": 63
+  },
+  "fingerprint": "e03d6e1863be21a742c4b7d0f84a5eafff44e7d4cdaad236e6a7c5e145461f50",
+  "sha256": "80031dfe0ce002839c4056f0ebf4f2d4e874c3c9580af9ba73414c78f1d4c4d8",
+  "seconds": 9.033,
+  "peak_dbfs": -6.17,
+  "gain_db": -2.09,
+  "sample_rate": 24000,
+  "channels": 1
+}

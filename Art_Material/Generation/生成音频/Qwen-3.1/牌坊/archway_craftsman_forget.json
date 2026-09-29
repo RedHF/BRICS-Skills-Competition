@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.forget_response.01",
+  "file": "牌坊\\archway_craftsman_forget.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你亲手抹去一页，也看见留下的人并非完整。愿你承认缺口，而不编造补白。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "c34c8bb8-7bca-9f60-94bd-c5cf11ebdc33",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 88,
+    "total_tokens": 122,
+    "characters": 64
+  },
+  "fingerprint": "7fb8bb01164fa5ef25c43831757bf328d98e2508bd4a82940beeefe6cbe9ffd3",
+  "sha256": "ccdd2cca11ca0d0c9ca5faf3d42f39557b936b2bd461f715fd8d5de377d3f74b",
+  "seconds": 6.96,
+  "peak_dbfs": -3.98,
+  "gain_db": -2.32,
+  "sample_rate": 24000,
+  "channels": 1
+}

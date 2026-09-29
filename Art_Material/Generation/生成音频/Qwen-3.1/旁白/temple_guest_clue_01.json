@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.clue.01",
+  "file": "旁白\\temple_guest_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "旧碗边有两双筷子的磨痕。那碗饭曾被分成两份。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "0e11dc54-bf26-9d8a-8b1b-1fb029350d5e",
+  "usage": {
+    "input_tokens": 22,
+    "output_tokens": 70,
+    "total_tokens": 92,
+    "characters": 42
+  },
+  "fingerprint": "fe613ecd22fd943a9835058b2c5140b83f1566e8aaa7190a683606cd07408852",
+  "sha256": "f0e3766c7b50982cd94720daa35035110b21312ed9b18320481b53a1f81342a2",
+  "seconds": 5.53,
+  "peak_dbfs": -6.35,
+  "gain_db": -2.68,
+  "sample_rate": 24000,
+  "channels": 1
+}

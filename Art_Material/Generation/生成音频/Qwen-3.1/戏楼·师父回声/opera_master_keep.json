@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.keep_response.01",
+  "file": "戏楼·师父回声\\opera_master_keep.wav",
+  "role": "戏楼·师父回声",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "别替他唱完。听他慢慢学，会有他自己的声音。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "e7c46283-6a5b-9989-9ab0-49b3088e7258",
+  "usage": {
+    "input_tokens": 21,
+    "output_tokens": 53,
+    "total_tokens": 74,
+    "characters": 39
+  },
+  "fingerprint": "b485dffe7e0c22a3fd6ee1a6ee6530cb64398e570611008943ab9b25562af550",
+  "sha256": "662ae8b042ea289b93e0f23118b26b504f17f713fac56eb2dfd24b1eebcb219a",
+  "seconds": 4.135,
+  "peak_dbfs": -5.18,
+  "gain_db": -3.53,
+  "sample_rate": 24000,
+  "channels": 1
+}

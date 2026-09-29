@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.first_clear.01",
+  "file": "旁白\\opera_opening_first_clear.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "锣敲对了。台下多了一个人——他从头到尾没有鼓掌，只在最后轻声问了一句。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "a9de414e-dc64-9148-9edd-c594e94b27e5",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 104,
+    "total_tokens": 138,
+    "characters": 65
+  },
+  "fingerprint": "354560c8d0e5e1a7c5cb54a578c00529a2dd440a2c17d9df43ce02bb8e228087",
+  "sha256": "8c8cf0557ecedb93017cfc5a453ac56ba4d12cca4e0437b68cc8d05126b3db32",
+  "seconds": 8.223,
+  "peak_dbfs": -7.25,
+  "gain_db": -2.42,
+  "sample_rate": 24000,
+  "channels": 1
+}

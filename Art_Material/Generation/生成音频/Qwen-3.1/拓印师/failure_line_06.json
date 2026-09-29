@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.06",
+  "file": "拓印师\\failure_line_06.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我只是不想让你们再忘下去。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "d27edde1-3c83-94bb-8174-625efba9c2c1",
+  "usage": {
+    "input_tokens": 13,
+    "output_tokens": 34,
+    "total_tokens": 47,
+    "characters": 25
+  },
+  "fingerprint": "204b53cba9b04fb41a80fddc80615107e5d872e0c2c9269c59fc97fbebe9721e",
+  "sha256": "f06a71076c21320f778497562d37d5e80f986af3f5f3b42d691d61b642e9b81a",
+  "seconds": 2.669,
+  "peak_dbfs": -4.63,
+  "gain_db": -1.35,
+  "sample_rate": 24000,
+  "channels": 1
+}

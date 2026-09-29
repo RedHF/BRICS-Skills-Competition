@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.dialogue.04",
+  "file": "戏楼·师父回声\\opera_master_dialogue_04.wav",
+  "role": "戏楼·师父回声",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "可我把最后一口气，用来教他接下一句。若只剩我的绝唱，这门手艺便到我为止。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "a996aaf9-1994-974a-adc7-7d709c1e68a6",
+  "usage": {
+    "input_tokens": 36,
+    "output_tokens": 109,
+    "total_tokens": 145,
+    "characters": 68
+  },
+  "fingerprint": "4ec88ec993157c345da1e529eeafdab1dff7d44db67a4de5b2a4958acc3e83db",
+  "sha256": "9f00acec26db270580fd56f7cce50d24d653af744a93c4692901b971a42dce32",
+  "seconds": 8.243,
+  "peak_dbfs": -3.86,
+  "gain_db": 0.13,
+  "sample_rate": 24000,
+  "channels": 1
+}

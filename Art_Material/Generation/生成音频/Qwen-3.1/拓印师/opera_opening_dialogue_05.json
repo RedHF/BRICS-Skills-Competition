@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.dialogue.05",
+  "file": "拓印师\\opera_opening_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你最想唱给谁听？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3373fdcf-3824-979b-ba26-70e461e13b95",
+  "usage": {
+    "input_tokens": 8,
+    "output_tokens": 24,
+    "total_tokens": 32,
+    "characters": 15
+  },
+  "fingerprint": "12ff2d38224ecdf5d288c73c06ac572df8b7c4f1d40acee155ecbe24e9557246",
+  "sha256": "6abb38cdea86975ae88cf4014fb55b5bcbfe2cebe11176fa5b1ad3d0e65be5bb",
+  "seconds": 1.851,
+  "peak_dbfs": -5.43,
+  "gain_db": 1.48,
+  "sample_rate": 24000,
+  "channels": 1
+}

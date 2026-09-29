@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.clue.03",
+  "file": "旁白\\temple_incense_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "供桌背面刻着捐木、送饭、搬石的记号，没有哪一笔比另一笔更大。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "d574871c-22bb-9d00-97d2-b7b401077b61",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 95,
+    "total_tokens": 125,
+    "characters": 56
+  },
+  "fingerprint": "569e86d9b06904a9d86b7a2adc890ac2326bf144b2c6ce76bc9a5c149e5157b9",
+  "sha256": "e6727c09ab5c9b4107695e9167849d22f24ca1a0307b9b26cd6a76141f80b9b6",
+  "seconds": 7.519,
+  "peak_dbfs": -6.2,
+  "gain_db": -3.09,
+  "sample_rate": 24000,
+  "channels": 1
+}

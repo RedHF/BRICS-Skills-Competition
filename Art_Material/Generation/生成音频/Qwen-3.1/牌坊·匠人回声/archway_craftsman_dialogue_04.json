@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.dialogue.04",
+  "file": "牌坊·匠人回声\\archway_craftsman_dialogue_04.wav",
+  "role": "牌坊·匠人回声",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "别猜。猜出来的名字会盖住真正的空白。记下你确实看见的手、工具和做法。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "bc7f2cae-129d-9eb2-bf4a-eba5c379e41a",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 99,
+    "total_tokens": 133,
+    "characters": 64
+  },
+  "fingerprint": "c6b77b589a4e67dc2e4d60b4b5a2d7d388328c571f9258fb3a3a81fce6ace5ea",
+  "sha256": "1b3c7d068c66efe138af46b1f7cacdee830eb42a8e9a8152666282ce3726e154",
+  "seconds": 7.85,
+  "peak_dbfs": -3.34,
+  "gain_db": -3.34,
+  "sample_rate": 24000,
+  "channels": 1
+}

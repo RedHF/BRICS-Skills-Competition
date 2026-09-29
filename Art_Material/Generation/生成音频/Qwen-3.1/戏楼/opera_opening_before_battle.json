@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.before_battle.01",
+  "file": "戏楼\\opera_opening_before_battle.wav",
+  "role": "戏楼",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "白蚀吞掉了台口的回声。施展飞檐破开灰幕，再让唱腔回到台上。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "d221aa6c-c36f-9996-a0aa-3e33ff8b8498",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 86,
+    "total_tokens": 115,
+    "characters": 55
+  },
+  "fingerprint": "88efc3620093e3821082d6b3152563a6622750d911cb73ab9c2a30202aa30945",
+  "sha256": "41e04b76d7d196024b9078c291d6700a9bd10c7467affc864689aa0e0de55dd2",
+  "seconds": 6.766,
+  "peak_dbfs": -4.32,
+  "gain_db": -1.2,
+  "sample_rate": 24000,
+  "channels": 1
+}

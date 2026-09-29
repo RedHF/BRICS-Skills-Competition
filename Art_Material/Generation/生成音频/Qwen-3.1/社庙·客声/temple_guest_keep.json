@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.keep_response.01",
+  "file": "社庙·客声\\temple_guest_keep.wav",
+  "role": "社庙·客声",
+  "voice": "anmingyuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "记住这一点暖，就够我走过后来的长路。藻井的清明交给你。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "44b12f82-a020-9ab7-a037-9a6045ab7467",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 71,
+    "total_tokens": 98,
+    "characters": 51
+  },
+  "fingerprint": "4f090d1e22aec12e5d728d09a3e740819e642ff943909a5c4f433668a498cdb9",
+  "sha256": "97f151238055114075fab6fdabe6dc0c8729cce42409bac197bbe48eb4a767e2",
+  "seconds": 5.609,
+  "peak_dbfs": -3.0,
+  "gain_db": -3.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

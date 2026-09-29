@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.clue.02",
+  "file": "旁白\\archway_form_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "中央榫槽磨痕最深，是连接两侧构件的受力节点。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "29d43385-a599-9caf-a772-a699daab158c",
+  "usage": {
+    "input_tokens": 23,
+    "output_tokens": 56,
+    "total_tokens": 79,
+    "characters": 42
+  },
+  "fingerprint": "6d9767d8c1fb6ff0f3347bf6b219412e64227731e736326bb6d78ae4d0897097",
+  "sha256": "4d7317a0f71c5ceee6b42be1ba0230c4bbf726879fc63c0ce50616fefe91c207",
+  "seconds": 4.446,
+  "peak_dbfs": -6.39,
+  "gain_db": -2.91,
+  "sample_rate": 24000,
+  "channels": 1
+}

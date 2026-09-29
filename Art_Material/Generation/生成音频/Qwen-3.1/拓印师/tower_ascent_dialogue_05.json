@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.dialogue.05",
+  "file": "拓印师\\tower_ascent_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "因为活着的人会难过，也会改变。你替他们删掉了再次选择的来路。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "986571f7-b7f7-9d9e-a2eb-c03d08314c08",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 86,
+    "total_tokens": 116,
+    "characters": 57
+  },
+  "fingerprint": "22a2fce801fd86038fe43b640b431f365c7d28d8494217000e68e8532eade6d1",
+  "sha256": "11e638aa52b77952be911db9345cf7a441625721047bb0b973eb6455a8509423",
+  "seconds": 6.862,
+  "peak_dbfs": -4.97,
+  "gain_db": -2.68,
+  "sample_rate": 24000,
+  "channels": 1
+}

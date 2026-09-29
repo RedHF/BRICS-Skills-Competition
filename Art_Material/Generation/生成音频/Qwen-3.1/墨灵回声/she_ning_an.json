@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.echo.01",
+  "file": "墨灵回声\\she_ning_an.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "檐下不拒客，一碗冷饭也分半碗。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "7e02d4fd-b8f4-9e8e-b5f8-e29b24f4e3d8",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 53,
+    "total_tokens": 68,
+    "characters": 28
+  },
+  "fingerprint": "655a3637cfea6acd2687bbe17880c300941ae6e5d68c7accc8d44b547e4695e1",
+  "sha256": "e2d1d2424ecbe3b2e56d1a9b75ac6b29c258a6ee287925b8006aae3a5dc833f0",
+  "seconds": 4.209,
+  "peak_dbfs": -4.43,
+  "gain_db": -3.1,
+  "sample_rate": 24000,
+  "channels": 1
+}

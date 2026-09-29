@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.clue.02",
+  "file": "旁白\\opera_opening_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "锣边磨出一个小小缺口，许多代开场都敲在同一处。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "69524362-5ee0-9e03-ab90-b6821885b2eb",
+  "usage": {
+    "input_tokens": 23,
+    "output_tokens": 61,
+    "total_tokens": 84,
+    "characters": 44
+  },
+  "fingerprint": "74241e515aef51b2197f55e857650a2499680a9ae0415c97100dc1dba928cd3d",
+  "sha256": "91340521b520bbd2fdbe9dc61d56f3e9cb663321ec2492e9d23c95972f02c9be",
+  "seconds": 4.772,
+  "peak_dbfs": -5.82,
+  "gain_db": -3.11,
+  "sample_rate": 24000,
+  "channels": 1
+}

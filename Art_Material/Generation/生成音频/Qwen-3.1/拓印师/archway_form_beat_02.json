@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.beat.02",
+  "file": "拓印师\\archway_form_beat_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "四根柱子，三处开间。把中央构件归位，重量才传得到两侧。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "ebc17df7-6271-954e-b621-5b7b2f51fef3",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 64,
+    "total_tokens": 91,
+    "characters": 50
+  },
+  "fingerprint": "c8baf9c85178361373e0d8b4844534a098fe0489aa29ce100ed7190422b4ab9c",
+  "sha256": "7cae4f6cb89b8ff0793eef9fce62f815cd2e02996afd407b143afabbd54b77eb",
+  "seconds": 5.011,
+  "peak_dbfs": -6.15,
+  "gain_db": -2.87,
+  "sample_rate": 24000,
+  "channels": 1
+}

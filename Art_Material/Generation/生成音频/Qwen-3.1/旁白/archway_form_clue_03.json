@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.clue.03",
+  "file": "旁白\\archway_form_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "石背留着搬运者的手印，大小不同，没有一只手能独自举起整块石头。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3f088ba1-aeaa-9dd0-b27b-2dafcb01d029",
+  "usage": {
+    "input_tokens": 31,
+    "output_tokens": 98,
+    "total_tokens": 129,
+    "characters": 59
+  },
+  "fingerprint": "df5a97af3ce1a4a2eb0a6216584e8c0a2f1adea55900615a2fe1a10b8921d0d7",
+  "sha256": "d00b36674418f8f8c18110a8dd74fcb7ae8c331235e8a91fcd195d963191f932",
+  "seconds": 7.743,
+  "peak_dbfs": -3.0,
+  "gain_db": -2.4,
+  "sample_rate": 24000,
+  "channels": 1
+}

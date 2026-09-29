@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.dialogue.03",
+  "file": "拓印师\\archway_craftsman_dialogue_03.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "可我还是想替你补上。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "fc2811d2-3822-947a-afe3-c7edc2d0474d",
+  "usage": {
+    "input_tokens": 10,
+    "output_tokens": 23,
+    "total_tokens": 33,
+    "characters": 19
+  },
+  "fingerprint": "bc14bb8bb0b5d88da686af686f64cb4dcb8ddefaf69963fe4a605f3f62ee635a",
+  "sha256": "8b63760fad157595f19041103820b4e9707564c397f8cff433692d9e3f6e2f35",
+  "seconds": 1.745,
+  "peak_dbfs": -3.0,
+  "gain_db": -2.68,
+  "sample_rate": 24000,
+  "channels": 1
+}

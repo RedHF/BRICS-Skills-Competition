@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.dialogue.05",
+  "file": "拓印师\\archway_form_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "建造它的人，为什么没有自己的位置？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "bae48eaa-eae8-9c92-8de7-ab8975c2d9e2",
+  "usage": {
+    "input_tokens": 17,
+    "output_tokens": 34,
+    "total_tokens": 51,
+    "characters": 32
+  },
+  "fingerprint": "431da39234bbabb3402647de2743c3dd1d170346becbc9f1e3aaa0b63ceb71e4",
+  "sha256": "ae978f487fd7ec947e5fff3df77c2245f5f3856ebdf7179bfe96fc90e5943667",
+  "seconds": 2.695,
+  "peak_dbfs": -6.93,
+  "gain_db": -3.94,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.keep_response.01",
+  "file": "社庙·童声\\temple_drum_keep.wav",
+  "role": "社庙·童声",
+  "voice": "longniuniu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "听见了吗？这一次，我也敲响了！",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "320a05b5-68ab-920f-836c-6db23d25b662",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 36,
+    "total_tokens": 51,
+    "characters": 27
+  },
+  "fingerprint": "aeb763edb899339d003d626cd927e14c6278dc9dc355a447e11a8198403e39f5",
+  "sha256": "c9dd274b323dd3fc01ff5bfe2a7fdb1d2e805d2ac4017fdc2c65dd18d2f0919e",
+  "seconds": 2.782,
+  "peak_dbfs": -7.16,
+  "gain_db": -2.42,
+  "sample_rate": 24000,
+  "channels": 1
+}

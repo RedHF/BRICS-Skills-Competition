@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.beat.02",
+  "file": "拓印师\\tower_ascent_beat_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "可你也抹去了为什么相助，为什么重建，为什么等一个人回来。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "9c13e128-a9fb-9b80-aa4f-32119b7f6966",
+  "usage": {
+    "input_tokens": 28,
+    "output_tokens": 61,
+    "total_tokens": 89,
+    "characters": 53
+  },
+  "fingerprint": "3535a1396798e7c315accbc16cb140b0dc6c0ce579f5de07f03e53088ab26a0d",
+  "sha256": "1ae7ee2d25eaf55ddb76616e55bf686d818339d46eb7fdc1cd7a5675c24d53ef",
+  "seconds": 4.766,
+  "peak_dbfs": -6.03,
+  "gain_db": -2.6,
+  "sample_rate": 24000,
+  "channels": 1
+}

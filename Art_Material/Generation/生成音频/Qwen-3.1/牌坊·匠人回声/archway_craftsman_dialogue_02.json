@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.dialogue.02",
+  "file": "牌坊·匠人回声\\archway_craftsman_dialogue_02.wav",
+  "role": "牌坊·匠人回声",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "若后人知道怎样修它，不知道我的名字，也不算白做。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "f072bf13-7b7f-9379-882c-298ab399632e",
+  "usage": {
+    "input_tokens": 24,
+    "output_tokens": 61,
+    "total_tokens": 85,
+    "characters": 45
+  },
+  "fingerprint": "8ecfa7a4de07f50e94166f8d7d510a3c31ae530d04a961724a1344447b193544",
+  "sha256": "20db697667734c3cfd35668a633f8673357b6f2621d0bdf61aba01dc2fa09bae",
+  "seconds": 4.856,
+  "peak_dbfs": -3.65,
+  "gain_db": -3.65,
+  "sample_rate": 24000,
+  "channels": 1
+}

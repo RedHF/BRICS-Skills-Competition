@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.clue.02",
+  "file": "旁白\\tower_ledger_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "遗忘页的账册没有被擦掉。承认取舍，才能看见自己记忆的边界。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "f646feb7-84f3-9e1a-a424-90a19e2bd650",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 84,
+    "total_tokens": 113,
+    "characters": 55
+  },
+  "fingerprint": "35dcc0eb817eab9f56361c8bbed18c5ba43a8cbf447bf2e70aff0d3d15680bd0",
+  "sha256": "ad4c75bd74e2b679d67b11e0a89c749eb32e1fe203c7bfa3c6a7ca1f15e3db93",
+  "seconds": 6.609,
+  "peak_dbfs": -5.54,
+  "gain_db": -3.29,
+  "sample_rate": 24000,
+  "channels": 1
+}

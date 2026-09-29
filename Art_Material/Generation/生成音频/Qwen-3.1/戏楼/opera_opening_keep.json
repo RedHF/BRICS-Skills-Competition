@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.keep_response.01",
+  "file": "戏楼\\opera_opening_keep.wav",
+  "role": "戏楼",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "飞檐把一口气送得更远。接住它，也替台下的人留一个座位。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "fe9c8ccb-57a9-9378-8a33-72ef7d7d61bf",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 61,
+    "total_tokens": 88,
+    "characters": 51
+  },
+  "fingerprint": "d145ee06d8f335b6e50a06e533c0e8d79e90550200dc649343717e5e6fdaca56",
+  "sha256": "694213b3806857668f9b23947dbab1eadb17566a0735444fa5e1ba51e557d4b5",
+  "seconds": 4.839,
+  "peak_dbfs": -5.89,
+  "gain_db": -1.5,
+  "sample_rate": 24000,
+  "channels": 1
+}

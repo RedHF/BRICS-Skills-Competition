@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.dialogue.06",
+  "file": "拓印师\\prologue_bridge_dialogue_06.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "好。我先听你说完，再落笔。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1e1e234c-77d4-91fe-8bcf-44a87492158f",
+  "usage": {
+    "input_tokens": 13,
+    "output_tokens": 37,
+    "total_tokens": 50,
+    "characters": 23
+  },
+  "fingerprint": "51ce729920ab66b419cbcbeb9a6047b73554d09aaefd53d79608a09f67234961",
+  "sha256": "d56c98aea81c7a390bea4d9d3bac4adc1ce601c516b8dfbed49dd0bbdb7842e1",
+  "seconds": 2.91,
+  "peak_dbfs": -6.87,
+  "gain_db": -3.13,
+  "sample_rate": 24000,
+  "channels": 1
+}

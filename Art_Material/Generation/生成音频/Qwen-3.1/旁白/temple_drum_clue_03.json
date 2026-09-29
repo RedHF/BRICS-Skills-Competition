@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.clue.03",
+  "file": "旁白\\temple_drum_clue_03.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "树下的旧脚印绕鼓成圈。春社是人重新相聚的日子。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "f0a03306-1926-96de-b510-29d2d112a2d5",
+  "usage": {
+    "input_tokens": 23,
+    "output_tokens": 69,
+    "total_tokens": 92,
+    "characters": 44
+  },
+  "fingerprint": "6672352987bfe2b74935ebaa0d87e7176f01bb4ba02fcee7c60cc3cf0dfec721",
+  "sha256": "55bbb8dbceada8e9d89806a1c0f637adf4dfe36c98bd6e29e70d7103d94a8d6e",
+  "seconds": 5.455,
+  "peak_dbfs": -5.67,
+  "gain_db": -2.42,
+  "sample_rate": 24000,
+  "channels": 1
+}

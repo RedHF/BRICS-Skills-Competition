@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.clue.02",
+  "file": "旁白\\prologue_bridge_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "刻痕里压着许多细小补笔。‘平安’不是一人写成，而是一代代行人续上的祝愿。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3720506f-ac43-9e52-b9f0-74bd74244305",
+  "usage": {
+    "input_tokens": 36,
+    "output_tokens": 104,
+    "total_tokens": 140,
+    "characters": 67
+  },
+  "fingerprint": "ed830ec99d5fd81429dac9ee567246767a803e3e5b616937f21bf1575b3076ab",
+  "sha256": "e4f46540ffb89a4d67d98990070d81775e23d72bdb0b01ee996e41acf806dd66",
+  "seconds": 8.259,
+  "peak_dbfs": -6.95,
+  "gain_db": -2.34,
+  "sample_rate": 24000,
+  "channels": 1
+}

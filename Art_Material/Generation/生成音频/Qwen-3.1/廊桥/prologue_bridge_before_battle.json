@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.before_battle.01",
+  "file": "廊桥\\prologue_bridge_before_battle.wav",
+  "role": "廊桥",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "白蚀正扑向刚显影的刻字。别急，先用斗拱承住，再挥墨驱散它。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "40a18c2a-cda2-9948-88dc-7c65991cb768",
+  "usage": {
+    "input_tokens": 29,
+    "output_tokens": 103,
+    "total_tokens": 132,
+    "characters": 54
+  },
+  "fingerprint": "f664d54802fed62d10f99879022107cc71ce8ea1df86383c8c752aee8430bdaa",
+  "sha256": "01a4dc9f40d1ff8ade757b2f2a74e5767dcb6a2ededfc79a58362d29c8a6b5e4",
+  "seconds": 7.783,
+  "peak_dbfs": -3.33,
+  "gain_db": -0.81,
+  "sample_rate": 24000,
+  "channels": 1
+}

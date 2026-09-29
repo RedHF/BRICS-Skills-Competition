@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.echo.01",
+  "file": "墨灵回声\\xi_xing_qiang.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "一腔唱尽台上台下的悲欢。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "eb9bedc8-2410-9087-b237-f1ee2a8c75be",
+  "usage": {
+    "input_tokens": 12,
+    "output_tokens": 41,
+    "total_tokens": 53,
+    "characters": 23
+  },
+  "fingerprint": "0a62fc27b3d0013308613832c6c5bf85841705f221de39d21724aea87e416520",
+  "sha256": "02a3fa74d81d16987c4b602f6b2b96dcc9c48945f6fe22dddededfa51f0bc24f",
+  "seconds": 3.19,
+  "peak_dbfs": -7.68,
+  "gain_db": -2.02,
+  "sample_rate": 24000,
+  "channels": 1
+}

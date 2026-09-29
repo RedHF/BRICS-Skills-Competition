@@ -1,0 +1,23 @@
+{
+  "id": "tower_ledger.beat.01",
+  "file": "拓印师\\tower_ledger_beat_01.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我来时想找回自己的名字，后来却一直在替别人留下声音。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "c1ad4740-d7cd-9f6c-9242-28cc21692f21",
+  "usage": {
+    "input_tokens": 26,
+    "output_tokens": 84,
+    "total_tokens": 110,
+    "characters": 50
+  },
+  "fingerprint": "88915a97c0d00e03de1211489e5242823ab1ae665097f09ac57722d283c800a5",
+  "sha256": "0199a2405d6feb000cf5be56ab770fe147aa26306b2b18ba846a49cb34f44478",
+  "seconds": 6.622,
+  "peak_dbfs": -3.22,
+  "gain_db": -1.8,
+  "sample_rate": 24000,
+  "channels": 1
+}

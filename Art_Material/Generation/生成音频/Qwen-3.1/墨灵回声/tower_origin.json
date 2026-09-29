@@ -1,0 +1,23 @@
+{
+  "id": "tower_ascent.echo.01",
+  "file": "墨灵回声\\tower_origin.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "初代拓印师为永恒秩序抹去了所有战乱与悲痛。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "29b4dd9a-d3bf-9923-8c98-f929335f9ece",
+  "usage": {
+    "input_tokens": 21,
+    "output_tokens": 53,
+    "total_tokens": 74,
+    "characters": 41
+  },
+  "fingerprint": "15e7ba2b83bfc449e838f4051521d20c92caa329eef2a76daa538c5cfe5e09ae",
+  "sha256": "1f66a7450237f724886122ccb125dcc630d4783398accbf11aa404a19b787b1a",
+  "seconds": 4.16,
+  "peak_dbfs": -7.14,
+  "gain_db": -3.47,
+  "sample_rate": 24000,
+  "channels": 1
+}

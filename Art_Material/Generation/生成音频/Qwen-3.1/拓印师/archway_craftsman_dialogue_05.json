@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.dialogue.05",
+  "file": "拓印师\\archway_craftsman_dialogue_05.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "用斗拱承住构件，再借飞檐点亮高处刻痕。让别人也能照着修。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "123ef66a-3efd-949c-8add-d7630d159074",
+  "usage": {
+    "input_tokens": 28,
+    "output_tokens": 88,
+    "total_tokens": 116,
+    "characters": 53
+  },
+  "fingerprint": "e9d432f34088b55acc119738fbbb69cdecc3f5192f6cb8af597a514083c4061f",
+  "sha256": "44564a177944594d7bdf073033cd720e67b7584da067191dd8d54f43abb2ff07",
+  "seconds": 6.932,
+  "peak_dbfs": -5.29,
+  "gain_db": -2.49,
+  "sample_rate": 24000,
+  "channels": 1
+}

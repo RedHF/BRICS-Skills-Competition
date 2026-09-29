@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.keep_response.01",
+  "file": "牌坊·匠人回声\\archway_craftsman_keep.wav",
+  "role": "牌坊·匠人回声",
+  "voice": "xunanchuan_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "不必替我编一个响亮的名字。把修它的办法交给下个人。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "99c33c5f-01e0-9061-8605-ae7740bea4ff",
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 54,
+    "total_tokens": 79,
+    "characters": 48
+  },
+  "fingerprint": "68a917397dbe9e0f5fbae19e413b7ffac51ad5f4294aaeb9e1a3394dc7aa3945",
+  "sha256": "c58eac3e344cbde9b61fd1bd766f554fd27d1648ea193ee19e3c18608a75ddd2",
+  "seconds": 4.255,
+  "peak_dbfs": -4.88,
+  "gain_db": -2.73,
+  "sample_rate": 24000,
+  "channels": 1
+}

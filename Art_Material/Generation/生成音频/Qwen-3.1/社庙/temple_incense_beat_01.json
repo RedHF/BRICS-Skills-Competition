@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.beat.01",
+  "file": "社庙\\temple_incense_beat_01.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "他们凑不出一根好木头，就把各家的余料抬来。那年春社，屋顶总算没有漏雨。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "1a1a671f-aac4-98ef-b270-ba66995e2cbd",
+  "usage": {
+    "input_tokens": 35,
+    "output_tokens": 94,
+    "total_tokens": 129,
+    "characters": 66
+  },
+  "fingerprint": "5ef88b66f3d8896c74fb8fb82e31cf8349465f664307780e09bae78a92a0c77d",
+  "sha256": "850408328d5faa1e24b7868b6d94ef69b4ba9d781bc96dc277ffb957241c8b44",
+  "seconds": 7.359,
+  "peak_dbfs": -5.68,
+  "gain_db": -1.75,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure_first.03",
+  "file": "檐下谱\\failure_first_battle_requirements_not_met.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你退到了飞鸟山。白蚀还在，你的手已经抬不起来了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5f0e40aa-adb9-9b6e-916a-160aa469656f",
+  "usage": {
+    "input_tokens": 24,
+    "output_tokens": 69,
+    "total_tokens": 93,
+    "characters": 45
+  },
+  "fingerprint": "413ea9c3ade42fed03d6ba614f96c051a3b6be47962566e58837f5076496ffe4",
+  "sha256": "2999d77345fc524ff9a7e820b4f068a36d0330e6700dd498f14f228bb506fbc4",
+  "seconds": 5.495,
+  "peak_dbfs": -5.76,
+  "gain_db": -3.26,
+  "sample_rate": 24000,
+  "channels": 1
+}

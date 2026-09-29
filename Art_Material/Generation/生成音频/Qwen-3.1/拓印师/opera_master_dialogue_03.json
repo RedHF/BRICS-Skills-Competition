@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.dialogue.03",
+  "file": "拓印师\\opera_master_dialogue_03.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "因为那句不够好听？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "c84477f8-8fcc-9bc7-9ca2-0bca54ed67a4",
+  "usage": {
+    "input_tokens": 9,
+    "output_tokens": 40,
+    "total_tokens": 49,
+    "characters": 17
+  },
+  "fingerprint": "e7c6a4f4e73d3f8192c4d522c27e6fe5a9670efe9e1f9d6f717a9eb053134f56",
+  "sha256": "ad506e8ddd617c1c90a3ece3ac168939cc388d252ee2a2fb017ddf8aa1001145",
+  "seconds": 3.067,
+  "peak_dbfs": -7.92,
+  "gain_db": -3.79,
+  "sample_rate": 24000,
+  "channels": 1
+}

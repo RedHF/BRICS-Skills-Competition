@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.dialogue.05",
+  "file": "廊桥\\prologue_bridge_dialogue_05.wav",
+  "role": "廊桥",
+  "voice": "longsanshu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "字是门，走过这里的人才是屋里的灯。去看看断檐、桥心和桥栏，你会知道该留下什么。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "237f5f4e-c778-92d1-83ab-8a05664f838b",
+  "usage": {
+    "input_tokens": 39,
+    "output_tokens": 124,
+    "total_tokens": 163,
+    "characters": 73
+  },
+  "fingerprint": "f4bcd36bf912366085077912cd8ec4b525f33434a5a4e6071b3404ec22962d1b",
+  "sha256": "1b81edcc6f9d01362ace5e49a50cba351264b88929d304f7a54a0b3a1d5c305d",
+  "seconds": 9.844,
+  "peak_dbfs": -3.0,
+  "gain_db": -1.98,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.outro.01",
+  "file": "旁白\\temple_guest_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "‘宁安’回到门楣，冷饭的记忆升起一点温热。前坪有孩子敲着空碗喊：开社啦——可回应他的鼓声，迟迟没有响起。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "17038f5c-03b4-9749-9729-f9cb625b5b56",
+  "usage": {
+    "input_tokens": 51,
+    "output_tokens": 147,
+    "total_tokens": 198,
+    "characters": 95
+  },
+  "fingerprint": "e5b6a6795fb70eb5a59741b387d5f6c8f6e57139588799f721d36acbc39fc926",
+  "sha256": "1a64c5542c82976323c35b1d192b95f20e6295174a891948726724e52d60c040",
+  "seconds": 11.655,
+  "peak_dbfs": -6.42,
+  "gain_db": -2.57,
+  "sample_rate": 24000,
+  "channels": 1
+}

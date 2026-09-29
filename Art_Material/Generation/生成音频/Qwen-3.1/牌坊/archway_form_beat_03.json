@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.beat.03",
+  "file": "牌坊\\archway_form_beat_03.wav",
+  "role": "牌坊",
+  "voice": "huozhuoshi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你看见规制了。再往下看，石脚背面有一排没有署名的手印。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "e90f9129-8151-9da8-a87d-272a7dac6bf9",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 77,
+    "total_tokens": 104,
+    "characters": 51
+  },
+  "fingerprint": "c729fc16ea2b7827473bf6285151b76323a62d6a4eb13528754bf92af31c5255",
+  "sha256": "0073ddf884b551c0ce6d827025576b3fd3e5ea2277ec31f313c2e5a33a0d28be",
+  "seconds": 6.059,
+  "peak_dbfs": -3.18,
+  "gain_db": -2.46,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "prologue_bridge.dialogue.01",
+  "file": "檐下谱\\prologue_bridge_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "雨停了。你醒在桥心，手中只有一本空白册子，封底写着：请把故事交还给愿意听的人。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "9f3d5397-6d5d-94b8-bd96-391cb81e87d6",
+  "usage": {
+    "input_tokens": 39,
+    "output_tokens": 134,
+    "total_tokens": 173,
+    "characters": 73
+  },
+  "fingerprint": "f407e1cea996c1d2ec95e1920e0614feb76c2aba009916dd703d9fed179ea948",
+  "sha256": "b0df9adfc01904bcbe9c1b860da01ae4b8e99d4fbf97521b1b3156f5239ce07e",
+  "seconds": 10.608,
+  "peak_dbfs": -5.97,
+  "gain_db": -2.26,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.clue.02",
+  "file": "旁白\\temple_guest_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "蓑衣补丁缝得很密，却没有留下主人的名字。这里的照料不以相识为条件。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "df5920a9-a071-9dbf-a89d-2c80cf32d510",
+  "usage": {
+    "input_tokens": 34,
+    "output_tokens": 111,
+    "total_tokens": 145,
+    "characters": 63
+  },
+  "fingerprint": "42dbbdd5a33e664bbeed3c1d87026966fa3e0db2ccb2604ad50eedfe2cc1fa07",
+  "sha256": "46f18fa7953e81805b28aae216dd122954fdd9e09375d5fb0a718bd439448b5d",
+  "seconds": 8.849,
+  "peak_dbfs": -6.8,
+  "gain_db": -2.84,
+  "sample_rate": 24000,
+  "channels": 1
+}

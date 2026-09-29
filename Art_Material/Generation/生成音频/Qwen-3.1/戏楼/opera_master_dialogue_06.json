@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.dialogue.06",
+  "file": "戏楼\\opera_master_dialogue_06.wav",
+  "role": "戏楼",
+  "voice": "xiaoxingzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "谱页有限，抉择会痛。但别把‘不完美’误认成‘不值得’。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "ba875431-9a65-9877-94f2-d3ffafef92d4",
+  "usage": {
+    "input_tokens": 27,
+    "output_tokens": 58,
+    "total_tokens": 85,
+    "characters": 47
+  },
+  "fingerprint": "97b144abd074ae49447fb8625cfb6cc5b7b17e9e79b118ee686035fe59efbebc",
+  "sha256": "58cabe051f20d1420ef18711d4d5062f217f7221e7ad256de5e723ec4880d0fe",
+  "seconds": 4.578,
+  "peak_dbfs": -6.24,
+  "gain_db": -2.57,
+  "sample_rate": 24000,
+  "channels": 1
+}

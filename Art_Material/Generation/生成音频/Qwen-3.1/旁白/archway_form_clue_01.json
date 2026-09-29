@@ -1,0 +1,23 @@
+{
+  "id": "archway_form.clue.01",
+  "file": "旁白\\archway_form_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "柱脚完整保存四个承重点，中间形成三个通道，对应四柱三间。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "35da95e9-4990-91a0-9ded-4e97c25577a8",
+  "usage": {
+    "input_tokens": 28,
+    "output_tokens": 85,
+    "total_tokens": 113,
+    "characters": 53
+  },
+  "fingerprint": "038ddaa00686aedac987ee17c8254a67ce1d0f370d51c47e615130b866e6db38",
+  "sha256": "497b7c18711cefbf08157f99abf4824a8770f8787561e8e5a599f65c46721e31",
+  "seconds": 6.692,
+  "peak_dbfs": -6.94,
+  "gain_db": -2.55,
+  "sample_rate": 24000,
+  "channels": 1
+}

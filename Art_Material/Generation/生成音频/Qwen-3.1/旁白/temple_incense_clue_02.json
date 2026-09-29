@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.clue.02",
+  "file": "旁白\\temple_incense_clue_02.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "三道榫口由浅至深分布：先左、再中、最后右。受力靠咬合，而不靠把木头硬钉在一起。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "da82129c-e1b7-95f6-970f-a5f631017395",
+  "usage": {
+    "input_tokens": 40,
+    "output_tokens": 129,
+    "total_tokens": 169,
+    "characters": 72
+  },
+  "fingerprint": "c2f0ea9b840da53cb2cbe11c9a0e5a646590eb8d288b449e501407f149677aa7",
+  "sha256": "3ba60e6b77be337cc2f12d37914c06a83f99b3878f98b9b7f762825afa859ea5",
+  "seconds": 10.287,
+  "peak_dbfs": -5.83,
+  "gain_db": -1.72,
+  "sample_rate": 24000,
+  "channels": 1
+}

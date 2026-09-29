@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure.07",
+  "file": "飞鸟山\\failure_line_07.wav",
+  "role": "飞鸟山",
+  "voice": "longzhe_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你是想让我停在你还记得我的那一天。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "5cfd23e1-54c8-9e30-bf2d-c8e6e9df59c5",
+  "usage": {
+    "input_tokens": 17,
+    "output_tokens": 35,
+    "total_tokens": 52,
+    "characters": 33
+  },
+  "fingerprint": "494ccfeac79b31279062fb106978a5a65a29f19f3a3b355e12c3581a01f7ba2c",
+  "sha256": "418b138e11a96f36aaf8b3b9118074fb6ff0a943b082c17b9b52aad6924bb0de",
+  "seconds": 2.719,
+  "peak_dbfs": -3.0,
+  "gain_db": -1.33,
+  "sample_rate": 24000,
+  "channels": 1
+}

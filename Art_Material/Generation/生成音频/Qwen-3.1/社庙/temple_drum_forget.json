@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.forget_response.01",
+  "file": "社庙\\temple_drum_forget.wav",
+  "role": "社庙",
+  "voice": "xuyanchu_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "新鼓声响起，旧声音渐远。你失去一段私人的回声，却没有失去继续守护的手艺。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "0da73623-8c9c-9693-9c4b-7ca476c32046",
+  "usage": {
+    "input_tokens": 36,
+    "output_tokens": 105,
+    "total_tokens": 141,
+    "characters": 68
+  },
+  "fingerprint": "6f638ec703acda632b166d4efe1d78c8607ffd6c6a078be4d1208237daeb4717",
+  "sha256": "f02012dcab118b26f3d20ddfe3a620b79809ea8d1d8c5e7f15018844d38bddf2",
+  "seconds": 8.295,
+  "peak_dbfs": -5.9,
+  "gain_db": -2.33,
+  "sample_rate": 24000,
+  "channels": 1
+}

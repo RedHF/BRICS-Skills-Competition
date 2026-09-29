@@ -1,0 +1,23 @@
+{
+  "id": "opera_master.outro.01",
+  "file": "旁白\\opera_master_outro.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你没有让绝唱永远循环，而是替它接上了一句尚显稚嫩的新声。通往石牌坊的门打开了，门后有人问：一座留名的坊，为什么没有匠人的名字？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "4c5077b9-4db9-930a-909e-e12ff62af2b9",
+  "usage": {
+    "input_tokens": 63,
+    "output_tokens": 174,
+    "total_tokens": 237,
+    "characters": 120
+  },
+  "fingerprint": "a9f82e2f82156975acd202398fee076181dfeb987c8910e3d5dd83888242a7ff",
+  "sha256": "da57034297463d6a81450f8d433dab51e3f85450930f53e9dceb19b70c981148",
+  "seconds": 13.891,
+  "peak_dbfs": -6.84,
+  "gain_db": -2.5,
+  "sample_rate": 24000,
+  "channels": 1
+}

@@ -1,0 +1,23 @@
+{
+  "id": "temple_incense.beat.02",
+  "file": "拓印师\\temple_incense_beat_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "我以为你记着的是香火。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "9e8222a9-e328-9b55-a927-ec7478acfe89",
+  "usage": {
+    "input_tokens": 11,
+    "output_tokens": 31,
+    "total_tokens": 42,
+    "characters": 21
+  },
+  "fingerprint": "a80606ef2dcf6c6fb3c085c79c5ce288dce7cb38f9d90f431ebdd3f9cf30f3f9",
+  "sha256": "462fe13bbdfdf088f4b66954e0b7b62b5573c6cb2f5b12a90bc8deb02aaed633",
+  "seconds": 2.394,
+  "peak_dbfs": -5.25,
+  "gain_db": -1.91,
+  "sample_rate": 24000,
+  "channels": 1
+}

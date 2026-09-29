@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.clue.01",
+  "file": "旁白\\archway_craftsman_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "凿口有三层深浅，显示构件曾被不同的手修过。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "6f41608f-3dde-98c5-9a0b-c2a36d3013b4",
+  "usage": {
+    "input_tokens": 21,
+    "output_tokens": 67,
+    "total_tokens": 88,
+    "characters": 40
+  },
+  "fingerprint": "b8fc34aab40b837201d54db85f0bbe9c867ae087c5437129fd5dfce12c1e09b7",
+  "sha256": "eb3060e0456b71c630b8f53663122145bbd883b62d1b7f03a9baf840a991a3a5",
+  "seconds": 5.252,
+  "peak_dbfs": -6.15,
+  "gain_db": -2.97,
+  "sample_rate": 24000,
+  "channels": 1
+}

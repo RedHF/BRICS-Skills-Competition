@@ -1,0 +1,23 @@
+{
+  "id": "temple_guest.dialogue.01",
+  "file": "檐下谱\\temple_guest_dialogue_01.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "侧厢门楣缺了一个字，只剩‘□安’。半碗冷饭旁叠着一件补过的蓑衣。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "84585e20-73dc-93cb-8002-82f93b68b23a",
+  "usage": {
+    "input_tokens": 32,
+    "output_tokens": 88,
+    "total_tokens": 120,
+    "characters": 58
+  },
+  "fingerprint": "5c1b2f681eabe9625f9de8cae9104c48e3b2f12cec1110172314f03684bade21",
+  "sha256": "1ba92454beff5332f56b227aa8665a6a1d69c95afdd04004b8cf181deae33af1",
+  "seconds": 6.952,
+  "peak_dbfs": -6.02,
+  "gain_db": -3.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

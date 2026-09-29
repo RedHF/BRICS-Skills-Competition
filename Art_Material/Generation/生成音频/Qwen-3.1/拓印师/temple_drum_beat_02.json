@@ -1,0 +1,23 @@
+{
+  "id": "temple_drum.beat.02",
+  "file": "拓印师\\temple_drum_beat_02.wav",
+  "role": "拓印师",
+  "voice": "longanzhi_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你等的是春天，还是一起回来的人？",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "78603810-60e0-9ccf-8f84-16152b0af594",
+  "usage": {
+    "input_tokens": 16,
+    "output_tokens": 57,
+    "total_tokens": 73,
+    "characters": 30
+  },
+  "fingerprint": "91c9aa88c79fa8955ee9a864e2dc62d5b5e506ce437526af7ded7cbe56bbfea7",
+  "sha256": "370c4da1094d47004b387a4ef1cd8a1ebf40e0692b1e8a08120c4e1012a27394",
+  "seconds": 4.452,
+  "peak_dbfs": -3.0,
+  "gain_db": -2.0,
+  "sample_rate": 24000,
+  "channels": 1
+}

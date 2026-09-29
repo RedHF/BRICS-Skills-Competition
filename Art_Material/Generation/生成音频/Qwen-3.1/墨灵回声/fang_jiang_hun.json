@@ -1,0 +1,23 @@
+{
+  "id": "archway_craftsman.echo.01",
+  "file": "墨灵回声\\fang_jiang_hun.wav",
+  "role": "墨灵回声",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "名字可以被风吹散，手艺留下的结构不会。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "7c4ae43f-4d69-9a6d-84a4-0097e7046421",
+  "usage": {
+    "input_tokens": 19,
+    "output_tokens": 55,
+    "total_tokens": 74,
+    "characters": 36
+  },
+  "fingerprint": "99d320f4ee5c1f65897d405c1c2db89678ce746796cbf3b13d0653c03f1c7592",
+  "sha256": "43d4bd5bab19eac00cd4ca833f6e0e6b3d727ea461896c4b339fcf8a17910fec",
+  "seconds": 4.291,
+  "peak_dbfs": -7.5,
+  "gain_db": -3.26,
+  "sample_rate": 24000,
+  "channels": 1
+}

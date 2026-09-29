@@ -1,0 +1,23 @@
+{
+  "id": "opera_opening.clue.01",
+  "file": "旁白\\opera_opening_clue_01.wav",
+  "role": "旁白",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "水袖柔长，旁边的戏单还辨得‘旦’字。角色线索来自行头与戏单。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "aed0debd-b565-9379-82ce-581b9ec9c148",
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 96,
+    "total_tokens": 126,
+    "characters": 55
+  },
+  "fingerprint": "f3094c648ac8790e449de2feaac94228b2434d15aebb2a907e8e6395f775a0e7",
+  "sha256": "993919a296dcd11fbc93594535632a188ec36cc7b80a9586f88361afa85cbd53",
+  "seconds": 7.538,
+  "peak_dbfs": -5.92,
+  "gain_db": -3.13,
+  "sample_rate": 24000,
+  "channels": 1
+}

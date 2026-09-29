@@ -1,0 +1,23 @@
+{
+  "id": "failure_scene.failure_first.02",
+  "file": "檐下谱\\failure_first_puzzle_attempt_limit.wav",
+  "role": "檐下谱",
+  "voice": "xieshurou_v3.1",
+  "model": "qwen-audio-3.1-tts-flash",
+  "text": "你退到了飞鸟山。这一回，你的手抖得太厉害了。",
+  "instruction": "用自然连贯的普通话朗读，语速适中，吐字清晰，情感克制。不加笑声、气声或背景音。",
+  "request_id": "3e7eb12e-c23b-9728-89e9-4ff38bad005b",
+  "usage": {
+    "input_tokens": 22,
+    "output_tokens": 62,
+    "total_tokens": 84,
+    "characters": 41
+  },
+  "fingerprint": "f28d9ac77102cbe12d30b105f55227ed50745a6e49d6fdb639a9ade5712d5b57",
+  "sha256": "8dcedbfc116ee200499291f15364ececd9348eee70bf93665e281e4dd15f6e87",
+  "seconds": 4.77,
+  "peak_dbfs": -7.69,
+  "gain_db": -4.15,
+  "sample_rate": 24000,
+  "channels": 1
+}
