@@ -51,15 +51,7 @@ func _ready() -> void:
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(spacer)
 	card = PanelContainer.new()
-	var paper := StyleBoxFlat.new()
-	paper.bg_color = Color(.055,.09,.095,.94)
-	paper.border_color = Color("#b2a383")
-	paper.border_width_top = 2
-	paper.content_margin_left = 24
-	paper.content_margin_right = 24
-	paper.content_margin_top = 26
-	paper.content_margin_bottom = 26
-	card.add_theme_stylebox_override("panel",paper)
+	card.add_theme_stylebox_override("panel", preload("res://scripts/ink_theme.gd").surface("panel", 26))
 	column.add_child(card)
 	var text_column := VBoxContainer.new()
 	text_column.add_theme_constant_override("separation",22)

@@ -14,12 +14,10 @@
 # Godot 的 .uid 是资源身份元数据，应和对应脚本一起入库。
 /LLM-tmp/.review/
 /LLM-tmp/交付/
-# 保留当前完整可玩包（88.60 MiB）；其他导出和解压副本不入库。
+# 发行包及展开文件只保留本地；Git 保存源码和构建工具。
 /dist/*
 !/dist/.gitkeep
 !/dist/README.md
-!/dist/檐下千秋-v10-可玩性修复版-20260915.zip
-!/dist/檐下千秋-v10-可玩性修复版-20260915.zip.sha256
 
 # AI 配音：184 段 wav 的正式位置是
 #   LLM-tmp/客户端/assets/voice/       —— 游戏运行时读取
@@ -43,3 +41,9 @@ __pycache__/
 ~$*
 .DS_Store
 Thumbs.db
+
+# 隔离的本地 UI 测试服务、存档与缓存；交付截图另存验证记录。
+/.review/
+
+# 发行验证解包目录与语音生成阶段数据。
+/LLM-tmp/联调脚本/.verify-tmp/

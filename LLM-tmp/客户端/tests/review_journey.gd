@@ -126,7 +126,7 @@ func _run() -> void:
 					main.scene_view._process(2.0)
 				assert(main.scene_view.discovered.size() == 3)
 				if event.id in ["prologue_bridge","temple_incense","temple_guest","temple_drum"]: await capture(event.id + "-investigation")
-				await click(button("三处调查完成"))
+				await click(button("开始修复"))
 			for step in event.puzzle.steps:
 				if game.session.accepted_steps.has(step.id): continue
 				await process_frame
@@ -230,7 +230,7 @@ func _run() -> void:
 				for label in main.page.find_children("*","Label",true,false):
 					assert(label.text != "戏楼："+whisper,"Whisper repeated on settlement revisit")
 			await capture(event.id+"-settlement")
-			await click(button("继续古建旅程"))
+			await click(button("返回关卡"))
 			print("PASS UI journey ",event.id)
 	assert(game.player.completed_events.size() == 10)
 	main._show_journal()

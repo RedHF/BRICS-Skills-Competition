@@ -16,17 +16,17 @@ func _ready() -> void:
 	piece = Vector2(size.x / 2, 168)
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), Color("#192f33"))
+	draw_style_box(preload("res://scripts/ink_theme.gd").surface("paper"), Rect2(Vector2.ZERO, size))
 	draw_rect(Rect2(12,55,size.x-24,22),Color("#796649"))
 	for i in range(options.size()):
 		var center := Vector2(size.x * (i + 0.5) / options.size(), 65)
 		draw_rect(Rect2(center-Vector2(33,22),Vector2(66,44)),Color("#d6bd85"),false,3)
 		var caption: String = {"left":"左榫口","center":"中央承重","right":"右榫口"}.get(options[i], options[i])
-		draw_string(ThemeDB.fallback_font,center+Vector2(-33,-31),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#e4c98a"))
+		draw_string(ThemeDB.fallback_font,center+Vector2(-33,-31),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#303832"))
 	var shape := PackedVector2Array([Vector2(-27,-17),Vector2(-14,-17),Vector2(-20,-29),Vector2(20,-29),Vector2(14,-17),Vector2(27,-17),Vector2(27,17),Vector2(-27,17)])
 	for i in range(shape.size()): shape[i] += piece
 	draw_colored_polygon(shape,Color("#9ad5ad") if snapped else Color("#c9a36b"))
-	draw_string(ThemeDB.fallback_font,Vector2(16,207),"拖动构件到榫口，松手吸附；放到外侧可取消。",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#cbd9cf"))
+	draw_string(ThemeDB.fallback_font,Vector2(16,207),"拖动构件到榫口，松手吸附；放到外侧可取消。",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("#303832"))
 
 func _gui_input(event: InputEvent) -> void:
 	if locked: return

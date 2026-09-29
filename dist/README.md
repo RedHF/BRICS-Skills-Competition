@@ -1,11 +1,12 @@
-# 可玩发行包
+# 当前 Windows 发行版
 
-当前保留 `檐下千秋-v10-可玩性修复版-20260915.zip`，大小 92,903,008 字节（88.60 MiB），低于 GitHub 普通 Git 的单文件 100 MiB 限制。ZIP 包含客户端、服务端、内容和许可证，完整解压后运行 `檐下千秋.exe`。SHA256 见同名 `.sha256` 文件。
+`檐下千秋-v12-水墨音乐版-20260929.zip`，163,937,895 字节（156.34 MiB）。完整解压后运行目录内的 `檐下千秋.exe`，无需安装 Godot／Go或提供API密钥。
 
-该版本对应参赛目录 `output/参赛材料/本科组_Track1_第二队/Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64`。展开的客户端 EXE 约 144 MiB，不能直接入 Git；克隆后可将发行 ZIP 内游戏文件夹的全部内容复制到上述 `Windows-x64` 目录，恢复完整提交目录。源代码、文档、素材、AI 交流记录保留在仓库中。
+包含三页水墨UI、184段Qwen 3.1配音与《檐下墨痕》背景音乐。ZIP及展开目录只保留在本地，不进入Git；旧发行包已清理。
 
-约 674 MiB 的总参赛 ZIP 在本地保留并由 `.gitignore` 排除。它与当前游戏发行 ZIP 用途不同，不应通过 `git add -f` 强行加入。无需 Git LFS 即可获取当前全部可玩内容；未来版本应重新检查包体大小。
+SHA256：`4c733182bd9f67216735bc76e9944506172065973533ceb68e48faa971745fba`
 
-提交前在仓库根目录运行 `python tools/check_git_size.py --history`。超过 50 MiB 仅提示警告，达到 100 MiB 时检查失败。脚本同时检查暂存内容与未忽略的工作区文件；`--history` 检查本机全部可达历史，不读取远端未获取的提交。
+构建：`LLM-tmp/联调脚本/package_release.py --version v12 --edition 水墨音乐版 --date 20260929 --build`。
+校验：`LLM-tmp/联调脚本/verify_release.py --version v12 --edition 水墨音乐版 --date 20260929`。
 
-参考：[GitHub 文件大小限制](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)。
+真实EXE验证已通过：七个文件哈希一致、服务自动启停、内容协议v10、UI/音频资源与调查恢复正常。记录见 `LLM-tmp/验证记录/2026-09-29-v12/`。

@@ -34,6 +34,19 @@ RESULT_FILE = 'release-verification.json'
 BOOT_TIMEOUT = 25
 EXIT_TIMEOUT = 45
 
+# 本机已知、与改动无关的引擎环境提示。除它们之外，任何 ERROR: 都算失败。
+# 见 docs/decisions/crd/0003-benign-log-error.md。
+BENIGN_LOG_ERRORS = (
+    'ERROR: Failed to read the root certificate store.',
+)
+
+
+def log_findings(log: str) -> list:
+    """日志里真正的问题行：已知环境提示之外，任何 `ERROR:` 都算。"""
+    return [line for line in log.splitlines()
+            if 'ERROR:' in line
+            and not any(benign in line for benign in BENIGN_LOG_ERRORS)]
+
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
@@ -56,7 +69,12 @@ def parse_args(argv=None):
 
 
 def default_result_dir(version: str, date: str) -> Path:
-    return pr.ROOT / 'LLM-tmp' / '验证记录' / f'{date}-{version}'
+    """验证结果的落点，例如 `LLM-tmp/验证记录/2026-09-28-v11/`。
+
+    `--date` 是打包用的 `YYYYMMDD`，这里的目录名按仓库惯例带连字符。
+    """
+    stamp = date if '-' in date else f'{date[:4]}-{date[4:6]}-{date[6:]}'
+    return pr.ROOT / 'LLM-tmp' / '验证记录' / f'{stamp}-{version}'
 
 
 def isolated_root() -> Path:
@@ -174,9 +192,9 @@ def main(argv=None) -> int:
         log = log_path.read_text(encoding='utf-8')
         if SMOKE_PASS_TOKEN not in log:
             raise RuntimeError(f'日志里没有 {SMOKE_PASS_TOKEN!r}：{log[-2000:]}')
-        if 'ERROR:' in log:
-            offending = [line for line in log.splitlines() if 'ERROR:' in line][:5]
-            raise RuntimeError('日志里有 ERROR：\n' + '\n'.join(offending))
+        findings = log_findings(log)
+        if findings:
+            raise RuntimeError('日志里有 ERROR：\n' + '\n'.join(findings[:5]))
         result['exported_smoke'] = 'passed'
 
         result_dir.mkdir(parents=True, exist_ok=True)

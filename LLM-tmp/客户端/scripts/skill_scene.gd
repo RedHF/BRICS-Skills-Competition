@@ -24,7 +24,7 @@ func _draw() -> void:
 	var supported := accepted.has("craftsman_anchor") or accepted.has("tower_anchor")
 	var triggered := accepted.has("craftsman_trigger")
 	var purged := accepted.has("tower_purify") or accepted.has("drum_purify")
-	var wood := Color("#c0a274")
+	var wood := Color("#796044")
 	var beam: Vector2 = anchors.beam * size
 	var bell: Vector2 = anchors.bell * size
 	var tablet: Vector2 = anchors.inscription * size
@@ -44,15 +44,11 @@ func _draw() -> void:
 		var point: Vector2 = anchors[target] * size
 		draw_arc(point, 47, 0, TAU, 48, Color("#dbc48c"), 1, true)
 		var caption: String = {"beam":"承重斗拱", "bell":"远端风铃", "inscription":"白蚀碑面"}[target]
-		draw_string(ThemeDB.fallback_font,point+Vector2(-48,65),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#efe4c4"))
+		draw_string(ThemeDB.fallback_font,point+Vector2(-48,65),caption,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#303832"))
 	var state := "梁架已稳，连杆接通" if supported else "梁架倾斜，连杆尚未受力"
 	if triggered: state = "风铃已响，匠人的刻痕重现"
 	if purged: state = "白斑消退，刻痕显影"
-	draw_string(ThemeDB.fallback_font,Vector2(14,25),state,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#a9d5c3"))
+	draw_string(ThemeDB.fallback_font,Vector2(14,25),state,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#303832"))
 
-func _panel() -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#182e30")
-	style.border_color = Color("#9a8960")
-	style.set_border_width_all(1)
-	return style
+func _panel() -> StyleBoxTexture:
+	return preload("res://scripts/ink_theme.gd").surface("paper")

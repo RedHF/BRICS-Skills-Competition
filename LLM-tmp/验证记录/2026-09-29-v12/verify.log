@@ -1,0 +1,31 @@
+隔离目录：C:\Users\Admin\Documents\GitHub\BRICS-Skills-Competition\LLM-tmp\联调脚本\.verify-tmp\run0001
++ C:\Users\Admin\Documents\GitHub\BRICS-Skills-Competition\LLM-tmp\联调脚本\.verify-tmp\run0001\unpacked\檐下千秋-v12-水墨音乐版-20260929\檐下千秋.exe --headless --verbose --audio-driver Dummy --script C:\Users\Admin\Documents\GitHub\BRICS-Skills-Competition\LLM-tmp\客户端\tests\release_smoke.gd
+{
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-v12-水墨音乐版-20260929.zip",
+  "archive_bytes": 163937895,
+  "archive_sha256": "4c733182bd9f67216735bc76e9944506172065973533ceb68e48faa971745fba",
+  "content_version": 10,
+  "isolated_review": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\联调脚本\\.verify-tmp\\run0001",
+  "manifest_lines_verified": 7,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "health": {
+    "active_sessions": 0,
+    "build": "assets-boss-v10",
+    "content_version": 10,
+    "game_id": "yanxia-qianqiu",
+    "players": 1,
+    "service": "yanxia-server",
+    "status": "ok",
+    "uptime_seconds": 0
+  },
+  "server_auto_started": true,
+  "client_exit_code": 0,
+  "server_auto_stopped": true,
+  "exported_smoke": "passed"
+}
+PASS 檐下千秋-v12-水墨音乐版-20260929.zip: 服务自动启停、内容协议 v10、退出码 0、7 行哈希、冒烟测试通过
+保留隔离目录：C:\Users\Admin\Documents\GitHub\BRICS-Skills-Competition\LLM-tmp\联调脚本\.verify-tmp\run0001

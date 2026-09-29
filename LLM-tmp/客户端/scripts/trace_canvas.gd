@@ -29,7 +29,7 @@ func select_stroke(index: int) -> void:
 func _draw() -> void:
 	var height := minf(size.y - 58, (size.x - 54) / (float(spec.aspect_ratio) / characters))
 	canvas_rect = Rect2((size - Vector2(height * float(spec.aspect_ratio) / characters, height)) / 2, Vector2(height * float(spec.aspect_ratio) / characters, height))
-	draw_rect(Rect2(Vector2.ZERO, size), Color("#10272b"))
+	draw_style_box(preload("res://scripts/ink_theme.gd").surface("paper"), Rect2(Vector2.ZERO, size))
 	draw_rect(Rect2(canvas_rect.position + Vector2(7, 8), canvas_rect.size), Color(0.01, 0.04, 0.05, 0.34))
 	draw_rect(canvas_rect, Color("#eee1bf"))
 	draw_rect(canvas_rect.grow(-7), Color("#b69557"), false, 2.0)
@@ -37,7 +37,7 @@ func _draw() -> void:
 		var grid_color := Color(0.34, 0.42, 0.39, 0.11)
 		draw_line(Vector2(canvas_rect.position.x + canvas_rect.size.x * i / 4.0, canvas_rect.position.y + 8), Vector2(canvas_rect.position.x + canvas_rect.size.x * i / 4.0, canvas_rect.end.y - 8), grid_color, 1.0)
 		draw_line(Vector2(canvas_rect.position.x + 8, canvas_rect.position.y + canvas_rect.size.y * i / 4.0), Vector2(canvas_rect.end.x - 8, canvas_rect.position.y + canvas_rect.size.y * i / 4.0), grid_color, 1.0)
-	draw_string(ThemeDB.fallback_font, Vector2(canvas_rect.position.x, canvas_rect.position.y - 12), "当前第 %02d 笔 · 由青印起笔，向朱印收锋" % [active + 1], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#e4c98a"))
+	draw_string(ThemeDB.fallback_font, Vector2(canvas_rect.position.x, canvas_rect.position.y - 12), "当前第 %02d 笔 · 由青印起笔，向朱印收锋" % [active + 1], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#303832"))
 	for i in range(spec.strokes.size()):
 		if floorf(float(spec.strokes[i][0][0]) * characters) / characters != view_x: continue
 		var points := PackedVector2Array()

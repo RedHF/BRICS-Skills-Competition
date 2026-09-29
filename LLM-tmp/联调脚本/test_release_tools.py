@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import package_release as pr
+import verify_release as vr
 
 _TEMP_COUNTER = itertools.count()
 
@@ -137,6 +138,73 @@ class ReleaseLayoutTest(FolderTestCase):
         self.fill(folder)
         (folder / '更新与素材记录.md').write_text('x', encoding='utf-8')
         self.assertEqual(pr.audit_release(folder)['extra'], ['更新与素材记录.md'])
+
+    def test_seal_release_writes_the_manifest_before_auditing(self):
+        """回归测试：封包这一步必须先写清单，再体检。
+
+        2026-09-28 的第一次构建栽在这里：`main()` 先体检后写清单，报「缺少
+        ['SHA256.txt']」而停下，而那个发行目录本身是好的。这个用例直接跑封包这一步，
+        所以谁把 `write_manifest` 挪到 `audit_release` 后面，它就会红。
+        """
+        folder = self.temp_folder()
+        self.fill(folder)
+        (folder / pr.MANIFEST_FILE).unlink()
+        entries = pr.seal_release(folder, 'v11', '20260928')
+        self.assertEqual([entry['path'] for entry in entries],
+                         [name for name in pr.expected_entries() if name != pr.MANIFEST_FILE])
+        self.assertTrue((folder / pr.MANIFEST_FILE).is_file())
+        self.assertEqual(pr.audit_release(folder),
+                         {'missing': [], 'forbidden': [], 'extra': []})
+
+    def test_seal_release_refuses_a_folder_with_a_stray_file(self):
+        """封包也要拦住混进来的东西，而不是把垃圾一起打进包。"""
+        folder = self.temp_folder()
+        self.fill(folder)
+        (folder / 'save.json').write_text('{}', encoding='utf-8')
+        with self.assertRaises(SystemExit):
+            pr.seal_release(folder, 'v11', '20260928')
+
+
+class GodotEnvironmentTest(unittest.TestCase):
+    def test_apdata_points_inside_the_repository(self):
+        """Godot 的用户目录必须在工作区内，否则它会以 0xC0000005 崩溃。
+
+        2026-09-28 的重跑就栽在这里：沙箱只让写工作区，Godot 写不了
+        `%APPDATA%\\Godot`，许可证一步变成访问冲突。
+        """
+        env = pr.godot_environment()
+        home = Path(env['APPDATA'])
+        self.assertEqual(home, pr.ROOT / pr.GODOT_HOME)
+        self.assertTrue(home.is_dir())
+        self.assertTrue(home.is_relative_to(pr.ROOT))
+
+
+class VerifyResultDirTest(unittest.TestCase):
+    def test_dashed_date(self):
+        self.assertEqual(vr.default_result_dir('v11', '20260928'),
+                         pr.ROOT / 'LLM-tmp' / '验证记录' / '2026-09-28-v11')
+
+    def test_already_dashed_date_is_left_alone(self):
+        self.assertEqual(vr.default_result_dir('v11', '2026-09-28'),
+                         pr.ROOT / 'LLM-tmp' / '验证记录' / '2026-09-28-v11')
+
+
+class LogFindingsTest(unittest.TestCase):
+    """日志判定：本机已知的环境提示放过，其余 ERROR: 一律算失败。"""
+
+    def test_clean_log_has_no_findings(self):
+        self.assertEqual(vr.log_findings('PASS EXPORTED\nnothing here\n'), [])
+
+    def test_known_environment_warning_is_ignored(self):
+        log = 'PASS EXPORTED\nERROR: Failed to read the root certificate store.\n'
+        self.assertEqual(vr.log_findings(log), [])
+
+    def test_any_other_error_is_reported(self):
+        log = ('PASS EXPORTED\n'
+               'ERROR: Failed to read the root certificate store.\n'
+               'ERROR: Script error in res://scripts/main.gd\n')
+        self.assertEqual(vr.log_findings(log),
+                         ['ERROR: Script error in res://scripts/main.gd'])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,10 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: d8c00a9d4283) - Compatibility - Using Device: Google Inc. (NVIDIA) - ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6614)
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)
+WARNING: Antialiasing is not supported for thin polylines drawn using line strips (`p_width < 0`).
+   at: canvas_item_add_polyline (servers/rendering/renderer_canvas_cull.cpp:970)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://scripts/trace_canvas.gd:50)
+PASS welcome and three-event chapter controls fully visible at 960x540, 1280x720 and 1600x720; chapter locks preserved

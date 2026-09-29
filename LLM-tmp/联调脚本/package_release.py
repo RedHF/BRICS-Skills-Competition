@@ -47,6 +47,8 @@ FORBIDDEN_NAMES = ('save.json', 'client.cfg', 'settings.cfg')
 FORBIDDEN_SUFFIXES = ('.gd', '.uid', '.ps1', '.bat', '.cmd', '.pdb')
 
 GODOT_CONSOLE = '.tools/godot/Godot_v4.5.2-stable_win64_console.exe'
+# Godot 启动时要写 %APPDATA%\Godot；本机沙箱只允许写工作区，所以给它一个仓库内的用户目录。
+GODOT_HOME = 'LLM-tmp/.review/godot-home'
 CLIENT_PROJECT = 'LLM-tmp/客户端'
 SERVER_PROJECT = 'LLM-tmp/服务端'
 SERVER_CONTENT = 'LLM-tmp/服务端/content/chapters.json'
@@ -187,9 +189,23 @@ def copy_content(folder: Path) -> None:
     shutil.copy2(ROOT / SERVER_CONTENT, target)
 
 
+def godot_environment() -> dict:
+    """给 Godot 一个工作区内可写的用户目录。
+
+    Godot 启动时要写 `%APPDATA%\\Godot`。写不进去时它不干净地退出，而是以
+    0xC0000005（访问冲突）崩溃——2026-09-28 的第一次重跑就是这样丢掉许可证的。
+    本机沙箱只允许写工作区，所以把 `APPDATA` 指到仓库里一个被忽略的目录。
+    """
+    home = ROOT / GODOT_HOME
+    home.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env['APPDATA'] = str(home)
+    return env
+
+
 def export_godot_licenses(folder: Path) -> None:
     """让引擎自己吐出它的许可证与版权清单，而不是从旧包里抄。"""
-    env = os.environ.copy()
+    env = godot_environment()
     env['QA_RELEASE_DIR'] = str(folder)
     run([str(ROOT / GODOT_CONSOLE), '--headless', '--path', CLIENT_PROJECT,
          '--script', str(ROOT / LICENSE_EXPORTER)], env=env)
@@ -241,6 +257,25 @@ def verify_zip(folder: Path, archive: Path, entries: list) -> None:
                 raise RuntimeError('ZIP 内容与清单不一致：' + entry['path'])
 
 
+def seal_release(folder: Path, version: str, date: str, notes_file=None) -> list:
+    """写运行说明与清单，然后体检；返回清单条目。
+
+    顺序有讲究：`audit_release` 要求发行目录里已经有 `SHA256.txt`，所以**清单必须先写**。
+    2026-09-28 的第一次构建就是先体检后写清单，报「缺少 ['SHA256.txt']」而停下，
+    而那个发行目录本身是好的。二进制、章节 JSON 和许可证由调用方在此之前放好。
+    """
+    write_runbook(folder, version, date, notes_file)
+    entries = write_manifest(folder)
+    report = audit_release(folder)
+    if any(report.values()):
+        raise SystemExit(
+            f'发行目录不合格 {folder}\n'
+            f'  缺少：{report["missing"]}\n'
+            f'  不该有：{report["forbidden"]}\n'
+            f'  多出来：{report["extra"]}')
+    return entries
+
+
 # ---------------------------------------------------------------- 入口
 
 def parse_args(argv=None):
@@ -286,17 +321,8 @@ def main(argv=None) -> int:
     copy_content(folder)
     export_godot_licenses(folder)
     copy_go_license(folder)
-    write_runbook(folder, args.version, args.date, args.notes_file)
+    entries = seal_release(folder, args.version, args.date, args.notes_file)
 
-    report = audit_release(folder)
-    if any(report.values()):
-        raise SystemExit(
-            f'发行目录不合格 {folder}\n'
-            f'  缺少：{report["missing"]}\n'
-            f'  不该有：{report["forbidden"]}\n'
-            f'  多出来：{report["extra"]}')
-
-    entries = write_manifest(folder)
     print(f'打包 {len(entries) + 1} 个文件……', flush=True)
     write_zip(folder, archive)
     print('检查 ZIP 的 CRC 与清单里的每个哈希……', flush=True)

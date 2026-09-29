@@ -5,6 +5,7 @@ var music: AudioStreamPlayer
 var voices: Array[AudioStreamPlayer] = []
 var cursor := 0
 var sounds := {}
+var speech_active := false
 
 func _exit_tree() -> void:
 	stop_all()
@@ -27,7 +28,7 @@ func _ready() -> void:
 		voice.volume_db = -12
 		add_child(voice)
 		voices.append(voice)
-	ambience = _loop("ambience", -24)
+	ambience = _loop("theme", -24)
 	music = _loop("battle", -19)
 	music.stream_paused = true
 
@@ -51,9 +52,12 @@ func cue(name: String) -> void:
 	if voices.is_empty() or not sounds.has(name): return
 	var player: AudioStreamPlayer = voices[cursor % voices.size()]
 	cursor += 1
+	player.volume_db = -24 if speech_active else -16
 	player.stream = sounds[name]
 	player.play()
 
 func duck(active: bool) -> void:
+	speech_active = active
+	for player in voices: player.volume_db = -24 if active else -16
 	if is_instance_valid(ambience): ambience.volume_db = -32 if active else -24
 	if is_instance_valid(music): music.volume_db = -28 if active else -19

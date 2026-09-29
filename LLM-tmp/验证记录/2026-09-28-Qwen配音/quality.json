@@ -1,0 +1,931 @@
+{
+  "files": 184,
+  "total_seconds": 1101.985,
+  "sample_rate": 24000,
+  "format": "PCM 16-bit mono",
+  "all_hashes_match": true,
+  "clipped_files": 0,
+  "zero_valued_boundaries": true,
+  "details": [
+    {
+      "file": "prologue_bridge_dialogue_01.wav",
+      "seconds": 10.608,
+      "peak_dbfs": -5.97
+    },
+    {
+      "file": "prologue_bridge_dialogue_02.wav",
+      "seconds": 1.636,
+      "peak_dbfs": -8.42
+    },
+    {
+      "file": "prologue_bridge_dialogue_03.wav",
+      "seconds": 7.725,
+      "peak_dbfs": -3.11
+    },
+    {
+      "file": "prologue_bridge_dialogue_04.wav",
+      "seconds": 2.771,
+      "peak_dbfs": -3.99
+    },
+    {
+      "file": "prologue_bridge_dialogue_05.wav",
+      "seconds": 9.844,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "prologue_bridge_dialogue_06.wav",
+      "seconds": 2.91,
+      "peak_dbfs": -6.87
+    },
+    {
+      "file": "prologue_bridge_clue_01.wav",
+      "seconds": 7.632,
+      "peak_dbfs": -4.8
+    },
+    {
+      "file": "prologue_bridge_clue_02.wav",
+      "seconds": 8.259,
+      "peak_dbfs": -6.95
+    },
+    {
+      "file": "prologue_bridge_clue_03.wav",
+      "seconds": 7.508,
+      "peak_dbfs": -5.37
+    },
+    {
+      "file": "prologue_bridge_beat_01.wav",
+      "seconds": 1.636,
+      "peak_dbfs": -8.42
+    },
+    {
+      "file": "prologue_bridge_beat_02.wav",
+      "seconds": 7.725,
+      "peak_dbfs": -3.11
+    },
+    {
+      "file": "prologue_bridge_beat_03.wav",
+      "seconds": 2.771,
+      "peak_dbfs": -3.99
+    },
+    {
+      "file": "prologue_bridge_before_battle.wav",
+      "seconds": 7.783,
+      "peak_dbfs": -3.33
+    },
+    {
+      "file": "prologue_bridge_keep.wav",
+      "seconds": 6.963,
+      "peak_dbfs": -4.07
+    },
+    {
+      "file": "prologue_bridge_forget.wav",
+      "seconds": 5.659,
+      "peak_dbfs": -3.33
+    },
+    {
+      "file": "prologue_bridge_outro.wav",
+      "seconds": 12.325,
+      "peak_dbfs": -7.04
+    },
+    {
+      "file": "yan_ping_an.wav",
+      "seconds": 3.098,
+      "peak_dbfs": -7.96
+    },
+    {
+      "file": "temple_incense_dialogue_01.wav",
+      "seconds": 6.669,
+      "peak_dbfs": -7.4
+    },
+    {
+      "file": "temple_incense_dialogue_02.wav",
+      "seconds": 7.359,
+      "peak_dbfs": -5.68
+    },
+    {
+      "file": "temple_incense_dialogue_03.wav",
+      "seconds": 2.394,
+      "peak_dbfs": -5.25
+    },
+    {
+      "file": "temple_incense_dialogue_04.wav",
+      "seconds": 5.543,
+      "peak_dbfs": -6.36
+    },
+    {
+      "file": "temple_incense_dialogue_05.wav",
+      "seconds": 4.536,
+      "peak_dbfs": -5.57
+    },
+    {
+      "file": "temple_incense_dialogue_06.wav",
+      "seconds": 6.363,
+      "peak_dbfs": -6.17
+    },
+    {
+      "file": "temple_incense_clue_01.wav",
+      "seconds": 7.194,
+      "peak_dbfs": -5.66
+    },
+    {
+      "file": "temple_incense_clue_02.wav",
+      "seconds": 10.287,
+      "peak_dbfs": -5.83
+    },
+    {
+      "file": "temple_incense_clue_03.wav",
+      "seconds": 7.519,
+      "peak_dbfs": -6.2
+    },
+    {
+      "file": "temple_incense_beat_01.wav",
+      "seconds": 7.359,
+      "peak_dbfs": -5.68
+    },
+    {
+      "file": "temple_incense_beat_02.wav",
+      "seconds": 2.394,
+      "peak_dbfs": -5.25
+    },
+    {
+      "file": "temple_incense_beat_03.wav",
+      "seconds": 5.543,
+      "peak_dbfs": -6.36
+    },
+    {
+      "file": "temple_incense_before_battle.wav",
+      "seconds": 5.447,
+      "peak_dbfs": -5.77
+    },
+    {
+      "file": "temple_incense_keep.wav",
+      "seconds": 6.846,
+      "peak_dbfs": -5.49
+    },
+    {
+      "file": "temple_incense_forget.wav",
+      "seconds": 6.121,
+      "peak_dbfs": -5.21
+    },
+    {
+      "file": "temple_incense_outro.wav",
+      "seconds": 12.926,
+      "peak_dbfs": -4.43
+    },
+    {
+      "file": "she_cheng_xiang.wav",
+      "seconds": 3.639,
+      "peak_dbfs": -6.63
+    },
+    {
+      "file": "temple_guest_dialogue_01.wav",
+      "seconds": 6.952,
+      "peak_dbfs": -6.02
+    },
+    {
+      "file": "temple_guest_dialogue_02.wav",
+      "seconds": 4.751,
+      "peak_dbfs": -3.32
+    },
+    {
+      "file": "temple_guest_dialogue_03.wav",
+      "seconds": 1.785,
+      "peak_dbfs": -6.59
+    },
+    {
+      "file": "temple_guest_dialogue_04.wav",
+      "seconds": 4.931,
+      "peak_dbfs": -3.22
+    },
+    {
+      "file": "temple_guest_dialogue_05.wav",
+      "seconds": 4.719,
+      "peak_dbfs": -4.84
+    },
+    {
+      "file": "temple_guest_dialogue_06.wav",
+      "seconds": 4.088,
+      "peak_dbfs": -3.45
+    },
+    {
+      "file": "temple_guest_clue_01.wav",
+      "seconds": 5.53,
+      "peak_dbfs": -6.35
+    },
+    {
+      "file": "temple_guest_clue_02.wav",
+      "seconds": 8.849,
+      "peak_dbfs": -6.8
+    },
+    {
+      "file": "temple_guest_clue_03.wav",
+      "seconds": 7.873,
+      "peak_dbfs": -7.17
+    },
+    {
+      "file": "temple_guest_beat_01.wav",
+      "seconds": 4.751,
+      "peak_dbfs": -3.32
+    },
+    {
+      "file": "temple_guest_beat_02.wav",
+      "seconds": 1.785,
+      "peak_dbfs": -6.59
+    },
+    {
+      "file": "temple_guest_beat_03.wav",
+      "seconds": 4.931,
+      "peak_dbfs": -3.22
+    },
+    {
+      "file": "temple_guest_before_battle.wav",
+      "seconds": 2.264,
+      "peak_dbfs": -7.71
+    },
+    {
+      "file": "temple_guest_keep.wav",
+      "seconds": 5.609,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "temple_guest_forget.wav",
+      "seconds": 4.764,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "temple_guest_outro.wav",
+      "seconds": 11.655,
+      "peak_dbfs": -6.42
+    },
+    {
+      "file": "she_ning_an.wav",
+      "seconds": 4.209,
+      "peak_dbfs": -4.43
+    },
+    {
+      "file": "temple_drum_dialogue_01.wav",
+      "seconds": 9.033,
+      "peak_dbfs": -6.17
+    },
+    {
+      "file": "temple_drum_dialogue_02.wav",
+      "seconds": 5.955,
+      "peak_dbfs": -6.49
+    },
+    {
+      "file": "temple_drum_dialogue_03.wav",
+      "seconds": 4.452,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "temple_drum_dialogue_04.wav",
+      "seconds": 6.431,
+      "peak_dbfs": -6.8
+    },
+    {
+      "file": "temple_drum_dialogue_05.wav",
+      "seconds": 5.487,
+      "peak_dbfs": -6.02
+    },
+    {
+      "file": "temple_drum_dialogue_06.wav",
+      "seconds": 2.726,
+      "peak_dbfs": -4.39
+    },
+    {
+      "file": "temple_drum_clue_01.wav",
+      "seconds": 6.639,
+      "peak_dbfs": -6.96
+    },
+    {
+      "file": "temple_drum_clue_02.wav",
+      "seconds": 6.425,
+      "peak_dbfs": -6.73
+    },
+    {
+      "file": "temple_drum_clue_03.wav",
+      "seconds": 5.455,
+      "peak_dbfs": -5.67
+    },
+    {
+      "file": "temple_drum_beat_01.wav",
+      "seconds": 5.955,
+      "peak_dbfs": -6.49
+    },
+    {
+      "file": "temple_drum_beat_02.wav",
+      "seconds": 4.452,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "temple_drum_beat_03.wav",
+      "seconds": 6.431,
+      "peak_dbfs": -6.8
+    },
+    {
+      "file": "temple_drum_before_battle.wav",
+      "seconds": 6.024,
+      "peak_dbfs": -5.99
+    },
+    {
+      "file": "temple_drum_keep.wav",
+      "seconds": 2.782,
+      "peak_dbfs": -7.16
+    },
+    {
+      "file": "temple_drum_forget.wav",
+      "seconds": 8.295,
+      "peak_dbfs": -5.9
+    },
+    {
+      "file": "temple_drum_outro.wav",
+      "seconds": 15.578,
+      "peak_dbfs": -4.71
+    },
+    {
+      "file": "temple_drum_chapter_outro.wav",
+      "seconds": 8.829,
+      "peak_dbfs": -6.5
+    },
+    {
+      "file": "she_hui_chun.wav",
+      "seconds": 3.81,
+      "peak_dbfs": -7.57
+    },
+    {
+      "file": "opera_opening_dialogue_01.wav",
+      "seconds": 8.271,
+      "peak_dbfs": -7.13
+    },
+    {
+      "file": "opera_opening_dialogue_02.wav",
+      "seconds": 6.141,
+      "peak_dbfs": -4.9
+    },
+    {
+      "file": "opera_opening_dialogue_03.wav",
+      "seconds": 1.942,
+      "peak_dbfs": -7.39
+    },
+    {
+      "file": "opera_opening_dialogue_04.wav",
+      "seconds": 8.414,
+      "peak_dbfs": -7.03
+    },
+    {
+      "file": "opera_opening_dialogue_05.wav",
+      "seconds": 1.851,
+      "peak_dbfs": -5.43
+    },
+    {
+      "file": "opera_opening_dialogue_06.wav",
+      "seconds": 5.902,
+      "peak_dbfs": -6.87
+    },
+    {
+      "file": "opera_opening_clue_01.wav",
+      "seconds": 7.538,
+      "peak_dbfs": -5.92
+    },
+    {
+      "file": "opera_opening_clue_02.wav",
+      "seconds": 4.772,
+      "peak_dbfs": -5.82
+    },
+    {
+      "file": "opera_opening_clue_03.wav",
+      "seconds": 6.299,
+      "peak_dbfs": -6.92
+    },
+    {
+      "file": "opera_opening_beat_01.wav",
+      "seconds": 6.141,
+      "peak_dbfs": -4.9
+    },
+    {
+      "file": "opera_opening_beat_02.wav",
+      "seconds": 1.942,
+      "peak_dbfs": -7.39
+    },
+    {
+      "file": "opera_opening_beat_03.wav",
+      "seconds": 8.414,
+      "peak_dbfs": -7.03
+    },
+    {
+      "file": "opera_opening_before_battle.wav",
+      "seconds": 6.766,
+      "peak_dbfs": -4.32
+    },
+    {
+      "file": "opera_opening_keep.wav",
+      "seconds": 4.839,
+      "peak_dbfs": -5.89
+    },
+    {
+      "file": "opera_opening_forget.wav",
+      "seconds": 5.716,
+      "peak_dbfs": -4.15
+    },
+    {
+      "file": "opera_opening_outro.wav",
+      "seconds": 13.241,
+      "peak_dbfs": -5.75
+    },
+    {
+      "file": "opera_opening_first_clear.wav",
+      "seconds": 8.223,
+      "peak_dbfs": -7.25
+    },
+    {
+      "file": "xi_xing_qiang.wav",
+      "seconds": 3.19,
+      "peak_dbfs": -7.68
+    },
+    {
+      "file": "opera_master_dialogue_01.wav",
+      "seconds": 8.64,
+      "peak_dbfs": -5.85
+    },
+    {
+      "file": "opera_master_dialogue_02.wav",
+      "seconds": 5.768,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "opera_master_dialogue_03.wav",
+      "seconds": 3.067,
+      "peak_dbfs": -7.92
+    },
+    {
+      "file": "opera_master_dialogue_04.wav",
+      "seconds": 8.243,
+      "peak_dbfs": -3.86
+    },
+    {
+      "file": "opera_master_dialogue_05.wav",
+      "seconds": 5.164,
+      "peak_dbfs": -4.61
+    },
+    {
+      "file": "opera_master_dialogue_06.wav",
+      "seconds": 4.578,
+      "peak_dbfs": -6.24
+    },
+    {
+      "file": "opera_master_clue_01.wav",
+      "seconds": 4.86,
+      "peak_dbfs": -6.2
+    },
+    {
+      "file": "opera_master_clue_02.wav",
+      "seconds": 4.738,
+      "peak_dbfs": -5.0
+    },
+    {
+      "file": "opera_master_clue_03.wav",
+      "seconds": 6.485,
+      "peak_dbfs": -5.99
+    },
+    {
+      "file": "opera_master_beat_01.wav",
+      "seconds": 5.768,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "opera_master_beat_02.wav",
+      "seconds": 3.067,
+      "peak_dbfs": -7.92
+    },
+    {
+      "file": "opera_master_beat_03.wav",
+      "seconds": 8.243,
+      "peak_dbfs": -3.86
+    },
+    {
+      "file": "opera_master_before_battle.wav",
+      "seconds": 5.497,
+      "peak_dbfs": -5.82
+    },
+    {
+      "file": "opera_master_keep.wav",
+      "seconds": 4.135,
+      "peak_dbfs": -5.18
+    },
+    {
+      "file": "opera_master_forget.wav",
+      "seconds": 6.567,
+      "peak_dbfs": -4.62
+    },
+    {
+      "file": "opera_master_outro.wav",
+      "seconds": 13.891,
+      "peak_dbfs": -6.84
+    },
+    {
+      "file": "opera_master_first_clear.wav",
+      "seconds": 3.022,
+      "peak_dbfs": -7.3
+    },
+    {
+      "file": "xi_jue_chang.wav",
+      "seconds": 4.065,
+      "peak_dbfs": -7.47
+    },
+    {
+      "file": "archway_form_dialogue_01.wav",
+      "seconds": 7.546,
+      "peak_dbfs": -4.85
+    },
+    {
+      "file": "archway_form_dialogue_02.wav",
+      "seconds": 4.279,
+      "peak_dbfs": -3.97
+    },
+    {
+      "file": "archway_form_dialogue_03.wav",
+      "seconds": 5.011,
+      "peak_dbfs": -6.15
+    },
+    {
+      "file": "archway_form_dialogue_04.wav",
+      "seconds": 6.059,
+      "peak_dbfs": -3.18
+    },
+    {
+      "file": "archway_form_dialogue_05.wav",
+      "seconds": 2.695,
+      "peak_dbfs": -6.93
+    },
+    {
+      "file": "archway_form_dialogue_06.wav",
+      "seconds": 6.582,
+      "peak_dbfs": -4.8
+    },
+    {
+      "file": "archway_form_clue_01.wav",
+      "seconds": 6.692,
+      "peak_dbfs": -6.94
+    },
+    {
+      "file": "archway_form_clue_02.wav",
+      "seconds": 4.446,
+      "peak_dbfs": -6.39
+    },
+    {
+      "file": "archway_form_clue_03.wav",
+      "seconds": 7.743,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "archway_form_beat_01.wav",
+      "seconds": 4.279,
+      "peak_dbfs": -3.97
+    },
+    {
+      "file": "archway_form_beat_02.wav",
+      "seconds": 5.011,
+      "peak_dbfs": -6.15
+    },
+    {
+      "file": "archway_form_beat_03.wav",
+      "seconds": 6.059,
+      "peak_dbfs": -3.18
+    },
+    {
+      "file": "archway_form_before_battle.wav",
+      "seconds": 5.061,
+      "peak_dbfs": -4.5
+    },
+    {
+      "file": "archway_form_keep.wav",
+      "seconds": 3.764,
+      "peak_dbfs": -3.55
+    },
+    {
+      "file": "archway_form_forget.wav",
+      "seconds": 5.876,
+      "peak_dbfs": -4.26
+    },
+    {
+      "file": "archway_form_outro.wav",
+      "seconds": 13.746,
+      "peak_dbfs": -6.5
+    },
+    {
+      "file": "fang_wu_ming.wav",
+      "seconds": 2.86,
+      "peak_dbfs": -5.23
+    },
+    {
+      "file": "archway_craftsman_dialogue_01.wav",
+      "seconds": 7.764,
+      "peak_dbfs": -6.39
+    },
+    {
+      "file": "archway_craftsman_dialogue_02.wav",
+      "seconds": 4.856,
+      "peak_dbfs": -3.65
+    },
+    {
+      "file": "archway_craftsman_dialogue_03.wav",
+      "seconds": 1.745,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "archway_craftsman_dialogue_04.wav",
+      "seconds": 7.85,
+      "peak_dbfs": -3.34
+    },
+    {
+      "file": "archway_craftsman_dialogue_05.wav",
+      "seconds": 6.932,
+      "peak_dbfs": -5.29
+    },
+    {
+      "file": "archway_craftsman_dialogue_06.wav",
+      "seconds": 6.964,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "archway_craftsman_clue_01.wav",
+      "seconds": 5.252,
+      "peak_dbfs": -6.15
+    },
+    {
+      "file": "archway_craftsman_clue_02.wav",
+      "seconds": 4.863,
+      "peak_dbfs": -7.12
+    },
+    {
+      "file": "archway_craftsman_clue_03.wav",
+      "seconds": 5.89,
+      "peak_dbfs": -6.41
+    },
+    {
+      "file": "archway_craftsman_beat_01.wav",
+      "seconds": 4.856,
+      "peak_dbfs": -3.65
+    },
+    {
+      "file": "archway_craftsman_beat_02.wav",
+      "seconds": 1.745,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "archway_craftsman_beat_03.wav",
+      "seconds": 7.85,
+      "peak_dbfs": -3.34
+    },
+    {
+      "file": "archway_craftsman_before_battle.wav",
+      "seconds": 7.951,
+      "peak_dbfs": -4.64
+    },
+    {
+      "file": "archway_craftsman_keep.wav",
+      "seconds": 4.255,
+      "peak_dbfs": -4.88
+    },
+    {
+      "file": "archway_craftsman_forget.wav",
+      "seconds": 6.96,
+      "peak_dbfs": -3.98
+    },
+    {
+      "file": "archway_craftsman_outro.wav",
+      "seconds": 15.391,
+      "peak_dbfs": -6.2
+    },
+    {
+      "file": "fang_jiang_hun.wav",
+      "seconds": 4.291,
+      "peak_dbfs": -7.5
+    },
+    {
+      "file": "tower_ascent_dialogue_01.wav",
+      "seconds": 6.899,
+      "peak_dbfs": -5.7
+    },
+    {
+      "file": "tower_ascent_dialogue_02.wav",
+      "seconds": 6.772,
+      "peak_dbfs": -4.92
+    },
+    {
+      "file": "tower_ascent_dialogue_03.wav",
+      "seconds": 4.766,
+      "peak_dbfs": -6.03
+    },
+    {
+      "file": "tower_ascent_dialogue_04.wav",
+      "seconds": 4.268,
+      "peak_dbfs": -4.36
+    },
+    {
+      "file": "tower_ascent_dialogue_05.wav",
+      "seconds": 6.862,
+      "peak_dbfs": -4.97
+    },
+    {
+      "file": "tower_ascent_dialogue_06.wav",
+      "seconds": 7.062,
+      "peak_dbfs": -3.44
+    },
+    {
+      "file": "tower_ascent_clue_01.wav",
+      "seconds": 7.386,
+      "peak_dbfs": -6.56
+    },
+    {
+      "file": "tower_ascent_clue_02.wav",
+      "seconds": 6.039,
+      "peak_dbfs": -6.27
+    },
+    {
+      "file": "tower_ascent_clue_03.wav",
+      "seconds": 8.663,
+      "peak_dbfs": -6.63
+    },
+    {
+      "file": "tower_ascent_beat_01.wav",
+      "seconds": 6.704,
+      "peak_dbfs": -4.3
+    },
+    {
+      "file": "tower_ascent_beat_02.wav",
+      "seconds": 4.766,
+      "peak_dbfs": -6.03
+    },
+    {
+      "file": "tower_ascent_beat_03.wav",
+      "seconds": 4.477,
+      "peak_dbfs": -4.35
+    },
+    {
+      "file": "tower_ascent_before_battle.wav",
+      "seconds": 9.653,
+      "peak_dbfs": -3.17
+    },
+    {
+      "file": "tower_ascent_keep.wav",
+      "seconds": 6.132,
+      "peak_dbfs": -3.75
+    },
+    {
+      "file": "tower_ascent_forget.wav",
+      "seconds": 6.922,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "tower_ascent_outro.wav",
+      "seconds": 12.767,
+      "peak_dbfs": -6.44
+    },
+    {
+      "file": "tower_origin.wav",
+      "seconds": 4.16,
+      "peak_dbfs": -7.14
+    },
+    {
+      "file": "tower_ledger_dialogue_01.wav",
+      "seconds": 7.491,
+      "peak_dbfs": -4.97
+    },
+    {
+      "file": "tower_ledger_dialogue_02.wav",
+      "seconds": 6.622,
+      "peak_dbfs": -3.22
+    },
+    {
+      "file": "tower_ledger_dialogue_03.wav",
+      "seconds": 3.252,
+      "peak_dbfs": -4.82
+    },
+    {
+      "file": "tower_ledger_dialogue_04.wav",
+      "seconds": 2.511,
+      "peak_dbfs": -5.95
+    },
+    {
+      "file": "tower_ledger_dialogue_05.wav",
+      "seconds": 5.126,
+      "peak_dbfs": -4.08
+    },
+    {
+      "file": "tower_ledger_dialogue_06.wav",
+      "seconds": 7.57,
+      "peak_dbfs": -4.03
+    },
+    {
+      "file": "tower_ledger_clue_01.wav",
+      "seconds": 5.164,
+      "peak_dbfs": -6.12
+    },
+    {
+      "file": "tower_ledger_clue_02.wav",
+      "seconds": 6.609,
+      "peak_dbfs": -5.54
+    },
+    {
+      "file": "tower_ledger_clue_03.wav",
+      "seconds": 5.558,
+      "peak_dbfs": -6.07
+    },
+    {
+      "file": "tower_ledger_beat_01.wav",
+      "seconds": 6.622,
+      "peak_dbfs": -3.22
+    },
+    {
+      "file": "tower_ledger_beat_02.wav",
+      "seconds": 3.252,
+      "peak_dbfs": -4.82
+    },
+    {
+      "file": "tower_ledger_beat_03.wav",
+      "seconds": 2.511,
+      "peak_dbfs": -5.95
+    },
+    {
+      "file": "tower_ledger_keep.wav",
+      "seconds": 4.172,
+      "peak_dbfs": -7.63
+    },
+    {
+      "file": "tower_ledger_forget.wav",
+      "seconds": 8.32,
+      "peak_dbfs": -6.73
+    },
+    {
+      "file": "tower_ledger_outro.wav",
+      "seconds": 15.014,
+      "peak_dbfs": -4.58
+    },
+    {
+      "file": "tower_epilogue.wav",
+      "seconds": 3.961,
+      "peak_dbfs": -5.9
+    },
+    {
+      "file": "failure_line_01.wav",
+      "seconds": 6.458,
+      "peak_dbfs": -7.44
+    },
+    {
+      "file": "failure_line_02.wav",
+      "seconds": 6.848,
+      "peak_dbfs": -5.36
+    },
+    {
+      "file": "failure_line_03.wav",
+      "seconds": 8.377,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "failure_line_04.wav",
+      "seconds": 3.784,
+      "peak_dbfs": -5.84
+    },
+    {
+      "file": "failure_line_05.wav",
+      "seconds": 4.037,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "failure_line_06.wav",
+      "seconds": 2.669,
+      "peak_dbfs": -4.63
+    },
+    {
+      "file": "failure_line_07.wav",
+      "seconds": 2.719,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "failure_line_09.wav",
+      "seconds": 3.009,
+      "peak_dbfs": -3.0
+    },
+    {
+      "file": "failure_first_erosion_limit.wav",
+      "seconds": 3.183,
+      "peak_dbfs": -7.51
+    },
+    {
+      "file": "failure_first_puzzle_attempt_limit.wav",
+      "seconds": 4.77,
+      "peak_dbfs": -7.69
+    },
+    {
+      "file": "failure_first_battle_requirements_not_met.wav",
+      "seconds": 5.495,
+      "peak_dbfs": -5.76
+    },
+    {
+      "file": "failure_first_session_expired.wav",
+      "seconds": 4.862,
+      "peak_dbfs": -7.57
+    }
+  ]
+}

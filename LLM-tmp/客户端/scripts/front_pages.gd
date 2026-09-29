@@ -1,7 +1,7 @@
 extends RefCounted
 
 const WELCOME = preload("res://assets/landscape/welcome.png")
-const MAP = preload("res://assets/landscape/chapters.png")
+const MAP = preload("res://assets/ink_ui/background.png")
 const LOGO = preload("res://assets/landscape/logo.png")
 const INK = preload("res://scripts/logo_ink.gdshader")
 var host: Node
@@ -47,15 +47,7 @@ func _surface(texture: Texture2D) -> void:
 func panel(parent: Node, light: bool = false) -> VBoxContainer:
 	var frame := PanelContainer.new()
 	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.91, 0.89, 0.83, 0.95) if light else Color(0.055, 0.085, 0.09, 0.94)
-	style.border_color = Color("#aa9064")
-	style.border_width_top = 2
-	style.content_margin_left = 24
-	style.content_margin_right = 24
-	style.content_margin_top = 18
-	style.content_margin_bottom = 18
-	frame.add_theme_stylebox_override("panel", style)
+	frame.add_theme_stylebox_override("panel", preload("res://scripts/ink_theme.gd").surface("paper" if light else "panel", 24))
 	parent.add_child(frame)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
@@ -96,15 +88,16 @@ func welcome() -> void:
 	var region := MarginContainer.new()
 	region.anchor_left = 0.57
 	region.anchor_right = 0.91
-	region.anchor_top = 0.53
+	region.anchor_top = 0.42
 	region.anchor_bottom = 0.93
 	overlay.add_child(region)
-	var box := panel(region)
+	var box := panel(region, true)
 	var title: Label = host._label(box, "一笔留住千秋，一念守住人间", 22, Color("#e4c98a"))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var saved: bool = host._has_current_event() or not GameState.player.completed_events.is_empty()
-	host._button(box, "继续旅程" if saved else "启程 · 展开檐下谱", _continue)
-	host._button(box, "选择关卡", host._show_map)
+	host._button(box, "继续旅程" if saved else "开始旅程", _continue)
+	if saved: host._button(box, "选择关卡", host._show_map)
+	host._button(box, "旅途收藏", func(): enter_game(); host._show_memories())
 	var row := HBoxContainer.new()
 	box.add_child(row)
 	host._button(row, "声音设置", func(): enter_game(); host._show_settings())
@@ -136,20 +129,26 @@ func select_current() -> void:
 func map_page() -> void:
 	enter_game()
 	host.heading.hide()
+	host.navigation.hide()
 	host.status.hide()
 	host.backdrop_art.texture = MAP
 	host.backdrop_art.modulate = Color.WHITE
-	host.backdrop.color = Color(0.04, 0.07, 0.07, 0.48)
+	host.backdrop.color = Color(0.94, 0.90, 0.81, 0.16)
 	var top := HBoxContainer.new()
 	host.page.add_child(top)
-	var title: Label = host._label(top, "古建行旅", 30, Color("#f1dfb9"))
-	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var count_label: Label = host._label(top, "已修复 %02d / 10 段记忆" % GameState.player.completed_events.size(), 18)
-	count_label.autowrap_mode = TextServer.AUTOWRAP_OFF
-	count_label.custom_minimum_size.x = 240
-	var home: Button = host._button(top, "返回欢迎页", host._show_welcome)
+	var title_art := TextureRect.new()
+	title_art.texture = preload("res://assets/ink_ui/title.png")
+	title_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	title_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	title_art.custom_minimum_size = Vector2(300, 76)
+	title_art.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(title_art)
+	var home: Button = host._button(top, "‹ 主页", host._show_welcome)
 	home.size_flags_horizontal = Control.SIZE_SHRINK_END
-	home.custom_minimum_size.x = 160
+	home.custom_minimum_size.x = 120
+	var settings: Button = host._button(top, "设置", host._show_settings)
+	settings.size_flags_horizontal = Control.SIZE_SHRINK_END
+	settings.custom_minimum_size.x = 120
 	var route := HBoxContainer.new()
 	route.add_theme_constant_override("separation", 10)
 	host.page.add_child(route)
@@ -161,42 +160,56 @@ func map_page() -> void:
 		for event in chapter.events:
 			if GameState.player.completed_events.has(chapter.id + ":" + event.id): count += 1
 		var available: bool = chapter.id in GameState.player.unlocked_chapters
-		var state := "%d/%d" % [count, chapter.events.size()] if available else "未解锁"
-		var button: Button = host._button(route, "%02d  %s\n%s" % [i+1, chapter.title, state], choose_chapter.bind(i))
-		button.custom_minimum_size.y = 66
+		var state := "%d / %d" % [count, chapter.events.size()] if available else "未解锁"
+		var button: Button = host._button(route, "%02d\n%s\n%s" % [i+1, chapter.title, state], choose_chapter.bind(i))
+		button.custom_minimum_size.y = 110
 		if i == selected:
-			var style := StyleBoxFlat.new()
-			style.bg_color = Color("#75613f")
-			style.border_color = Color("#e4c98a")
-			style.set_border_width_all(2)
-			button.add_theme_stylebox_override("normal", style)
+			button.add_theme_stylebox_override("normal", preload("res://scripts/ink_theme.gd").surface("paper", 12))
+			button.add_theme_color_override("font_color", Color("#303832"))
 	var chapter: Dictionary = chapters[selected]
 	var body := HBoxContainer.new()
 	body.add_theme_constant_override("separation", 20)
 	host.page.add_child(body)
+	var frame := PanelContainer.new()
+	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	frame.size_flags_stretch_ratio = 1.5
+	frame.add_theme_stylebox_override("panel", preload("res://scripts/ink_theme.gd").surface("frame", 8))
+	body.add_child(frame)
 	var art := TextureRect.new()
 	art.texture = host._event_background(str(chapter.events[0].id))
 	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	art.custom_minimum_size = Vector2(0, 312)
-	art.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	art.size_flags_stretch_ratio = 1.35
-	body.add_child(art)
+	art.custom_minimum_size.y = 340
+	frame.add_child(art)
 	var details := panel(body)
-	details.add_theme_constant_override("separation", 8)
-	host._label(details, chapter.title, 27, Color("#e4c98a"))
-	host._label(details, chapter.summary, 17)
+	host._label(details, chapter.title, 28, Color("#f4ead3"))
+	var teasers := ["风雨初歇，找回廊桥的第一段记忆。", "循香入庙，让沉寂的钟鼓再次回响。", "登上旧戏台，寻回失落的唱腔。", "走近石刻，读懂匠人留下的名字。", "登塔寻源，写下你对传承的回答。"]
+	host._label(details, teasers[selected], 19, Color("#f4ead3"))
+	var target: Dictionary = chapter.events[0]
+	var available: bool = chapter.id in GameState.player.unlocked_chapters
 	for event in chapter.events:
-		var done: bool = GameState.player.completed_events.has(chapter.id + ":" + event.id)
-		var reason := ""
-		if not chapter.id in GameState.player.unlocked_chapters: reason = "完成上一章节后开放"
-		else:
-			for previous in chapter.events:
-				if int(previous.order) < int(event.order) and not GameState.player.completed_events.has(chapter.id + ":" + previous.id):
-					reason = "先完成「%s」" % previous.title
-		if event.draft: reason = "尚未开放"
-		var button: Button = host._button(details, ("✓  " if done else "○  ") + event.title + (" · 重访" if done else ""), host._open_event.bind(chapter.id, event.id))
-		button.disabled = not reason.is_empty()
-		if not reason.is_empty(): host._label(details, reason, 14, Color("#b8b8a9"))
-	if host._has_current_event():
-		host._button(host.page, "继续当前事件 · " + str(host.current_event.get("title", "未完的记忆")), host._resume)
+		if not GameState.player.completed_events.has(chapter.id + ":" + event.id):
+			target = event
+			break
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	details.add_child(spacer)
+	if not available: host._label(details, "完成上一章后解锁", 18, Color("#f4ead3"))
+	elif host._has_current_event(): host._label(details, "你有一段尚未完成的旅程", 18, Color("#f4ead3"))
+	else: host._label(details, target.title, 18, Color("#f4ead3"))
+	var continuing: bool = host._has_current_event()
+	var enter: Button = host._button(details, "继续当前旅程 →" if continuing else "进入关卡 →", host._resume if continuing else host._open_event.bind(chapter.id, target.id))
+	enter.disabled = not available or target.draft
+	enter.add_theme_stylebox_override("normal", preload("res://scripts/ink_theme.gd").surface("paper", 16))
+	enter.add_theme_color_override("font_color", Color("#303832"))
+	var completed: Array = []
+	for event in chapter.events:
+		if GameState.player.completed_events.has(chapter.id + ":" + event.id): completed.append(event)
+	if not completed.is_empty() and not continuing:
+		var revisit := OptionButton.new()
+		revisit.add_item("重访已完成的记忆…")
+		for event in completed: revisit.add_item(event.title)
+		revisit.custom_minimum_size.y = 44
+		details.add_child(revisit)
+		revisit.item_selected.connect(func(index):
+			if index > 0: host._open_event(chapter.id, completed[index - 1].id))
