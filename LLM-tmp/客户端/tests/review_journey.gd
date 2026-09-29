@@ -8,6 +8,10 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func click(button: Button) -> void:
+	if not is_instance_valid(button) or button.disabled:
+		push_error("Review requested an unavailable button")
+		quit(1)
+		return
 	assert(is_instance_valid(button) and not button.disabled)
 	await process_frame
 	await process_frame
@@ -45,7 +49,8 @@ func button(prefix: String, parent: Node = null) -> Button:
 	if parent == null: parent = main.page
 	for child in parent.find_children("*", "Button", true, false):
 		if child.text.begins_with(prefix): return child
-	assert(false, "Missing button " + prefix)
+	push_error("Missing button " + prefix)
+	quit(1)
 	return null
 
 func capture(name: String) -> void:

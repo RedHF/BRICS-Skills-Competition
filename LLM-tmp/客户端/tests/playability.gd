@@ -80,8 +80,8 @@ func _run() -> void:
 		await click(return_button)
 		check(main.flow == "intro" and main.scene_view == original_scene and original_scene.discovered.size() == 1, "Investigation progress lost after settings")
 		# Return through the main task entry as well.
-		await click(button("关卡", main.navigation))
-		await click(button("继续当前事件"))
+		await click(button("‹ 返回关卡", main.navigation))
+		await click(button("继续当前旅程"))
 		check(main.flow == "intro" and main.scene_view == original_scene, "Map failed to resume investigation")
 		await capture("investigation-restored")
 	if is_instance_valid(main.paused_page):

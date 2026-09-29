@@ -488,10 +488,11 @@ func _show_investigation() -> void:
 			if scene_view.investigations[i].label == label:
 				_play_cues([str(current_event.id) + "_clue_%02d" % (i+1)])
 		if found < total: return
-		var beat_cues: Array = []
-		for i in range(current_event.story.beats.size()):
-			beat_cues.append(str(current_event.id) + "_beat_%02d" % (i+1))
-		_button(story_details, "聆听往事（可选）", func(): _play_cues(beat_cues))
+		var story_reader = preload("res://scripts/story_reader.gd").new()
+		story_reader.host = self
+		story_reader.beats = current_event.story.beats.duplicate()
+		story_reader.event_id = str(current_event.id)
+		story_details.add_child(story_reader)
 		if completed:
 			if scene_view.forgotten: _label(story_details, memory.forgotten_text, 20)
 			else: _label(story_details, current_event.story.outro, 20)
@@ -794,9 +795,10 @@ func _battle_skill(skill: String) -> void:
 	if int(spec.damage) > 0: effect += " -%d" % int(spec.damage)
 	if int(spec.shield) > 0: effect += " 护盾 +%d" % int(spec.shield)
 	if int(spec.heal) > 0: effect += " 净化"
-	arena.flash(effect, Color(spec.color))
+	arena.cast(skill, effect, Color(spec.color))
 	soundscape.cue("ink" if int(spec.damage) > 0 else "repair")
 	if arena.hp <= 0:
+		arena.disperse()
 		battle_wave += 1
 		arena.hp = _wave_hp()
 		arena.max_hp = arena.hp
@@ -816,10 +818,10 @@ func _process(delta: float) -> void:
 	while next_attack <= int(battle_elapsed * 1000) and battle_hits <= int(current_event.battle.max_hits_taken) and int(GameState.player.erosion) + battle_hits * 5 < 100:
 		if arena.shield > 0:
 			arena.shield -= 1
-			arena.flash("斗拱挡住侵袭", Color("#9ad5ad"))
+			arena.enemy_strike(true)
 		else:
 			battle_hits += 1
-			arena.flash("侵蚀 +5", Color("#ff8078"))
+			arena.enemy_strike(false)
 			soundscape.cue("hit")
 		next_attack += _attack_interval()
 	_battle_update()

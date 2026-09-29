@@ -1,0 +1,27 @@
+{
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-v13-故事与战斗演出版-20260929.zip",
+  "archive_bytes": 164068802,
+  "archive_sha256": "57835ded105f393c57c214c08751cc6ced983467cae9b7c098607153a64bc427",
+  "content_version": 10,
+  "isolated_review": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\联调脚本\\.verify-tmp\\run0000",
+  "manifest_lines_verified": 7,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "health": {
+    "active_sessions": 0,
+    "build": "assets-boss-v10",
+    "content_version": 10,
+    "game_id": "yanxia-qianqiu",
+    "players": 1,
+    "service": "yanxia-server",
+    "status": "ok",
+    "uptime_seconds": 0
+  },
+  "server_auto_started": true,
+  "client_exit_code": 0,
+  "server_auto_stopped": true,
+  "exported_smoke": "passed"
+}

@@ -1,0 +1,18 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+FONT unique characters=761 missing=
+WARNING: Antialiasing is not supported for thin polylines drawn using line strips (`p_width < 0`).
+   at: canvas_item_add_polyline (servers/rendering/renderer_canvas_cull.cpp:970)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://scripts/trace_canvas.gd:50)
+WARNING: Antialiasing is not supported for thin polylines drawn using line strips (`p_width < 0`).
+   at: canvas_item_add_polyline (servers/rendering/renderer_canvas_cull.cpp:970)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://scripts/trace_canvas.gd:50)
+WARNING: Antialiasing is not supported for thin polylines drawn using line strips (`p_width < 0`).
+   at: canvas_item_add_polyline (servers/rendering/renderer_canvas_cull.cpp:970)
+   GDScript backtrace (most recent call first):
+       [0] _draw (res://scripts/trace_canvas.gd:50)
+MIX exploration frames=7680 peak=0.08194959908724
+MIX battle frames=7680 peak=0.04567294940352
+PLAYABILITY checks=278 failures=0
