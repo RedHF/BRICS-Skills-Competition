@@ -21,4 +21,4 @@ func _ready() -> void:
 func _draw() -> void:
 	if MOTIFS.has(motif):
 		draw_texture_rect(MOTIFS[motif], Rect2(Vector2(size.x * .5 - 80, 5), Vector2(160, 115)), false)
-	draw_string(ThemeDB.fallback_font, Vector2(20, 145), "图式 %s · %s" % [["甲", "乙", "丙"][choice_index], motif], HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#e4c98a"))
+	draw_string(preload("res://scripts/ink_theme.gd").font(), Vector2(20, 145), "图式 %s · %s" % [["甲", "乙", "丙"][choice_index], motif], HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#e4c98a"))

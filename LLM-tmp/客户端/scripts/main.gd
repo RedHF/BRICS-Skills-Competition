@@ -45,6 +45,8 @@ var battle_dock: VBoxContainer
 var erosion_bar: ProgressBar
 var skill_scene: Control
 var soundscape: Node
+var transition_veil: ColorRect
+var transition_tween: Tween
 var confirmation: ConfirmationDialog
 var dialogue_lines: Array = []
 var dialogue_index := 0
@@ -160,6 +162,14 @@ func _ready() -> void:
 	battle_dock = VBoxContainer.new()
 	column.add_child(battle_dock)
 	battle_dock.hide()
+	var transition_layer := CanvasLayer.new()
+	transition_layer.layer = 40
+	add_child(transition_layer)
+	transition_veil = ColorRect.new()
+	transition_veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	transition_veil.color = Color(0.045, 0.065, 0.060, 0.0)
+	transition_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	transition_layer.add_child(transition_veil)
 
 	confirmation = ConfirmationDialog.new()
 	confirmation.title = "确认抹去记忆"
@@ -421,7 +431,7 @@ func _clear() -> void:
 	if flow not in ["map", "loading", "welcome", "splash"]: front.enter_game()
 	_layout_landscape.call_deferred()
 	if is_instance_valid(battle_dock): battle_dock.visible = flow == "battle"
-	if is_instance_valid(soundscape): soundscape.set_battle(flow == "battle")
+	if is_instance_valid(soundscape): soundscape.set_scene("battle" if flow == "battle" else "theme")
 	status.text = ""
 	for child in page.get_children():
 		page.remove_child(child)
@@ -438,6 +448,12 @@ func _show_map() -> void:
 	flow = "map"
 	_clear()
 	front.map_page()
+
+func _enter_event(chapter: String, event: String) -> void:
+	if busy: return
+	await _fade_to_dark()
+	await _open_event(chapter, event)
+	_fade_from_dark()
 
 func _open_event(chapter: String, event: String) -> void:
 	if busy: return
@@ -458,6 +474,19 @@ func _open_event(chapter: String, event: String) -> void:
 	var lines: Array = current_event.story.dialogue.duplicate(true)
 	for i in range(lines.size()): lines[i]["audio_cue"] = str(current_event.id) + "_dialogue_%02d" % (i+1)
 	_begin_dialogue(current_event.title, lines, _show_investigation, _show_map)
+
+func _fade_to_dark() -> void:
+	if transition_tween and transition_tween.is_valid(): transition_tween.kill()
+	transition_veil.mouse_filter = Control.MOUSE_FILTER_STOP
+	transition_tween = create_tween()
+	transition_tween.tween_property(transition_veil, "color:a", 0.95, 0.26).set_trans(Tween.TRANS_SINE)
+	await transition_tween.finished
+
+func _fade_from_dark() -> void:
+	if transition_tween and transition_tween.is_valid(): transition_tween.kill()
+	transition_tween = create_tween()
+	transition_tween.tween_property(transition_veil, "color:a", 0.0, 0.36).set_trans(Tween.TRANS_SINE)
+	transition_tween.finished.connect(func(): transition_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE)
 
 func _show_investigation() -> void:
 	flow = "intro"
@@ -523,7 +552,7 @@ func _resume() -> void:
 		scroll.add_child(page)
 		flow = paused_flow
 		battle_dock.visible = flow == "battle"
-		soundscape.set_battle(flow == "battle")
+		soundscape.set_scene("battle" if flow == "battle" else ("trace" if flow == "puzzle" and is_instance_valid(trace_canvas) else "theme"))
 		scroll.set_deferred("scroll_vertical", paused_scroll)
 		_refresh_stats()
 		return
@@ -563,6 +592,8 @@ func _show_puzzle() -> void:
 	_clear()
 	var index: int = GameState.session.accepted_steps.size()
 	var step: Dictionary = current_event.puzzle.steps[index]
+	soundscape.set_scene("trace" if step.kind == "trace" else "theme")
+	if step.kind == "trace": soundscape.cue("ui_page")
 	_label(page, "修复 %d / %d · %s" % [index + 1, current_event.puzzle.steps.size(), current_event.title], 24, Color("#e4c98a"))
 	_label(page, step.prompt, 20)
 	if step.kind == "trace":
@@ -582,6 +613,7 @@ func _show_puzzle() -> void:
 			var button := _button(stroke_buttons, "%02d" % [i + 1], trace_canvas.select_stroke.bind(i))
 			button.custom_minimum_size = Vector2(48, 42)
 		trace_canvas.stroke_finished.connect(_trace_feedback)
+		trace_canvas.brush_touched.connect(func(): soundscape.cue("brush_touch"))
 		_trace_feedback()
 		var buttons := HBoxContainer.new()
 		page.add_child(buttons)
@@ -617,6 +649,7 @@ func _show_puzzle() -> void:
 			option.motif = str(step.options[i])
 			option.choice_index = i
 			option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			_decorate_button(option)
 			option.pressed.connect(func(): _submit_puzzle({"step_id":step.id, "answer":step.options[i]}))
 			options.add_child(option)
 	else:
@@ -868,7 +901,9 @@ func _finish() -> void:
 	GameState.player = response.player
 	_refresh_stats()
 	busy = false
+	await _fade_to_dark()
 	_settlement(response.result, str(response.get("reason","")) == "settled")
+	_fade_from_dark()
 
 func _settlement(result: Dictionary, first_clear: bool = false) -> void:
 	flow = "settlement"
@@ -1033,12 +1068,29 @@ func _button(parent: Node, text: String, callback: Callable) -> Button:
 	button.add_theme_color_override("font_pressed_color", Color("#303832"))
 	button.add_theme_color_override("font_disabled_color", Color("#999d96"))
 	button.add_theme_font_size_override("font_size", 18)
+	_decorate_button(button)
 	button.pressed.connect(func():
 		if not busy:
-			soundscape.cue("ui")
+			soundscape.cue("ui_page" if ("关卡" in text or "主页" in text or "回看" in text or "下一段" in text or "往事" in text) else "ui_wood")
 			callback.call())
 	parent.add_child(button)
 	return button
+
+func _decorate_button(button: BaseButton) -> void:
+	button.resized.connect(func(): button.pivot_offset = button.size * .5)
+	button.mouse_entered.connect(func(): _hover_button(button, true))
+	button.mouse_exited.connect(func(): _hover_button(button, false))
+	button.focus_entered.connect(func(): _hover_button(button, true))
+	button.focus_exited.connect(func(): _hover_button(button, false))
+
+func _hover_button(button: BaseButton, active: bool) -> void:
+	if not is_instance_valid(button) or button.disabled: return
+	var previous = button.get_meta("hover_tween") if button.has_meta("hover_tween") else null
+	if previous is Tween and previous.is_valid(): previous.kill()
+	var animation := button.create_tween().set_parallel()
+	animation.tween_property(button, "scale", Vector2.ONE * (1.035 if active else 1.0), .16).set_trans(Tween.TRANS_BACK if active else Tween.TRANS_SINE)
+	animation.tween_property(button, "modulate", Color(1.06, 1.04, 0.96) if active else Color.WHITE, .16)
+	button.set_meta("hover_tween", animation)
 
 # Finished rubbing art is a packaged bitmap, never generated at runtime.
 func _memory_art(parent: Node, id: String, height: float) -> TextureRect:
@@ -1073,7 +1125,7 @@ func _add_current_task(parent: Node) -> void:
 	_label(parent, "当前任务 · " + str(task.event.title), 23, Color("#e4c98a"))
 	for objective in task.event.objectives: _label(parent, "· " + str(objective), 17)
 	if not _has_current_event():
-		_button(parent, "前往任务", _open_event.bind(task.chapter, task.event.id))
+		_button(parent, "前往任务", _enter_event.bind(task.chapter, task.event.id))
 	else:
 		_button(parent, "继续当前修复", _resume)
 
@@ -1302,6 +1354,6 @@ func _next_event() -> void:
 		if chapter.id not in GameState.player.unlocked_chapters: continue
 		for event in chapter.events:
 			if not event.draft and not GameState.player.completed_events.has(chapter.id + ":" + event.id):
-				_open_event(chapter.id, event.id)
+				_enter_event(chapter.id, event.id)
 				return
 	_show_map()

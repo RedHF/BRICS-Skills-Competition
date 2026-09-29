@@ -120,7 +120,7 @@ func _draw() -> void:
 		draw_rect(Rect2(Vector2.ZERO, size), Color("#101f28"))
 	var enemy := enemy_position * size + Vector2(sin(motion_time * 75) * impact * 25, 0)
 	var player := player_position * size
-	var font := ThemeDB.fallback_font
+	var font := preload("res://scripts/ink_theme.gd").font()
 	if not defeated:
 		var extent := (126.0 if not boss_name.is_empty() else 76.0) * (1.0 + sin(motion_time * 3.0) * .04)
 		var tint := Color.WHITE if phase < .7 else Color("#ffa78d")
@@ -196,7 +196,7 @@ func _draw_effect(item: Dictionary) -> void:
 		label_at += Vector2(-65, -58 - age * 25)
 		label_at.x = clampf(label_at.x, 8, maxf(8, size.x - 210))
 		label_at.y = maxf(70, label_at.y)
-		draw_string(ThemeDB.fallback_font, label_at, item.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 19, color)
+		draw_string(preload("res://scripts/ink_theme.gd").font(), label_at, item.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 19, color)
 
 func _draw_background() -> void:
 	var texture_size := Vector2(background.get_width(), background.get_height())

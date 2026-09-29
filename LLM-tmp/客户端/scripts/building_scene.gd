@@ -113,10 +113,10 @@ func _draw() -> void:
 				draw_texture_rect(stamp, Rect2(point - Vector2.ONE * (22 + ripple * 4), Vector2.ONE * (44 + ripple * 8)), false, Color(1, 1, 1, .22))
 			var caption := "已调查 · " if found else "调查 · "
 			var text := caption + str(investigations[i].label)
-			var width := ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x + 16
+			var width := preload("res://scripts/ink_theme.gd").font().get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x + 16
 			var origin := Vector2(clampf(point.x-width/2,4,size.x-width-4),point.y-54)
 			draw_texture_rect(INK_CARD, Rect2(origin, Vector2(width, 30)), false)
-			draw_string(ThemeDB.fallback_font,origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
+			draw_string(preload("res://scripts/ink_theme.gd").font(),origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
 		preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, ripple)
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(14, size.y - 79), Vector2.ONE * 68), false, Color(1, 1, 1, .48))
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(36, size.y - 57) + joystick * 23, Vector2.ONE * 24), false)

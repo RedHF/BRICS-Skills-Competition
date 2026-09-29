@@ -1,6 +1,7 @@
 extends Control
 
 signal stroke_finished
+signal brush_touched
 var spec: Dictionary
 var step_id := ""
 var strokes: Array = []
@@ -44,7 +45,7 @@ func _draw() -> void:
 	draw_texture_rect(PAPER, canvas_rect, false)
 	var plaque := Rect2(Vector2(canvas_rect.position.x, canvas_rect.position.y - 37), Vector2(minf(canvas_rect.size.x, 380), 31))
 	draw_texture_rect(HINT, plaque, false, Color(1, 1, 1, .35))
-	draw_string(ThemeDB.fallback_font, plaque.position + Vector2(12, 22), "第 %02d 笔 · 青印起笔，朱印收锋" % [active + 1], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#6d6860"))
+	draw_string(preload("res://scripts/ink_theme.gd").font(), plaque.position + Vector2(12, 22), "第 %02d 笔 · 青印起笔，朱印收锋" % [active + 1], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#6d6860"))
 	if glyph != null:
 		var source := Rect2(Vector2(glyph.get_width() * view_x, 0), Vector2(glyph.get_width() / characters, glyph.get_height()))
 		draw_texture_rect_region(glyph, canvas_rect, source, Color(1, 1, 1, .63))
@@ -74,6 +75,7 @@ func _gui_input(event: InputEvent) -> void:
 		brush_visible = canvas_rect.has_point(event.position)
 		if event.pressed and canvas_rect.has_point(event.position):
 			drawing = true
+			brush_touched.emit()
 			strokes[active] = []
 			failed.erase(active)
 			_sample(event.position)

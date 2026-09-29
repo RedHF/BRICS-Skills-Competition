@@ -38,11 +38,11 @@ func _draw() -> void:
 		var center := _socket_center(i)
 		draw_texture_rect(marker_art, Rect2(center - Vector2(34, 25), Vector2(68, 50)), false, Color(1, 1, 1, .62))
 		var caption: String = {"left":"左榫口","center":"中央承重","right":"右榫口"}.get(options[i], options[i])
-		draw_string(ThemeDB.fallback_font, center + Vector2(-34, -33), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#303832"))
+		draw_string(preload("res://scripts/ink_theme.gd").font(), center + Vector2(-34, -33), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#303832"))
 	draw_texture_rect(piece_art, Rect2(piece - Vector2(54, 45), Vector2(108, 90)), false, Color("#e2f3df") if snapped else Color.WHITE)
 	draw_texture_rect(HINT, Rect2(Vector2(12, size.y - 35), Vector2(size.x - 24, 30)), false, Color(1, 1, 1, .3))
 	var instruction := "拖动戏台构件到对应位置，松手吸附。" if stage else "拖动木榫到榫口，松手吸附；放到外侧可取消。"
-	draw_string(ThemeDB.fallback_font, Vector2(22, size.y - 15), instruction, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#60564b"))
+	draw_string(preload("res://scripts/ink_theme.gd").font(), Vector2(22, size.y - 15), instruction, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#60564b"))
 
 func _gui_input(event: InputEvent) -> void:
 	if locked: return

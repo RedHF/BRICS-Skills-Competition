@@ -19,6 +19,10 @@ func _run() -> void:
 		if clip == null or clip.mix_rate != 24000 or clip.format != AudioStreamWAV.FORMAT_16_BITS:
 			return fail("Qwen PCM voice " + path)
 	if main.navigation.get_child_count() != 2: return fail("Three-page navigation")
+	var chinese_font = main.stats.get_theme_font("font")
+	if chinese_font is not SystemFont or (chinese_font as SystemFont).font_names[0] != "Noto Serif SC": return fail("Chinese system font in EXE")
+	var canvas_font = preload("res://scripts/ink_theme.gd").font()
+	if canvas_font is not SystemFont or (canvas_font as SystemFont).font_names[0] != (chinese_font as SystemFont).font_names[0]: return fail("Canvas and UI font mismatch")
 	if AudioServer.get_bus_effect_count(main.echo_bus) != 0: return fail("Speech distortion")
 	if main.soundscape.ambience.stream.resource_path != "res://assets/audio/theme.wav": return fail("New background music")
 	if not is_equal_approx(main.soundscape.ambience.stream.get_length(), 123.0): return fail("Music duration")
@@ -31,6 +35,22 @@ func _run() -> void:
 		if vfx == null or vfx.get_image().get_pixel(0, 0).a != 0: return fail("Generated transparent VFX " + filename)
 	for filename in ["xuan_paper", "brush_cursor", "ink_dab", "cinnabar_seal", "hint_plaque", "jade_seal", "mortise_beam", "tenon_piece", "mortise_marker", "stage_floor", "stage_step_piece", "backdrop_rail", "brocade_panel", "lotus_marker", "gate_2", "gate_3", "gate_4", "glyph_bridge_trace", "glyph_guest_trace", "glyph_drum_trace", "glyph_opera_trace", "glyph_tower_trace"]:
 		if not ResourceLoader.exists("res://assets/puzzles/" + filename + ".png"): return fail("Generated puzzle art " + filename)
+	for filename in ["ui_wood", "ui_page", "brush_touch", "trace_music"]:
+		var recording = load("res://assets/audio/" + filename + ".wav") as AudioStreamWAV
+		if recording == null or recording.get_length() < .2: return fail("Tactile sound " + filename)
+	main.soundscape.set_scene("trace")
+	if main.soundscape.scene_music != "trace" or main.soundscape.trace_music.stream_paused: return fail("Tracing score switching")
+	main.soundscape.set_scene("theme")
+	var hover: Button = main.page.find_children("*", "Button", true, false)[0]
+	hover.mouse_entered.emit()
+	await create_timer(.2).timeout
+	if hover.scale.x <= 1.02: return fail("Button hover tween")
+	hover.mouse_exited.emit()
+	await main._fade_to_dark()
+	if main.transition_veil.color.a < .9: return fail("Level darkening")
+	main._fade_from_dark()
+	await create_timer(.4).timeout
+	if main.transition_veil.color.a > .01: return fail("Level brightening")
 	if ResourceLoader.exists("res://assets/imported/rubbing_master.png"): return fail("Rejected artwork leaked into release")
 	main._open_event("prologue", "prologue_bridge")
 	await create_timer(.3).timeout
@@ -76,6 +96,8 @@ func _run() -> void:
 	print("PASS EXPORTED v13: optional story text/audio, library artisan texture, independent attack/defence effects")
 	print("PASS EXPORTED v14: six Qwen-generated transparent VFX sprites loaded in Windows EXE")
 	print("PASS EXPORTED v15: Qwen-generated brush tracing, joinery, opera and pattern artwork loaded in Windows EXE")
+	print("PASS EXPORTED v16: tactile Foley, tracing score, hover tween and level fade in Windows EXE")
+	print("PASS EXPORTED v17: one Chinese system font for UI and canvas in Windows EXE")
 	root.propagate_notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
 
 func fail(reason: String) -> void:

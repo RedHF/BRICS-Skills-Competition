@@ -105,9 +105,21 @@ func _utility(parent: Node, value: String, action: Callable) -> Button:
 	button.custom_minimum_size = Vector2(68,44)
 	button.add_theme_font_size_override("font_size",16)
 	button.add_theme_color_override("font_color",Color("#b7bcae"))
+	button.resized.connect(func(): button.pivot_offset = button.size * .5)
+	button.mouse_entered.connect(func(): _utility_hover(button, true))
+	button.mouse_exited.connect(func(): _utility_hover(button, false))
 	button.pressed.connect(action)
 	parent.add_child(button)
 	return button
+
+func _utility_hover(button: Button, active: bool) -> void:
+	if button.disabled: return
+	var previous = button.get_meta("hover_tween") if button.has_meta("hover_tween") else null
+	if previous is Tween and previous.is_valid(): previous.kill()
+	var animation := button.create_tween().set_parallel()
+	animation.tween_property(button, "scale", Vector2.ONE * (1.035 if active else 1.0), .16).set_trans(Tween.TRANS_BACK if active else Tween.TRANS_SINE)
+	animation.tween_property(button, "modulate", Color(1.06, 1.04, 0.96) if active else Color.WHITE, .16)
+	button.set_meta("hover_tween", animation)
 
 func show_line(title: String, line: Dictionary, index: int, total: int, read: bool) -> void:
 	if reveal and reveal.is_valid(): reveal.kill()

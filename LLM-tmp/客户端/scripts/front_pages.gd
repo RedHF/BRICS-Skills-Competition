@@ -198,7 +198,7 @@ func map_page() -> void:
 	elif host._has_current_event(): host._label(details, "你有一段尚未完成的旅程", 18, Color("#f4ead3"))
 	else: host._label(details, target.title, 18, Color("#f4ead3"))
 	var continuing: bool = host._has_current_event()
-	var enter: Button = host._button(details, "继续当前旅程 →" if continuing else "进入关卡 →", host._resume if continuing else host._open_event.bind(chapter.id, target.id))
+	var enter: Button = host._button(details, "继续当前旅程 →" if continuing else "进入关卡 →", host._resume if continuing else host._enter_event.bind(chapter.id, target.id))
 	enter.disabled = not available or target.draft
 	enter.add_theme_stylebox_override("normal", preload("res://scripts/ink_theme.gd").surface("paper", 16))
 	enter.add_theme_color_override("font_color", Color("#303832"))
@@ -210,6 +210,7 @@ func map_page() -> void:
 		revisit.add_item("重访已完成的记忆…")
 		for event in completed: revisit.add_item(event.title)
 		revisit.custom_minimum_size.y = 44
+		host._decorate_button(revisit)
 		details.add_child(revisit)
 		revisit.item_selected.connect(func(index):
-			if index > 0: host._open_event(chapter.id, completed[index - 1].id))
+			if index > 0: host._enter_event(chapter.id, completed[index - 1].id))

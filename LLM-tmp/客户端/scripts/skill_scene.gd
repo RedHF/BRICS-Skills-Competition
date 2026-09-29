@@ -44,8 +44,8 @@ func _draw() -> void:
 		var point: Vector2 = anchors[target] * size
 		draw_texture_rect(MARKER, Rect2(point - Vector2.ONE * 46, Vector2.ONE * 92), false, Color(1, 1, 1, .25))
 		var caption: String = {"beam":"承重斗拱", "bell":"远端风铃", "inscription":"白蚀碑面"}[target]
-		draw_string(ThemeDB.fallback_font, point + Vector2(-48, 69), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#303832"))
+		draw_string(preload("res://scripts/ink_theme.gd").font(), point + Vector2(-48, 69), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#303832"))
 	var state := "梁架已稳，连杆接通" if supported else "梁架倾斜，连杆尚未受力"
 	if triggered: state = "风铃已响，匠人的刻痕重现"
 	if purged: state = "白斑消退，刻痕显影"
-	draw_string(ThemeDB.fallback_font, Vector2(14, 25), state, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#303832"))
+	draw_string(preload("res://scripts/ink_theme.gd").font(), Vector2(14, 25), state, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("#303832"))

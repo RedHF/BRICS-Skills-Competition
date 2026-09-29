@@ -37,9 +37,24 @@ func _run() -> void:
 	while main.flow != "welcome" or main.busy: await process_frame
 	main._show_map()
 	main.set_process(false)
+	var ui_font = main.stats.get_theme_font("font")
+	check(ui_font is SystemFont, "UI did not load the Chinese system font")
+	check((ui_font as SystemFont).font_names[0] == "Noto Serif SC", "Unexpected Chinese font family")
+	await capture("font-map")
+	for name in ["ui_wood", "ui_page", "brush_touch"]:
+		check(main.soundscape.sounds.has(name) and main.soundscape.sounds[name] != null, "Missing tactile sound: " + name)
+	check(main.soundscape.trace_music.stream.resource_path.ends_with("trace_music.wav"), "Missing tracing score")
+	var hover: Button = main.page.find_children("*", "Button", true, false)[0]
+	hover.mouse_entered.emit()
+	await create_timer(.24).timeout
+	check(hover.scale.x > 1.02, "Button hover tween does not grow")
+	hover.mouse_exited.emit()
+	await create_timer(.24).timeout
+	check(is_equal_approx(hover.scale.x, 1.0), "Button hover tween does not reset")
 	for item in [["prologue", "prologue_bridge", 0], ["temple", "temple_guest", 1], ["temple", "temple_drum", 1], ["opera", "opera_opening", 1], ["tower", "tower_ascent", 0]]:
 		show_step(item[0], item[1], item[2])
 		await process_frame
+		check(main.soundscape.scene_music == "trace", "Tracing score did not switch on")
 		var trace = main.trace_canvas
 		check(is_instance_valid(trace) and trace.glyph != null, "Missing authored brush glyph: " + item[1])
 		check(trace.canvas_rect.has_area(), "No paper canvas")
@@ -66,6 +81,7 @@ func _run() -> void:
 	for item in [["temple", "temple_incense", 0], ["opera", "opera_master", 0], ["opera", "opera_master", 1], ["archway", "archway_form", 1]]:
 		show_step(item[0], item[1], item[2])
 		await process_frame
+		check(main.soundscape.scene_music == "theme", "Tracing score did not switch off")
 		check(is_instance_valid(main.join_canvas) and main.join_canvas.options.size() > 0, "Join asset missing")
 		await capture("join-" + item[1] + "-" + str(item[2]))
 	var join = main.join_canvas
@@ -96,6 +112,12 @@ func _run() -> void:
 	for item in [["archway", "archway_form", 0], ["opera", "opera_opening", 0]]:
 		show_step(item[0], item[1], item[2])
 		await capture("pattern-" + item[1])
+	await main._fade_to_dark()
+	check(main.transition_veil.color.a > .9, "Level transition did not darken")
+	await capture("transition-dark")
+	main._fade_from_dark()
+	await create_timer(.45).timeout
+	check(main.transition_veil.color.a < .01, "Level transition did not brighten")
 	print("PASS generated puzzle art checks=", checks)
 	main.queue_free()
 	await create_timer(.3).timeout

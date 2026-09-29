@@ -1,5 +1,10 @@
 extends RefCounted
 
+const CHINESE_FONT = preload("res://assets/fonts/chinese_system_font.tres")
+
+static func font() -> Font:
+	return CHINESE_FONT
+
 static func surface(kind: String = "ink", margin: float = 18.0) -> StyleBoxTexture:
 	var style := StyleBoxTexture.new()
 	style.texture = load("res://assets/ink_ui/" + kind + ".png")

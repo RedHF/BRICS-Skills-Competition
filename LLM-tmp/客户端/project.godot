@@ -61,6 +61,7 @@ environment/defaults/default_clear_color=Color(0.035, 0.055, 0.075, 1)
 
 [gui]
 
+theme/custom_font="res://assets/fonts/chinese_system_font.tres"
 theme/default_font_multichannel_signed_distance_field=true
 
 [yanxia]
