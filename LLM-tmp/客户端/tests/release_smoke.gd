@@ -26,6 +26,11 @@ func _run() -> void:
 		if not ResourceLoader.exists("res://assets/ink_ui/" + name + ".png"): return fail("Ink UI " + name)
 	for filename in ["bridge_restored.jpg", "bridge_eroded.jpg", "temple_interior.png", "guest_room.png", "drum_courtyard.png", "white_erosion.png"]:
 		if not ResourceLoader.exists("res://assets/imported/" + filename): return fail("Image " + filename)
+	for filename in ["ink_slash", "dougong_ward", "caisson_rosette", "flying_blades", "dodge_smoke", "erosion_burst"]:
+		var vfx = load("res://assets/vfx/" + filename + ".png") as Texture2D
+		if vfx == null or vfx.get_image().get_pixel(0, 0).a != 0: return fail("Generated transparent VFX " + filename)
+	for filename in ["xuan_paper", "brush_cursor", "ink_dab", "cinnabar_seal", "hint_plaque", "jade_seal", "mortise_beam", "tenon_piece", "mortise_marker", "stage_floor", "stage_step_piece", "backdrop_rail", "brocade_panel", "lotus_marker", "gate_2", "gate_3", "gate_4", "glyph_bridge_trace", "glyph_guest_trace", "glyph_drum_trace", "glyph_opera_trace", "glyph_tower_trace"]:
+		if not ResourceLoader.exists("res://assets/puzzles/" + filename + ".png"): return fail("Generated puzzle art " + filename)
 	if ResourceLoader.exists("res://assets/imported/rubbing_master.png"): return fail("Rejected artwork leaked into release")
 	main._open_event("prologue", "prologue_bridge")
 	await create_timer(.3).timeout
@@ -69,6 +74,8 @@ func _run() -> void:
 	print("PASS EXPORTED v10: fresh local save, auto-started server, 184 voices, six adopted images, rejected asset excluded, dialogue voice and animation")
 	print("PASS EXPORTED current release: ink UI, simplified navigation, 184 Qwen 24kHz PCM voices, no speech distortion")
 	print("PASS EXPORTED v13: optional story text/audio, library artisan texture, independent attack/defence effects")
+	print("PASS EXPORTED v14: six Qwen-generated transparent VFX sprites loaded in Windows EXE")
+	print("PASS EXPORTED v15: Qwen-generated brush tracing, joinery, opera and pattern artwork loaded in Windows EXE")
 	root.propagate_notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
 
 func fail(reason: String) -> void:

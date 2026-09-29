@@ -573,6 +573,7 @@ func _show_puzzle() -> void:
 		_label(page, "按住拖动：从青印描到朱印。", 17, Color("#d7c69c"))
 		trace_canvas = TRACE.new()
 		trace_canvas.spec = step.trace
+		trace_canvas.step_id = str(step.id)
 		page.add_child(trace_canvas)
 		trace_progress = _label(page, "", 16)
 		stroke_buttons = HFlowContainer.new()
@@ -591,6 +592,7 @@ func _show_puzzle() -> void:
 		_button(buttons, "核对拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
 	elif step.kind == "join":
 		join_canvas = preload("res://scripts/join_canvas.gd").new()
+		join_canvas.step_id = str(step.id)
 		join_canvas.options = step.options
 		page.add_child(join_canvas)
 		join_canvas.placed.connect(func(answer): _submit_puzzle({"step_id": step.id, "answer": answer}))

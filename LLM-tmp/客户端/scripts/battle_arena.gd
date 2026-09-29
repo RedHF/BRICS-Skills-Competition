@@ -14,6 +14,12 @@ var defeated := false
 var background: Texture2D
 var boss_name := ""
 const ENEMY_TEXTURE = preload("res://assets/imported/white_erosion.png")
+const INK_SLASH = preload("res://assets/vfx/ink_slash.png")
+const DOUGONG_WARD = preload("res://assets/vfx/dougong_ward.png")
+const CAISSON_ROSETTE = preload("res://assets/vfx/caisson_rosette.png")
+const FLYING_BLADES = preload("res://assets/vfx/flying_blades.png")
+const DODGE_SMOKE = preload("res://assets/vfx/dodge_smoke.png")
+const EROSION_BURST = preload("res://assets/vfx/erosion_burst.png")
 var active := false
 var player_position := Vector2(0.50, 0.78)
 var enemy_position := Vector2(0.50, 0.28)
@@ -121,20 +127,17 @@ func _draw() -> void:
 		tint.a = 1.0 - spawn_time
 		draw_texture_rect(ENEMY_TEXTURE, Rect2(enemy-Vector2.ONE*extent*.5,Vector2.ONE*extent),false,tint)
 		if not boss_name.is_empty():
-			draw_arc(enemy, extent*.54, motion_time*.4, motion_time*.4+TAU*.86, 48, Color("#c6ac78"), 2, true)
+			_sprite(DOUGONG_WARD, enemy, Vector2.ONE * extent * 1.55, motion_time * .12, .24)
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6, 7)), Color("#394448"))
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6 * float(hp) / max_hp, 7)), Color("#e6a275"))
 		draw_string(font, Vector2(12, 48), (boss_name if not boss_name.is_empty() else "白蚀") + " %d/%d" % [hp, max_hp], HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#e4c98a"))
 		if phase > 0.7:
 			var warning := clampf((phase - .7) / .3, 0, 1)
-			draw_circle(player, 48, Color(1, .25, .2, .08 + .12 * warning))
-			draw_arc(player, 52, -PI / 2, -PI / 2 + TAU * warning, 64, Color("#ff8078"), 3, true)
-			for i in range(6):
-				var mark := enemy.lerp(player, float(i) / 6)
-				draw_line(mark, mark + (player - enemy).normalized() * 12, Color(1, .4, .3, .5), 2, true)
+			_sprite(EROSION_BURST, player - Vector2(0, 15), Vector2.ONE * (110 + 30 * warning), motion_time * .10, .24 + .24 * warning, Color("#ff8c80"))
+			_sprite(DODGE_SMOKE, enemy.lerp(player, .42), Vector2(140, 85), (player - enemy).angle(), .22 + .18 * warning)
 			draw_string(font, Vector2(12, size.y * 0.45), "白蚀蓄力 · 移动闪身 / 斗拱承击", HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#ffb39c"))
 	if shield > 0:
-		_draw_seal(player - Vector2(0, 20), 58, motion_time * .25, Color(.55, .9, .78, .5), shield)
+		_sprite(DOUGONG_WARD, player - Vector2(0, 20), Vector2.ONE * (124 + 5 * sin(motion_time * 3)), motion_time * .08, .48)
 	var action_offset := Vector2.ZERO
 	if pose_time > 0:
 		var impulse := sin(pose_time / .45 * PI)
@@ -152,19 +155,10 @@ func _draw() -> void:
 	if effect > 0:
 		draw_string(font, Vector2(size.x * 0.5 - 70, size.y * 0.62), effect_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, effect_color)
 
-func _draw_seal(center: Vector2, radius: float, rotation: float, color: Color, layers: int = 2) -> void:
-	draw_arc(center, radius, 0, TAU, 64, color, 2, true)
-	for layer in range(layers):
-		var points := PackedVector2Array()
-		for i in range(9):
-			points.append(center + Vector2.from_angle(TAU * i / 8 + rotation + layer * .4) * (radius - layer * 9))
-		draw_polyline(points, color, 2, true)
-
-func _burst(center: Vector2, age: float, color: Color, count: int = 18) -> void:
-	for i in range(count):
-		var direction := Vector2.from_angle(i * 2.399)
-		var radius := 15 + age * (45 + (i % 5) * 22)
-		draw_line(center + direction * radius, center + direction * (radius + 9 * (1 - age)), color, 2 + i % 3, true)
+func _sprite(texture: Texture2D, center: Vector2, dimensions: Vector2, rotation: float, opacity: float, tint: Color = Color.WHITE) -> void:
+	draw_set_transform(center, rotation)
+	draw_texture_rect(texture, Rect2(-dimensions * .5, dimensions), false, Color(tint.r, tint.g, tint.b, clampf(opacity, 0, 1)))
+	draw_set_transform(Vector2.ZERO)
 
 func _draw_effect(item: Dictionary) -> void:
 	var age: float = item.age
@@ -174,52 +168,29 @@ func _draw_effect(item: Dictionary) -> void:
 	var target: Vector2 = item.target * size - Vector2(0, 20)
 	var direction := (target - source).normalized()
 	var center := source.lerp(target, minf(1, age / .24))
+	var fade := clampf((1.05 - age) / .55, 0, 1)
 	match item.kind:
 		"挥墨":
-			var angle := direction.angle() + float(item.variant - 1) * .35
-			for layer in range(3):
-				draw_arc(center, 22 + layer * 8 + t * 18, angle - 1.1, angle + 1.1, 24, color if layer == 1 else Color(.05, .16, .17, color.a), 7 - layer * 2, true)
-			if age > .22: _burst(target, age - .22, color)
+			_sprite(INK_SLASH, center, Vector2(120, 105) * (1 + .3 * t), direction.angle() + PI / 4 + float(item.variant - 1) * .2, fade)
+			if age > .20: _sprite(EROSION_BURST, target, Vector2.ONE * (65 + 75 * (age - .2)), age * .4, fade * .7)
 		"飞檐":
-			for blade in range(3):
-				var side := direction.orthogonal() * (blade - 1) * sin(t * PI) * 65
-				var tip := source.lerp(target, minf(1, age / .38)) + side
-				draw_line(tip - direction * 48, tip, Color(color, color.a * .25), 13, true)
-				draw_line(tip - direction * 35, tip, color, 4, true)
-			if age > .32: _burst(target, age - .32, color, 30)
+			_sprite(FLYING_BLADES, source.lerp(target, minf(1, age / .35)), Vector2(165, 120) * (1 + .18 * t), direction.angle() + PI / 4, fade)
+			if age > .30: _sprite(EROSION_BURST, target, Vector2.ONE * (90 + 75 * (age - .3)), age * .3, fade)
 		"藻井":
-			_draw_seal(target, 32 + t * 60, -age, color, 3)
-			_draw_seal(source, 22 + t * 36, age, Color(color, color.a * .6), 2)
-			for i in range(8):
-				var petal := target + Vector2.from_angle(TAU * i / 8 + age) * (24 + t * 40)
-				draw_arc(petal, 18, age, age + PI, 16, color, 2, true)
+			_sprite(CAISSON_ROSETTE, target, Vector2.ONE * (75 + t * 120), age * .45, fade)
+			_sprite(CAISSON_ROSETTE, source, Vector2.ONE * (55 + t * 65), -age * .6, fade * .5)
 		"斗拱":
-			_draw_seal(source, 25 + sin(t * PI / 2) * 40, .0, color, 3)
-			for i in range(3):
-				var y := source.y - 35 + i * 18
-				draw_polyline(PackedVector2Array([Vector2(source.x - 45 + i * 8, y - 8), Vector2(source.x - 30 + i * 6, y), Vector2(source.x + 30 - i * 6, y), Vector2(source.x + 45 - i * 8, y - 8)]), color, 4, true)
+			_sprite(DOUGONG_WARD, source, Vector2.ONE * (75 + t * 90), age * .08, fade)
 		"闪身":
-			for i in range(4):
-				FIGURE.paint(self, source + Vector2(-18 - i * 19 - t * 20, 20), 1, motion_time, "dash", .8, Color(color, color.a * (4 - i) * .12))
-			draw_arc(source, 35 + t * 45, .3, 2.8, 32, color, 2, true)
+			_sprite(DODGE_SMOKE, source + Vector2(-30 - t * 45, 0), Vector2(145, 115) * (1 + .3 * t), -.3, fade)
+			FIGURE.paint(self, source + Vector2(-18 - t * 28, 20), 1, motion_time, "dash", .8, Color(1, 1, 1, fade * .22))
 		"格挡", "受击":
-			var tip := source.lerp(target, minf(1, age / .13))
-			for i in range(3):
-				var offset := direction.orthogonal() * (i - 1) * 14
-				draw_line(source + offset, tip + offset, Color(.95, .45, .38, color.a * .45), 4, true)
+			_sprite(INK_SLASH, source.lerp(target, minf(1, age / .15)), Vector2(130, 75), direction.angle() + PI / 4, fade * .75, Color("#ffb49b"))
 			if age > .12:
-				_burst(target, age - .12, color, 24)
-				if item.kind == "格挡": _draw_seal(target, 58 + t * 12, .0, color, 2)
-				else: draw_rect(Rect2(Vector2.ZERO, size), Color(.8, .14, .1, maxf(0, .15 - age * .3)))
+				if item.kind == "格挡": _sprite(DOUGONG_WARD, target, Vector2.ONE * (105 + 50 * t), age * .2, fade)
+				else: _sprite(EROSION_BURST, target, Vector2.ONE * (95 + 75 * t), age * .25, fade, Color("#ff8c83"))
 		"消散":
-			var texture_size := ENEMY_TEXTURE.get_size()
-			for y in range(4):
-				for x in range(4):
-					var shard := Vector2(x - 1.5, y - 1.5)
-					var position := target + Vector2(0, 20) + shard * (19 + age * 55)
-					draw_texture_rect_region(ENEMY_TEXTURE, Rect2(position - Vector2.ONE * 10, Vector2.ONE * 20), Rect2(Vector2(x, y) * texture_size / 4, texture_size / 4), Color(1, 1, 1, 1 - t))
-			_burst(target, age, color, 36)
-			draw_arc(target, 15 + age * 95, age, age + TAU * .9, 48, color, 3, true)
+			_sprite(EROSION_BURST, target, Vector2.ONE * (85 + age * 220), age * .36, fade)
 	if age > .12:
 		var label_at := source if item.kind in ["斗拱", "闪身"] else target
 		label_at += Vector2(-65, -58 - age * 25)
