@@ -47,3 +47,6 @@ Thumbs.db
 
 # 发行验证解包目录与语音生成阶段数据。
 /LLM-tmp/联调脚本/.verify-tmp/
+output/评委提交/本科组_Track1_第二队.zip
+output/评委提交/最终提交/本科组_Track1_第二队.zip
+output/评委提交/本科组_Track1_第二队/Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/檐下千秋.exe

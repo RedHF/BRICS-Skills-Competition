@@ -7,8 +7,7 @@ func _run() -> void:
 	ProjectSettings.set_setting("yanxia/server_url", "http://127.0.0.1:8097")
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	await create_timer(0.3).timeout
-	if main.flow != "splash":
+	if main.flow != "loading":
 		push_error("Opening logo screen missing")
 		quit(20)
 		return
@@ -16,10 +15,13 @@ func _run() -> void:
 		RenderingServer.force_draw()
 		root.get_texture().get_image().save_png("user://auth-splash.png")
 	var deadline := Time.get_ticks_msec() + 12000
-	while (main.busy or root.get_node("GameState").player.is_empty()) and Time.get_ticks_msec() < deadline: await process_frame
+	while main.flow != "welcome" and Time.get_ticks_msec() < deadline: await process_frame
+	assert(main.flow == "welcome", "Welcome page missing")
+	main._show_map()
 	assert(main.flow == "map" and main.navigation.visible, "Direct play unavailable: " + main.status.text)
 	var player_id: String = root.get_node("GameState").player.id
 	await main._load_game()
+	main._show_map()
 	assert(root.get_node("GameState").player.id == player_id, "Local save identity changed")
 	print("PASS direct play and stable local save")
 	main.set_process(false)

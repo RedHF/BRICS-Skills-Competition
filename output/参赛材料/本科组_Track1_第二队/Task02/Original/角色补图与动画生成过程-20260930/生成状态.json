@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-30",
+  "status": "generated_and_adopted",
+  "generated_images": 6,
+  "adopted_designs": [
+    "hero-hd-reframed.png",
+    "hero-chibi-hd.png"
+  ],
+  "animation_sheets": 3,
+  "runtime_frames": 18,
+  "idle_sprites": 1,
+  "model_order_rule": "前两张qwen-image-3.0，之后qwen-image-3.0-pro",
+  "secret_saved": false
+}

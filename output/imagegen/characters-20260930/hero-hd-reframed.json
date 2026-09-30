@@ -1,0 +1,21 @@
+{
+  "name": "hero-hd-reframed",
+  "reference": "output/imagegen/characters-20260930/hero-hd.png",
+  "size": "1920*1080",
+  "prompt": "保持参考图中同一位男性拓印师的设计：黑色高髻与长黑发带，黑灰水墨外袍，米白交领与宽袖，青灰色腰坠、深色长靴，右手毛笔、左手墨色册页。脸型、衣服花纹、发髻和配饰必须一致，不增加其他人物或现代配饰。绘画风格保持国风水墨游戏原画，黑灰白色调。依据参考图保持同一成人角色和相同水墨绘画细节，将人物完整安排在1920×1080白色画布内。必须补全双脚鞋底，人物高度约880像素，头顶到图片顶部至少80像素，鞋底到图片底部至少80像素。保留完整毛笔、册页、发带和宽袖，正常成人比例，原站姿，不得截切脚或发髻。只重新调整画面构图并补全鞋底细节，不更换脸、衣服和人物设计。纯白背景，不加文字、水印或边框。",
+  "model": "qwen-image-3.0-pro",
+  "time": "2026-09-30T19:29:46",
+  "reference_sha256": "a63766b5ff501dbd0492f0c2abbd8ad34321bcefb62cf25438babb9826e491a0",
+  "output_sha256": "02dabf839474e24b4d17df73eebcb5156019d9e3a29f47079dfd558394b9c845",
+  "bytes": 871442,
+  "request_id": "51de162d-c914-98b8-b0f0-541414d2f64a",
+  "usage": {
+    "input_image_count": 1,
+    "input_image_type": "qima_input_1k",
+    "output_height": 1080,
+    "output_image_count": 1,
+    "output_image_type": "qima_output_1k",
+    "output_width": 1920
+  },
+  "workflow": "existing DashScope multimodal image generation API with a reference image"
+}

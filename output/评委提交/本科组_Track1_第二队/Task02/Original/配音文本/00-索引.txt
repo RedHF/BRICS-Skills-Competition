@@ -1,0 +1,66 @@
+﻿# 《檐下千秋》配音文本索引
+
+内容源：LLM-tmp/服务端/content/chapters.json（内容协议 v9）
+音频源：LLM-tmp/客户端/assets/echo/
+生成时间：2026-09-14 21:34
+
+配音音频共 14 个，每个文件一份对应文本。
+
+| 序号 | 类型 | 音频文件 | 对应内容 | 依附事件 | 时长(秒) | 字数 | 文本文件 |
+|---|---|---|---|---|---|---|---|
+| 1 | 调查呓语 | prologue_bridge.wav | 桥上平安 | 序章·风雨廊桥 / 桥上平安 | 37.7 | 75 | 01-prologue_bridge-桥上平安.txt |
+| 2 | 墨灵回声 | yan_ping_an.wav | 檐·平安 | 序章·风雨廊桥 / 桥上平安 | 3.9 | 12 | 02-yan_ping_an-檐·平安.txt |
+| 3 | 调查呓语 | temple_incense.wav | 香火断 | 第一章·社庙 / 香火断 | 21.3 | 86 | 03-temple_incense-香火断.txt |
+| 4 | 墨灵回声 | she_cheng_xiang.wav | 社·承香 | 第一章·社庙 / 香火断 | 4.3 | 15 | 04-she_cheng_xiang-社·承香.txt |
+| 5 | 调查呓语 | temple_guest.wav | 檐下客 | 第一章·社庙 / 檐下客 | 19.7 | 70 | 05-temple_guest-檐下客.txt |
+| 6 | 墨灵回声 | she_ning_an.wav | 社·宁安 | 第一章·社庙 / 檐下客 | 4.7 | 15 | 06-she_ning_an-社·宁安.txt |
+| 7 | 调查呓语 | temple_drum.wav | 社鼓声 | 第一章·社庙 / 社鼓声 | 25.2 | 86 | 07-temple_drum-社鼓声.txt |
+| 8 | 墨灵回声 | she_hui_chun.wav | 社·回春 | 第一章·社庙 / 社鼓声 | 5 | 17 | 08-she_hui_chun-社·回春.txt |
+| 9 | 墨灵回声 | xi_xing_qiang.wav | 戏·行腔 | 第二章·戏楼 / 开场锣 | 3.8 | 12 | 09-xi_xing_qiang-戏·行腔.txt |
+| 10 | 墨灵回声 | xi_jue_chang.wav | 戏·绝唱 | 第二章·戏楼 / 名角儿 | 5.3 | 18 | 10-xi_jue_chang-戏·绝唱.txt |
+| 11 | 墨灵回声 | fang_wu_ming.wav | 坊·无名 | 第三章·牌坊 / 四柱三间 | 4 | 14 | 11-fang_wu_ming-坊·无名.txt |
+| 12 | 墨灵回声 | fang_jiang_hun.wav | 坊·匠魂 | 第三章·牌坊 / 无名匠 | 5.7 | 19 | 12-fang_jiang_hun-坊·匠魂.txt |
+| 13 | 墨灵回声 | tower_origin.wav | 塔·初代之忆 | 第四章·通天塔 / 登塔 | 5.8 | 21 | 13-tower_origin-塔·初代之忆.txt |
+| 14 | 墨灵回声 | tower_epilogue.wav | 塔·檐下折中 | 第四章·通天塔 / 千层墨 | 5.5 | 19 | 14-tower_epilogue-塔·檐下折中.txt |
+| 15 | 未配音文本 | — | 对话 / 线索 / 失败结局 | 全部章节 | — | — | 15-未配音台词与线索.txt |
+
+## 两类配音
+
+· 调查呓语：进入事件调查场景、完成第一处调查点时播放一次，文本取自事件的 story.beats。序章与社庙的四个事件有独立音频。
+· 墨灵回声：心舍中点击「聆听墨灵回声」播放，文本取自墨灵的 remembered_text。十道墨灵各一段。
+
+## 待补内容：复用墨灵回声的事件呓语
+
+以下事件的 whisper_audio 目前复用墨灵回声音频，尚未按各自的 story.beats 单独配音：
+
+| 事件 | 所在章节 | 应有呓语句数 | 当前复用音频 |
+|---|---|---|---|
+| 无名匠 | 第三章·牌坊 | 3 | fang_jiang_hun.wav |
+| 四柱三间 | 第三章·牌坊 | 3 | fang_wu_ming.wav |
+| 千层墨 | 第四章·通天塔 | 3 | tower_epilogue.wav |
+| 登塔 | 第四章·通天塔 | 3 | tower_origin.wav |
+| 名角儿 | 第二章·戏楼 | 3 | xi_jue_chang.wav |
+| 开场锣 | 第二章·戏楼 | 3 | xi_xing_qiang.wav |
+
+## 未配音文本
+
+以下文案已在 chapters.json 中，但当前没有音频，客户端以文字呈现：
+
+| 类别 | 字段 | 数量 |
+|---|---|---|
+| 开场与剧情回顾对话 | story.dialogue | 60 条 |
+| 调查线索 | story.clues | 30 条 |
+| 首次通关呓语 | story.first_clear_whisper | 2 条 |
+| 失败结局·飞鸟山 | failure_scene.dialogue | 9 句 + 4 首句 |
+
+详见 [15-未配音台词与线索.txt](15-未配音台词与线索.txt)。
+
+## 音效（非配音）
+
+LLM-tmp/客户端/assets/audio/ 下另有 7 个音效 WAV：ambience / battle / hit / ink / repair / ui / win。
+由 LLM-tmp/联调脚本/generate_audio.py 以数学波形合成，无对应台词，不属于配音文本。
+
+## 维护提示
+
+· 全部配音为中文合成朗读的独立 WAV，修改 JSON 文案后必须重新合成，不会自动更新。
+· 新增墨灵或事件时，需同步添加对应 WAV 并重新导出客户端。

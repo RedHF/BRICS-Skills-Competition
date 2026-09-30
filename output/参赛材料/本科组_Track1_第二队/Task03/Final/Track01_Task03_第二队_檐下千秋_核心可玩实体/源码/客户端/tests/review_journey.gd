@@ -8,10 +8,17 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func click(button: Button) -> void:
+	if not is_instance_valid(button) or button.disabled:
+		push_error("Review requested an unavailable button")
+		quit(1)
+		return
 	assert(is_instance_valid(button) and not button.disabled)
 	await process_frame
 	await process_frame
-	if main.scroll.is_ancestor_of(button): main.scroll.ensure_control_visible(button)
+	var ancestor: Node = button.get_parent()
+	while ancestor != null:
+		if ancestor is ScrollContainer: ancestor.ensure_control_visible(button)
+		ancestor = ancestor.get_parent()
 	await process_frame
 	await process_frame
 	var point := button.get_global_rect().get_center()
@@ -42,7 +49,8 @@ func button(prefix: String, parent: Node = null) -> Button:
 	if parent == null: parent = main.page
 	for child in parent.find_children("*", "Button", true, false):
 		if child.text.begins_with(prefix): return child
-	assert(false, "Missing button " + prefix)
+	push_error("Missing button " + prefix)
+	quit(1)
 	return null
 
 func capture(name: String) -> void:
@@ -93,7 +101,8 @@ func _run() -> void:
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	game = root.get_node("GameState")
-	while main.flow != "map" or main.busy: await process_frame
+	while main.flow != "welcome" or main.busy: await process_frame
+	main._show_map()
 	main.set_process(false)
 	main.story_progress = ConfigFile.new()
 	assert(main.voice_index.cues.size() == 184)
@@ -122,7 +131,7 @@ func _run() -> void:
 					main.scene_view._process(2.0)
 				assert(main.scene_view.discovered.size() == 3)
 				if event.id in ["prologue_bridge","temple_incense","temple_guest","temple_drum"]: await capture(event.id + "-investigation")
-				await click(button("三处调查完成"))
+				await click(button("开始修复"))
 			for step in event.puzzle.steps:
 				if game.session.accepted_steps.has(step.id): continue
 				await process_frame
@@ -226,7 +235,7 @@ func _run() -> void:
 				for label in main.page.find_children("*","Label",true,false):
 					assert(label.text != "戏楼："+whisper,"Whisper repeated on settlement revisit")
 			await capture(event.id+"-settlement")
-			await click(button("继续古建旅程"))
+			await click(button("返回关卡"))
 			print("PASS UI journey ",event.id)
 	assert(game.player.completed_events.size() == 10)
 	main._show_journal()

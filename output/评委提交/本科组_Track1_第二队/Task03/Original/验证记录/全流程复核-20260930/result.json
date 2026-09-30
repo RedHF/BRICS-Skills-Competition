@@ -1,0 +1,18 @@
+{
+  "date": "2026-09-30",
+  "exit": 0,
+  "errors": [],
+  "event_passes": [
+    "PASS UI journey prologue_bridge",
+    "PASS UI journey temple_incense",
+    "PASS UI journey temple_guest",
+    "PASS UI journey temple_drum",
+    "PASS UI journey opera_opening",
+    "PASS UI journey opera_master",
+    "PASS UI journey archway_form",
+    "PASS UI journey archway_craftsman",
+    "PASS UI journey tower_ascent",
+    "PASS UI journey tower_ledger"
+  ],
+  "all_ten_tasks_passed": true
+}

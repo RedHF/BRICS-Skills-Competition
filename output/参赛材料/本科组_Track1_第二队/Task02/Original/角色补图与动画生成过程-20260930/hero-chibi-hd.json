@@ -1,0 +1,21 @@
+{
+  "name": "hero-chibi-hd",
+  "reference": "檐下千秋主角Q版.png",
+  "size": "1920*1080",
+  "prompt": "保持参考图中同一位男性拓印师的设计：黑色高髻与长黑发带，黑灰水墨外袍，米白交领与宽袖，青灰色腰坠、深色长靴，右手毛笔、左手墨色册页。脸型、衣服花纹、发髻和配饰必须一致，不增加其他人物或现代配饰。绘画风格保持国风水墨游戏原画，黑灰白色调。按参考图重新绘制同一人物的Q版高清全身角色设计稿，保持原有大头、小身体比例以及黑色发髻、大眼睛、宽袖和衣服层次。单个角色居中，纯白无纹理背景，完整站姿、完整鞋底，角色高度約950像素。册页用墨色封面、米白竖向封签，不写任何文字。不要标题、标注、分镜、边框或水印。",
+  "model": "qwen-image-3.0",
+  "time": "2026-09-30T19:21:52",
+  "reference_sha256": "401d88f0d209a305c63c99288e1aca7c90b0645720cd67884aa2b703f4a18e38",
+  "output_sha256": "b8a6e733b41bd88aa410be6e639cc9d7bbcab17d2fcb1a580efb971cf017fe67",
+  "bytes": 765899,
+  "request_id": "0a1f2fbd-5ef0-9190-a624-81c20dd18452",
+  "usage": {
+    "input_image_count": 1,
+    "input_image_type": "qima_input_1k",
+    "output_height": 1080,
+    "output_image_count": 1,
+    "output_image_type": "qima_output_1k",
+    "output_width": 1920
+  },
+  "workflow": "existing DashScope multimodal image generation API with a reference image"
+}

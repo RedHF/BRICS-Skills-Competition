@@ -1,0 +1,110 @@
+{
+  "description": "原始图片与核心源码素材逐字节相同，共用以下随包文件；SHA256可验证。动画采用源码中的透明帧与实际客户端播放。",
+  "files": [
+    {
+      "original_path": "Task02/Original/2026-09-27新素材/AI协作记录/给AI的素材/给seedream生成场景背景的素材.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/chapters.png",
+      "sha256": "b2621271e340cb53d6432ba907992c0735f70579b1d5627476d41d28e2c8d3fc"
+    },
+    {
+      "original_path": "Task02/Original/2026-09-27新素材/AI协作记录/给AI的素材/给seedream生成技能特效的素材.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/artisan_source.png",
+      "sha256": "401d88f0d209a305c63c99288e1aca7c90b0645720cd67884aa2b703f4a18e38"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/attack_0.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/attack_0.png",
+      "sha256": "78e9cea7f6bf2b3db4894da57e42255389c9e2f8c19d4943ea5ddb255488dfff"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/attack_1.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/attack_1.png",
+      "sha256": "816a439fe00eab2e1fb7b41f8bc7cea7766f9d3cee166e4fea83a1f0869aaf85"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/attack_2.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/attack_2.png",
+      "sha256": "142d32a274ced401eefa4d10f309cf2c9d1a27bf9c48f0c16e67a8ecc2690ac1"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/attack_3.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/attack_3.png",
+      "sha256": "27a2e3eafa8b2fc49067e89d20a6aa8b525b900aeb25d647c9e41ac2aa1fa4da"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/attack_4.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/attack_4.png",
+      "sha256": "47070e5e2f36330bdda851d6af12454a51c52075caffd4ade921384b2157f3a4"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/attack_5.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/attack_5.png",
+      "sha256": "21223d4c0c2634058b615667db8a28078f1662dc9493c295a6774777f2ebc2e9"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/hurt_0.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/hurt_0.png",
+      "sha256": "e6dc38d34eebcbba20964188d215713709c7b565631b0af5d2ee7d79d5cb175f"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/hurt_1.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/hurt_1.png",
+      "sha256": "0f31e643912ffbf8747c8a906e9a4eaa1aa7d3530e2d4ff251419d211c3e9a6c"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/hurt_2.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/hurt_2.png",
+      "sha256": "22eb73bfe0b95be02f40347942fc5e39925d68b6d1d34400dbb6f192107f56f5"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/hurt_3.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/hurt_3.png",
+      "sha256": "0e80c3197129919a05137a67fb4dca4cdff1a81771e6c37b959ab9d087331601"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/hurt_4.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/hurt_4.png",
+      "sha256": "9d85ff3dc90f1cff7f9d23e0609905353dd0b1c9d1cbbd17a93bf3f265bad108"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/hurt_5.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/hurt_5.png",
+      "sha256": "f829c3d1861dfd2610672e99680ca7bf19d22725eefe953bc266b6a75edfcc93"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/idle.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/idle.png",
+      "sha256": "53071e73260efb0446071945f8c82f20e74bd0ad53d785e964a23be740678630"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/walk_0.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/walk_0.png",
+      "sha256": "4a10ba81c83c773305cd8cff262665e3c8943336b362a53ebe42bd80802e709f"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/walk_1.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/walk_1.png",
+      "sha256": "7edace60f4ed897881d4628fd82a992a181882fc2e1b4cdce59276385ec2922a"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/walk_2.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/walk_2.png",
+      "sha256": "6ce26f4ab4631fdf95009b55133a31b1404b69677141f9da6381f048b29f144b"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/walk_3.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/walk_3.png",
+      "sha256": "7bd98f8ca19252cb27f2e424eb5881fd1d40378270df6a001ad5a07fedab87d3"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/walk_4.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/walk_4.png",
+      "sha256": "156d1e513cab994dac5d44cef5cc85a31f64ed890626db1afd98bcc8ca6f79f6"
+    },
+    {
+      "original_path": "Task02/Original/角色补图与动画生成过程-20260930/透明动作帧/walk_5.png",
+      "retained_identical_file": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/characters/walk_5.png",
+      "sha256": "d600480ef05a4abe528cf32a386b5665c2d4ea0439a6b98684c041a36d27bb5d"
+    }
+  ]
+}

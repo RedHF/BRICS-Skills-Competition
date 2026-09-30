@@ -1,0 +1,27 @@
+{
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-v20-自适应界面版-20260930.zip",
+  "archive_bytes": 184787477,
+  "archive_sha256": "4c513e8f6c4d73625c777b49179d83445fe502ccffaf26079614892af9191461",
+  "content_version": 10,
+  "isolated_review": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\联调脚本\\.verify-tmp\\run0000",
+  "manifest_lines_verified": 8,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "health": {
+    "active_sessions": 0,
+    "build": "assets-boss-v10",
+    "content_version": 10,
+    "game_id": "yanxia-qianqiu",
+    "players": 1,
+    "service": "yanxia-server",
+    "status": "ok",
+    "uptime_seconds": 0
+  },
+  "server_auto_started": true,
+  "client_exit_code": 0,
+  "server_auto_stopped": true,
+  "exported_smoke": "passed"
+}

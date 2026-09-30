@@ -1,0 +1,75 @@
+{
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\output\\评委提交\\最终提交\\本科组_Track1_第二队.zip",
+  "bytes": 497823070,
+  "sha256": "35d9f973a7a54ac0c56177b897a108a207f1bdf1e74070ef39e29f5b43eb0519",
+  "basis": "交互赛道小游戏评分标准；参赛ID按赛方指定第二队，视频时长按用户明确指定的评分标准优先",
+  "checks": {
+    "root_and_six_task_directories": "PASS",
+    "all_required_final_names_and_materials": "PASS",
+    "original_process_files_per_task": {
+      "Task01": 33,
+      "Task02": 99,
+      "Task03": 122
+    },
+    "crc_and_all_archived_hashes": "PASS",
+    "file_count": 1155,
+    "formal_documents": [
+      {
+        "name": "Track01_Task01_第二队_檐下千秋_AI协作记录.docx",
+        "pages": 5,
+        "cover_fonts_spacing_margins_blue_keywords_footnotes": "PASS",
+        "embedded_images": 0
+      },
+      {
+        "name": "Track01_Task01_第二队_檐下千秋_游戏策划案.docx",
+        "pages": 8,
+        "cover_fonts_spacing_margins_blue_keywords_footnotes": "PASS",
+        "embedded_images": 2
+      },
+      {
+        "name": "Track01_Task02_第二队_檐下千秋_AI协作记录.docx",
+        "pages": 10,
+        "cover_fonts_spacing_margins_blue_keywords_footnotes": "PASS",
+        "embedded_images": 0
+      },
+      {
+        "name": "Track01_Task03_第二队_檐下千秋_测试与迭代记录.docx",
+        "pages": 7,
+        "cover_fonts_spacing_margins_blue_keywords_footnotes": "PASS",
+        "embedded_images": 0
+      },
+      {
+        "name": "Track01_Task03_第二队_檐下千秋_运行逻辑说明.docx",
+        "pages": 6,
+        "cover_fonts_spacing_margins_blue_keywords_footnotes": "PASS",
+        "embedded_images": 1
+      }
+    ],
+    "planning_content_and_visualizations": "PASS",
+    "art_assets": {
+      "RGB_300dpi_JPG_count": 112,
+      "unique_files_min_side_1024": 67,
+      "hashes_sources_no_upscaling": "PASS"
+    },
+    "runtime_and_full_client_server_source": "PASS",
+    "packaged_game_verification_evidence": "10 tasks PASS; real release EXE PASS",
+    "video": {
+      "duration_seconds": 185.1,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "fps": 30.0,
+      "codec": "H.264",
+      "bytes": 37051854,
+      "matches_packaged_QA": "PASS"
+    },
+    "credential_patterns": "0"
+  },
+  "scoring_evidence_gaps": [],
+  "scope_notes": [
+    "官方IP素材按参赛者明确说明作为可选项，不列为必交缺项。",
+    "参赛ID使用赛方指定的第二队；约3分钟视频按参赛者明确指定的评分标准优先执行。"
+  ],
+  "conclusion": "按已确认的执行口径，必交材料、名称、目录、规格及文件完整性通过。风格、创新等主观评分不作得分保证。"
+}

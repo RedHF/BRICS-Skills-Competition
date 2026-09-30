@@ -1,395 +1,41 @@
 [
   {
-    "source": "LLM-tmp/客户端/assets/logo.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/logo.jpg",
-    "source_size": [
-      256,
-      256
-    ],
-    "export_size": [
-      1920,
-      1920
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/bg_01_wind_rain_bridge.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/bg_01_wind_rain_bridge.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/bg_02_village_temple_courtyard.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/bg_02_village_temple_courtyard.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/bg_03_temple_white_erosion_battle.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/bg_03_temple_white_erosion_battle.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/ui_01_open_scroll_main_menu_base.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/ui_01_open_scroll_main_menu_base.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/ui_02_memory_talisman_cards_sheet.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/ui_02_memory_talisman_cards_sheet.jpg",
-    "source_size": [
-      1254,
-      1254
-    ],
-    "export_size": [
-      1920,
-      1920
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/ui_03_skill_emblems_sheet.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/ui_03_skill_emblems_sheet.jpg",
-    "source_size": [
-      1254,
-      1254
-    ],
-    "export_size": [
-      1920,
-      1920
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/generated/ui_04_frames_buttons_kit.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/generated/ui_04_frames_buttons_kit.jpg",
-    "source_size": [
-      1254,
-      1254
-    ],
-    "export_size": [
-      1920,
-      1920
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/imported/bridge_eroded.jpg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/imported/bridge_eroded.jpg",
-    "source_size": [
-      2267,
-      1280
-    ],
-    "export_size": [
-      2267,
-      1280
-    ],
-    "upscaled": false,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/imported/bridge_restored.jpg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/imported/bridge_restored.jpg",
-    "source_size": [
-      2267,
-      1280
-    ],
-    "export_size": [
-      2267,
-      1280
-    ],
-    "upscaled": false,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/imported/drum_courtyard.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/imported/drum_courtyard.jpg",
-    "source_size": [
-      1672,
-      941
-    ],
-    "export_size": [
-      1920,
-      1081
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/imported/guest_room.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/imported/guest_room.jpg",
-    "source_size": [
-      1672,
-      940
-    ],
-    "export_size": [
-      1921,
-      1080
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/imported/temple_interior.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/imported/temple_interior.jpg",
-    "source_size": [
-      1673,
-      940
-    ],
-    "export_size": [
-      1922,
-      1080
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/imported/white_erosion.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/imported/white_erosion.jpg",
-    "source_size": [
-      1254,
-      1254
-    ],
-    "export_size": [
-      1920,
-      1920
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/fang_jiang_hun.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/fang_jiang_hun.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/fang_wu_ming.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/fang_wu_ming.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/she_cheng_xiang.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/she_cheng_xiang.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/she_hui_chun.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/she_hui_chun.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/she_ning_an.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/she_ning_an.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/tower_epilogue.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/tower_epilogue.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/tower_origin.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/tower_origin.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/xi_jue_chang.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/xi_jue_chang.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/xi_xing_qiang.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/xi_xing_qiang.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/yan_ping_an.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/游戏使用的栅格资产/rubbings/yan_ping_an.jpg",
-    "source_size": [
-      1024,
-      1536
-    ],
-    "export_size": [
-      1920,
-      2880
-    ],
-    "upscaled": true,
-    "kind": "游戏使用的栅格资产"
-  },
-  {
-    "source": "Task02/Original/生成图片/Q版主角.png",
+    "source": "output/imagegen/characters-20260930/hero-chibi-hd.png",
     "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/Q版主角.jpg",
     "source_size": [
       1920,
-      1296
+      1080
     ],
     "export_size": [
       1920,
-      1296
+      1080
     ],
     "upscaled": false,
-    "kind": "角色与场景设计原图"
+    "kind": "Qwen原生高清角色设计展示图",
+    "version": "2026-09-30",
+    "packaged_source": "Task02/Original/角色补图与动画生成过程-20260930/hero-chibi-hd.png",
+    "source_sha256": "b8a6e733b41bd88aa410be6e639cc9d7bbcab17d2fcb1a580efb971cf017fe67",
+    "target_sha256": "882eed11ee8f58dbe40c769e28bf332da9818975e491992ba586fb136f5f34b4",
+    "conversion": "参考原角色设计由Qwen原生重绘为1920×1080；RGB/JPG、300dpi导出，不放大旧原图。"
   },
   {
-    "source": "Task02/Original/生成图片/主角.png",
+    "source": "output/imagegen/characters-20260930/hero-hd-reframed.png",
     "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/主角.jpg",
     "source_size": [
-      2720,
-      1536
+      1920,
+      1080
     ],
     "export_size": [
-      2720,
-      1536
+      1920,
+      1080
     ],
     "upscaled": false,
-    "kind": "角色与场景设计原图"
-  },
-  {
-    "source": "Task02/Original/生成图片/廊桥-侵蚀态.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/廊桥-侵蚀态.jpg",
-    "source_size": [
-      2720,
-      1536
-    ],
-    "export_size": [
-      2720,
-      1536
-    ],
-    "upscaled": false,
-    "kind": "角色与场景设计原图"
-  },
-  {
-    "source": "Task02/Original/生成图片/廊桥-完好态.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/廊桥-完好态.jpg",
-    "source_size": [
-      2720,
-      1536
-    ],
-    "export_size": [
-      2720,
-      1536
-    ],
-    "upscaled": false,
-    "kind": "角色与场景设计原图"
+    "kind": "Qwen原生高清角色设计展示图",
+    "version": "2026-09-30",
+    "packaged_source": "Task02/Original/角色补图与动画生成过程-20260930/hero-hd-reframed.png",
+    "source_sha256": "02dabf839474e24b4d17df73eebcb5156019d9e3a29f47079dfd558394b9c845",
+    "target_sha256": "22c5ca6497ebc49688e0ef71dfe8bf434e813cec9f18c7eade1b1fbd6dfd9a84",
+    "conversion": "参考原角色设计由Qwen原生重绘为1920×1080；RGB/JPG、300dpi导出，不放大旧原图。"
   },
   {
     "source": "Task02/Original/生成图片/白蚀.png",
@@ -403,792 +49,2005 @@
       1440
     ],
     "upscaled": false,
-    "kind": "角色与场景设计原图"
+    "kind": "保留角色设计原图",
+    "version": "current-and-historical",
+    "packaged_source": "Task02/Original/生成图片/白蚀.png",
+    "source_sha256": "b264e1330435c165a9d9dc3a8e684e9e2aa2ec225b3c1e9625a7ed303d3cbe14",
+    "target_sha256": "f0c216722ab9ea26d7a203c06b71403d82d36c2b94ca5794c479747fdc778451"
   },
   {
-    "source": "Task02/Original/生成图片/社庙侧厢.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/社庙侧厢.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/archway_craftsman.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/archway_craftsman.jpg",
     "source_size": [
-      2560,
-      1440
+      1920,
+      1080
     ],
     "export_size": [
-      2560,
-      1440
+      1920,
+      1080
     ],
     "upscaled": false,
-    "kind": "角色与场景设计原图"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "49f40168151e8feab51efbd096dc3976e6541ae4b31790e686a7b36e8eb8277f",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/archway_craftsman.jpeg",
+    "target_sha256": "58b6741c519b6bb64a6c56e271112cce3eea871e1682ea18ae0342b0611ff94c"
   },
   {
-    "source": "Task02/Original/生成图片/社庙前坪.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/社庙前坪.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/archway_form.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/archway_form.jpg",
     "source_size": [
-      2560,
-      1440
+      1920,
+      1080
     ],
     "export_size": [
-      2560,
-      1440
+      1920,
+      1080
     ],
     "upscaled": false,
-    "kind": "角色与场景设计原图"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "9434f0e9f0d4073fb1cef26128815c8fd099e36024372e9ed6f5933e8127b61b",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/archway_form.jpeg",
+    "target_sha256": "b851ce27cbe375cd1f184548b001a35c28ded8309ec032071b93011029b36575"
   },
   {
-    "source": "Task02/Original/生成图片/社庙正殿.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色与场景设计原图/社庙正殿.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/chapters.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/chapters.jpg",
     "source_size": [
-      2560,
-      1440
+      1920,
+      1088
     ],
     "export_size": [
-      2560,
-      1440
+      1920,
+      1088
     ],
     "upscaled": false,
-    "kind": "角色与场景设计原图"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "b2621271e340cb53d6432ba907992c0735f70579b1d5627476d41d28e2c8d3fc",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/chapters.png",
+    "target_sha256": "f59593e2dd9293ceb61fc7d9c1112268d8ada88edddcbec0850fc4d4a626bb34"
   },
   {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/archway_craftsman-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_archway_craftsman-battle-ready.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/failure.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/failure.jpg",
     "source_size": [
-      450,
-      800
+      1920,
+      1080
     ],
     "export_size": [
       1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/archway_craftsman-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_archway_craftsman-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/archway_form-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_archway_form-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/archway_form-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_archway_form-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/archway_grade.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_archway_grade.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/confirmation-after.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_confirmation-after.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/confirmation-before.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_confirmation-before.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/craftsman_anchor.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_craftsman_anchor.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/craftsman_trigger.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_craftsman_trigger.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/dialogue-full.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_dialogue-full.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/dialogue-reveal.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_dialogue-reveal.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/drum_purify.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_drum_purify.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/gameover-last-line.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_gameover-last-line.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/gameover-recovery.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_gameover-recovery.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/heart-room.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_heart-room.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/journal.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_journal.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/map.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_map.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/miniboss-active.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_miniboss-active.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/opera_master-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_opera_master-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/opera_master-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_opera_master-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/opera_opening-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_opera_opening-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/opera_opening-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_opera_opening-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/opera_role.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_opera_role.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/prologue_bridge-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_prologue_bridge-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/prologue_bridge-investigation.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_prologue_bridge-investigation.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/prologue_bridge-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_prologue_bridge-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_drum-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_drum-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_drum-investigation.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_drum-investigation.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_drum-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_drum-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_guest-investigation.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_guest-investigation.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_guest-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_guest-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_incense-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_incense-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_incense-investigation.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_incense-investigation.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/temple_incense-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_temple_incense-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/tower_anchor.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_tower_anchor.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/tower_ascent-battle-ready.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_tower_ascent-battle-ready.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/tower_ascent-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_tower_ascent-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/tower_ledger-settlement.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_tower_ledger-settlement.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-14-v10/tower_purify.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/实机_tower_purify.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "v10实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/confirmation-before.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_confirmation-before.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/gameover-recovery.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_gameover-recovery.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/investigation-restored.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_investigation-restored.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/map-450x800.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_map-450x800.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/miniboss-active.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_miniboss-active.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/replay-correct-background.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_replay-correct-background.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/验证记录/2026-09-15-可玩性/trace-450x800.png",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/修复版_trace-450x800.jpg",
-    "source_size": [
-      450,
-      800
-    ],
-    "export_size": [
-      1920,
-      3413
-    ],
-    "upscaled": true,
-    "kind": "2026-09-15修复版实机截图"
-  },
-  {
-    "source": "LLM-tmp/客户端/assets/rubbings/fang_jiang_hun.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/fang_jiang_hun.jpg",
-    "export_size": [
-      1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "2c7feb5c035b08232c5f2594657a918723f0c2ba8cf03dc511e8327a305883ab",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/failure.jpeg",
+    "target_sha256": "f1b56be65a6cd59f5e2d5d82c88e8f4fc82843a926bcc5329875e0c854e06567"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/fang_wu_ming.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/fang_wu_ming.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/logo.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/logo.jpg",
+    "source_size": [
+      1024,
+      1024
+    ],
     "export_size": [
-      1920,
-      2880
+      1024,
+      1024
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "c2f289dbe8ea399bd49d3dc60730b263ca4081a17c3ef5cdf1ed6fb83b576a1e",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/logo.png",
+    "target_sha256": "93758b7896325d9691ca97ab5cda64a10ea2c3c8e7cf802df17d5277a652ecfb"
   },
   {
-    "source": "LLM-tmp/客户端/assets/logo.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/logo.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/opera_master.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/opera_master.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      1920
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "ed12161636aaa3638786c37e34b1edc858e0db0e566614126227bdb4d02dd9af",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/opera_master.jpeg",
+    "target_sha256": "0fbf926ba4ded0af450a467ec7b2ccaf299aab2738bf50bad791b4db2d945b60"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/she_cheng_xiang.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/she_cheng_xiang.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/opera_opening.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/opera_opening.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "1f4fa9ce6ed2830aa3553c991bcf0a6efd125b639c2bc62a694f3dab9eb11e45",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/opera_opening.jpeg",
+    "target_sha256": "53bb1e22d9293119b43fc6ecce8b2c13d9eca4d0f59294a19fe2028178676413"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/she_hui_chun.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/she_hui_chun.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/prologue_bridge.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/prologue_bridge.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "3bdde7ec900b26edde182ea61481f0e64485c2a6dd10b8e1aacc555e976691c4",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/prologue_bridge.jpeg",
+    "target_sha256": "19ed34a857ad1dbe41c9391a332e18a7bd2842d5f1bbe5300635c4f44a3f0b5c"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/she_ning_an.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/she_ning_an.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/temple_drum.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/temple_drum.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "bab06f4d7a9aefae16fcc0e289181c86c5e488b19be2b2a314feb931f99772c9",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/temple_drum.jpeg",
+    "target_sha256": "d96a573c4bdfafdcc2171504b9e596b8add7891df29d676b88f5cf54e29e41b3"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/tower_epilogue.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/tower_epilogue.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/temple_guest.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/temple_guest.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "36f635a56b047595ef9ce144ee69d9492faab0c32c0f17433c9390aad4ba9e93",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/temple_guest.jpeg",
+    "target_sha256": "c4fb69758c7689f047617fb74bb7a55e70610944efdad24248ea39b5aa445fc4"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/tower_origin.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/tower_origin.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/temple_incense.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/temple_incense.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "2a206984070696abf91f565f7695694f9640c261fd40ad47e3e22e5b6fd9e69f",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/temple_incense.jpeg",
+    "target_sha256": "b3e597e6cabd68e0f9e79a446f96ade484941a53ad74d3e9831c1afab299de09"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/xi_jue_chang.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/xi_jue_chang.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/tower_ascent.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/tower_ascent.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "b7ad55650998ac2d2b2fc80f3e67840c34b1e13e89441a5eab26c49a5367638a",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/tower_ascent.jpeg",
+    "target_sha256": "40de47a28f94869b726978cb03a9cb125aa9026cfbb3d9f9bbb702759c5f2bf4"
   },
   {
-    "source": "LLM-tmp/客户端/assets/rubbings/xi_xing_qiang.svg",
-    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/矢量资产展示/xi_xing_qiang.jpg",
+    "source": "LLM-tmp/客户端/assets/landscape/tower_ledger.jpeg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/tower_ledger.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
     "export_size": [
       1920,
-      2880
+      1080
     ],
     "upscaled": false,
-    "kind": "矢量按目标尺寸栅格化；logo在用，旧拓印SVG保留为历史资产"
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "dfd52d26dd5f0a7f6ae68161cd1cab4bab1734f2fc20fe636af70ff42e7ec44a",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/tower_ledger.jpeg",
+    "target_sha256": "d78a5db41a61716af8f85c69431c6256c1c933b930c726def144fe3f428ca15b"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/landscape/welcome.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/landscape/welcome.jpg",
+    "source_size": [
+      1920,
+      1088
+    ],
+    "export_size": [
+      1920,
+      1088
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "5a84ab99455979fd429a750413fe6da590c042de36f2413ce5f9db6ca26964f1",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/landscape/welcome.png",
+    "target_sha256": "428c0c8edbbf72d64172b92209fc9c613420af705e35c10108db9d43d8249edc"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/vfx/caisson_rosette.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/vfx/caisson_rosette.jpg",
+    "source_size": [
+      464,
+      455
+    ],
+    "export_size": [
+      464,
+      455
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "a9527c569beb6dadc1310e4b35c28b55b415f9c7d54ab37e7c47f2aaf473e384",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/vfx/caisson_rosette.png",
+    "target_sha256": "e65cc101ba1cc7fc243da74f95712e44771555dbba10a602886062264c75644a"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/vfx/dodge_smoke.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/vfx/dodge_smoke.jpg",
+    "source_size": [
+      460,
+      377
+    ],
+    "export_size": [
+      460,
+      377
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "43138acf6eae8e1e27beb25615ad3433eb317910423ca912419f5ca59ec05bfc",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/vfx/dodge_smoke.png",
+    "target_sha256": "002d924d0b2112ccc532fec5d59ad8d3a301af215f15a582fe24065266007c75"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/vfx/dougong_ward.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/vfx/dougong_ward.jpg",
+    "source_size": [
+      432,
+      418
+    ],
+    "export_size": [
+      432,
+      418
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "e151b7c7246b1d0b048bfe488c8f7d9bc4fcf3b6de5e4e30c5dcb253b675ee69",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/vfx/dougong_ward.png",
+    "target_sha256": "d6fe8f4215ec64455344c724a3650417b762bd4fe88afa85e511d5be4f7f0f05"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/vfx/erosion_burst.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/vfx/erosion_burst.jpg",
+    "source_size": [
+      464,
+      426
+    ],
+    "export_size": [
+      464,
+      426
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "c8498ae8cfa51ea82f468aeb6b9d204081e4f6e3cce2a851136587e0102b77fe",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/vfx/erosion_burst.png",
+    "target_sha256": "96d4b69ba3a4498cb62e8f61401f1dfe4171f727a4eef56fef921c8c1a15a8ae"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/vfx/flying_blades.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/vfx/flying_blades.jpg",
+    "source_size": [
+      467,
+      410
+    ],
+    "export_size": [
+      467,
+      410
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "3c037866a5bec087f57ea1277a0eb8aacefb16ead949b580c7bccf70e605c8e7",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/vfx/flying_blades.png",
+    "target_sha256": "e9bc41c9239383e5bfd1f3f32a3fc1fbe0a79a7c129258e0f239239028c4b5a0"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/vfx/ink_slash.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/vfx/ink_slash.jpg",
+    "source_size": [
+      479,
+      417
+    ],
+    "export_size": [
+      479,
+      417
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "0a0122d91588c03ca402b77fbfa902f028924f2c1b939accae6a4ae8775d7ccd",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/vfx/ink_slash.png",
+    "target_sha256": "7d4baf9afd2d8f8f4835e7de1040beec5bc6caf9f1417053f79ab55aac6ef9cb"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/backdrop_rail.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/backdrop_rail.jpg",
+    "source_size": [
+      494,
+      342
+    ],
+    "export_size": [
+      494,
+      342
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "9288d4bdf0f6f1376314f61686697e0765753792377011cf44778f26123ed62d",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/backdrop_rail.png",
+    "target_sha256": "78ac180156d82483038f8f0c17afac6c9ab4897cd9e6fbdbf8bc18e3b4c79c9c"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/brocade_panel.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/brocade_panel.jpg",
+    "source_size": [
+      326,
+      427
+    ],
+    "export_size": [
+      326,
+      427
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "6c29405b5313d60cfa9336624e4598fb5dbf9b44079c5ade79397007625a6423",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/brocade_panel.png",
+    "target_sha256": "69889cb916a86d7f533c89d3e4191b59888c68edc56e74cc2c40aa031419ac8a"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/brush_cursor.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/brush_cursor.jpg",
+    "source_size": [
+      425,
+      475
+    ],
+    "export_size": [
+      425,
+      475
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "75bd5af4465dc1290b34177b25df3b69c8465763ac622f884051ab079ef658ef",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/brush_cursor.png",
+    "target_sha256": "9ebe9c6888472c20f88e5eaed365a8d849dd012ed1e23d8dde8a05e192105860"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/cinnabar_seal.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/cinnabar_seal.jpg",
+    "source_size": [
+      192,
+      211
+    ],
+    "export_size": [
+      192,
+      211
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "7bd2aab36f843404bf04053d1b9ee2f371cfd4998da3ec8982c3f356b58dc8a0",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/cinnabar_seal.png",
+    "target_sha256": "826a1fbf8e361ffb98502fd93d7de7337a94711f73a7d38b993f12b6fc50c0df"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/dougong_bracket.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/dougong_bracket.jpg",
+    "source_size": [
+      447,
+      423
+    ],
+    "export_size": [
+      447,
+      423
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "328fbe0ec76c515e2f891ff135526f276adef67e3c3e61396b419b13942daa6d",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/dougong_bracket.png",
+    "target_sha256": "31727d5b19ad09bd637896e07e81ac6d0edce18c36917c3b427e7c9b1842e2d0"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/gate_2.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/gate_2.jpg",
+    "source_size": [
+      457,
+      392
+    ],
+    "export_size": [
+      457,
+      392
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "c8607faf1e126164e49b150c880270c8992cb24fac4df44648c79da21f825301",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/gate_2.png",
+    "target_sha256": "f4cb6112c6307226d69e84a7b2b6b57315b700cb0493dc91247dfb051c84dfb9"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/gate_3.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/gate_3.jpg",
+    "source_size": [
+      825,
+      753
+    ],
+    "export_size": [
+      825,
+      753
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "e61c5a396a6fb15b08d20062fca544ea228015bc8bcc7fb6ade94d1bb2823c3c",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/gate_3.png",
+    "target_sha256": "2bf33b3b45f36c4ef05dd091262ab5e705f560d8b08a1cc94ff27d5b183ce4a6"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/gate_4.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/gate_4.jpg",
+    "source_size": [
+      494,
+      373
+    ],
+    "export_size": [
+      494,
+      373
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "53b4a61ff9dffa32d05951399be0ec94a045dceb3efdee3293846a92a9ce10e3",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/gate_4.png",
+    "target_sha256": "142c6edb94709e9cbf639655beaa960a3f03180bfeec6566e8901fa2541fd21a"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/glyph_bridge_trace.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/glyph_bridge_trace.jpg",
+    "source_size": [
+      1200,
+      500
+    ],
+    "export_size": [
+      1200,
+      500
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "156608386fd7da0f3b3a8cd5c26c3617a1bdad22e5a5fa4edb8246aaefe3628f",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/glyph_bridge_trace.png",
+    "target_sha256": "889f32bbc7eaf4263d0a2243036fdf93de08efeb340475a44fb62923226a4c34"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/glyph_drum_trace.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/glyph_drum_trace.jpg",
+    "source_size": [
+      1200,
+      500
+    ],
+    "export_size": [
+      1200,
+      500
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "bc2c2c3ddfd8d3bd6933f09124f7e2cb29b83bd4e2ff891a684085008a5c4f1b",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/glyph_drum_trace.png",
+    "target_sha256": "5bf2602435c9fefcc534cc96f4e2ba35484558e80b1bbeaa55d2f2e4b5a50507"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/glyph_guest_trace.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/glyph_guest_trace.jpg",
+    "source_size": [
+      1200,
+      500
+    ],
+    "export_size": [
+      1200,
+      500
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "e75da29bf80cc33cc6a2ebd202c135ff580e7756c52a6f793e6586648de0093e",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/glyph_guest_trace.png",
+    "target_sha256": "54b03100901fe1cc6efc856818b49bcdb4f5579478ae914e9523f2416d2fb9bf"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/glyph_opera_trace.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/glyph_opera_trace.jpg",
+    "source_size": [
+      1200,
+      500
+    ],
+    "export_size": [
+      1200,
+      500
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "39cda05253b44bf1fc1fc3c51a3220eabc0feb86f6a5ef6ae8418325faae2c0d",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/glyph_opera_trace.png",
+    "target_sha256": "3fb678996e96b0de8d8dacd29177df1e58a52751e3a1459ed912e9b5917b6dfe"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/glyph_tower_trace.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/glyph_tower_trace.jpg",
+    "source_size": [
+      1200,
+      500
+    ],
+    "export_size": [
+      1200,
+      500
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "854f26bced6b350717df01c8b91de2ded516ae85220b2516576098763d2b6436",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/glyph_tower_trace.png",
+    "target_sha256": "26efb98dc4bacb198b6a2d3385be7d1a757681b93c3ac752307a65ff4346d11c"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/hint_plaque.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/hint_plaque.jpg",
+    "source_size": [
+      444,
+      442
+    ],
+    "export_size": [
+      444,
+      442
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "6b1dc7d6fcb7be963b82e0e962c1db57b4fd4f30d9274ffff81efd2a127dc8fe",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/hint_plaque.png",
+    "target_sha256": "26cdb3809e040538bb835baf7589e7e5db63a4a0ffe32740c007f46e88c4dd72"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/ink_dab.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/ink_dab.jpg",
+    "source_size": [
+      214,
+      299
+    ],
+    "export_size": [
+      214,
+      299
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "f62e03663cab3dbf4f4bc595404965b7fddf1337044f2e372073992fd257c6fd",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/ink_dab.png",
+    "target_sha256": "785e8352f9417070450487b9dc2a167ca344a45f24e21cb480b6d7df131cf899"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/ink_dab_red.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/ink_dab_red.jpg",
+    "source_size": [
+      214,
+      299
+    ],
+    "export_size": [
+      214,
+      299
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "cfd7f21108625ce085d23d8e439897f24d0e3be3e0f08b71b505a4a30cce7d37",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/ink_dab_red.png",
+    "target_sha256": "bee8e6c356fbe853e9653cf5289cc2d5ab33e30a216e3ab2f399b7e6d1725c97"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/ink_swash.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/ink_swash.jpg",
+    "source_size": [
+      474,
+      384
+    ],
+    "export_size": [
+      474,
+      384
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "cb8ea7a0fe368ba318cb27f6a388e72bbc0610d34f27444861988d530e70b3dd",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/ink_swash.png",
+    "target_sha256": "d526979811f8c662efb078385ee25421e1963d6e5010832e92e70b66059b6258"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/jade_seal.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/jade_seal.jpg",
+    "source_size": [
+      224,
+      235
+    ],
+    "export_size": [
+      224,
+      235
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "386935af6080a9d20ce4f4d87a658bcc72d2e5f4db576f7f7d7d5e8bc4a5d099",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/jade_seal.png",
+    "target_sha256": "0379e7d29edec631d9cdeb945501c8992203959a88f389b7a9c1365c68d508d2"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/lotus_marker.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/lotus_marker.jpg",
+    "source_size": [
+      292,
+      289
+    ],
+    "export_size": [
+      292,
+      289
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "45b56b900ff05c30b675b1575cea7e0d3f1f7aaf65919e2c7f6c1d44e51972ee",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/lotus_marker.png",
+    "target_sha256": "4362266a9041312141f1ca4523cb690b466dec02b697c355d3c1577d6a8a1f59"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/mortise_beam.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/mortise_beam.jpg",
+    "source_size": [
+      490,
+      363
+    ],
+    "export_size": [
+      490,
+      363
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "41b48d9edaec94f1f63c898169e32e4a385bed072a399212f3d2833739d73a27",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/mortise_beam.png",
+    "target_sha256": "e1a0a8c81cb0733267c7cc613acda602d22edf61b879d010ab1fd4ee9dceb048"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/mortise_marker.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/mortise_marker.jpg",
+    "source_size": [
+      264,
+      267
+    ],
+    "export_size": [
+      264,
+      267
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "f3c878652a939342ff6fa9dfc9ffb754f61294c7677f5b65ec17930fc2480195",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/mortise_marker.png",
+    "target_sha256": "7e2bc25a72be42146b3c04307850d4cd2b79e7aba75698cb24cb8432c54e0bbf"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/opera_dan.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/opera_dan.jpg",
+    "source_size": [
+      369,
+      441
+    ],
+    "export_size": [
+      369,
+      441
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "5ed2d9c8a4a4c8518744b4fedbfc0cc93bddb2c4fc8fc58e08be6968bc53f768",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/opera_dan.png",
+    "target_sha256": "46c2c08fee89b28ca9e3e3108a8abf5f6fded72bfaf9106e99b7593ce4c1f86d"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/opera_jing.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/opera_jing.jpg",
+    "source_size": [
+      307,
+      390
+    ],
+    "export_size": [
+      307,
+      390
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "34c66604ea17c9f665accf21a8a004fe941ded83d70c2d15205bf41a134cea6a",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/opera_jing.png",
+    "target_sha256": "bdddb11d1f955fb1e0e4e5893838715e7249fc53f8d173af6c9540879c7660ae"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/opera_sheng.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/opera_sheng.jpg",
+    "source_size": [
+      312,
+      427
+    ],
+    "export_size": [
+      312,
+      427
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "c1f5446ddb4a85a8875c542e3bfcef937d92dd8e0ab8a305b8f1e75e75f2700d",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/opera_sheng.png",
+    "target_sha256": "d8df60b592eb4ba554be5ca8b981042d5684f84e3a8f61ec00bccaa613dd51a4"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/stage_floor.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/stage_floor.jpg",
+    "source_size": [
+      491,
+      213
+    ],
+    "export_size": [
+      491,
+      213
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "1cf37866eecda013527c304af0cf53fb4d71bd848ea358170020dc607f7f035f",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/stage_floor.png",
+    "target_sha256": "93f3c1c8545ee812e6ebdf63ca36c16d8bed108346ad098e919a1e5c6673751a"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/stage_step_piece.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/stage_step_piece.jpg",
+    "source_size": [
+      302,
+      235
+    ],
+    "export_size": [
+      302,
+      235
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "a3b0fa90e18b71bd24940647101ebfcbc06762db6a5270f69ea937e9bc82cdde",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/stage_step_piece.png",
+    "target_sha256": "0071dac6c964c1ccff00032ffe98a73e04447a13361ff31b043efa8cc120df7b"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/stage_tassel.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/stage_tassel.jpg",
+    "source_size": [
+      99,
+      429
+    ],
+    "export_size": [
+      99,
+      429
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "7ccba287c2ff4a5b0a7323f849c423df5911d5d973c57cc4970aa615964dfb3e",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/stage_tassel.png",
+    "target_sha256": "6bf7b102f054d0988ce8a02295fbd3c00ce76539897d4670b29b8ff90ce3fe16"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/stone_tablet.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/stone_tablet.jpg",
+    "source_size": [
+      257,
+      449
+    ],
+    "export_size": [
+      257,
+      449
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "1ad63504341a0fed795512205124a0709cf38c958648e5c56d41e3b17e8f16cc",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/stone_tablet.png",
+    "target_sha256": "1ad5f79b4b4ca9843c894bffa47d856dd3c87203100f4f6f437185111013203a"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/tenon_piece.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/tenon_piece.jpg",
+    "source_size": [
+      455,
+      331
+    ],
+    "export_size": [
+      455,
+      331
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "175ab5a8ef2d667c83558c6be38afb8c627194c1d9c07de2c80d1f6052b6a947",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/tenon_piece.png",
+    "target_sha256": "591ddccb0a472d738dc74745e0d09feb1236c7e15590d564d5923962e289fafa"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/wind_bell.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/wind_bell.jpg",
+    "source_size": [
+      231,
+      427
+    ],
+    "export_size": [
+      231,
+      427
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "b76e79e5d7831914678e1de84f08006e6a165a4c6ff492dd0b4bc1b6f8aacaf7",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/wind_bell.png",
+    "target_sha256": "1bf10e04a2ef140dedcc4fc3b899872d61e079577ae7e9c4924eba7997aec9bb"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/puzzles/xuan_paper.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/puzzles/xuan_paper.jpg",
+    "source_size": [
+      1536,
+      1024
+    ],
+    "export_size": [
+      1536,
+      1024
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "73658f9f2217b22688c30f8825af7105b433d9d40fabcaf4e70fac54309efe14",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/puzzles/xuan_paper.png",
+    "target_sha256": "1d1522d0dc0fc5d0b81d4a2bd2f5b25e352d5fdafa4fb1b5b8fa5ae4c535d0f5"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/background.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/background.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "c3bb658203d63d2d3e063bce5597dbcd50aa64c7d85e13fda123fd6b23529ca1",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/background.png",
+    "target_sha256": "136f6dae216f188b93464ebd880d63c6d84c3ffe03fb09546222ba88f3fbfd21"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/brush.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/brush.jpg",
+    "source_size": [
+      678,
+      231
+    ],
+    "export_size": [
+      678,
+      231
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "88a9ca3197810d43539a6d78ba55a007794e4756e2fbe01bb58f49bf31764e14",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/brush.png",
+    "target_sha256": "d2865867a867e30f42d7083ca435e80bda0cdb81c49cb0a4020b837c4fc8aef4"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/frame.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/frame.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "075cd03599ee311a5ed0d215b2ef1fa21629ccba414bf2a446dcf08da7708289",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/frame.png",
+    "target_sha256": "967b72acec631a9e358fd222c1ec4bb4139c00dd0f7ee1086c85bd19f8e37dca"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/ink.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/ink.jpg",
+    "source_size": [
+      694,
+      394
+    ],
+    "export_size": [
+      694,
+      394
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "8cadf156200ab0cb717f9cefa97c7a531ce79ce41cb3e2dafc2b24844f8b43b7",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/ink.png",
+    "target_sha256": "7ba97bda392833e02a24f79fa82f8bec5f0aa4ad6a91e33d5debfe7c2dc2d920"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/panel.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/panel.jpg",
+    "source_size": [
+      1620,
+      1080
+    ],
+    "export_size": [
+      1620,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "b8ffea418955d48051347ee1054ada82150c87dc2f131d1eb6d3b92fd5803905",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/panel.png",
+    "target_sha256": "d2f542f7c9188114433a406127930aa153027081dbf26be95ba93eebdf3f05d5"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/paper.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/paper.jpg",
+    "source_size": [
+      761,
+      418
+    ],
+    "export_size": [
+      761,
+      418
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "916937d395457b108b1bfa086ea028debb0ce6e3a90ff119950bfa859db6e035",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/paper.png",
+    "target_sha256": "b21fe98d73195418bf01a6eac9e30156580efbbcd8b23eef48968b14d0579949"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/ink_ui/title.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/ink_ui/title.jpg",
+    "source_size": [
+      1615,
+      393
+    ],
+    "export_size": [
+      1615,
+      393
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "3272cdb77dbec495e4fc3cc563358d469c03818981c98de93de9fdcf5ddc9037",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/ink_ui/title.png",
+    "target_sha256": "345c8a14dbed894bbf751fddcdb14c1f2925b2bee5ced85a367ab98e6c27dac0"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/fang_jiang_hun.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/fang_jiang_hun.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "7b533ad925fe80b158e4196bc12ca79d91a319091bb0fa268b1d9f11e7ea6bc0",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/fang_jiang_hun.png",
+    "target_sha256": "57486baae3e7697c1a6bf39fc4a44e081b8e87a6bf7a696d6d505fe532aff685"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/fang_wu_ming.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/fang_wu_ming.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "8352405da72cdbe3cf081a9854a2b5b3995c01ae8fe007f3572d01188491e3d2",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/fang_wu_ming.png",
+    "target_sha256": "7e3479f5b7218f01b56ec359369832a5c39d9d0e16ca5d4b8c309e2e211073aa"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/she_cheng_xiang.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/she_cheng_xiang.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "e674f3dd8ea6d0834566f8168f76f19575c33cc4585e8e1f5fdaa50baddf6097",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/she_cheng_xiang.png",
+    "target_sha256": "43e28524e38b0ff6fc46405f3426144bd92bc48e35372d3f0ebdac5a13f693d9"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/she_hui_chun.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/she_hui_chun.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "7cdd901f17150f8afd24c9e9c24a27e5ea98e1578a4c7e82d8de8ea3ff7c4536",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/she_hui_chun.png",
+    "target_sha256": "0ff734638508227e5e2f56fa330290470130d8b5f91556eca2e0a48a6fb94833"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/she_ning_an.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/she_ning_an.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "4bce6a5b11d10a3250ab59f85f12f26f32fa5551d84947d658e77fee3e3116f6",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/she_ning_an.png",
+    "target_sha256": "5887646a9918106f5d38a8af93847084d45d4373eeb46c8b3a8a0dc42bdd7f90"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/tower_epilogue.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/tower_epilogue.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "a1a1c997a2f0d2668d518e4113fc031e6367766130761a71ed081ecbab05b6f1",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/tower_epilogue.png",
+    "target_sha256": "201919aba9f278d3df771a72e40e9bbe318fb017b76add8e67aab3664646720f"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/tower_origin.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/tower_origin.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "528765f3a529107712a1d42140cc94b4bbda8d116891de376470bb57c23718f2",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/tower_origin.png",
+    "target_sha256": "d0c8367bdf9e6d1321a6f5c267c03fc63515f85ffce1451f0f1ceb5b33205fc2"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/xi_jue_chang.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/xi_jue_chang.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "8cfa25a4ff9a1ed053498a62dc7c3e588a8bad7543c6907efb6914b08a341100",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/xi_jue_chang.png",
+    "target_sha256": "178224befa0e871fe500fde643a8da7110872a550828662aaa1a2d9b4da00c80"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/xi_xing_qiang.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/xi_xing_qiang.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "7b3a1761fa4c886933494bfce939d78d3742a358e27c3d377dd07182970f1c64",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/xi_xing_qiang.png",
+    "target_sha256": "1d9cccae811c8ab401523af41be5869d0868456386b08a479bde6ff598312a9e"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/rubbings/yan_ping_an.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/rubbings/yan_ping_an.jpg",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "export_size": [
+      1024,
+      1536
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "52f054c6c96391e190c3d36e476ef724126cc06af9a227fec8ebca0701011f7e",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/rubbings/yan_ping_an.png",
+    "target_sha256": "60802d39a25bce57d43fa0c8d1481f1605fe5471bc7e731d7bdbc0d09409543c"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/artisan_source.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/artisan_source.jpg",
+    "source_size": [
+      336,
+      449
+    ],
+    "export_size": [
+      336,
+      449
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "401d88f0d209a305c63c99288e1aca7c90b0645720cd67884aa2b703f4a18e38",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/artisan_source.png",
+    "target_sha256": "2514bffb4622deab325736e62f650f29e272c309c138412afa58edff1666248b"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/bridge_eroded.jpg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/bridge_eroded.jpg",
+    "source_size": [
+      2267,
+      1280
+    ],
+    "export_size": [
+      2267,
+      1280
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "512d37ec12924efadd1b743c4a8c321abf5c7207bacfed75c0aae83121de3720",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/bridge_eroded.jpg",
+    "target_sha256": "51ecc53bfeca6c4d1dbb02a5da72865cbee8401e3dbb4bdabfea5d827150d279"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/bridge_restored.jpg",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/bridge_restored.jpg",
+    "source_size": [
+      2267,
+      1280
+    ],
+    "export_size": [
+      2267,
+      1280
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "0631154fa5c334be261765b3fa241fa39cb0806ddc0679481dc48ab4f422bbd3",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/bridge_restored.jpg",
+    "target_sha256": "602ee0ace3d5c7c94a5f131ad62d4ba1860b0144414aacbeffbd40039aa76bcc"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/drum_courtyard.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/drum_courtyard.jpg",
+    "source_size": [
+      1672,
+      941
+    ],
+    "export_size": [
+      1672,
+      941
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "4f81ea2042ac1297a693b43533b5b39d15d97e39d7e8069cfc5b9c9ba84146ee",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/drum_courtyard.png",
+    "target_sha256": "2f2d7aff9f788dfb650f23fd4dd07bd7efd0d689ed2d21b878c68dfb076a3fa5"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/guest_room.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/guest_room.jpg",
+    "source_size": [
+      1672,
+      940
+    ],
+    "export_size": [
+      1672,
+      940
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "4ade6a4cab3a80cfc6cfe87ced4b0356d0468d97bbf59c09a8c3503518472182",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/guest_room.png",
+    "target_sha256": "609b1a40f36a635697da1c23acf20f38eb150e2b519d27ffb8b1513effb354a7"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/rubbing_master.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/rubbing_master.jpg",
+    "source_size": [
+      986,
+      1595
+    ],
+    "export_size": [
+      986,
+      1595
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "de50c62202ea1fdfcae7ec9be773f5d76370de73b1c44b9f64dfad7977e162a9",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/rubbing_master.png",
+    "target_sha256": "029e5f7b75bfbd59424a45444248fbafa3166f3afb016a2fbda4b5d003c319c0"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/temple_interior.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/temple_interior.jpg",
+    "source_size": [
+      1673,
+      940
+    ],
+    "export_size": [
+      1673,
+      940
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "cc6775b71420cbebf033ca999c7c669b024e0674b7b3ba682bc3353fec2df2e9",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/temple_interior.png",
+    "target_sha256": "fca1bcdf7efc609383c4cf7cff4dbe97951262304e6a8a89ad3fa1e4239d12c7"
+  },
+  {
+    "source": "LLM-tmp/客户端/assets/imported/white_erosion.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/当前运行素材/imported/white_erosion.jpg",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "export_size": [
+      1254,
+      1254
+    ],
+    "upscaled": false,
+    "kind": "当前运行素材",
+    "version": "v17",
+    "source_sha256": "36ee2ca576c60d1b765a482f1e1497f5f9b06e4de25fb42044a53574061501a6",
+    "packaged_source": "Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/源码/客户端/assets/imported/white_erosion.png",
+    "target_sha256": "4771056d45547514887adbc00a093a7bd93c7edbd607388a1f7f1d4e2a20bc78"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/front_hd_review/locked-chapter.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v11-to-v17/locked-chapter.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "38cf29fee8a885512e01ac64de65e0d76c7ac9aba039687ec6ab6950b1bd1f6c",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/front_hd_review/locked-chapter.png",
+    "target_sha256": "0bd1018329328e4d3c389a4dce1a529da0ea39030cde130d3e262c56ea69b4bc",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/front_hd_review/chapters-final.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v11-to-v17/chapters-final.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "5e25046c67a3c79bed64f1953df9b61b3502432ff35d20f73f4eaaafd9f4c368",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/front_hd_review/chapters-final.png",
+    "target_sha256": "447ca3ef4ab870ba15676839edaf2cf0015c43ad45c8d938eb867847c2c1093d",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/front_hd_review/welcome-final.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v11-to-v17/welcome-final.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "2e4137cf59016e03109eab9756865dd293d18b0bef4a3af93cc6987e66ac989c",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/front_hd_review/welcome-final.png",
+    "target_sha256": "f0020df76c066aed41e453fe042fe1be69274374539c29bf68f8a5c21630b1c0",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/story_combat/01-story-reader.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v13-to-v17/01-story-reader.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "7cd805b32e3a59ec7475db7b49586d77d2a0e470a312b2370fcc5fce7bab4c92",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/story_combat/01-story-reader.png",
+    "target_sha256": "4138c4042c7661bbc4df84712bbcbeb3e831212195d09102655d66b5511edafe",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/block.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/block.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "a6233d0cb5b39fa7a6c0e9036fc07c9c890288b03849d648d5372693a45cb32e",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/block.png",
+    "target_sha256": "6351d7fdd2f0912370f8d397642d67e0c352e0839dd18386dac387ada0f2034a",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/disperse.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/disperse.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "6dfe46853fe02b6d107d84a09edaf9cdab7d0890ec2250f6db4df16df3f93e09",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/disperse.png",
+    "target_sha256": "740ff59550c6b79b84d4f18292473c31f03522e88754a2291bd66ff018f60494",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/hit.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/hit.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "da45a7e8c25546368daf751d1c7493daa0fc2f382e4f4551de6f2c66e72e8ff5",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/hit.png",
+    "target_sha256": "58f952b0b61a619561a8f3769cb47bdab761050ca16cc3c4bbd186908fc06665",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/skill-0.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/skill-0.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "8f6f1053cdcac61273eca64c719eb3997d4d00ce6e75e835b8059de1e6e8089b",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/skill-0.png",
+    "target_sha256": "4a34f9415a71db984d0385b1af3c3f18c5b5c5a206a9153eaf3da7e2e4932e0e",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/skill-1.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/skill-1.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "ef4360eda2bc27facf8507603a45d9dbdde56b987f47d95021e85aa5f50c93e0",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/skill-1.png",
+    "target_sha256": "32994c86268d99c2e7587407bb62df3a7535887f71e2baa5cab7bb33b93c5762",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/skill-2.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/skill-2.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "ed0bdd3a142dc187ef6c4ff63639923ecd078dbfdbcd610aad7356de51cbe412",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/skill-2.png",
+    "target_sha256": "33d0a4ea52138af6f9ae1a57dfff4111e9d5cc59f5edd5fc1bc9cbe677584b48",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/skill-3.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/skill-3.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "4759c2b8db626e4b7976eb5614be9374fc3cd6cc201cb55cdf9d7bf7a7e0f525",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/skill-3.png",
+    "target_sha256": "d3a88229283ba0d0b2a694265de2201db9b47126cdec1823e2186ae52e5d6995",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/vfx_review/skill-4.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v14-to-v17/skill-4.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "cd3470c99e202b9527f34a009832911138108b20626384db4716fe53a026021a",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/vfx_review/skill-4.png",
+    "target_sha256": "85f288d1a78a3afcfecfa2645f855599e49ef5d59a2073f639147910f96a3fd8",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/brush-drawing.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/brush-drawing.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "6fa0ca97a6342029a24c5ea255ed3638059f3dd83907befdfa742984d14ab114",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/brush-drawing.png",
+    "target_sha256": "aece73aaa5fb98dcc0108f71d6e1820258cddbe988844659ea847493441d8eb8",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/brush-hover.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/brush-hover.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "5a52da72199536c77fa3c4477179510dc1810ce4c1d8b93157988b46e97e8144",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/brush-hover.png",
+    "target_sha256": "ece5128833972a06a62c95728b8e56653b3499f13119129de72257909b45ceaf",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/font-map.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/font-map.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "5e25046c67a3c79bed64f1953df9b61b3502432ff35d20f73f4eaaafd9f4c368",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/font-map.png",
+    "target_sha256": "447ca3ef4ab870ba15676839edaf2cf0015c43ad45c8d938eb867847c2c1093d",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/join-archway_form-1.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/join-archway_form-1.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "9f1855b74c3beb76eb699c97f549f7d996d891f9fecf6aeb473fc6599d5ced7a",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/join-archway_form-1.png",
+    "target_sha256": "6e2c4e3dcd0275b1f0cd7f7fc788ab8ce097ee587737d8233482b490d063d43f",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/join-opera_master-0.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/join-opera_master-0.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "9e66ddfd5b1567a49202882dab09b2eacca507cd1b64be07e7bfdc9ec12c4db8",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/join-opera_master-0.png",
+    "target_sha256": "a405899c508dd8e2406cdbd601067fb413302164648d80221bcd1725a5533972",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/join-opera_master-1.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/join-opera_master-1.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "e5081c754630126e40479a39d8cf3c858c5a1aebf5a12cb019a7803032b65af3",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/join-opera_master-1.png",
+    "target_sha256": "2231904f80d196116b61cc7e8cefff1faf9f77e5e66e886050d31cd9f7c01ee6",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/join-snapped.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/join-snapped.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "f0b0e357793f4d4caa1c30816a03fe15ef171c7d450d66ed29e4bbe6fba741a4",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/join-snapped.png",
+    "target_sha256": "b7b360379fda16577544e781a21fb248045854e34d8b619259718380fe67a97c",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/join-temple_incense-0.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/join-temple_incense-0.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "bc8d2bd281f6b6a99c53d754e1bb1c23911c66bacbc174adb31e9c4f60952062",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/join-temple_incense-0.png",
+    "target_sha256": "2e08dd677aa157a412704948555c2bb93dc2c951abaa58773bf9028545dabc24",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/pattern-archway_form.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/pattern-archway_form.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "3c3bbc60b3398b72092e79e61c529d10d1f037d5c80db1ee7fa53c973cb2adcd",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/pattern-archway_form.png",
+    "target_sha256": "eeb8d797697e182ce4cf81a47ee5b508b5d755c604eb776773982273119ed993",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/pattern-opera_opening.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/pattern-opera_opening.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "e34d74cb32f04ea913eb89c3e97803aa8863865d9b67644d05539f6801d3a225",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/pattern-opera_opening.png",
+    "target_sha256": "15b7897b48bfbf7bd5cf759ce6c4b8e7d112b195c3ab65e9e9c1c0aef012eec4",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/skill-archway_craftsman.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/skill-archway_craftsman.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "4f834a0c865186471049c3395b867f94aa95697b40c0d8ef246880c515a59e90",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/skill-archway_craftsman.png",
+    "target_sha256": "86e69b3402818878544bdb96f8d15c73278515b117407276bf704a0b4d8471a6",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/skill-tower_ascent.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/skill-tower_ascent.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "fa9791d267041f3d7d086d42444e30e90b075157eb666d0acfdf41af577d3c9c",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/skill-tower_ascent.png",
+    "target_sha256": "32904d8c41a673603f13d0a7433d4b69a3b3bb13fde7914a5a2d925d7984470a",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/trace-opera_opening.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/trace-opera_opening.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "09c7fedea4683bd413152b2ac957583c4615dab3125144e30b871754fa14922a",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/trace-opera_opening.png",
+    "target_sha256": "440e327d44108109eb377f4aa6bd8e3b2b60f88091c9e26643fd67d0ff8f4d8a",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/trace-prologue_bridge.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/trace-prologue_bridge.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "506b518ffc351d19ad51bf8f249ffaebc18107eeb332b6fc69fbae070b0cd503",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/trace-prologue_bridge.png",
+    "target_sha256": "2011bff309028b43cf26db25f49275bab4875d4ca43297c80515a37edec055e8",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/trace-temple_drum.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/trace-temple_drum.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "df862d91e327685987fada9d9380933cba8cbb8b4f46dbee7bd62e96ebbbdbf2",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/trace-temple_drum.png",
+    "target_sha256": "d459cfe6cae187693203678af3390d4f00f0c5cd639ea94252208baca131cbc4",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/trace-temple_guest.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/trace-temple_guest.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "0cec384fe30e7051d2831f48c70e93dd1af1f2576dd29889f5b638e7597bbd37",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/trace-temple_guest.png",
+    "target_sha256": "342bf3e31d52bfb8cfd5a614c482d38e07cfffc82af74d2b25b16ab29fb89502",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/trace-tower_ascent.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/trace-tower_ascent.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "66c9fb9507e2a399fa6e283fec9e7961f551b01bb438f6d1a55b7e5b3ceee147",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/trace-tower_ascent.png",
+    "target_sha256": "70c6399eb39ab49f3affae09104e52114c94b199509448f27aa3ee464d051235",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "LLM-tmp/验证记录/2026-09-30-v19/puzzle_art_review/transition-dark.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_主场景图/v17/transition-dark.jpg",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "export_size": [
+      1920,
+      1080
+    ],
+    "upscaled": false,
+    "kind": "v19原生1920×1080实机截图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "2b42b1a8d741739b22b71b8e525cbd720fab647f504f8dd77fa5dee941ec5a6c",
+    "packaged_source": "Task02/Original/当前截图原文件/2026-09-30-v19/puzzle_art_review/transition-dark.png",
+    "target_sha256": "a86e027c75de880c7a728c047c22088bcefc67c24acf414537c143f2f7d0785a",
+    "conversion": "游戏窗口原生1920×1080渲染；仅转RGB/JPG并写入300dpi，不缩放。沿用原展示目录位置，拍摄版本以本清单为准"
+  },
+  {
+    "source": "output/imagegen/characters-20260930/hero-walk-sheet.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色动作设计/hero-walk-sheet.jpg",
+    "source_size": [
+      1920,
+      1280
+    ],
+    "export_size": [
+      1920,
+      1280
+    ],
+    "upscaled": false,
+    "kind": "Qwen角色动作六帧设计展示图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "a901bcfc756104f51524daf753e7ba95fdeeedbb6f0350aa601bde5bd35f10be",
+    "target_sha256": "010f0510d24146ab601d0d4be02805d3c21ca1e5fb4a7d7d5216758a9afc256e",
+    "packaged_source": "Task02/Original/角色补图与动画生成过程-20260930/hero-walk-sheet.png",
+    "conversion": "Qwen原生1920×1280图集转RGB/JPG、300dpi，不缩放；透明帧经去除边界相连白底、共用缩小比例与脚底对齐后用于运行。"
+  },
+  {
+    "source": "output/imagegen/characters-20260930/hero-attack-sheet.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色动作设计/hero-attack-sheet.jpg",
+    "source_size": [
+      1920,
+      1280
+    ],
+    "export_size": [
+      1920,
+      1280
+    ],
+    "upscaled": false,
+    "kind": "Qwen角色动作六帧设计展示图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "9991cf8981453e02b0e48f96e990088999b03a8d1868de1c0ee0d4b1a4db4491",
+    "target_sha256": "f1fe5d28a5a15925fa6c8d2c5b68f9617d1d6bd4406ad2bd0f280b712433bc06",
+    "packaged_source": "Task02/Original/角色补图与动画生成过程-20260930/hero-attack-sheet.png",
+    "conversion": "Qwen原生1920×1280图集转RGB/JPG、300dpi，不缩放；透明帧经去除边界相连白底、共用缩小比例与脚底对齐后用于运行。"
+  },
+  {
+    "source": "output/imagegen/characters-20260930/hero-hurt-sheet.png",
+    "target": "Task02/Final/Track01_Task02_第二队_檐下千秋_游戏素材图/角色动作设计/hero-hurt-sheet.jpg",
+    "source_size": [
+      1920,
+      1280
+    ],
+    "export_size": [
+      1920,
+      1280
+    ],
+    "upscaled": false,
+    "kind": "Qwen角色动作六帧设计展示图",
+    "version": "v19 角色帧动画版",
+    "source_sha256": "c9fd1d62daeae4815f3e04635018414d29636e663e513838be0ba89fce030d83",
+    "target_sha256": "6030d5fb43254ce6903ea4274f6c08a8c477a6d2496536c9c0c13551994b11c1",
+    "packaged_source": "Task02/Original/角色补图与动画生成过程-20260930/hero-hurt-sheet.png",
+    "conversion": "Qwen原生1920×1280图集转RGB/JPG、300dpi，不缩放；透明帧经去除边界相连白底、共用缩小比例与脚底对齐后用于运行。"
   }
 ]

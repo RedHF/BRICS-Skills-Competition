@@ -17,6 +17,15 @@ var ripple := 0.0
 var joystick := Vector2.ZERO
 var dragging_stick := false
 var purification := 0.0
+var character_time := 0.0
+var character_moving := false
+var character_facing_left := false
+
+const FALLBACK_SCENE = preload("res://assets/ink_ui/background.png")
+const INK_CARD = preload("res://assets/ink_ui/ink.png")
+const JADE_SEAL = preload("res://assets/puzzles/jade_seal.png")
+const CINNABAR_SEAL = preload("res://assets/puzzles/cinnabar_seal.png")
+const EROSION_ART = preload("res://assets/vfx/erosion_burst.png")
 
 func _ready() -> void:
 	custom_minimum_size.y = 310 if interactive else 240
@@ -27,7 +36,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not is_visible_in_tree(): return
 	ripple = fmod(ripple + delta, 2.0)
+	character_time += delta
+	character_moving = false
 	if interactive:
+		var previous_position := player
 		var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down") + joystick
 		if direction.length() > 0:
 			pending_investigation = -1
@@ -35,6 +47,9 @@ func _process(delta: float) -> void:
 			target = player
 		else: player = player.move_toward(target, delta * 0.5)
 		player = player.clamp(Vector2(0.05, 0.16), Vector2(0.95, 0.94))
+		character_moving = player.distance_to(previous_position) > 0.0001
+		if absf(player.x - previous_position.x) > 0.0001:
+			character_facing_left = player.x < previous_position.x
 		if pending_investigation >= 0 and player.distance_to(_investigation_point(pending_investigation)) < 0.035:
 			_discover(pending_investigation)
 		if Input.is_action_just_pressed("advance"): _investigate_nearest()
@@ -89,50 +104,31 @@ func _discover(index: int) -> void:
 
 func _draw() -> void:
 	var fade := float(erosion) / 100.0
-	var ink := tint.lerp(Color("#888e8b"), 1.0 if forgotten else fade)
 	if background != null:
 		_draw_background(fade)
 	else:
-		var floor_points := PackedVector2Array([Vector2(.06,.68),Vector2(.5,.40),Vector2(.94,.68),Vector2(.5,.94)])
-		for i in range(floor_points.size()): floor_points[i] *= size
-		draw_colored_polygon(floor_points, Color("#344440").lerp(Color("#565953"), fade))
-		for i in range(6):
-			var x := size.x * (0.22 + i * 0.11)
-			var drop := (sin(ripple * PI + i) + 1) * 4 if erosion >= 40 and i % 2 == 0 else 0.0
-			if erosion >= 70 and i % 2 == 0:
-				draw_line(Vector2(x, size.y * .73), Vector2(x + 18, size.y * .80), ink, 6)
-			else:
-				draw_line(Vector2(x, size.y * .34 + drop), Vector2(x, size.y * .67), ink, 7)
-				if erosion >= 40:
-					draw_polyline(PackedVector2Array([Vector2(x-4,size.y*.46),Vector2(x+4,size.y*.48),Vector2(x-3,size.y*.51)]), Color("#17282a"), 2)
-		if erosion < 70:
-			var roof := PackedVector2Array([Vector2(.12,.36),Vector2(.25,.26),Vector2(.49,.12),Vector2(.76,.25),Vector2(.9,.35),Vector2(.58,.4)])
-			for i in range(roof.size()): roof[i] *= size
-			draw_colored_polygon(roof, ink.darkened(.35))
-			draw_polyline(roof, ink, 3, true)
-		else:
-			for i in range(7): draw_rect(Rect2(size * Vector2(.22+i*.085,.65+i%2*.05), Vector2(24,9)), ink.darkened(.3))
-		if bridge:
-			draw_line(size*Vector2(.12,.70),size*Vector2(.84,.70),ink,5)
-			draw_line(size*Vector2(.18,.76),size*Vector2(.91,.76),ink,4)
+		draw_texture_rect(FALLBACK_SCENE, Rect2(Vector2.ZERO, size), false)
 	if purification > 0:
-		for i in range(8): draw_circle(size*Vector2(.25+i*.065,.43+sin(i)*.1), 12, Color(0.05,0.08,0.09,purification*.85))
+		for i in range(5):
+			var place := size * Vector2(.21 + i * .13, .34 + sin(i) * .1)
+			draw_texture_rect(EROSION_ART, Rect2(place - Vector2.ONE * 27, Vector2.ONE * 54), false, Color(1, 1, 1, purification * .38))
 	if interactive:
 		for i in range(investigations.size()):
 			var point := size * _investigation_point(i)
 			var found := discovered.has(i)
-			var marker_color := Color("#79c9a5") if found else Color("#e4c98a")
-			draw_circle(point, 9 if found else 12, marker_color)
-			if not found: draw_arc(point, 18+ripple*8, 0, TAU, 40, Color(0.9,.78,.5,1-ripple/2),2,true)
+			var stamp := JADE_SEAL if found else CINNABAR_SEAL
+			draw_texture_rect(stamp, Rect2(point - Vector2.ONE * 15, Vector2.ONE * 30), false)
+			if not found:
+				draw_texture_rect(stamp, Rect2(point - Vector2.ONE * (22 + ripple * 4), Vector2.ONE * (44 + ripple * 8)), false, Color(1, 1, 1, .22))
 			var caption := "已调查 · " if found else "调查 · "
 			var text := caption + str(investigations[i].label)
-			var width := ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x + 16
+			var width := preload("res://scripts/ink_theme.gd").font().get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x + 16
 			var origin := Vector2(clampf(point.x-width/2,4,size.x-width-4),point.y-54)
-			draw_rect(Rect2(origin,Vector2(width,30)),Color(0.06,0.13,0.14,0.94))
-			draw_string(ThemeDB.fallback_font,origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
-		preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, ripple)
-		draw_circle(Vector2(48,size.y-45),34,Color(.8,.85,.8,.14))
-		draw_circle(Vector2(48,size.y-45)+joystick*23,12,Color("#a9b9a5"))
+			draw_texture_rect(INK_CARD, Rect2(origin, Vector2(width, 30)), false)
+			draw_string(preload("res://scripts/ink_theme.gd").font(),origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
+		preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, character_time, "walk" if character_moving else "idle", 0.0, Color.WHITE, character_facing_left)
+		draw_texture_rect(JADE_SEAL, Rect2(Vector2(14, size.y - 79), Vector2.ONE * 68), false, Color(1, 1, 1, .48))
+		draw_texture_rect(JADE_SEAL, Rect2(Vector2(36, size.y - 57) + joystick * 23, Vector2.ONE * 24), false)
 
 func _draw_background(fade: float) -> void:
 	var texture_size := Vector2(background.get_width(), background.get_height())
@@ -156,10 +152,4 @@ func _draw_background(fade: float) -> void:
 		var crack_alpha := 0.82 if forgotten else clampf((fade - 0.35) * 1.4, 0.2, 0.82)
 		for i in range(5):
 			var x := size.x * (0.12 + i * 0.19)
-			var points := PackedVector2Array([
-				Vector2(x, size.y * 0.08),
-				Vector2(x + 18, size.y * 0.27),
-				Vector2(x - 10, size.y * 0.48),
-				Vector2(x + 24, size.y * 0.72)
-			])
-			draw_polyline(points, Color(0.94, 0.96, 0.94, crack_alpha), 2.0)
+			draw_texture_rect(EROSION_ART, Rect2(Vector2(x - 45, size.y * .14), Vector2(90, size.y * .55)), false, Color(1, 1, 1, crack_alpha * .28))

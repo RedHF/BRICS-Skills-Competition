@@ -1,0 +1,121 @@
+{
+  "date": "2026-09-30",
+  "authority": "评分标准；冲突项按参赛者明确指示优先采用评分标准",
+  "team_id": "第二队",
+  "task_structure": "PASS",
+  "formal_names": "PASS",
+  "jpg_count": 112,
+  "major_rasters_min_side_1024": 67,
+  "image_hashes_and_sources": "PASS",
+  "upscaled_images": 0,
+  "runtime_9_files_match_v20": "PASS",
+  "video": {
+    "duration_seconds": 185.1,
+    "size": [
+      1920,
+      1080
+    ],
+    "fps": 30.0,
+    "codec": "h264",
+    "bytes": 37051854,
+    "real_game_interaction_and_server_settlement": "PASS",
+    "input": "自动输入驱动真实客户端；包含两次实际服务器结算",
+    "capture": "Godot Movie Maker本机游戏视口及游戏音频录制，FFmpeg编码"
+  },
+  "documents": [
+    {
+      "file": "Track01_Task01_第二队_檐下千秋_AI协作记录.docx",
+      "pages": 5,
+      "footnotes": 3,
+      "blue_marking": 3,
+      "embedded_images": 0,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    },
+    {
+      "file": "Track01_Task01_第二队_檐下千秋_游戏策划案.docx",
+      "pages": 8,
+      "footnotes": 7,
+      "blue_marking": 18,
+      "embedded_images": 2,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    },
+    {
+      "file": "Track01_Task01_第二队_檐下千秋_章节叙事脚本.docx",
+      "pages": 17,
+      "footnotes": 5,
+      "blue_marking": 9,
+      "embedded_images": 0,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    },
+    {
+      "file": "Track01_Task02_第二队_檐下千秋_AI协作记录.docx",
+      "pages": 10,
+      "footnotes": 4,
+      "blue_marking": 4,
+      "embedded_images": 0,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    },
+    {
+      "file": "Track01_Task03_第二队_檐下千秋_测试与迭代记录.docx",
+      "pages": 7,
+      "footnotes": 4,
+      "blue_marking": 10,
+      "embedded_images": 0,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    },
+    {
+      "file": "Track01_Task03_第二队_檐下千秋_运行逻辑说明.docx",
+      "pages": 6,
+      "footnotes": 5,
+      "blue_marking": 8,
+      "embedded_images": 1,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    },
+    {
+      "file": "Track01_Task03_第二队_檐下千秋_AI协作记录.docx",
+      "pages": 5,
+      "footnotes": 2,
+      "blue_marking": 2,
+      "embedded_images": 0,
+      "cover_identity": "PASS",
+      "margins": "PASS",
+      "placeholders": 0
+    }
+  ],
+  "go_tests": "PASS on jury source copy",
+  "asset_audit": "210 audio / 184 voice cues / 162 narrative cues / 226 references, no issues",
+  "credential_scan": {
+    "files_scanned": 285,
+    "pattern_hits": 0
+  },
+  "full_journey": {
+    "date": "2026-09-30",
+    "exit": 0,
+    "errors": [],
+    "event_passes": [
+      "PASS UI journey prologue_bridge",
+      "PASS UI journey temple_incense",
+      "PASS UI journey temple_guest",
+      "PASS UI journey temple_drum",
+      "PASS UI journey opera_opening",
+      "PASS UI journey opera_master",
+      "PASS UI journey archway_form",
+      "PASS UI journey archway_craftsman",
+      "PASS UI journey tower_ascent",
+      "PASS UI journey tower_ledger"
+    ],
+    "all_ten_tasks_passed": true
+  }
+}

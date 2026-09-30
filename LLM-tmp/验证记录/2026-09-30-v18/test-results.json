@@ -1,0 +1,27 @@
+[
+  {
+    "test": "puzzle_art_review",
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "test": "vfx_review",
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "test": "story_combat",
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "test": "front_hd_review",
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "test": "playability",
+    "exit": 0,
+    "errors": []
+  }
+]

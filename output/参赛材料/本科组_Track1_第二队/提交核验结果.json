@@ -2,16 +2,18 @@
   "documents": [
     {
       "file": "Task01/Final/Track01_Task01_第二队_檐下千秋_AI协作记录.docx",
-      "pages": 9,
+      "pages": 8,
       "format_ok": true,
       "footnotes": 8,
       "pdf_fonts": [
+        "",
         "BAAAAA+SimSun",
         "CAAAAA+SimHei",
         "DAAAAA+SimSun",
-        "FAAAAA+SegoeUIEmoji",
-        "GAAAAA+SimSun",
-        "SegoeUIEmoji"
+        "EAAAAA+SimSun",
+        "FAAAAA+SimSun",
+        "HAAAAA+SegoeUIEmoji",
+        "IAAAAA+SimSun"
       ],
       "pdf_has_school": true,
       "pdf_has_team": true,
@@ -61,7 +63,12 @@
         "BAAAAA+SimSun",
         "CAAAAA+SimHei",
         "DAAAAA+SimSun",
-        "EAAAAA+SimSun"
+        "EAAAAA+SimSun",
+        "FAAAAA+SimSun",
+        "GAAAAA+SimSun",
+        "HAAAAA+Calibri-Bold",
+        "IAAAAA+MS-Gothic",
+        "JAAAAA+MicrosoftYaHei-Bold"
       ],
       "pdf_has_school": true,
       "pdf_has_team": true,
@@ -70,35 +77,45 @@
     },
     {
       "file": "Task03/Final/Track01_Task03_第二队_檐下千秋_测试与迭代记录.docx",
-      "pages": 6,
+      "pages": 7,
       "format_ok": true,
       "footnotes": 4,
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": [],
       "pdf_fonts": [
         "BAAAAA+SimSun",
         "CAAAAA+SimHei",
         "DAAAAA+SimSun",
-        "EAAAAA+SimSun"
-      ],
-      "pdf_has_school": true,
-      "pdf_has_team": true,
-      "pdf_has_group": true,
-      "text_outside_page": []
+        "EAAAAA+SimSun",
+        "FAAAAA+SimSun",
+        "GAAAAA+SimSun",
+        "HAAAAA+Calibri-Bold",
+        "IAAAAA+MS-Gothic",
+        "JAAAAA+MicrosoftYaHei-Bold"
+      ]
     },
     {
       "file": "Task03/Final/Track01_Task03_第二队_檐下千秋_运行逻辑说明.docx",
       "pages": 6,
       "format_ok": true,
       "footnotes": 6,
+      "pdf_has_school": true,
+      "pdf_has_team": true,
+      "pdf_has_group": true,
+      "text_outside_page": [],
       "pdf_fonts": [
         "BAAAAA+SimSun",
         "CAAAAA+SimHei",
         "DAAAAA+SimSun",
-        "EAAAAA+SimSun"
-      ],
-      "pdf_has_school": true,
-      "pdf_has_team": true,
-      "pdf_has_group": true,
-      "text_outside_page": []
+        "EAAAAA+SimSun",
+        "FAAAAA+SimSun",
+        "GAAAAA+SimSun",
+        "HAAAAA+Calibri-Bold",
+        "IAAAAA+MS-Gothic",
+        "JAAAAA+MicrosoftYaHei-Bold"
+      ]
     },
     {
       "file": "Task03/Original/AI协作记录/Track01_Task03_第二队_檐下千秋_AI协作记录.docx",
@@ -109,7 +126,9 @@
         "BAAAAA+SimSun",
         "CAAAAA+SimHei",
         "DAAAAA+SimSun",
-        "EAAAAA+SimSun"
+        "EAAAAA+SimSun",
+        "FAAAAA+SimSun",
+        "GAAAAA+SimSun"
       ],
       "pdf_has_school": true,
       "pdf_has_team": true,
@@ -118,63 +137,187 @@
     }
   ],
   "jpg": {
-    "count": 88,
+    "count": 112,
     "invalid": [],
-    "interpolated_from_smaller_raster": 68
+    "interpolated_from_smaller_raster": 0,
+    "current_runtime_assets": 76,
+    "interface_screenshots": 30,
+    "native_1920x1080_scenes": 11,
+    "date": "2026-09-30",
+    "character_design_minimum_size_ok": true,
+    "new_character_original_sizes": [
+      [
+        1920,
+        1080
+      ],
+      [
+        1920,
+        1080
+      ]
+    ],
+    "character_design_presentations": 3,
+    "native_1920x1080_screenshots": 30,
+    "action_design_sheets": 3,
+    "action_sheet_sizes": [
+      1920,
+      1280
+    ]
   },
   "release": {
-    "original_zip_sha256": "a7021fe9f01e80f86ed59085855706cfe23b6560a6af85ee24bdd6b3420d942f",
+    "version": "v19 角色帧动画版",
+    "source_zip_sha256": "82fb4f94da293db0acecc43c0e58049094daeb0ad9d1c7a58724753ddb1894d7",
+    "runtime_matches_release_sha256": true,
     "zip_crc_ok": true,
     "package_hashes_ok": true,
-    "file_hash_count": 7,
-    "content_matches_source": true,
+    "file_hash_count": 8,
     "exported_smoke_ok": true,
     "server_auto_shutdown": true,
-    "process_exit": 0
+    "process_exit": 0,
+    "content_version": 10,
+    "source_zip_bytes": 192901792
   },
-  "source_go_tests": "passed on submission copy 2026-09-17",
+  "source_go_tests": "passed on submission copy 2026-09-30 with bundled Go; v19仅修改客户端/资源/发行脚本，服务端Go代码未变",
   "asset_audit": {
-    "audio_files": 205,
+    "audio_files": 210,
     "voice_cues": 184,
     "narrative_cues": 162,
     "references": 226,
-    "issues": []
+    "issues": [],
+    "date": "2026-09-30",
+    "scope": "v19正式提交源码副本"
   },
   "identity": {
     "group": "本科组",
     "track": "交互赛道 小游戏开发",
     "school": "上海商学院",
     "team_id": "第二队",
-    "numeric_suffix_rule": "按用户明确要求使用第二队，不声称符合官方后五位数字规则"
+    "organizer_id_instruction": "赛方要求使用“第二队”三个字作为参赛 ID；本包统一使用该 ID"
   },
-  "video": "按用户要求暂不制作",
+  "video": "未制作；赛题要求 60–120 秒 1080P H.264 MP4，提交前需补齐",
   "ai_export": {
-    "Codex": 20,
+    "Codex": 25,
     "DeepSeek_Harness": 5,
-    "visible_messages": 358,
+    "visible_messages": 628,
     "secrets_redacted": true,
-    "jsonl_records_validated": 3619,
-    "final_hashes_verified": true
+    "jsonl_records_validated": 6064,
+    "final_hashes_verified": true,
+    "date": "2026-09-30",
+    "source_fragments": 38,
+    "excluded_sources": 16
   },
   "known_gaps": [
-    "后期六任务独立场景",
-    "飞鸟山独立背景",
-    "主角独立精灵与动画",
-    "部分JPG为低分辨率原图插值输出",
-    "系统字体回退仍依赖运行环境"
+    "交互演示视频未制作：本轮按用户要求不处理，正式提交仍需60–120秒1080P H.264 MP4",
+    "尚需人工完整通关、逐条配音发音试听，以及第二台实体机器的显卡/音频/输入兼容性确认"
   ],
-  "final_package_date": "2026-09-21",
+  "final_package_date": "2026-09-30",
   "visual_review": {
     "documents": 7,
     "pages": 66,
-    "status": "逐页检查通过；未发现裁切、覆盖或缺字。"
+    "rendered_documents": 5,
+    "changed_pages_visually_checked": 7,
+    "status": "五份Word重新经LibreOffice渲染；七个变动页逐页查看，其余页与此前检查通过的PNG逐字节一致。另两份沿用此前检查结果。PDF与Word同步，未发现裁切、覆盖或缺字。"
   },
   "privacy_scan": {
     "credential_pattern_hits": 0,
-    "scope": "文本、Word XML和PDF可提取文本；图片保留原始记录"
+    "files_scanned": 490,
+    "scope": "包内文本源码、Word XML和PDF可提取文本；图片保留原始记录，本次未对图片进行OCR",
+    "date": "2026-09-30"
   },
   "temporary_file_cleanup": {
     "thumbnail_cache_files": 0,
     "documents_and_assets_unchanged": true
-  }
+  },
+  "submission_refresh": {
+    "date": "2026-09-30",
+    "runtime": "v19发行目录9文件逐文件SHA256一致",
+    "client_source": "与开发工程已跟踪文件同步；export_presets.cfg 为可移植构建移除开发机模板路径",
+    "evidence": "新增v18/v19验证记录与20张动作实机PNG；本机绝对路径脱敏",
+    "full_human_playthrough_rerun": false,
+    "task03_documents": "运行逻辑说明与测试迭代记录Word/PDF已整合v19",
+    "scene_correction": "v17 已接入十任务独立横屏场景和飞鸟山背景；旧评估报告中的七张场景缺口仅适用于 2026-09-16 版本",
+    "task02_images": "112张RGB/300dpi JPG：76既有素材、30原生1920×1080截图、3角色设计展示、3原生1920×1280动作设计。插值数量0。",
+    "ai_documents": "Task01/Task02 AI记录、Task03说明与测试文档已更新，五份Word/PDF同步并复核"
+  },
+  "embedded_fonts": {
+    "files": [
+      "NotoSerifSC-VF.ttf",
+      "NotoSans-Regular.ttf"
+    ],
+    "system_fallback_enabled": false,
+    "glyphs_checked": 761,
+    "missing_glyphs": 0,
+    "licenses_included": true,
+    "scope": "字体随游戏分发；真实EXE检查资源和回退开关，字形覆盖在本机验证"
+  },
+  "character_animation": {
+    "independent_frames": 18,
+    "idle_frames": 1,
+    "frame_size": [
+      640,
+      640
+    ],
+    "actions": {
+      "walk": 6,
+      "attack": 6,
+      "hurt": 6
+    },
+    "model_order": [
+      "qwen-image-3.0",
+      "qwen-image-3.0",
+      "qwen-image-3.0-pro",
+      "qwen-image-3.0-pro",
+      "qwen-image-3.0-pro",
+      "qwen-image-3.0-pro"
+    ],
+    "generated_images": 6,
+    "runtime_dispatch_and_boundary_tests": "PASS",
+    "directions": "左/右镜像",
+    "guard_dash": "仍使用小幅程序变形"
+  },
+  "current_tests": {
+    "date": "2026-09-30",
+    "source_tests": [
+      {
+        "test": "puzzle_art_review",
+        "exit": 0,
+        "errors": []
+      },
+      {
+        "test": "vfx_review",
+        "exit": 0,
+        "errors": []
+      },
+      {
+        "test": "story_combat",
+        "exit": 0,
+        "errors": []
+      },
+      {
+        "test": "front_hd_review",
+        "exit": 0,
+        "errors": []
+      },
+      {
+        "test": "character_animation_review",
+        "exit": 0,
+        "errors": []
+      },
+      {
+        "test": "playability",
+        "exit": 0,
+        "errors": []
+      }
+    ],
+    "playability_checks": 278,
+    "failed": 0,
+    "audio_pcm_files": 210,
+    "audio_pcm_issues": 0,
+    "full_human_playthrough": false,
+    "voice_pronunciation_listened_individually": false,
+    "physical_second_machine_test": false
+  },
+  "quality_limits": [
+    "动作每组6帧，左/右方向镜像；防御和闪身仍使用程序变形，未补专用动作帧",
+    "AI动作帧局部衣纹、比例存在轻微变化，游戏中的小尺寸显示已检查；未宣称专业逐帧手绘精度"
+  ]
 }

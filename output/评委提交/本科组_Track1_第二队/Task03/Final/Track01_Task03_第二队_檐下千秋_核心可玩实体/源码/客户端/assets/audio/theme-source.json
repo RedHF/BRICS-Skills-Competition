@@ -1,0 +1,11 @@
+{
+  "source": "jimeng-2026-09-28-8752-檐下墨痕(1).wav",
+  "sha256_source": "334bb3463ec9f4cfa2ba636375444344a1a2c34cfb6932ed132df7e1501afd26",
+  "sha256_runtime": "9b110460a1232a1e9c946b2c276c70fc7b874555f4c28d768f5bc501bf2caca0",
+  "seconds": 123.0,
+  "sample_rate": 44100,
+  "channels": 2,
+  "processing": "50 ms linear fade at both boundaries; original retained",
+  "normal_db": -24,
+  "speech_db": -32
+}
