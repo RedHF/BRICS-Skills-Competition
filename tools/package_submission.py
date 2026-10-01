@@ -19,6 +19,8 @@ def save_json(path, data):
 
 
 def main():
+    if (PACKAGE / '历史目录说明.md').exists():
+        raise SystemExit('Old submission directory was deduplicated; use the final jury submission archive instead.')
     # The ignored executable must exist locally before creating a submission ZIP.
     runtime = PACKAGE / 'Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64'
     for name in ['檐下千秋.exe', 'server/yanxia-server.exe']:

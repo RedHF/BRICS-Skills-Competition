@@ -66,6 +66,8 @@ def read_source(path):
     return data, meta, records
 
 def main():
+    if (PACKAGE / '历史目录说明.md').exists():
+        raise SystemExit('Old submission directory is a historical subset; existing final AI records are retained in the jury submission.')
     DEST.mkdir(parents=True, exist_ok=True)
     index_path = DEST / '导出索引.json'
     old = json.loads(index_path.read_text(encoding='utf-8'))
