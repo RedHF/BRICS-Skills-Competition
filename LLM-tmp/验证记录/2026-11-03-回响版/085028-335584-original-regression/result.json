@@ -1,0 +1,31 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "edition": "original",
+  "archived": null,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\085028-335584-original-regression",
+  "passed": false,
+  "client_exit": 90,
+  "script_errors": [],
+  "frames": [],
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "ERROR: Release verification: Rejected artwork leaked into release",
+    "   at: push_error (core/variant/variant_utility.cpp:1024)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] fail (res://tests/release_smoke.gd:110)",
+    "       [1] _run (res://tests/release_smoke.gd:57)",
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "   at: cleanup (core/object/object.cpp:2514)",
+    "ERROR: 3 resources still in use at exit (run with --verbose for details).",
+    "   at: clear (core/io/resource.cpp:804)"
+  ]
+}

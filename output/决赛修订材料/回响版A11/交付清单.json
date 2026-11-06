@@ -1,0 +1,54 @@
+{
+  "edition": "echo-v1",
+  "preview": "A-preview11",
+  "human_playtest": false,
+  "native_powerpoint_static_render": true,
+  "native_powerpoint_video_playback": false,
+  "files": [
+    {
+      "path": "从这里开始.md",
+      "bytes": 2793,
+      "sha256": "dc7fe05ea2b80bdc863bc914830b051a28efdff21153a1ee63849f465b2986ce"
+    },
+    {
+      "path": "檐下千秋_两分钟实机节选.mp4",
+      "bytes": 12311521,
+      "sha256": "24b905f5bc24b1b74bf5b1bb9619dc78ebfc47bef9b3db4370d3562597577f8a"
+    },
+    {
+      "path": "檐下千秋_决赛路演.pptx",
+      "bytes": 31925995,
+      "sha256": "5c5b1a936893f1e9da2c8be9690612c6979977f603b4be848d40142abd00b899"
+    },
+    {
+      "path": "檐下千秋_视觉与AI制作过程册.pdf",
+      "bytes": 18701008,
+      "sha256": "b56890d935048a8a42a73ef75b181519b3a66da18c1f5718ffa222d9b5e51793"
+    },
+    {
+      "path": "檐下千秋_设计与运行修订说明.pdf",
+      "bytes": 18908996,
+      "sha256": "990519529cc58864be51f289498ac1f21f5e3bf91898ae9cd550a765f0fdf053"
+    },
+    {
+      "path": "素材生成记录/README.md",
+      "bytes": 13138,
+      "sha256": "a950070854d68d261300401230075274756db03852d62ef391fea834f7ed0e5d"
+    },
+    {
+      "path": "素材生成记录/动作与梁架生成记录.md",
+      "bytes": 7213,
+      "sha256": "f09a8e9ab101a164c8d33026da7742df8ccd6144cbbf0a9958371bfbe2449cbc"
+    },
+    {
+      "path": "素材生成记录/线索与记忆层生成记录.md",
+      "bytes": 6924,
+      "sha256": "a84e97cdfd034b6ee78431a11bfd8f2cfe0f7bb0ffac9acd8859b9e4832505ec"
+    },
+    {
+      "path": "素材生成记录/采用素材清单.json",
+      "bytes": 1991,
+      "sha256": "2d27a69bbbeb0d9ccb439148af567b0cfb117f2a896b43cea1b89cf392de0c8f"
+    }
+  ]
+}

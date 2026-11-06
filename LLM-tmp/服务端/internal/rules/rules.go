@@ -22,14 +22,18 @@ const (
 )
 
 type PuzzleAttempt struct {
-	Target  string
-	StepID  string
-	Answer  string
-	Action  string
-	Strokes [][][2]float64
+	Rotation int
+	Position *[2]float64
+	AssistMS int
+	Target   string
+	StepID   string
+	Answer   string
+	Action   string
+	Strokes  [][][2]float64
 }
 
 type PuzzleEvaluation struct {
+	Coverage      float64
 	FailedStrokes []int
 	Accepted      bool
 	Correct       bool
@@ -48,6 +52,9 @@ type PuzzleEvaluation struct {
 // checked against the content catalog, so a client cannot submit a later step
 // or claim a score without solving earlier steps.
 func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attempt PuzzleAttempt) PuzzleEvaluation {
+	if event != nil && event.Puzzle.Dependencies {
+		return evaluateEchoStep(event, session, attempt)
+	}
 	result := PuzzleEvaluation{PuzzleTotal: puzzleTotal(event)}
 	now := time.Now().UTC()
 	record := model.ActionRecord{StepID: attempt.StepID, Action: attempt.Action, AnswerHash: hashAnswer(attempt.Answer), OccurredAt: now}
@@ -157,6 +164,12 @@ func EvaluatePuzzleStep(event *content.Event, session *model.EventSession, attem
 }
 
 func rejectPuzzle(event *content.Event, session *model.EventSession, result PuzzleEvaluation, record model.ActionRecord, reason string) PuzzleEvaluation {
+	if event.Puzzle.Practice {
+		result.Reason = reason
+		record.Reason = reason
+		result.ActionRecord = record
+		return result
+	}
 	session.InvalidAttempts++
 	result.ErosionDelta = PuzzleFailureErosion
 	result.Reason = reason

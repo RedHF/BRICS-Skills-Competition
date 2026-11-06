@@ -27,6 +27,7 @@ func main() {
 	contentPath := flag.String("content", "content/chapters.json", "path to data-driven chapter catalog")
 	dataPath := flag.String("data", "data/save.json", "path to server-side save database")
 	logPath := flag.String("log", "", "log file for desktop launch")
+	edition := flag.String("edition", content.OriginalEdition, "journey edition: original or echo-v1")
 	flag.Parse()
 	if *logPath != "" {
 		file, err := os.OpenFile(*logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600)
@@ -41,6 +42,24 @@ func main() {
 	catalog, err := content.Load(resolvedContentPath)
 	if err != nil {
 		log.Fatalf("load content (%s): %v", resolvedContentPath, err)
+	}
+	catalog, err = catalog.ForEdition(*edition)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if catalog.IsEcho() && *dataPath == "data/save.json" {
+		*dataPath = filepath.Join("data", "echo-v1-save.json")
+	}
+	if catalog.IsEcho() {
+		addressSet := false
+		flag.Visit(func(f *flag.Flag) {
+			if f.Name == "addr" {
+				addressSet = true
+			}
+		})
+		if !addressSet {
+			*address = "127.0.0.1:8091"
+		}
 	}
 	resolvedDataPath := resolveDataPath(*dataPath)
 	database, err := store.Open(resolvedDataPath)
@@ -90,9 +109,9 @@ func resolveDataPath(requested string) string {
 	// When launched from the repository root, keep the demo save beside the
 	// service.  When launched from the service directory, the relative path is
 	// intentionally left untouched and Store.Open creates ./data as needed.
-	if requested == filepath.Join("data", "save.json") {
+	if requested == filepath.Join("data", "save.json") || requested == filepath.Join("data", "echo-v1-save.json") {
 		if _, err := os.Stat(filepath.Join("LLM-tmp", "服务端", "content", "chapters.json")); err == nil {
-			return filepath.Join("LLM-tmp", "服务端", "data", "save.json")
+			return filepath.Join("LLM-tmp", "服务端", requested)
 		}
 	}
 	return requested

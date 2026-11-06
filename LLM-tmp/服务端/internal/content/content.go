@@ -24,6 +24,7 @@ type SkillSpec struct {
 }
 
 type Catalog struct {
+	Edition      string                `json:"edition,omitempty"`
 	FailureScene FailureSceneSpec      `json:"failure_scene"`
 	Skills       map[string]SkillSpec  `json:"skills"`
 	Memories     map[string]MemorySpec `json:"memories"`
@@ -75,6 +76,7 @@ type DialogueLine struct {
 }
 
 type Event struct {
+	Stage          *EchoStageSpec      `json:"stage,omitempty"`
 	Story          StorySpec           `json:"story"`
 	Draft          bool                `json:"draft"`
 	ID             string              `json:"id"`
@@ -95,9 +97,11 @@ type InvestigationSpec struct {
 }
 
 type PuzzleSpec struct {
-	Type        string       `json:"type"`
-	MaxAttempts int          `json:"max_attempts"`
-	Steps       []PuzzleStep `json:"steps"`
+	Dependencies bool         `json:"dependencies,omitempty"`
+	Practice     bool         `json:"practice,omitempty"`
+	Type         string       `json:"type"`
+	MaxAttempts  int          `json:"max_attempts"`
+	Steps        []PuzzleStep `json:"steps"`
 }
 
 type TraceSpec struct {
@@ -107,14 +111,16 @@ type TraceSpec struct {
 }
 
 type PuzzleStep struct {
-	Target  string     `json:"target,omitempty"`
-	Trace   *TraceSpec `json:"trace,omitempty"`
-	ID      string     `json:"id"`
-	Kind    string     `json:"kind"`
-	Prompt  string     `json:"prompt"`
-	Options []string   `json:"options,omitempty"`
-	Answer  string     `json:"answer,omitempty"`
-	Points  int        `json:"points"`
+	Requires []string   `json:"requires,omitempty"`
+	Rotation int        `json:"rotation,omitempty"`
+	Target   string     `json:"target,omitempty"`
+	Trace    *TraceSpec `json:"trace,omitempty"`
+	ID       string     `json:"id"`
+	Kind     string     `json:"kind"`
+	Prompt   string     `json:"prompt"`
+	Options  []string   `json:"options,omitempty"`
+	Answer   string     `json:"answer,omitempty"`
+	Points   int        `json:"points"`
 }
 
 type BattleSpec struct {
@@ -156,6 +162,7 @@ type RewardSpec struct {
 }
 
 type MemorySpec struct {
+	Epilogue       bool    `json:"epilogue,omitempty"`
 	Image          string  `json:"image"`
 	EchoAudio      string  `json:"echo_audio"`
 	Source         string  `json:"source"`
@@ -190,6 +197,9 @@ func Load(path string) (*Catalog, error) {
 func (c *Catalog) Validate() error {
 	if c == nil {
 		return errors.New("catalog is nil")
+	}
+	if c.EditionID() != OriginalEdition && c.EditionID() != EchoEdition {
+		return fmt.Errorf("unknown edition %q", c.Edition)
 	}
 	if c.FailureScene.Title == "" || !strings.HasPrefix(c.FailureScene.Background, "res://assets/") || len(c.FailureScene.Dialogue) == 0 {
 		return errors.New("failure scene requires title, asset background and dialogue")
@@ -332,10 +342,18 @@ func (c *Catalog) Validate() error {
 					return fmt.Errorf("event %q step %q has negative points", event.ID, step.ID)
 				}
 			}
+			if event.Stage != nil {
+				if !c.IsEcho() {
+					return fmt.Errorf("event %q stage requires echo edition", event.ID)
+				}
+				if err := validateEchoStage(event); err != nil {
+					return err
+				}
+			}
 			if event.Reward.Memory.ID == "" {
 				return fmt.Errorf("event %q has no reward memory id", event.ID)
 			}
-			if event.Reward.Memory.Capacity <= 0 {
+			if event.Reward.Memory.Capacity <= 0 && !(c.IsEcho() && event.Reward.Memory.Epilogue && event.Reward.Memory.Capacity == 0) {
 				return fmt.Errorf("event %q reward memory capacity must be positive", event.ID)
 			}
 			if len(event.Reward.Choices) == 0 {

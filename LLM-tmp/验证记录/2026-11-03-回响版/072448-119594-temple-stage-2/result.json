@@ -1,0 +1,53 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\072448-119594-temple-stage-2",
+  "passed": false,
+  "client_exit": 0,
+  "script_errors": [
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'."
+  ],
+  "frames": [],
+  "log_tail": [
+    "   at: _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:97)",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "   at: _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:97)",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "   at: _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:97)",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "   at: _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:97)",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "   at: _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:97)",
+    "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+    "   at: _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_bowl (res://scripts/echo_stage_canvas.gd:191)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:97)",
+    "PASS echo client: temple observations, reversible joinery mistake, both-side assembly, sheltered placement saved, gradual rubbing and held assistance, first three-slot choice, confirmed archive and persistent craft"
+  ]
+}

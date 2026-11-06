@@ -1,0 +1,16 @@
+{
+  "kind": "exported-echo-client-check",
+  "human_playtest": false,
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview1-20261103.zip",
+  "archive_sha256": "38cfa11ec585eba300932b4b7414d9a22a34cbc1e25a63e58ded100ef80a947a",
+  "manifest_lines_verified": 8,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "edition_argument_used": false,
+  "source_project_used": false,
+  "passed": false,
+  "error": "Exported client did not auto-start its echo companion"
+}

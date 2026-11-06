@@ -18,6 +18,7 @@
 /dist/*
 !/dist/.gitkeep
 !/dist/README.md
+!/dist/回响版-当前预览.md
 
 # AI 配音：184 段 wav 的正式位置是
 #   LLM-tmp/客户端/assets/voice/       —— 游戏运行时读取
@@ -50,3 +51,19 @@ Thumbs.db
 output/评委提交/本科组_Track1_第二队.zip
 output/评委提交/最终提交/本科组_Track1_第二队.zip
 output/评委提交/本科组_Track1_第二队/Task03/Final/Track01_Task03_第二队_檐下千秋_核心可玩实体/Windows-x64/檐下千秋.exe
+output/决赛材料核对/本科组_Track01/Task03/Final/Track01_Task03_檐下千秋_核心可玩实体/Windows-x64/檐下千秋.exe
+output/决赛材料核对/本科组_Track01_匿名核对副本.zip
+
+# 2026-11-06: keep this upload below the user's 200 MB incremental budget.
+# Repeated render captures and process logs stay local; JSON results stay in Git.
+/LLM-tmp/验证记录/2026-11-??-回响版/**/*.png
+/LLM-tmp/验证记录/2026-11-??-回响版/**/*.log
+# The assembled anonymous final is a generated copy of existing source/assets.
+# Keep its manifest and review notes, rather than uploading another full copy.
+/output/决赛材料核对/本科组_Track01/
+# Superseded display binaries stay local; retain the A11 set and A12/A13 evidence.
+/output/决赛修订材料/回响版A3/*.pdf
+/output/决赛修订材料/回响版A6/*.pdf
+/output/决赛修订材料/回响版A9/*.pdf
+/output/决赛修订材料/回响版A10/*.pptx
+/output/决赛修订材料/回响版A10/*.mp4

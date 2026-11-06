@@ -1,0 +1,202 @@
+{
+  "edition": "echo-v1",
+  "local_player_id": "local-player",
+  "version": 2,
+  "players": {
+    "local-player": {
+      "learned_skills": [
+        "斗拱"
+      ],
+      "recorded_memories": [
+        {
+          "id": "yan_ping_an",
+          "title": "檐·平安",
+          "summary": "桥记着每一次送别与归来。",
+          "skill": "斗拱",
+          "capacity": 1,
+          "source": "prologue/prologue_bridge",
+          "added_at": "2026-11-03T12:57:18.4422938Z"
+        }
+      ],
+      "id": "local-player",
+      "display_name": "拓印师",
+      "created_at": "2026-11-03T12:57:14.4492436Z",
+      "updated_at": "2026-11-03T12:57:21.9728717Z",
+      "ink_marks": 0,
+      "capacity": 3,
+      "erosion": 0,
+      "unlocked_chapters": [
+        "prologue",
+        "temple"
+      ],
+      "completed_events": {
+        "prologue:prologue_bridge": {
+          "memory_action": "keep",
+          "scoring_version": 3,
+          "quality_score": 0,
+          "memory_retention_percent": 0,
+          "memories_kept": 1,
+          "memories_acquired": 1,
+          "battle_clear_percent": 100,
+          "chapter_id": "prologue",
+          "event_id": "prologue_bridge",
+          "stars": 0,
+          "puzzle_score": 100,
+          "puzzle_total": 100,
+          "battle_won": true,
+          "repair_percent": 100,
+          "erosion_at_end": 0,
+          "ink_marks_earned": 0,
+          "completed_at": "2026-11-03T12:57:20.2275404Z",
+          "sequence": 1
+        }
+      },
+      "memories": [
+        {
+          "id": "yan_ping_an",
+          "title": "檐·平安",
+          "summary": "桥记着每一次送别与归来。",
+          "skill": "斗拱",
+          "capacity": 1,
+          "source": "prologue/prologue_bridge",
+          "added_at": "2026-11-03T12:57:18.4422938Z"
+        }
+      ],
+      "memory_ledger": [
+        {
+          "memory_id": "yan_ping_an",
+          "title": "檐·平安",
+          "action": "kept",
+          "chapter_id": "prologue",
+          "event_id": "prologue_bridge",
+          "occurred_at": "2026-11-03T12:57:18.4422938Z"
+        }
+      ],
+      "last_sequence": 1
+    }
+  },
+  "sessions": {
+    "s_28fa17b40037d7fc5f925298e994a27c": {
+      "world_response": false,
+      "start_erosion": 0,
+      "retries": 0,
+      "id": "s_28fa17b40037d7fc5f925298e994a27c",
+      "player_id": "local-player",
+      "chapter_id": "prologue",
+      "event_id": "prologue_bridge",
+      "started_at": "2026-11-03T12:57:18.216299Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-11-03T12:57:20.2275404Z",
+      "status": "completed",
+      "attempt_count": 1,
+      "invalid_attempts": 0,
+      "puzzle_score": 100,
+      "puzzle_total": 100,
+      "accepted_steps": [
+        "bridge_trace"
+      ],
+      "actions": [
+        {
+          "step_id": "bridge_trace",
+          "action": "trace",
+          "answer_hash": "036a258ec2e8cda7939e823c226681115d6ec22918263141313b15b5a817cac2",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-11-03T12:57:18.361331Z"
+        }
+      ],
+      "battle_won": true,
+      "battle_checked": true,
+      "battle_waves": 1,
+      "battle_hits": 0,
+      "repair_percent": 100,
+      "choice_done": true,
+      "choice_action": "keep",
+      "reward_applied": true,
+      "pending_memory": {
+        "id": "yan_ping_an",
+        "title": "檐·平安",
+        "summary": "桥记着每一次送别与归来。",
+        "skill": "斗拱",
+        "capacity": 1,
+        "source": "prologue/prologue_bridge",
+        "added_at": "0001-01-01T00:00:00Z"
+      },
+      "pending_result": {
+        "memory_action": "keep",
+        "scoring_version": 3,
+        "quality_score": 0,
+        "memory_retention_percent": 0,
+        "memories_kept": 1,
+        "memories_acquired": 1,
+        "battle_clear_percent": 100,
+        "chapter_id": "prologue",
+        "event_id": "prologue_bridge",
+        "stars": 0,
+        "puzzle_score": 100,
+        "puzzle_total": 100,
+        "battle_won": true,
+        "repair_percent": 100,
+        "erosion_at_end": 0,
+        "ink_marks_earned": 0,
+        "completed_at": "2026-11-03T12:57:20.2275404Z",
+        "sequence": 1
+      }
+    },
+    "s_d73fd9a4de4e19f899b2c64e68929dbf": {
+      "world_response": false,
+      "start_erosion": 0,
+      "retries": 0,
+      "id": "s_d73fd9a4de4e19f899b2c64e68929dbf",
+      "player_id": "local-player",
+      "chapter_id": "temple",
+      "event_id": "temple_incense",
+      "started_at": "2026-11-03T12:57:20.6156147Z",
+      "expires_at": "0001-01-01T00:00:00Z",
+      "last_seen_at": "2026-11-03T12:57:21.9728717Z",
+      "status": "active",
+      "attempt_count": 2,
+      "invalid_attempts": 0,
+      "puzzle_score": 0,
+      "puzzle_total": 100,
+      "accepted_steps": [
+        "inspect_join",
+        "inspect_marks"
+      ],
+      "actions": [
+        {
+          "step_id": "inspect_join",
+          "action": "",
+          "answer_hash": "42aa46049b1efaa0c4b06022b58b479ec3d260efe7f0555de6bac2dbdfb26f8a",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-11-03T12:57:21.5283089Z"
+        },
+        {
+          "step_id": "inspect_marks",
+          "action": "",
+          "answer_hash": "9368f6e442c5ca85708d05c13fa43770b5d29d5a6d2c8b71326a6234edc45b84",
+          "accepted": true,
+          "reason": "accepted",
+          "occurred_at": "2026-11-03T12:57:21.9728717Z"
+        }
+      ],
+      "battle_won": false,
+      "battle_checked": false,
+      "battle_waves": 0,
+      "battle_hits": 0,
+      "repair_percent": 0,
+      "choice_done": false,
+      "reward_applied": false,
+      "pending_memory": {
+        "id": "she_cheng_xiang",
+        "title": "社·承香",
+        "summary": "一炷香把一村人的愿望托给屋梁。",
+        "skill": "斗拱",
+        "capacity": 1,
+        "source": "temple/temple_incense",
+        "added_at": "0001-01-01T00:00:00Z"
+      }
+    }
+  }
+}

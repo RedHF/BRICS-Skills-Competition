@@ -1,0 +1,491 @@
+{
+  "kind": "recorded-exported-excerpts",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview10-20261104.zip",
+  "archive_sha256": "1c2dad9b32b4a788c212d6bb8a47bdc9ae97b269cbb7f0a3da58592f86de1e85",
+  "human_playtest": false,
+  "input": "automated UI actions",
+  "source_project_used": false,
+  "rendering_override": "[display]\nwindow/size/viewport_width=1920\nwindow/size/viewport_height=1080\nwindow/size/window_width_override=1280\nwindow/size/window_height_override=720\nwindow/stretch/mode=\"viewport\"\n",
+  "manifest_lines_before_override": 8,
+  "exe_sha256": "9793999ffae603522a8b05b6e7a1a5fd5b30a6de5283f58c8ca1b2cf917972ff",
+  "passed": true,
+  "file": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\output\\决赛修订材料\\回响版A10\\檐下千秋_两分钟实机节选.mp4",
+  "sha256": "510fe82c8c820b76f1c661143899bb60fad2fbc169ed569827ff6498f1b313ca",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuvj420p",
+        "level": 62,
+        "color_range": "pc",
+        "color_space": "bt470bg",
+        "chroma_location": "center",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "1200000000/39988889",
+        "time_base": "1/1000000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 119966667,
+        "duration": "119.966667",
+        "bit_rate": "613215",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "3600",
+        "extradata_size": 52,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc61.19.101 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 5760000,
+        "duration": "120.000000",
+        "bit_rate": "197270",
+        "nb_frames": "5626",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\output\\决赛修订材料\\回响版A10\\檐下千秋_两分钟实机节选.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "120.000000",
+      "size": "12308146",
+      "bit_rate": "820543",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf61.7.100"
+      }
+    }
+  },
+  "clips": [
+    {
+      "caption_height": 90,
+      "cues": [
+        {
+          "caption": "片段一｜接梁：先承住，再接合",
+          "frame": 0
+        },
+        {
+          "caption": "接梁｜先核对余料上的旧痕，记号来自不同人家",
+          "frame": 120
+        },
+        {
+          "caption": "接梁｜先稳住梁，才开始安放木件",
+          "frame": 300
+        },
+        {
+          "caption": "接梁｜斜痕对应右口；左右两端都能先装",
+          "frame": 480
+        },
+        {
+          "caption": "接梁｜双短痕件需要转向，让凸榫朝向凹口",
+          "frame": 690
+        },
+        {
+          "caption": "接梁｜两端接住后，中部才能合拢",
+          "frame": 960
+        },
+        {
+          "caption": "接梁｜撤下临撑，梁稳住了，旧拼缝仍在",
+          "frame": 1170
+        },
+        {
+          "caption": "接梁｜这次抬梁的手影随身回应；实体修复另行保留",
+          "frame": 1329
+        }
+      ],
+      "cut_duration_frames": 1500,
+      "cut_start_frame": 331,
+      "fps": 30,
+      "game_native_size": [
+        1920,
+        990
+      ],
+      "human_playtest": false,
+      "input": "automated UI actions",
+      "kind": "exported-game-recording",
+      "mode": "repair",
+      "movie_native_size": [
+        1920,
+        1080
+      ],
+      "profile_root": "user://demo/repair/2026-11-04T02-11-33-33076/",
+      "raw": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\.review\\echo-movie\\20261104-021129\\repair.avi",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mjpeg",
+            "codec_long_name": "Motion JPEG",
+            "profile": "Baseline",
+            "codec_type": "video",
+            "codec_tag_string": "MJPG",
+            "codec_tag": "0x47504a4d",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuvj420p",
+            "level": -99,
+            "color_range": "pc",
+            "color_space": "bt470bg",
+            "chroma_location": "center",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/30",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 1841,
+            "duration": "61.366667",
+            "bit_rate": "41970580",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "1841",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "pcm_s32le",
+            "codec_long_name": "PCM signed 32-bit little-endian",
+            "codec_type": "audio",
+            "codec_tag_string": "[1][0][0][0]",
+            "codec_tag": "0x0001",
+            "sample_fmt": "s32",
+            "sample_rate": "48000",
+            "channels": 2,
+            "bits_per_sample": 32,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "bit_rate": "3072000",
+            "bits_per_raw_sample": "32",
+            "nb_frames": "2945600",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\.review\\echo-movie\\20261104-021129\\repair.avi",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "avi",
+          "format_long_name": "AVI (Audio Video Interleaved)",
+          "start_time": "0.000000",
+          "duration": "61.366667",
+          "size": "345427956",
+          "bit_rate": "45031346",
+          "probe_score": 100
+        }
+      },
+      "errors": [],
+      "client_exit": 0
+    },
+    {
+      "caption_height": 90,
+      "cues": [
+        {
+          "caption": "片段二｜取舍：看过回应，再作决定",
+          "frame": 0
+        },
+        {
+          "caption": "取舍｜确认前，可以先看一看旧回应",
+          "frame": 240
+        },
+        {
+          "caption": "取舍｜新回声来自鼓边数拍的孩子",
+          "frame": 780
+        },
+        {
+          "caption": "取舍｜这次只留下新回声的记录，保留原有三段",
+          "frame": 1200
+        },
+        {
+          "caption": "取舍｜亲手敲鼓：真实鼓声仍响起，独有的童声不再跟来",
+          "frame": 1650
+        },
+        {
+          "caption": "取舍｜事实、修复与技艺保留；心舍在章末展开一格",
+          "frame": 1890
+        }
+      ],
+      "cut_duration_frames": 2100,
+      "cut_start_frame": 337,
+      "fps": 30,
+      "game_native_size": [
+        1920,
+        990
+      ],
+      "human_playtest": false,
+      "input": "automated UI actions",
+      "kind": "exported-game-recording",
+      "mode": "choice",
+      "movie_native_size": [
+        1920,
+        1080
+      ],
+      "profile_root": "user://demo/choice/2026-11-04T02-12-50-46428/",
+      "raw": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\.review\\echo-movie\\20261104-021129\\choice.avi",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mjpeg",
+            "codec_long_name": "Motion JPEG",
+            "profile": "Baseline",
+            "codec_type": "video",
+            "codec_tag_string": "MJPG",
+            "codec_tag": "0x47504a4d",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuvj420p",
+            "level": -99,
+            "color_range": "pc",
+            "color_space": "bt470bg",
+            "chroma_location": "center",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/30",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 2447,
+            "duration": "81.566667",
+            "bit_rate": "44018469",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "2447",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "pcm_s32le",
+            "codec_long_name": "PCM signed 32-bit little-endian",
+            "codec_type": "audio",
+            "codec_tag_string": "[1][0][0][0]",
+            "codec_tag": "0x0001",
+            "sample_fmt": "s32",
+            "sample_rate": "48000",
+            "channels": 2,
+            "bits_per_sample": 32,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "bit_rate": "3072000",
+            "bits_per_raw_sample": "32",
+            "nb_frames": "3915200",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\.review\\echo-movie\\20261104-021129\\choice.avi",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "avi",
+          "format_long_name": "AVI (Audio Video Interleaved)",
+          "start_time": "0.000000",
+          "duration": "81.566667",
+          "size": "480060958",
+          "bit_rate": "47084033",
+          "probe_score": 100
+        }
+      },
+      "errors": [],
+      "client_exit": 0
+    }
+  ],
+  "exe_bytes_unchanged": true,
+  "recovery": "Existing terminal recordings and final MP4 rechecked with explicit UTF-8 metadata decoding; no recapture"
+}

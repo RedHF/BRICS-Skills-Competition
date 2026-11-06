@@ -1,0 +1,60 @@
+{
+  "kind": "echo-preview-build",
+  "edition": "echo-v1",
+  "tag": "A-preview3",
+  "folder": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview3-20261103",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview3-20261103.zip",
+  "sha256": "4dc57a24919729c5e42b67d39734f4539c42532f55c52c598c9b5e5431a17a50",
+  "bytes": 196282028,
+  "files": [
+    {
+      "path": "COPYRIGHT-Godot.json",
+      "bytes": 104586,
+      "sha256": "8ea98567c3ca2e4354278a9299e119d6353babbef1c73ceeb8d57953e68f2ba6"
+    },
+    {
+      "path": "LICENSE-Go.txt",
+      "bytes": 1453,
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "path": "LICENSE-Godot.txt",
+      "bytes": 1149,
+      "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+    },
+    {
+      "path": "LICENSE-Noto.txt",
+      "bytes": 9012,
+      "sha256": "94dbe8bd7f0a274ead35460b484ab7f44114a8701a05d20838e077d8ace59b52"
+    },
+    {
+      "path": "server/content/chapters.json",
+      "bytes": 80463,
+      "sha256": "b894aef90c882b45af3eb4238607138689bcde951eaaa27d0877a258f0d34fb2"
+    },
+    {
+      "path": "server/yanxia-server.exe",
+      "bytes": 7133184,
+      "sha256": "4306a802879906cee337633aa4e676ed192db7058f157d37f415c20fe2888446"
+    },
+    {
+      "path": "檐下千秋.exe",
+      "bytes": 268384136,
+      "sha256": "85f6c7af5a7ca0414adf37f20c00f15aa7459d6a363f405f7377e1194363f2f9"
+    },
+    {
+      "path": "运行说明.txt",
+      "bytes": 1616,
+      "sha256": "db86fb45b914c94e3ef540fa8c6cde20be747a0542b85f31b4ebdf580238727b"
+    }
+  ],
+  "human_playtest": false,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "export_preset": "Windows Echo",
+  "artifact_integrity_passed": true,
+  "runtime_verified": false
+}

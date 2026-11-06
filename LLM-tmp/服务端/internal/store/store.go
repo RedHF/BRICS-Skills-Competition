@@ -20,6 +20,7 @@ import (
 const databaseVersion = 2
 
 type database struct {
+	Edition        string                        `json:"edition,omitempty"`
 	LegacyAccounts json.RawMessage               `json:"accounts,omitempty"`
 	LocalPlayerID  string                        `json:"local_player_id,omitempty"`
 	Version        int                           `json:"version"`
@@ -326,12 +327,15 @@ func normalizePlayer(p *model.Player) {
 
 func clonePlayer(p model.Player) model.Player {
 	normalizePlayer(&p)
+	p.LearnedSkills = append([]string{}, p.LearnedSkills...)
+	p.RecordedMemories = append([]model.Memory{}, p.RecordedMemories...)
 	if p.UnlockedChapters != nil {
 		p.UnlockedChapters = append([]string{}, p.UnlockedChapters...)
 	}
 	if p.CompletedEvents != nil {
 		completed := make(map[string]model.EventResult, len(p.CompletedEvents))
 		for k, v := range p.CompletedEvents {
+			v.StagePlacements = clonePlacements(v.StagePlacements)
 			completed[k] = v
 		}
 		p.CompletedEvents = completed
@@ -346,6 +350,7 @@ func clonePlayer(p model.Player) model.Player {
 }
 
 func cloneSession(s model.EventSession) model.EventSession {
+	s.StagePlacements = clonePlacements(s.StagePlacements)
 	s.AcceptedSteps = append([]string{}, s.AcceptedSteps...)
 	s.Actions = append([]model.ActionRecord{}, s.Actions...)
 	if s.PendingMemory != nil {
@@ -354,9 +359,21 @@ func cloneSession(s model.EventSession) model.EventSession {
 	}
 	if s.PendingResult != nil {
 		r := *s.PendingResult
+		r.StagePlacements = clonePlacements(r.StagePlacements)
 		s.PendingResult = &r
 	}
 	return s
+}
+
+func clonePlacements(source map[string][2]float64) map[string][2]float64 {
+	if source == nil {
+		return nil
+	}
+	result := make(map[string][2]float64, len(source))
+	for id, position := range source {
+		result[id] = position
+	}
+	return result
 }
 
 func newPlayer(newID string) model.Player {
@@ -377,8 +394,21 @@ func newPlayer(newID string) model.Player {
 
 // LocalPlayer restores the selected solo save. Legacy records remain intact.
 func (s *Store) LocalPlayer() (model.Player, error) {
+	return s.LocalPlayerForEdition("original", 5)
+}
+
+// A database belongs to one ruleset. Never reinterpret an existing original
+// journey as a smaller-capacity echo journey, even when the caller misroutes it.
+func (s *Store) LocalPlayerForEdition(edition string, initialCapacity int) (model.Player, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	if (edition != "original" && edition != "echo-v1") || initialCapacity < 1 {
+		return model.Player{}, errors.New("invalid journey edition")
+	}
+	previousEdition := s.db.Edition
+	if (previousEdition != "" && previousEdition != edition) || (previousEdition == "" && len(s.db.Players) > 0 && edition != "original") {
+		return model.Player{}, errors.New("save edition mismatch: use a separate save file for this journey")
+	}
 	if p, ok := s.db.Players[s.db.LocalPlayerID]; ok {
 		return clonePlayer(p), nil
 	}
@@ -391,11 +421,14 @@ func (s *Store) LocalPlayer() (model.Player, error) {
 	created := selected.ID == ""
 	if created {
 		selected = newPlayer("local-player")
+		selected.Capacity = initialCapacity
 		selected.DisplayName = "拓印师"
 		s.db.Players[selected.ID] = selected
 	}
 	s.db.LocalPlayerID = selected.ID
+	s.db.Edition = edition
 	if err := s.persistLocked(); err != nil {
+		s.db.Edition = previousEdition
 		s.db.LocalPlayerID = ""
 		if created {
 			delete(s.db.Players, selected.ID)

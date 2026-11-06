@@ -1,0 +1,17 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "edition": "original",
+  "archived": null,
+  "full_journey": false,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\093840-887170-original-after-adult",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "frames": []
+}

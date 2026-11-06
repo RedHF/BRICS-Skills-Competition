@@ -6,6 +6,8 @@ signal skip_requested
 signal back_requested
 
 var failure := false
+var echo_style := false
+var echo_event_id := ""
 var backdrop: Texture2D
 var stage: Control
 var picture: TextureRect
@@ -36,6 +38,12 @@ func _ready() -> void:
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	picture.modulate = Color(.48,.49,.47) if failure else Color(.7,.77,.73)
 	_fill(picture)
+	if echo_style and not failure:
+		picture.texture = null
+		var physical := preload("res://scripts/echo_prop_layer.gd").new()
+		physical.backdrop = backdrop
+		physical.event_id = echo_event_id
+		picture.add_child(physical)
 	var shade := ColorRect.new()
 	shade.color = Color(0.025,0.055,0.065,.36)
 	_fill(shade)

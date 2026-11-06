@@ -1,0 +1,85 @@
+{
+  "kind": "exported-demo-check",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview6-20261103.zip",
+  "archive_sha256": "7d303bf76fee3f591fee0340aac94570cb33ec797ba4fcb082aad541ecdc0892",
+  "human_playtest": false,
+  "source_project_used": false,
+  "edition_argument_used": false,
+  "manifest_lines_verified": 8,
+  "runs": [
+    {
+      "mode": "repair",
+      "client_exit": 0,
+      "server_auto_started": true,
+      "server_auto_stopped": true,
+      "errors": [],
+      "normal_profiles_unchanged": true,
+      "independent_profiles": 1,
+      "frame_sizes": {
+        "repair-complete.png": [
+          1920,
+          1080
+        ],
+        "repair-living-response.png": [
+          1920,
+          1080
+        ],
+        "repair-start.png": [
+          1920,
+          1080
+        ],
+        "repair-welcome.png": [
+          1920,
+          1080
+        ]
+      }
+    },
+    {
+      "mode": "choice",
+      "client_exit": 0,
+      "server_auto_started": true,
+      "server_auto_stopped": true,
+      "errors": [],
+      "normal_profiles_unchanged": true,
+      "independent_profiles": 1,
+      "frame_sizes": {
+        "choice-physical-drum.png": [
+          1920,
+          1080
+        ],
+        "choice-start.png": [
+          1920,
+          1080
+        ],
+        "choice-welcome.png": [
+          1920,
+          1080
+        ]
+      }
+    },
+    {
+      "mode": "choice",
+      "client_exit": 0,
+      "server_auto_started": true,
+      "server_auto_stopped": true,
+      "errors": [],
+      "normal_profiles_unchanged": true,
+      "independent_profiles": 2,
+      "frame_sizes": {
+        "choice-physical-drum.png": [
+          1920,
+          1080
+        ],
+        "choice-start.png": [
+          1920,
+          1080
+        ],
+        "choice-welcome.png": [
+          1920,
+          1080
+        ]
+      }
+    }
+  ],
+  "passed": true
+}

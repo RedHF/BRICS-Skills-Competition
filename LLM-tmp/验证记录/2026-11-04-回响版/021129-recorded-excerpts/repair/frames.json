@@ -1,0 +1,53 @@
+{
+  "caption_height": 90,
+  "cues": [
+    {
+      "caption": "片段一｜接梁：先承住，再接合",
+      "frame": 0
+    },
+    {
+      "caption": "接梁｜先核对余料上的旧痕，记号来自不同人家",
+      "frame": 120
+    },
+    {
+      "caption": "接梁｜先稳住梁，才开始安放木件",
+      "frame": 300
+    },
+    {
+      "caption": "接梁｜斜痕对应右口；左右两端都能先装",
+      "frame": 480
+    },
+    {
+      "caption": "接梁｜双短痕件需要转向，让凸榫朝向凹口",
+      "frame": 690
+    },
+    {
+      "caption": "接梁｜两端接住后，中部才能合拢",
+      "frame": 960
+    },
+    {
+      "caption": "接梁｜撤下临撑，梁稳住了，旧拼缝仍在",
+      "frame": 1170
+    },
+    {
+      "caption": "接梁｜这次抬梁的手影随身回应；实体修复另行保留",
+      "frame": 1329
+    }
+  ],
+  "cut_duration_frames": 1500,
+  "cut_start_frame": 331,
+  "fps": 30,
+  "game_native_size": [
+    1920,
+    990
+  ],
+  "human_playtest": false,
+  "input": "automated UI actions",
+  "kind": "exported-game-recording",
+  "mode": "repair",
+  "movie_native_size": [
+    1920,
+    1080
+  ],
+  "profile_root": "user://demo/repair/2026-11-04T02-11-33-33076/"
+}

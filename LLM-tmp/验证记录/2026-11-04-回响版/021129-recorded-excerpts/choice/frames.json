@@ -1,0 +1,45 @@
+{
+  "caption_height": 90,
+  "cues": [
+    {
+      "caption": "片段二｜取舍：看过回应，再作决定",
+      "frame": 0
+    },
+    {
+      "caption": "取舍｜确认前，可以先看一看旧回应",
+      "frame": 240
+    },
+    {
+      "caption": "取舍｜新回声来自鼓边数拍的孩子",
+      "frame": 780
+    },
+    {
+      "caption": "取舍｜这次只留下新回声的记录，保留原有三段",
+      "frame": 1200
+    },
+    {
+      "caption": "取舍｜亲手敲鼓：真实鼓声仍响起，独有的童声不再跟来",
+      "frame": 1650
+    },
+    {
+      "caption": "取舍｜事实、修复与技艺保留；心舍在章末展开一格",
+      "frame": 1890
+    }
+  ],
+  "cut_duration_frames": 2100,
+  "cut_start_frame": 337,
+  "fps": 30,
+  "game_native_size": [
+    1920,
+    990
+  ],
+  "human_playtest": false,
+  "input": "automated UI actions",
+  "kind": "exported-game-recording",
+  "mode": "choice",
+  "movie_native_size": [
+    1920,
+    1080
+  ],
+  "profile_root": "user://demo/choice/2026-11-04T02-12-50-46428/"
+}

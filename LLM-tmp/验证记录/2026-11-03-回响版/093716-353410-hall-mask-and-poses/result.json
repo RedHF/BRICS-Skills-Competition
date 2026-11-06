@@ -1,0 +1,42 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\093716-353410-hall-mask-and-poses",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "adult-walking.png",
+    "archived-record.png",
+    "archway_craftsman-result.png",
+    "archway_form-result.png",
+    "choice-result.png",
+    "drum-response.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "joinery-detail-after.png",
+    "opera_master-result.png",
+    "opera_opening-result.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-observe.png",
+    "temple_guest-observe.png",
+    "temple_incense-observe.png",
+    "tower_ascent-result.png",
+    "tower_ledger-result.png"
+  ]
+}

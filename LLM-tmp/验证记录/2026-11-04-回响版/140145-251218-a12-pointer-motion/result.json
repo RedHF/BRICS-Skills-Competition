@@ -1,0 +1,34 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1920,
+    1030
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-04-回响版\\140145-251218-a12-pointer-motion",
+  "passed": false,
+  "client_exit": 1,
+  "script_errors": [
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"result\" variable because the value doesn't have a set type."
+  ],
+  "errors": [
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"result\" variable because the value doesn't have a set type.",
+    "ERROR: Failed to load script \"res://tests/echo_smoke.gd\" with error \"Parse error\"."
+  ],
+  "frames": [],
+  "frame_sizes": {},
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: d8c00a9d4283) - Compatibility - Using Device: Google Inc. (NVIDIA) - ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6614)",
+    "",
+    "SCRIPT ERROR: Parse Error: Cannot infer the type of \"result\" variable because the value doesn't have a set type.",
+    "   at: GDScript::reload (res://tests/echo_smoke.gd:326)",
+    "ERROR: Failed to load script \"res://tests/echo_smoke.gd\" with error \"Parse error\".",
+    "   at: load (modules/gdscript/gdscript.cpp:3041)"
+  ]
+}

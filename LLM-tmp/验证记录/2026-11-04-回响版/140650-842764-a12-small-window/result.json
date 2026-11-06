@@ -1,0 +1,207 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    960,
+    540
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": false,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-04-回响版\\140650-842764-a12-small-window",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "errors": [],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "adult-walking.png",
+    "archived-record.png",
+    "choice-result.png",
+    "choice-retiring.png",
+    "drum-response.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "joinery-detail-after.png",
+    "joinery-rotated-drag.png",
+    "prologue_bridge-kept-response.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-close-drum.png",
+    "temple_drum-close-rope.png",
+    "temple_drum-observe.png",
+    "temple_guest-close-bowl.png",
+    "temple_guest-close-cape.png",
+    "temple_guest-kept-response.png",
+    "temple_guest-observe.png",
+    "temple_incense-close-join.png",
+    "temple_incense-close-marks.png",
+    "temple_incense-kept-response.png",
+    "temple_incense-observe.png",
+    "walk-left-frame-0.png",
+    "walk-left-frame-1.png",
+    "walk-left-frame-2.png",
+    "walk-left-frame-3.png",
+    "walk-left-frame-4.png",
+    "walk-left-frame-5.png",
+    "walk-left-frame-6.png",
+    "walk-left-frame-7.png"
+  ],
+  "frame_sizes": {
+    "adult-battle-casting.png": [
+      960,
+      540
+    ],
+    "adult-battle-idle.png": [
+      960,
+      540
+    ],
+    "adult-investigation.png": [
+      960,
+      540
+    ],
+    "adult-walking.png": [
+      960,
+      540
+    ],
+    "archived-record.png": [
+      960,
+      540
+    ],
+    "choice-result.png": [
+      960,
+      540
+    ],
+    "choice-retiring.png": [
+      960,
+      540
+    ],
+    "drum-response.png": [
+      960,
+      540
+    ],
+    "first-choice.png": [
+      960,
+      540
+    ],
+    "guest-after.png": [
+      960,
+      540
+    ],
+    "joinery-after.png": [
+      960,
+      540
+    ],
+    "joinery-before.png": [
+      960,
+      540
+    ],
+    "joinery-detail-after.png": [
+      960,
+      540
+    ],
+    "joinery-rotated-drag.png": [
+      960,
+      540
+    ],
+    "prologue_bridge-kept-response.png": [
+      960,
+      540
+    ],
+    "rubbing-after.png": [
+      960,
+      540
+    ],
+    "rubbing-before.png": [
+      960,
+      540
+    ],
+    "rubbing-partial.png": [
+      960,
+      540
+    ],
+    "temple_drum-close-drum.png": [
+      960,
+      540
+    ],
+    "temple_drum-close-rope.png": [
+      960,
+      540
+    ],
+    "temple_drum-observe.png": [
+      960,
+      540
+    ],
+    "temple_guest-close-bowl.png": [
+      960,
+      540
+    ],
+    "temple_guest-close-cape.png": [
+      960,
+      540
+    ],
+    "temple_guest-kept-response.png": [
+      960,
+      540
+    ],
+    "temple_guest-observe.png": [
+      960,
+      540
+    ],
+    "temple_incense-close-join.png": [
+      960,
+      540
+    ],
+    "temple_incense-close-marks.png": [
+      960,
+      540
+    ],
+    "temple_incense-kept-response.png": [
+      960,
+      540
+    ],
+    "temple_incense-observe.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-0.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-1.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-2.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-3.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-4.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-5.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-6.png": [
+      960,
+      540
+    ],
+    "walk-left-frame-7.png": [
+      960,
+      540
+    ]
+  }
+}

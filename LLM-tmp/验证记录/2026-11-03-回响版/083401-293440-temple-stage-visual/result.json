@@ -1,0 +1,27 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\083401-293440-temple-stage-visual",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "frames": [
+    "archived-record.png",
+    "choice-result.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-observe.png",
+    "temple_guest-observe.png",
+    "temple_incense-observe.png"
+  ]
+}

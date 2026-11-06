@@ -1,0 +1,12 @@
+{
+  "kind": "exported-demo-check",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview4-20261103.zip",
+  "archive_sha256": "afce29342a9bc6fc3ac96f1892445531a89c78d0cf16189dd07b3c8b982981ce",
+  "human_playtest": false,
+  "source_project_used": false,
+  "edition_argument_used": false,
+  "manifest_lines_verified": 8,
+  "runs": [],
+  "passed": false,
+  "error": "Demo render dimensions incorrect"
+}

@@ -31,11 +31,14 @@ func (s *Server) handleRewind(w http.ResponseWriter, r *http.Request, sessionID 
 			return invalid
 		}
 		// A failed session blocks progression, so every chapter has a zero-ink fallback.
-		if player.InkMarks > 0 {
+		if !s.catalog.IsEcho() && player.InkMarks > 0 {
 			player.InkMarks--
 		}
 		player.Erosion = current.StartErosion
 		event, _ := s.catalog.Event(current.ChapterID, current.EventID)
+		accepted := append([]string{}, current.AcceptedSteps...)
+		placements := current.StagePlacements
+		puzzleScore, repairPercent, narrativeChoice := current.PuzzleScore, current.RepairPercent, current.NarrativeChoice
 		// Keep the already-committed choice, so retained rewards cannot force a
 		// second capacity choice or create a duplicate ledger entry on retry.
 		*current = model.EventSession{
@@ -44,6 +47,13 @@ func (s *Server) handleRewind(w http.ResponseWriter, r *http.Request, sessionID 
 			Retries: current.Retries + 1, Status: "active", PuzzleTotal: puzzleTotal(event),
 			AcceptedSteps: []string{}, Actions: []model.ActionRecord{}, PendingMemory: memoryFromEvent(event),
 			ChoiceDone: current.ChoiceDone, ChoiceAction: current.ChoiceAction, ForgottenMemory: current.ForgottenMemory,
+		}
+		if s.catalog.IsEcho() {
+			current.StagePlacements = placements
+			current.AcceptedSteps = accepted
+			current.PuzzleScore = puzzleScore
+			current.RepairPercent = repairPercent
+			current.NarrativeChoice = narrativeChoice
 		}
 		return nil
 	})

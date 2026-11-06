@@ -1,0 +1,42 @@
+{
+  "kind": "exported-demo-check",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview11-20261104.zip",
+  "archive_sha256": "6d9d50f7866311d6a6484eebc2ba670fdc70db4a47c03fd0e22b4e06163f672b",
+  "human_playtest": false,
+  "source_project_used": false,
+  "edition_argument_used": false,
+  "manifest_lines_verified": 8,
+  "runs": [
+    {
+      "mode": "repair",
+      "client_exit": 0,
+      "server_auto_started": true,
+      "server_auto_stopped": true,
+      "errors": [],
+      "normal_profiles_unchanged": true,
+      "independent_profiles": 1,
+      "frame_sizes": {}
+    },
+    {
+      "mode": "choice",
+      "client_exit": 0,
+      "server_auto_started": true,
+      "server_auto_stopped": true,
+      "errors": [],
+      "normal_profiles_unchanged": true,
+      "independent_profiles": 1,
+      "frame_sizes": {}
+    },
+    {
+      "mode": "choice",
+      "client_exit": 0,
+      "server_auto_started": true,
+      "server_auto_stopped": true,
+      "errors": [],
+      "normal_profiles_unchanged": true,
+      "independent_profiles": 2,
+      "frame_sizes": {}
+    }
+  ],
+  "passed": true
+}

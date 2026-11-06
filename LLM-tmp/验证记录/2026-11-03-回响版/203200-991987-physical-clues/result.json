@@ -1,0 +1,171 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_cheng_xiang",
+  "full_journey": true,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\203200-991987-physical-clues",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "adult-walking.png",
+    "archived-record.png",
+    "archway_craftsman-result.png",
+    "archway_form-result.png",
+    "choice-result.png",
+    "drum-response.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "joinery-detail-after.png",
+    "opera_master-result.png",
+    "opera_opening-result.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-close-drum.png",
+    "temple_drum-close-rope.png",
+    "temple_drum-observe.png",
+    "temple_guest-close-bowl.png",
+    "temple_guest-close-cape.png",
+    "temple_guest-observe.png",
+    "temple_incense-close-join.png",
+    "temple_incense-close-marks.png",
+    "temple_incense-observe.png",
+    "tower_ascent-result.png",
+    "tower_ledger-result.png"
+  ],
+  "frame_sizes": {
+    "adult-battle-casting.png": [
+      1280,
+      720
+    ],
+    "adult-battle-idle.png": [
+      1280,
+      720
+    ],
+    "adult-investigation.png": [
+      1280,
+      720
+    ],
+    "adult-walking.png": [
+      1280,
+      720
+    ],
+    "archived-record.png": [
+      1280,
+      720
+    ],
+    "archway_craftsman-result.png": [
+      1280,
+      720
+    ],
+    "archway_form-result.png": [
+      1280,
+      720
+    ],
+    "choice-result.png": [
+      1280,
+      720
+    ],
+    "drum-response.png": [
+      1280,
+      720
+    ],
+    "first-choice.png": [
+      1280,
+      720
+    ],
+    "guest-after.png": [
+      1280,
+      720
+    ],
+    "joinery-after.png": [
+      1280,
+      720
+    ],
+    "joinery-before.png": [
+      1280,
+      720
+    ],
+    "joinery-detail-after.png": [
+      1280,
+      720
+    ],
+    "opera_master-result.png": [
+      1280,
+      720
+    ],
+    "opera_opening-result.png": [
+      1280,
+      720
+    ],
+    "rubbing-after.png": [
+      1280,
+      720
+    ],
+    "rubbing-before.png": [
+      1280,
+      720
+    ],
+    "rubbing-partial.png": [
+      1280,
+      720
+    ],
+    "temple_drum-close-drum.png": [
+      1280,
+      720
+    ],
+    "temple_drum-close-rope.png": [
+      1280,
+      720
+    ],
+    "temple_drum-observe.png": [
+      1280,
+      720
+    ],
+    "temple_guest-close-bowl.png": [
+      1280,
+      720
+    ],
+    "temple_guest-close-cape.png": [
+      1280,
+      720
+    ],
+    "temple_guest-observe.png": [
+      1280,
+      720
+    ],
+    "temple_incense-close-join.png": [
+      1280,
+      720
+    ],
+    "temple_incense-close-marks.png": [
+      1280,
+      720
+    ],
+    "temple_incense-observe.png": [
+      1280,
+      720
+    ],
+    "tower_ascent-result.png": [
+      1280,
+      720
+    ],
+    "tower_ledger-result.png": [
+      1280,
+      720
+    ]
+  }
+}

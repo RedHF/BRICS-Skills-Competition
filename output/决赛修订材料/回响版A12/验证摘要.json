@@ -1,0 +1,27 @@
+{
+  "revision": "A12",
+  "human_feedback_received": true,
+  "feedback_date": "2026-11-04",
+  "human_retest_of_A12": false,
+  "automated_checks": {
+    "actual_exported_full_journey": "2026-11-04-回响版/141139-exported-client/result.json",
+    "actual_exported_demo_runs": "2026-11-04-回响版/141257-exported-demos/result.json",
+    "actual_exported_timed_feedback": "2026-11-04-回响版/142049-exported-client/result.json",
+    "native_9_second_movie": true,
+    "window_sizes": [
+      [
+        960,
+        540
+      ],
+      [
+        1920,
+        1030
+      ],
+      [
+        1920,
+        1080
+      ]
+    ],
+    "rotation_bug_negative_control": "2026-11-04-回响版/135026-357729-rotation-negative/result.json"
+  }
+}

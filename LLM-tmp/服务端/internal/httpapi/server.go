@@ -47,11 +47,15 @@ func New(catalog *content.Catalog, persistence *store.Store) (*Server, error) {
 	if catalog == nil || persistence == nil {
 		return nil, errors.New("catalog and persistence are required")
 	}
-	player, err := persistence.LocalPlayer()
+	player, err := persistence.LocalPlayerForEdition(catalog.EditionID(), catalog.InitialCapacity())
 	if err != nil {
 		return nil, err
 	}
-	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: "assets-boss-v10"}, nil
+	build := "assets-boss-v10"
+	if catalog.IsEcho() {
+		build = "echo-v1"
+	}
+	return &Server{catalog: catalog, store: persistence, playerID: player.ID, started: time.Now().UTC(), buildID: build}, nil
 }
 
 // ServeHTTP implements routing without a framework so the server remains a
@@ -104,6 +108,7 @@ func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
 		"status":          "ok",
 		"service":         "yanxia-server",
 		"game_id":         s.catalog.GameID,
+		"edition":         s.catalog.EditionID(),
 		"content_version": s.catalog.Version,
 		"build":           s.buildID,
 		"uptime_seconds":  int(time.Since(s.started).Seconds()),
@@ -121,6 +126,7 @@ func (s *Server) handleCatalog(w http.ResponseWriter, r *http.Request) {
 }
 
 type publicCatalogResponse struct {
+	Edition      string                        `json:"edition"`
 	FailureScene content.FailureSceneSpec      `json:"failure_scene"`
 	Skills       map[string]content.SkillSpec  `json:"skills"`
 	Memories     map[string]content.MemorySpec `json:"memories"`
@@ -141,6 +147,7 @@ type publicChapter struct {
 }
 
 type publicEvent struct {
+	Stage          *content.EchoStageSpec      `json:"stage,omitempty"`
 	Investigations []content.InvestigationSpec `json:"investigations"`
 	Story          content.StorySpec           `json:"story"`
 	Draft          bool                        `json:"draft"`
@@ -157,21 +164,25 @@ type publicEvent struct {
 }
 
 type publicPuzzle struct {
-	Type        string             `json:"type"`
-	MaxAttempts int                `json:"max_attempts"`
-	Steps       []publicPuzzleStep `json:"steps"`
+	Dependencies bool               `json:"dependencies,omitempty"`
+	Practice     bool               `json:"practice,omitempty"`
+	Type         string             `json:"type"`
+	MaxAttempts  int                `json:"max_attempts"`
+	Steps        []publicPuzzleStep `json:"steps"`
 }
 
 type publicPuzzleStep struct {
-	Trace   *content.TraceSpec `json:"trace,omitempty"`
-	ID      string             `json:"id"`
-	Kind    string             `json:"kind"`
-	Prompt  string             `json:"prompt"`
-	Options []string           `json:"options,omitempty"`
-	Points  int                `json:"points"`
+	Requires []string           `json:"requires,omitempty"`
+	Trace    *content.TraceSpec `json:"trace,omitempty"`
+	ID       string             `json:"id"`
+	Kind     string             `json:"kind"`
+	Prompt   string             `json:"prompt"`
+	Options  []string           `json:"options,omitempty"`
+	Points   int                `json:"points"`
 }
 
 type publicMemory struct {
+	Epilogue bool     `json:"epilogue,omitempty"`
 	ID       string   `json:"id"`
 	Title    string   `json:"title"`
 	Summary  string   `json:"summary"`
@@ -182,12 +193,17 @@ type publicMemory struct {
 
 func publicCatalog(c *content.Catalog) publicCatalogResponse {
 	response := publicCatalogResponse{FailureScene: c.FailureScene, Skills: c.Skills, Memories: c.Memories, Version: c.Version, GameID: c.GameID, Art: c.Art, Chapters: make([]publicChapter, 0, len(c.Chapters))}
+	response.Edition = c.EditionID()
 	for _, chapter := range c.Chapters {
 		pc := publicChapter{ID: chapter.ID, Order: chapter.Order, Title: chapter.Title, Summary: chapter.Summary, UnlockCost: chapter.UnlockCost, NextChapter: chapter.NextChapter, Events: make([]publicEvent, 0, len(chapter.Events))}
 		for _, event := range chapter.Events {
 			pe := publicEvent{Investigations: event.Investigations, Story: event.Story, Draft: event.Draft, Reward: event.Reward, ID: event.ID, Order: event.Order, Title: event.Title, Scene: event.Scene, Intro: event.Intro, Objectives: append([]string(nil), event.Objectives...), Puzzle: publicPuzzle{Type: event.Puzzle.Type, MaxAttempts: event.Puzzle.MaxAttempts, Steps: make([]publicPuzzleStep, 0, len(event.Puzzle.Steps))}, Memory: publicMemory{ID: event.Reward.Memory.ID, Title: event.Reward.Memory.Title, Summary: event.Reward.Memory.Summary, Skill: event.Reward.Memory.Skill, Capacity: event.Reward.Memory.Capacity, Choices: append([]string(nil), event.Reward.Choices...)}}
+			pe.Puzzle.Practice = event.Puzzle.Practice
+			pe.Puzzle.Dependencies = event.Puzzle.Dependencies
+			pe.Stage = event.Stage
+			pe.Memory.Epilogue = event.Reward.Memory.Epilogue
 			for _, step := range event.Puzzle.Steps {
-				pe.Puzzle.Steps = append(pe.Puzzle.Steps, publicPuzzleStep{Trace: step.Trace, ID: step.ID, Kind: step.Kind, Prompt: step.Prompt, Options: append([]string(nil), step.Options...), Points: step.Points})
+				pe.Puzzle.Steps = append(pe.Puzzle.Steps, publicPuzzleStep{Requires: append([]string(nil), step.Requires...), Trace: step.Trace, ID: step.ID, Kind: step.Kind, Prompt: step.Prompt, Options: append([]string(nil), step.Options...), Points: step.Points})
 			}
 			if event.Battle != nil {
 				battle := *event.Battle
@@ -261,6 +277,7 @@ func playerPayload(player model.Player) map[string]any {
 		"ink_marks": player.InkMarks, "capacity": player.Capacity, "erosion": player.Erosion,
 		"unlocked_chapters": player.UnlockedChapters, "completed_events": player.CompletedEvents,
 		"memories": player.Memories, "memory_ledger": player.MemoryLedger, "last_sequence": player.LastSequence,
+		"learned_skills": append([]string{}, player.LearnedSkills...), "recorded_memories": append([]model.Memory{}, player.RecordedMemories...),
 	}
 }
 
@@ -372,7 +389,7 @@ func (s *Server) startSession(w http.ResponseWriter, r *http.Request, request st
 		writeError(w, http.StatusForbidden, "chapter_locked", "chapter is not unlocked")
 		return
 	}
-	if event.Puzzle.MaxAttempts <= 0 {
+	if event.Puzzle.MaxAttempts <= 0 && !event.Puzzle.Practice {
 		event.Puzzle.MaxAttempts = 3
 	}
 	for _, previous := range chapter.Events {
@@ -439,6 +456,12 @@ func (s *Server) handleSessionPath(w http.ResponseWriter, r *http.Request, remai
 		return
 	}
 	switch parts[1] {
+	case "respond":
+		if r.Method != http.MethodPost {
+			methodNotAllowed(w, http.MethodPost)
+			return
+		}
+		s.handleEchoResponse(w, r, sessionID)
 	case "puzzle", "actions":
 		if r.Method != http.MethodPost {
 			methodNotAllowed(w, http.MethodPost)
@@ -495,6 +518,9 @@ func (s *Server) sessionStartResponse(session model.EventSession, event *content
 		pe = public.Chapters[0].Events
 	}
 	response := sessionStartResponse{RunID: session.ID, SessionID: session.ID, PlayerID: session.PlayerID, ChapterID: session.ChapterID, EventID: session.EventID, StartedAt: session.StartedAt, ExpiresAt: session.ExpiresAt, Rules: map[string]int{"puzzle_failure_erosion": rules.PuzzleFailureErosion, "battle_failure_erosion": rules.BattleFailureErosion, "hit_erosion": rules.HitErosion, "max_erosion": maxErosion}}
+	if s.catalog.IsEcho() {
+		response.Rules["puzzle_failure_erosion"] = 0
+	}
 	if len(pe) > 0 {
 		response.Puzzle = pe[0].Puzzle
 		response.Battle = pe[0].Battle
@@ -504,6 +530,9 @@ func (s *Server) sessionStartResponse(session model.EventSession, event *content
 }
 
 type puzzleRequest struct {
+	Rotation int            `json:"rotation"`
+	Position *[2]float64    `json:"position"`
+	AssistMS int            `json:"assist_ms"`
 	Target   string         `json:"target"`
 	Strokes  [][][2]float64 `json:"strokes"`
 	PlayerID string         `json:"player_id"`
@@ -541,6 +570,14 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 
 	if len(session.AcceptedSteps) < len(event.Puzzle.Steps) {
 		step := event.Puzzle.Steps[len(session.AcceptedSteps)]
+		if event.Puzzle.Dependencies {
+			for _, candidate := range event.Puzzle.Steps {
+				if candidate.ID == request.StepID {
+					step = candidate
+					break
+				}
+			}
+		}
 		player, _ := s.store.GetPlayer(session.PlayerID)
 		if step.Kind == "skill" && !s.playerSkills(player)[request.Answer] {
 			writeError(w, http.StatusBadRequest, "skill_unavailable", "skill has not been acquired")
@@ -549,7 +586,19 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 	}
 	var evaluation rules.PuzzleEvaluation
 	updated, player, err := s.store.UpdateSessionAndPlayer(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
-		evaluation = rules.EvaluatePuzzleStep(event, current, rules.PuzzleAttempt{Target: request.Target, Strokes: request.Strokes, StepID: strings.TrimSpace(request.StepID), Answer: request.Answer, Action: request.Action})
+		evaluation = rules.EvaluatePuzzleStep(event, current, rules.PuzzleAttempt{Rotation: request.Rotation, Position: request.Position, AssistMS: request.AssistMS, Target: request.Target, Strokes: request.Strokes, StepID: strings.TrimSpace(request.StepID), Answer: request.Answer, Action: request.Action})
+		isPlacement := false
+		for _, step := range event.Puzzle.Steps {
+			if step.ID == request.StepID && step.Kind == "placement" {
+				isPlacement = true
+			}
+		}
+		if evaluation.Accepted && isPlacement && request.Position != nil {
+			if current.StagePlacements == nil {
+				current.StagePlacements = map[string][2]float64{}
+			}
+			current.StagePlacements[request.StepID] = *request.Position
+		}
 		current.Actions = append(current.Actions, evaluation.ActionRecord)
 		if evaluation.ErosionDelta > 0 {
 			player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
@@ -560,6 +609,9 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 		}
 		if evaluation.Complete && current.Status == "active" {
 			current.RepairPercent = halfPuzzlePercent(*current)
+			if s.catalog.IsEcho() && event.Reward.Memory.Skill != "" {
+				learnSkill(player, event.Reward.Memory.Skill)
+			}
 		}
 		return nil
 	})
@@ -568,6 +620,7 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
+		"coverage": evaluation.Coverage, "accepted_steps": updated.AcceptedSteps, "stage_placements": updated.StagePlacements,
 		"failed_strokes": evaluation.FailedStrokes, "accepted": evaluation.Accepted, "correct": evaluation.Correct, "complete": evaluation.Complete,
 		"reason": evaluation.Reason, "next_step_id": evaluation.NextStepID,
 		"puzzle_score": updated.PuzzleScore, "puzzle_total": updated.PuzzleTotal,
@@ -697,6 +750,10 @@ type choiceRequest struct {
 func (s *Server) handleChoice(w http.ResponseWriter, r *http.Request, sessionID string) {
 	var request choiceRequest
 	if !decodeJSON(w, r, &request) {
+		return
+	}
+	if s.catalog.IsEcho() {
+		s.handleEchoChoice(w, sessionID, request)
 		return
 	}
 	session, ok := s.store.GetSession(sessionID)
@@ -879,6 +936,10 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 		writeError(w, http.StatusConflict, "choice_incomplete", "submit a memory choice before settling")
 		return
 	}
+	if s.catalog.IsEcho() && event.ID == "temple_drum" && !session.WorldResponse {
+		writeError(w, http.StatusConflict, "response_incomplete", "sound the drum after choosing before opening the next page")
+		return
+	}
 
 	var result model.EventResult
 	updated, player, err := s.store.FinalizeSession(sessionID, session.PlayerID, func(current *model.EventSession, player *model.Player) error {
@@ -898,13 +959,25 @@ func (s *Server) handleFinish(w http.ResponseWriter, r *http.Request, sessionID 
 			return nil
 		}
 		result = calculateResult(current, event, player)
+		if s.catalog.IsEcho() {
+			result.ScoringVersion = 3
+			result.Stars, result.QualityScore, result.MemoryRetentionPercent, result.InkMarksEarned = 0, 0, 0, 0
+			result.MemoryAction, result.ArchivedMemoryID = current.ChoiceAction, current.ForgottenMemory
+			result.StagePlacements = current.StagePlacements
+			result.MemoriesAcquired = 0
+			for _, memory := range player.RecordedMemories {
+				if !s.catalog.Memories[memory.ID].Epilogue {
+					result.MemoriesAcquired++
+				}
+			}
+		}
 		result.NarrativeChoice = current.NarrativeChoice
 		result.Sequence = player.LastSequence + 1
 		result.CompletedAt = time.Now().UTC()
 		player.LastSequence = result.Sequence
 		player.InkMarks += result.InkMarksEarned
 		if event.Reward.CapacityIncrease > 0 {
-			player.Capacity = clamp(player.Capacity+event.Reward.CapacityIncrease, 1, maxCapacity)
+			player.Capacity = clamp(player.Capacity+event.Reward.CapacityIncrease, 1, s.catalog.CapacityLimit())
 		}
 		player.CompletedEvents[key] = result
 		unlockNextChapter(s.catalog, current.ChapterID, player)
@@ -1013,6 +1086,9 @@ func usedCapacity(player model.Player) int {
 
 func (s *Server) playerSkills(player model.Player) map[string]bool {
 	result := make(map[string]bool)
+	for _, skill := range player.LearnedSkills {
+		result[skill] = true
+	}
 	for _, entry := range player.MemoryLedger {
 		if entry.Action == "kept" {
 			skill := s.catalog.Memories[entry.MemoryID].Skill

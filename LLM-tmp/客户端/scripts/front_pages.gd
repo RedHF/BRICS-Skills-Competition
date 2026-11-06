@@ -90,21 +90,53 @@ func welcome() -> void:
 	region.anchor_right = 0.91
 	region.anchor_top = 0.45
 	region.anchor_bottom = 0.79
+	if host._is_echo():
+		region.anchor_left = 0
+		region.anchor_right = 1
+		region.anchor_top = 0
+		region.anchor_bottom = 1
+		region.offset_right = -20
+		region.offset_bottom = -20
 	overlay.add_child(region)
 	var box := panel(region, true)
 	box.custom_minimum_size.x = 420
 	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	box.add_theme_constant_override("separation", 16)
 	var title: Label = host._label(box, "一笔留住千秋，一念守住人间", 22, Color("#e4c98a"))
+	if host._is_echo(): title.text = "回响版 · 让屋檐下的生活得到回应"
+	if not host.demo_mode.is_empty(): title.text = "路演片段 · "+("先稳梁，再接合" if host.demo_mode == "repair" else "第一次满心舍的取舍")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var saved: bool = host._has_current_event() or not GameState.player.completed_events.is_empty()
-	host._button(box, "继续旅程" if saved else "开始旅程", _continue)
-	if saved: host._button(box, "选择关卡", host._show_map)
-	host._button(box, "旅途收藏", func(): enter_game(); host._show_memories())
+	var start_title := "继续旅程" if saved else "开始旅程"
+	if not host.demo_mode.is_empty(): start_title = "开始接梁片段" if host.demo_mode == "repair" else "开始取舍片段"
+	host._button(box, start_title, _continue)
+	if host._is_echo() and not host.demo_mode.is_empty():
+		host._label(box,"本次操作保存在独立演示旅程，不影响完整旅程。",17,Color("#746b60"))
+		host._button(box,"返回完整旅程",host._launch_demo.bind(""))
+	if host._is_echo():
+		if host.demo_mode.is_empty():
+			var secondary := HBoxContainer.new()
+			secondary.add_theme_constant_override("separation",12)
+			box.add_child(secondary)
+			if saved: host._button(secondary,"选择关卡",host._show_map)
+			host._button(secondary,"旅途收藏",func(): enter_game(); host._show_memories())
+	else:
+		if saved: host._button(box, "选择关卡", host._show_map)
+		host._button(box, "旅途收藏", func(): enter_game(); host._show_memories())
 	var row := HBoxContainer.new()
 	box.add_child(row)
 	host._button(row, "声音设置", func(): enter_game(); host._show_settings())
 	host._button(row, "退出", host._notification.bind(Node.NOTIFICATION_WM_CLOSE_REQUEST))
+	if host._is_echo():
+		var fit := func():
+			if not is_instance_valid(region) or not is_instance_valid(box): return
+			var available := overlay.size.y
+			var minimum: Vector2 = box.get_parent().get_combined_minimum_size()
+			region.offset_left = maxf(20,minf(overlay.size.x*.57,overlay.size.x-minimum.x-20))
+			region.offset_top = maxf(20,minf(available*.45,available-minimum.y-20))
+		overlay.resized.connect(fit)
+		box.resized.connect(fit)
+		fit.call_deferred()
 
 func _continue() -> void:
 	enter_game()

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "human_playtest": false,
+  "source_project_used": false,
+  "native_movie_writer": true,
+  "private_viewport_override": true,
+  "archive_sha256": "58c227a3ecf38cf07c04922c1ecba71706d2af987f3ef168df71d521bf70fe05",
+  "exe_sha256": "cac93aeba9b79c2006f85f1f20fe7878b30ef5af724adf319c731b92b43b8984",
+  "manifest_lines_before_override": 8,
+  "file": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\output\\决赛修订材料\\回响版A12\\A12_实机行走检查.mp4",
+  "sha256": "54e39c5c4228df376e82957ee621893c7a1557349c29f13b3f7049bb483cbd3d",
+  "seconds": 9
+}

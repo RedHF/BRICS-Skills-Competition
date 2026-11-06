@@ -1,0 +1,35 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": false,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\093356-858646-adult-and-hall",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "archived-record.png",
+    "choice-result.png",
+    "drum-response.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "joinery-detail-after.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-observe.png",
+    "temple_guest-observe.png",
+    "temple_incense-observe.png"
+  ]
+}

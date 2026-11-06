@@ -1,0 +1,18 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\022904-079811-layout-1280",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "frames": [
+    "archived-record.png",
+    "choice-result.png",
+    "first-choice.png"
+  ]
+}

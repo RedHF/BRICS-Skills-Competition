@@ -1,6 +1,8 @@
 extends Control
 
 signal dodge_triggered
+signal footstep
+signal erosion_gathered
 
 var hp := 30
 var max_hp := 30
@@ -39,12 +41,19 @@ var last_guard := "斗拱"
 var spawn_time := 0.0
 var character_moving := false
 var character_facing_left := false
+var echo_style := false
+var walk_time := 0.0
+var erosion_art: Texture2D
+var gathering := false
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(0, 250)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	clip_contents = true
-	FIGURE.prepare()
+	if echo_style:
+		preload("res://scripts/echo_figure.gd").prepare()
+		erosion_art = load("res://assets/echo_v1/white_erosion_mask.png")
+	else: FIGURE.prepare()
 
 func cast(skill: String, text: String, color: Color) -> void:
 	var attacking := skill in ["挥墨", "飞檐", "藻井"]
@@ -79,6 +88,9 @@ func flash(text: String, color: Color) -> void:
 	effect = 0.7
 
 func _process(delta: float) -> void:
+	if echo_style and active and not defeated:
+		if phase > .7 and not gathering: erosion_gathered.emit()
+		gathering = phase > .7
 	motion_time += delta
 	pose_time = maxf(0, pose_time - delta)
 	impact = maxf(0, impact - delta)
@@ -92,8 +104,14 @@ func _process(delta: float) -> void:
 		character_moving = direction.length() > 0.0
 		if absf(direction.x) > 0.01: character_facing_left = direction.x < 0
 		if direction.length() > 0:
-			player_position += Vector2(direction.x, direction.y * 0.72).limit_length() * delta * 0.52
+			var previous := player_position
+			player_position += Vector2(direction.x, direction.y * 0.72).limit_length() * delta * (0.32 if echo_style else 0.52)
 			player_position = player_position.clamp(Vector2(0.08, 0.38), Vector2(0.92, 0.90))
+			character_moving = player_position.distance_to(previous) > .0001
+			if character_moving:
+				var old_step := int(walk_time*2.5)
+				walk_time += ((player_position-previous)*size).length()/180.0*.8
+				if int(walk_time*2.5) != old_step: footstep.emit()
 			if phase > 0.68 and not dodge_armed:
 				dodge_armed = true
 				dodge_triggered.emit()
@@ -130,7 +148,12 @@ func _draw() -> void:
 		var extent := (126.0 if not boss_name.is_empty() else 76.0) * (1.0 + sin(motion_time * 3.0) * .04)
 		var tint := Color.WHITE if phase < .7 else Color("#ffa78d")
 		tint.a = 1.0 - spawn_time
-		draw_texture_rect(ENEMY_TEXTURE, Rect2(enemy-Vector2.ONE*extent*.5,Vector2.ONE*extent),false,tint)
+		if echo_style and erosion_art != null:
+			var height := extent*1.85
+			var dimensions := Vector2(height*erosion_art.get_width()/erosion_art.get_height(),height)
+			var lunge := (player-enemy).normalized()*maxf(0,phase-.7)*65
+			draw_texture_rect(erosion_art,Rect2(enemy+lunge-dimensions*.5,dimensions),false,tint)
+		else: draw_texture_rect(ENEMY_TEXTURE, Rect2(enemy-Vector2.ONE*extent*.5,Vector2.ONE*extent),false,tint)
 		if not boss_name.is_empty():
 			_sprite(DOUGONG_WARD, enemy, Vector2.ONE * extent * 1.55, motion_time * .12, .24)
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6, 7)), Color("#394448"))
@@ -149,7 +172,7 @@ func _draw() -> void:
 		if pose == "attack": action_offset = (enemy - player).normalized() * impulse * 18
 		elif pose == "dash": action_offset = Vector2(impulse * 32, 0)
 		elif pose == "hurt": action_offset = Vector2(sin(motion_time * 70) * 5, impulse * 8)
-	FIGURE.paint(self, player + action_offset, 1.0, motion_time, pose if pose_time > 0 else ("walk" if character_moving else "idle"), pose_time / .45, Color.WHITE, character_facing_left)
+	_paint_figure(player+action_offset,1.0,pose if pose_time > 0 else ("walk" if character_moving else "idle"),pose_time/.45,Color.WHITE,character_facing_left)
 	for item in effects: _draw_effect(item)
 	if combo > 1 and combo_timeout > 0:
 		draw_string(font, Vector2(size.x - 150, 52), "%d 连墨" % combo, HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color("#e4c98a"))
@@ -164,6 +187,10 @@ func _sprite(texture: Texture2D, center: Vector2, dimensions: Vector2, rotation:
 	draw_set_transform(center, rotation)
 	draw_texture_rect(texture, Rect2(-dimensions * .5, dimensions), false, Color(tint.r, tint.g, tint.b, clampf(opacity, 0, 1)))
 	draw_set_transform(Vector2.ZERO)
+
+func _paint_figure(point: Vector2, scale: float, action: String, strength: float, tint: Color, facing_left: bool = false) -> void:
+	if echo_style: preload("res://scripts/echo_figure.gd").paint(self,point,scale,walk_time if action in ["walk","dash"] else motion_time,action,strength,tint,facing_left)
+	else: FIGURE.paint(self,point,scale,motion_time,action,strength,tint,facing_left)
 
 func _draw_effect(item: Dictionary) -> void:
 	var age: float = item.age
@@ -188,7 +215,7 @@ func _draw_effect(item: Dictionary) -> void:
 			_sprite(DOUGONG_WARD, source, Vector2.ONE * (75 + t * 90), age * .08, fade)
 		"闪身":
 			_sprite(DODGE_SMOKE, source + Vector2(-30 - t * 45, 0), Vector2(145, 115) * (1 + .3 * t), -.3, fade)
-			FIGURE.paint(self, source + Vector2(-18 - t * 28, 20), 1, motion_time, "dash", .8, Color(1, 1, 1, fade * .22))
+			_paint_figure(source+Vector2(-18-t*28,20),1,"dash",.8,Color(1,1,1,fade*.22))
 		"格挡", "受击":
 			_sprite(INK_SLASH, source.lerp(target, minf(1, age / .15)), Vector2(130, 75), direction.angle() + PI / 4, fade * .75, Color("#ffb49b"))
 			if age > .12:

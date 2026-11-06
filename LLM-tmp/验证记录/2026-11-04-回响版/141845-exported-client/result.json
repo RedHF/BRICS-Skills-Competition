@@ -1,0 +1,37 @@
+{
+  "kind": "exported-echo-client-check",
+  "human_playtest": false,
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview12-20261104.zip",
+  "archive_sha256": "58c227a3ecf38cf07c04922c1ecba71706d2af987f3ef168df71d521bf70fe05",
+  "manifest_lines_verified": 8,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "edition_argument_used": false,
+  "source_project_used": false,
+  "passed": false,
+  "visual": true,
+  "offscreen_native_render": true,
+  "full_journey": false,
+  "archived_memory": "she_ning_an",
+  "health": {
+    "active_sessions": 0,
+    "build": "echo-v1",
+    "content_version": 10,
+    "edition": "echo-v1",
+    "game_id": "yanxia-qianqiu",
+    "players": 1,
+    "service": "yanxia-server",
+    "status": "ok",
+    "uptime_seconds": 0
+  },
+  "server_auto_started": true,
+  "client_exit": 98,
+  "errors": [
+    "ERROR: Missing visible control: 2 · 斗拱 · 点击施展",
+    "ERROR: 4 resources still in use at exit."
+  ],
+  "error": "Exported client check failed; inspect console.log"
+}

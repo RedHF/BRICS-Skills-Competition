@@ -1,0 +1,16 @@
+# Preserve exported media bytes and PDF cross-reference offsets on Windows.
+*.pdf binary
+*.docx binary
+*.pptx binary
+*.xlsx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.wav binary
+*.mp3 binary
+*.mp4 binary
+*.zip binary
+*.exe binary
+*.ttf binary
+*.woff2 binary

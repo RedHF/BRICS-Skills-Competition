@@ -1,6 +1,7 @@
 extends Control
 
 signal investigated(label: String, found: int, total: int)
+signal footstep
 var erosion := 0
 var forgotten := false
 var bridge := false
@@ -18,8 +19,11 @@ var joystick := Vector2.ZERO
 var dragging_stick := false
 var purification := 0.0
 var character_time := 0.0
+var walk_time := 0.0
 var character_moving := false
 var character_facing_left := false
+var echo_style := false
+var echo_event_id := ""
 
 const FALLBACK_SCENE = preload("res://assets/ink_ui/background.png")
 const INK_CARD = preload("res://assets/ink_ui/ink.png")
@@ -43,11 +47,15 @@ func _process(delta: float) -> void:
 		var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down") + joystick
 		if direction.length() > 0:
 			pending_investigation = -1
-			player += Vector2(direction.x, direction.y * 0.65).limit_length() * delta * 0.5
+			player += Vector2(direction.x, direction.y * 0.65).limit_length() * delta * (0.24 if echo_style else 0.5)
 			target = player
-		else: player = player.move_toward(target, delta * 0.5)
+		else: player = player.move_toward(target, delta * (0.24 if echo_style else 0.5))
 		player = player.clamp(Vector2(0.05, 0.16), Vector2(0.95, 0.94))
 		character_moving = player.distance_to(previous_position) > 0.0001
+		if character_moving:
+			var old_step := int(walk_time*2.5)
+			walk_time += ((player-previous_position)*size).length()/129.6*.8
+			if int(walk_time*2.5) != old_step: footstep.emit()
 		if absf(player.x - previous_position.x) > 0.0001:
 			character_facing_left = player.x < previous_position.x
 		if pending_investigation >= 0 and player.distance_to(_investigation_point(pending_investigation)) < 0.035:
@@ -126,7 +134,9 @@ func _draw() -> void:
 			var origin := Vector2(clampf(point.x-width/2,4,size.x-width-4),point.y-54)
 			draw_texture_rect(INK_CARD, Rect2(origin, Vector2(width, 30)), false)
 			draw_string(preload("res://scripts/ink_theme.gd").font(),origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
-		preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, character_time, "walk" if character_moving else "idle", 0.0, Color.WHITE, character_facing_left)
+		if echo_style:
+			preload("res://scripts/echo_figure.gd").paint(self,player*size,.72,walk_time if character_moving else character_time,"walk" if character_moving else "idle",0.0,Color.WHITE,character_facing_left)
+		else: preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, character_time, "walk" if character_moving else "idle", 0.0, Color.WHITE, character_facing_left)
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(14, size.y - 79), Vector2.ONE * 68), false, Color(1, 1, 1, .48))
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(36, size.y - 57) + joystick * 23, Vector2.ONE * 24), false)
 
@@ -141,6 +151,10 @@ func _draw_background(fade: float) -> void:
 		source_size.y = texture_size.x / target_aspect
 	var source_rect := Rect2((texture_size - source_size) * 0.5, source_size)
 	draw_texture_rect_region(background, Rect2(Vector2.ZERO, size), source_rect)
+	if echo_style:
+		var scale_factor := size/source_size
+		var whole := Rect2(-source_rect.position*scale_factor,texture_size*scale_factor)
+		preload("res://scripts/echo_props.gd").paint(self,whole,echo_event_id)
 	if eroded_background != null:
 		var erosion_mix := 1.0 if forgotten else fade
 		draw_texture_rect_region(eroded_background, Rect2(Vector2.ZERO, size), source_rect, Color(1,1,1,erosion_mix))

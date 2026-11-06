@@ -1,0 +1,31 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\085755-076486-full-client-journey",
+  "passed": false,
+  "client_exit": 0,
+  "script_errors": [
+    "SCRIPT ERROR: Assertion failed: Later-chapter battle fixture failed"
+  ],
+  "frames": [],
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "SCRIPT ERROR: Assertion failed: Later-chapter battle fixture failed",
+    "   at: _remaining_journey (res://tests/echo_smoke.gd:147)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _remaining_journey (res://tests/echo_smoke.gd:147)",
+    "       [1] request_json (res://scripts/network_client.gd:36)",
+    "PASS echo client: temple observations, reversible joinery mistake, both-side assembly, sheltered placement saved, gradual rubbing and held assistance, first three-slot choice, confirmed archive and persistent craft"
+  ]
+}

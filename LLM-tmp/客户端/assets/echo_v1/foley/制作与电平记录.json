@@ -1,0 +1,120 @@
+{
+  "origin": "procedural synthesis, no recordings or external samples",
+  "sample_rate": 32000,
+  "channels": 1,
+  "bits": 16,
+  "sounds": [
+    {
+      "file": "timber_seat.wav",
+      "duration": 0.58,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -26.04,
+      "sha256": "91c0a59d1e1ead6ec8ce8ddce9d278bbffb460111616ec2c67d127813be605fe"
+    },
+    {
+      "file": "timber_support.wav",
+      "duration": 0.8,
+      "peak_dbfs": -6.9,
+      "rms_dbfs": -27.41,
+      "sha256": "23fa6128ea00a72dfaf2579f889643cb3bede0f49f2998d9e42d56f8fe8b65ac"
+    },
+    {
+      "file": "ward_knock.wav",
+      "duration": 0.42,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -21.98,
+      "sha256": "bc7cc362f2449366c01df2d5450a9f2f4bdc59eba6c77ac13745a8c8522d4e96"
+    },
+    {
+      "file": "pottery_place.wav",
+      "duration": 0.8,
+      "peak_dbfs": -9.46,
+      "rms_dbfs": -27.29,
+      "sha256": "dddf5b20e1cb13500a26ea8b06bff85c1bce4217ee09575f7a38084ffc34a93c"
+    },
+    {
+      "file": "paper_rub_1.wav",
+      "duration": 0.38,
+      "peak_dbfs": -9.11,
+      "rms_dbfs": -25.01,
+      "sha256": "3c5785730fd586cfc6c90d8ad0f38ffc82b2022e751595fc33306d2da53634cf"
+    },
+    {
+      "file": "paper_rub_2.wav",
+      "duration": 0.43,
+      "peak_dbfs": -10.44,
+      "rms_dbfs": -25.02,
+      "sha256": "f406219a00357b949d2365cc1abe6bee8e2877080e1381b18ce4baf95b74a9f5"
+    },
+    {
+      "file": "step_wood_1.wav",
+      "duration": 0.28,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -23.94,
+      "sha256": "f267f1a274977f0be21cc88883bc6f62b7867cced50317b69f8d5841e8f5f4cc"
+    },
+    {
+      "file": "step_wood_2.wav",
+      "duration": 0.29,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -23.05,
+      "sha256": "b4e1fba512c8abb2d13095812e9d880ba2d82cb2e9d3439df2bafe1332a876b3"
+    },
+    {
+      "file": "step_stone_1.wav",
+      "duration": 0.25,
+      "peak_dbfs": -6.06,
+      "rms_dbfs": -23.84,
+      "sha256": "0f35057f3b17d3aefa30351451b0b506b0a298eed04d1ea516547b52bf780725"
+    },
+    {
+      "file": "step_stone_2.wav",
+      "duration": 0.27,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -25.23,
+      "sha256": "6a958e00e259979fbc289c74178407c5d3cc59ff7e87ab7d4cb97bfb97e9e799"
+    },
+    {
+      "file": "paper_fold.wav",
+      "duration": 0.46,
+      "peak_dbfs": -14.77,
+      "rms_dbfs": -26.84,
+      "sha256": "dd6f48aed6232cb4c9a3ca7b4575495ada41b516f5c79db1175739a1fd1094a6"
+    },
+    {
+      "file": "brush_sweep.wav",
+      "duration": 0.36,
+      "peak_dbfs": -13.21,
+      "rms_dbfs": -26.23,
+      "sha256": "426ce2e0606f98d5f4d8784cf404abdb00a87140a96e44b6e0e9c3fd6d9559b0"
+    },
+    {
+      "file": "erosion_gather.wav",
+      "duration": 0.85,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -23.7,
+      "sha256": "e1e565481c585addeb9e1e41c3717cc6ddf7cbc18a1a3665e7a4a24de597a7be"
+    },
+    {
+      "file": "erosion_break.wav",
+      "duration": 0.65,
+      "peak_dbfs": -10.99,
+      "rms_dbfs": -27.42,
+      "sha256": "1fcaf6db9325dfc3112c720db42e71418ff6eb261c55871a57897548bfcbdfff"
+    },
+    {
+      "file": "ink_settle.wav",
+      "duration": 0.48,
+      "peak_dbfs": -12.65,
+      "rms_dbfs": -26.3,
+      "sha256": "6350fda6ce7d361a167d7aceba4cc551374dbf9b51ed6315ca6bdc37cb18120e"
+    },
+    {
+      "file": "drum_body.wav",
+      "duration": 1.9,
+      "peak_dbfs": -6.02,
+      "rms_dbfs": -23.64,
+      "sha256": "277509cb66415fa5a7fa126376ae476a27abf813ccecfc7d6176067324b3051c"
+    }
+  ]
+}

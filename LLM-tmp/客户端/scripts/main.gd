@@ -6,6 +6,11 @@ const REPOSITORY = preload("res://scripts/data_repository.gd")
 const MENU_BACKGROUND = preload("res://assets/ink_ui/background.png")
 
 var front: RefCounted
+var echo_journey: RefCounted
+var echo_stage: Control
+var edition := "original"
+var demo_mode := ""
+var profile_root := "user://"
 var network = NETWORK.new()
 var data = REPOSITORY.new()
 var page: VBoxContainer
@@ -48,6 +53,7 @@ var soundscape: Node
 var transition_veil: ColorRect
 var transition_tween: Tween
 var confirmation: ConfirmationDialog
+var archive_prompt: Control
 var dialogue_lines: Array = []
 var dialogue_index := 0
 var dialogue_done: Callable
@@ -69,6 +75,7 @@ var join_canvas: Control
 var echo_bus := 0
 var volume := 1.0
 var muted := false
+var reduced_motion := false
 var event_audio: AudioStreamPlayer
 var closing := false
 const BATTLE_KEYS := ["挥墨", "斗拱", "藻井", "飞檐", "闪身"]
@@ -76,17 +83,20 @@ var voice_index: Dictionary = {}
 var voice_queue: Array[String] = []
 
 func _ready() -> void:
+	_configure_edition()
+	echo_journey = preload("res://scripts/echo_journey.gd").new(self)
 	get_tree().auto_accept_quit = false
 	front = preload("res://scripts/front_pages.gd").new(self)
 	add_child(network)
 	soundscape = preload("res://scripts/soundscape.gd").new()
+	soundscape.echo_style = _is_echo()
 	add_child(soundscape)
 	AudioServer.add_bus()
 	echo_bus = AudioServer.bus_count - 1
 	AudioServer.set_bus_name(echo_bus, "Echo")
 	var settings := ConfigFile.new()
-	if FileAccess.file_exists("user://settings.cfg"):
-		var error := settings.load("user://settings.cfg")
+	if FileAccess.file_exists(profile_root+"settings.cfg"):
+		var error := settings.load(profile_root+"settings.cfg")
 		if error != OK:
 			push_error("设置文件读取失败：%s" % error)
 			get_tree().quit(1)
@@ -94,6 +104,7 @@ func _ready() -> void:
 		else:
 			volume = clampf(float(settings.get_value("audio", "volume", 1.0)), 0, 1)
 			muted = bool(settings.get_value("audio", "muted", false))
+			reduced_motion = bool(settings.get_value("visual", "reduced_motion", false))
 	AudioServer.set_bus_volume_linear(0, volume)
 	AudioServer.set_bus_mute(0, muted)
 	event_audio = AudioStreamPlayer.new()
@@ -118,7 +129,7 @@ func _ready() -> void:
 	root.add_child(backdrop_art)
 	backdrop = ColorRect.new()
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.color = Color(0.078, 0.149, 0.169, 0.78)
+	backdrop.color = Color(0.16, 0.14, 0.12, 0.78) if _is_echo() else Color(0.078, 0.149, 0.169, 0.78)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(backdrop)
 	var margin := MarginContainer.new()
@@ -134,8 +145,17 @@ func _ready() -> void:
 	margin.add_child(column)
 	heading = VBoxContainer.new()
 	column.add_child(heading)
-	_label(heading, "檐下千秋  /  檐下谱", 20, Color("#e4c98a"))
-	stats = _label(heading, "正在连接本地服务…", 17)
+	var heading_info: Node = heading
+	var heading_row: HBoxContainer
+	if _is_echo():
+		heading_row = HBoxContainer.new()
+		heading.add_child(heading_row)
+		var info := VBoxContainer.new()
+		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		heading_row.add_child(info)
+		heading_info = info
+	_label(heading_info, "檐下千秋  /  檐下谱", 20, Color("#e4c98a"))
+	stats = _label(heading_info, "正在连接本地服务…", 17)
 	erosion_bar = ProgressBar.new()
 	erosion_bar.custom_minimum_size.y = 12
 	erosion_bar.show_percentage = false
@@ -145,7 +165,8 @@ func _ready() -> void:
 	nav.size_flags_horizontal = Control.SIZE_SHRINK_END
 	nav.custom_minimum_size.x = 280
 	navigation = nav
-	heading.add_child(nav)
+	if _is_echo(): heading_row.add_child(nav)
+	else: heading.add_child(nav)
 	_button(nav, "‹ 返回关卡", _show_map)
 	_button(nav, "设置", _show_settings)
 	navigation.hide()
@@ -168,7 +189,7 @@ func _ready() -> void:
 	add_child(transition_layer)
 	transition_veil = ColorRect.new()
 	transition_veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	transition_veil.color = Color(0.045, 0.065, 0.060, 0.0)
+	transition_veil.color = Color(0.10, 0.08, 0.06, 0.0) if _is_echo() else Color(0.045, 0.065, 0.060, 0.0)
 	transition_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	transition_layer.add_child(transition_veil)
 
@@ -177,7 +198,43 @@ func _ready() -> void:
 	confirmation.ok_button_text = "亲手抹去"
 	confirmation.cancel_button_text = "留下这段记忆"
 	add_child(confirmation)
+	if _is_echo():
+		var archive_layer := CanvasLayer.new()
+		archive_layer.layer = 80
+		add_child(archive_layer)
+		archive_prompt = preload("res://scripts/echo_archive_prompt.gd").new()
+		archive_prompt.host = self
+		archive_layer.add_child(archive_prompt)
 	await _connect_server()
+
+func _configure_edition() -> void:
+	if OS.has_feature("echo_v1"): edition = "echo-v1"
+	var config := ConfigFile.new()
+	var path := OS.get_executable_path().get_base_dir().path_join("client.cfg")
+	if FileAccess.file_exists(path) and config.load(path) == OK:
+		edition = str(config.get_value("game", "edition", "original"))
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--edition="): edition = argument.trim_prefix("--edition=")
+		elif argument.begins_with("--demo="): demo_mode = argument.trim_prefix("--demo=")
+	if demo_mode in ["repair","choice"]:
+		var stamp := Time.get_datetime_string_from_system().replace(":","-")+"-"+str(OS.get_process_id())
+		profile_root = "user://demo/"+demo_mode+"/"+stamp+"/"
+
+func _is_echo() -> bool:
+	return edition == "echo-v1"
+
+func _story_progress_path() -> String:
+	return profile_root+"story-" + ("echo-v1-" if _is_echo() else "") + str(GameState.player.id) + ".cfg"
+
+func _launch_demo(mode: String) -> void:
+	if mode not in ["repair","choice",""]: return
+	var arguments := PackedStringArray(["--"])
+	if not mode.is_empty(): arguments.append("--demo="+mode)
+	var launched := OS.create_process(OS.get_executable_path(),arguments,false)
+	if launched <= 0:
+		status.text = "片段暂时未能打开，请从完整解压的程序包重试。"
+		return
+	_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _connect_server() -> void:
 	_clear()
@@ -186,6 +243,10 @@ func _connect_server() -> void:
 	front.stage(15, "正在连接本地存档…")
 	busy = true
 	network.base_url = str(ProjectSettings.get_setting("yanxia/server_url", "http://127.0.0.1:8090"))
+	if _is_echo(): network.base_url = "http://127.0.0.1:8091"
+	if edition not in ["original", "echo-v1"]:
+		_error("无法识别旅程版本：" + edition)
+		return
 	var config := ConfigFile.new()
 	var config_path := OS.get_executable_path().get_base_dir().path_join("client.cfg")
 	if FileAccess.file_exists(config_path):
@@ -193,25 +254,51 @@ func _connect_server() -> void:
 		if error != OK:
 			_error("无法读取 client.cfg：%s" % error)
 			return
-		network.base_url = str(config.get_value("server", "url", "http://127.0.0.1:8090"))
+		network.base_url = str(config.get_value("server", "url", network.base_url))
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--server-url="): network.base_url = argument.trim_prefix("--server-url=")
+	if not demo_mode.is_empty():
+		if not _is_echo() or demo_mode not in ["repair","choice"]:
+			_error("无法识别这个演示片段，请从主页重新选择。")
+			return
+		network.base_url = "http://127.0.0.1:8092"
 	var local_address := RegEx.create_from_string("^http://(127\\.0\\.0\\.1|localhost)(:[0-9]+)?(/|$)")
 	if local_address.search(network.base_url) == null:
 		_error("游戏使用本地存档，请连接本机配套服务。")
 		return
 	var health: Dictionary = await network.request_json("/healthz")
-	if health.is_empty() and network.base_url == "http://127.0.0.1:8090" and not OS.has_feature("editor"):
+	var default_url := "http://127.0.0.1:8091" if _is_echo() else "http://127.0.0.1:8090"
+	if not demo_mode.is_empty():
+		default_url = "http://127.0.0.1:8092"
+		if not health.is_empty():
+			_error("已有一个演示窗口正在运行。请先退出该窗口，再打开新的片段。")
+			return
+	if health.is_empty() and network.base_url == default_url and not OS.has_feature("editor"):
 		var server := OS.get_executable_path().get_base_dir().path_join("server/yanxia-server.exe")
 		var content := server.get_base_dir().path_join("content/chapters.json")
-		server_pid = OS.create_process(server, PackedStringArray(["-addr", "127.0.0.1:8090", "-content", content, "-data", ProjectSettings.globalize_path("user://save.json"), "-log", ProjectSettings.globalize_path("user://server.log")]), false)
+		var save_path := "user://echo-v1-save.json" if _is_echo() else "user://save.json"
+		var log_path := "user://echo-v1-server.log" if _is_echo() else "user://server.log"
+		if not demo_mode.is_empty():
+			var template := "res://assets/echo_v1/demo/"+demo_mode+".json"
+			save_path = profile_root+"echo-v1-save.json"
+			log_path = profile_root+"echo-v1-server.log"
+			var directory_error := DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(profile_root))
+			if directory_error != OK:
+				_error("无法准备本次演示旅程。")
+				return
+			if not FileAccess.file_exists(save_path):
+				var copied := DirAccess.copy_absolute(template,save_path)
+				if copied != OK:
+					_error("演示片段不完整，请重新完整解压程序包。")
+					return
+		server_pid = OS.create_process(server, PackedStringArray(["-addr", default_url.trim_prefix("http://"), "-edition", edition, "-content", content, "-data", ProjectSettings.globalize_path(save_path), "-log", ProjectSettings.globalize_path(log_path)]), false)
 		if server_pid <= 0:
 			_error("无法启动配套服务端，请确认 server/yanxia-server.exe 完整。")
 			return
 		for attempt in range(20):
 			await get_tree().create_timer(0.2).timeout
 			if not OS.is_process_running(server_pid):
-				_error("服务端启动失败，详情见 %s" % ProjectSettings.globalize_path("user://server.log"))
+				_error("服务端启动失败，详情见 %s" % ProjectSettings.globalize_path(log_path))
 				return
 			health = await network.request_json("/healthz")
 			if not health.is_empty(): break
@@ -220,6 +307,9 @@ func _connect_server() -> void:
 		return
 	if health.game_id != "yanxia-qianqiu" or int(health.content_version) != 10:
 		_error("端口上的服务与本客户端内容版本不匹配，请关闭旧服务后重试。")
+		return
+	if str(health.get("edition", "original")) != edition:
+		_error("该端口运行的是另一版旅程，请使用与当前版本匹配的本地服务。")
 		return
 	front.stage(45, "正在读取旅程…")
 	await _load_game()
@@ -231,7 +321,7 @@ func _load_game() -> void:
 		return
 	GameState.player = response.player
 	story_progress = ConfigFile.new()
-	var progress_path := "user://story-" + str(GameState.player.id) + ".cfg"
+	var progress_path := _story_progress_path()
 	if FileAccess.file_exists(progress_path):
 		var progress_error := story_progress.load(progress_path)
 		if progress_error != OK:
@@ -280,6 +370,9 @@ func _notification(what: int) -> void:
 		for player in [memory_audio, event_audio]:
 			player.stop()
 			player.stream = null
+		for player in find_children("*","AudioStreamPlayer",true,false):
+			player.stop()
+			player.stream = null
 		# Let the audio server retire playback before the engine shuts down.
 		await get_tree().create_timer(.3).timeout
 		get_tree().quit()
@@ -288,6 +381,10 @@ func _exit_tree() -> void:
 	memory_audio.stop()
 	memory_audio.stream = null
 	if is_instance_valid(paused_page): paused_page.free()
+	if _is_echo():
+		preload("res://scripts/echo_figure.gd").release()
+		preload("res://scripts/echo_hall.gd").release()
+		preload("res://scripts/echo_props.gd").release()
 	if server_pid > 0 and OS.is_process_running(server_pid):
 		var error := OS.kill(server_pid)
 		if error != OK: push_error("关闭本地服务失败：%s" % error)
@@ -308,10 +405,13 @@ func _refresh_stats(erosion: int = -1) -> void:
 	var used := 0
 	for memory in p.memories: used += int(memory.capacity)
 	stats.text = str(p.display_name) + " · 识海 %d/%d   墨痕 %d   侵蚀 %d/100 · %s" % [used, int(p.capacity), int(p.ink_marks), erosion, "浸" if erosion < 40 else ("蚀" if erosion < 70 else "竭")]
+	if _is_echo(): stats.text = "回响版 · 心舍 %d/%d   已留记录 %d 段" % [used, int(p.capacity), p.get("recorded_memories", []).size()]
 
 	erosion_bar.value = erosion
+	if _is_echo(): erosion_bar.visible = flow == "battle"
 	var fill := StyleBoxFlat.new()
 	fill.bg_color = Color("#83bfa4") if erosion < 40 else (Color("#d8b67c") if erosion < 70 else Color("#d78275"))
+	if _is_echo(): fill.bg_color = Color("#b78c48") if erosion < 70 else Color("#9b4031")
 	erosion_bar.add_theme_stylebox_override("fill", fill)
 	_apply_erosion(erosion)
 
@@ -327,6 +427,9 @@ func _apply_erosion(value: int) -> void:
 func _add_building(interactive: bool = false) -> void:
 	scene_view = preload("res://scripts/building_scene.gd").new()
 	scene_view.interactive = interactive
+	scene_view.echo_style = _is_echo()
+	if _is_echo(): scene_view.footstep.connect(func(): soundscape.cue("step_wood" if chapter_id in ["prologue","temple"] else "step_stone"))
+	scene_view.echo_event_id = str(current_event.id)
 	scene_view.bridge = chapter_id == "prologue"
 	scene_view.tint = Color(data.memory(current_event.reward.memory_id).color)
 	scene_view.background = _event_background()
@@ -340,7 +443,7 @@ func _add_building(interactive: bool = false) -> void:
 		if memory.id == current_event.reward.memory_id: held = true
 	for entry in GameState.player.memory_ledger:
 		if entry.memory_id == current_event.reward.memory_id and entry.action == "kept": acquired = true
-	scene_view.forgotten = acquired and not held
+	scene_view.forgotten = acquired and not held and not _is_echo()
 	page.add_child(scene_view)
 
 func _event_background(event_id: String = "") -> Texture2D:
@@ -355,6 +458,9 @@ func _event_background(event_id: String = "") -> Texture2D:
 	return texture
 
 func _event_art(event_id: String) -> Dictionary:
+	if _is_echo():
+		var revised: Dictionary = data.catalog.get("art", {}).get(event_id, {})
+		if str(revised.get("background", "")).begins_with("res://assets/echo_v1/"): return revised
 	var landscape := "res://assets/landscape/" + event_id + ".jpeg"
 	if ResourceLoader.exists(landscape):
 		return {"background": landscape, "backdrop_color": "#263331"}
@@ -377,7 +483,8 @@ func _art_banner(parent: Node, texture: Texture2D, height: float) -> TextureRect
 	return banner
 
 func _pause_event() -> void:
-	if flow not in ["intro", "puzzle", "choice", "battle"]: return
+	if flow not in ["intro", "puzzle", "choice", "response", "battle"]: return
+	if is_instance_valid(echo_stage): echo_stage.stop_assist()
 	paused_flow = flow
 	paused_scroll = scroll.scroll_vertical
 	paused_page = page
@@ -414,11 +521,18 @@ func _show_settings() -> void:
 	mute.toggled.connect(func(value):
 		muted = value
 		AudioServer.set_bus_mute(0, muted))
+	if _is_echo():
+		var motion := CheckButton.new()
+		motion.text = "减弱环境动态与转场"
+		motion.button_pressed = reduced_motion
+		page.add_child(motion)
+		motion.toggled.connect(func(value): reduced_motion = value)
 	_button(page, "保存设置", func():
 		var config := ConfigFile.new()
 		config.set_value("audio", "volume", volume)
 		config.set_value("audio", "muted", muted)
-		var error := config.save("user://settings.cfg")
+		config.set_value("visual", "reduced_motion", reduced_motion)
+		var error := config.save(profile_root+"settings.cfg")
 		if error != OK: _error("设置保存失败：%s" % error)
 		else: status.text = "声音设置已保存。")
 	if _has_current_event(): _button(page, "返回当前事件", _resume)
@@ -435,6 +549,9 @@ func _clear() -> void:
 	if is_instance_valid(battle_dock): battle_dock.visible = flow == "battle"
 	if is_instance_valid(soundscape): soundscape.set_scene("battle" if flow == "battle" else "theme")
 	status.text = ""
+	for player in page.find_children("*","AudioStreamPlayer",true,false):
+		player.stop()
+		player.stream = null
 	for child in page.get_children():
 		page.remove_child(child)
 		child.queue_free()
@@ -474,23 +591,33 @@ func _open_event(chapter: String, event: String) -> void:
 	current_event = data.event(chapter, event)
 	session_id = ""
 	var lines: Array = current_event.story.dialogue.duplicate(true)
-	for i in range(lines.size()): lines[i]["audio_cue"] = str(current_event.id) + "_dialogue_%02d" % (i+1)
+	for i in range(lines.size()):
+		# Rewritten echo dialogue must never borrow a differently worded recording.
+		if _is_echo() and current_event.has("stage"):
+			lines[i]["audio_cue"] = str(voice_index.get("lines", {}).get(str(lines[i].text), ""))
+		else: lines[i]["audio_cue"] = str(current_event.id) + "_dialogue_%02d" % (i+1)
 	_begin_dialogue(current_event.title, lines, _show_investigation, _show_map)
 
 func _fade_to_dark() -> void:
 	if transition_tween and transition_tween.is_valid(): transition_tween.kill()
 	transition_veil.mouse_filter = Control.MOUSE_FILTER_STOP
 	transition_tween = create_tween()
-	transition_tween.tween_property(transition_veil, "color:a", 0.95, 0.26).set_trans(Tween.TRANS_SINE)
+	transition_tween.tween_property(transition_veil, "color:a", 0.95, 0.01 if reduced_motion else 0.26).set_trans(Tween.TRANS_SINE)
 	await transition_tween.finished
 
 func _fade_from_dark() -> void:
 	if transition_tween and transition_tween.is_valid(): transition_tween.kill()
 	transition_tween = create_tween()
-	transition_tween.tween_property(transition_veil, "color:a", 0.0, 0.36).set_trans(Tween.TRANS_SINE)
+	transition_tween.tween_property(transition_veil, "color:a", 0.0, 0.01 if reduced_motion else 0.36).set_trans(Tween.TRANS_SINE)
 	transition_tween.finished.connect(func(): transition_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE)
 
 func _show_investigation() -> void:
+	if _is_echo() and current_event.has("stage") and GameState.player.completed_events.has(chapter_id + ":" + str(current_event.id)):
+		echo_journey.revisit()
+		return
+	if _is_echo() and current_event.has("stage") and not GameState.player.completed_events.has(chapter_id + ":" + str(current_event.id)):
+		await _start_event()
+		return
 	flow = "intro"
 	_clear()
 	_label(page, current_event.scene + " · " + current_event.title, 26, Color("#e4c98a"))
@@ -577,6 +704,7 @@ func _resume() -> void:
 		_settlement(response.pending_result)
 	elif response.accepted_steps.size() < current_event.puzzle.steps.size(): _show_puzzle()
 	elif not response.choice_done: _show_choice()
+	elif _is_echo() and str(current_event.id) == "temple_drum" and not bool(response.get("world_response",false)): echo_journey.drum_response()
 	elif current_event.has("battle") and not response.battle_checked: _start_battle()
 	else: await _finish()
 
@@ -592,6 +720,11 @@ func _rewind() -> void:
 func _show_puzzle() -> void:
 	flow = "puzzle"
 	_clear()
+	if _is_echo() and current_event.has("stage"):
+		echo_stage = preload("res://scripts/echo_stage.gd").new()
+		echo_stage.host = self
+		page.add_child(echo_stage)
+		return
 	var index: int = GameState.session.accepted_steps.size()
 	var step: Dictionary = current_event.puzzle.steps[index]
 	soundscape.set_scene("trace" if step.kind == "trace" else "theme")
@@ -702,6 +835,7 @@ func _submit_puzzle(payload: Dictionary) -> void:
 				join_canvas.snapped = false
 				join_canvas.queue_redraw()
 			status.text = "修复尚未相合，侵蚀 +10。"
+			if _is_echo(): status.text = "修复尚未相合。看看形状与方向，可以继续尝试。"
 		return
 	if response.accepted and current_event.puzzle.steps[GameState.session.accepted_steps.size()].kind == "skill":
 		soundscape.cue("repair")
@@ -714,6 +848,9 @@ func _submit_puzzle(payload: Dictionary) -> void:
 	if response.accepted: status.text = "墨线相合，记忆显影。"
 
 func _show_choice() -> void:
+	if _is_echo():
+		echo_journey.choice()
+		return
 	flow = "choice"
 	_clear()
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
@@ -750,6 +887,9 @@ func _choose(action: String, forget_id: String) -> void:
 		_error(network.last_error)
 		_button(page, "读取服务器进度后继续", _resume)
 		return
+	if _is_echo():
+		echo_journey.choice_result(response)
+		return
 	if action == "forget":
 		memory_audio.stop()
 		backdrop.color = Color(0.341, 0.357, 0.349, 0.88)
@@ -758,6 +898,8 @@ func _choose(action: String, forget_id: String) -> void:
 
 func _learned_skills() -> Array[String]:
 	var skills: Array[String] = []
+	for learned in GameState.player.get("learned_skills", []):
+		if not skills.has(str(learned)): skills.append(str(learned))
 	for entry in GameState.player.memory_ledger:
 		var skill: String = data.memory(entry.memory_id).skill
 		if entry.action == "kept" and not skill.is_empty() and not skills.has(skill): skills.append(skill)
@@ -783,10 +925,14 @@ func _start_battle() -> void:
 	if not boss_name.is_empty():
 		_label(page, "第三项技艺 · 飞檐已习得。先清除游蚀，再迎战噤声客；首领每 2.4 秒侵袭，记得护盾与闪身。", 17)
 	_play_cues([str(current_event.id) + "_before_battle"])
-	_label(page, current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
-	_label(page, "1 挥墨　2 斗拱　3 藻井　4 飞檐　5 闪身\n数字键或点击施展；未习得的技艺暂不可用。", 16)
+	_label(page, "白蚀蓄力时，移动避开，或用斗拱承住。" if _is_echo() else current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
+	if not _is_echo(): _label(page, "1 挥墨　2 斗拱　3 藻井　4 飞檐　5 闪身\n数字键或点击施展；未习得的技艺暂不可用。", 16)
 	battle_note = _label(page, "", 17)
 	arena = preload("res://scripts/battle_arena.gd").new()
+	arena.echo_style = _is_echo()
+	if _is_echo():
+		arena.footstep.connect(func(): soundscape.cue("step_wood" if chapter_id in ["prologue","temple"] else "step_stone"))
+		arena.erosion_gathered.connect(func(): soundscape.cue("erosion_gather"))
 	arena.background = _event_background()
 	arena.dodge_triggered.connect(_battle_dodge)
 	arena.hp = _wave_hp()
@@ -833,7 +979,7 @@ func _battle_skill(skill: String) -> void:
 	if int(spec.shield) > 0: effect += " 护盾 +%d" % int(spec.shield)
 	if int(spec.heal) > 0: effect += " 净化"
 	arena.cast(skill, effect, Color(spec.color))
-	soundscape.cue("ink" if int(spec.damage) > 0 else "repair")
+	soundscape.cue(("brush_sweep" if int(spec.damage) > 0 else ("ward_knock" if skill == "斗拱" else "paper_fold")) if _is_echo() else ("ink" if int(spec.damage) > 0 else "repair"))
 	if arena.hp <= 0:
 		arena.disperse()
 		battle_wave += 1
@@ -846,6 +992,7 @@ func _battle_skill(skill: String) -> void:
 	_battle_update()
 
 func _process(delta: float) -> void:
+	if _is_echo() and is_instance_valid(status): status.visible = not status.text.is_empty()
 	if flow == "memory" and memory_audio.stream != null:
 		var position := memory_audio.get_playback_position()
 		echo_note.text = "%s  %.1f / %.1f 秒" % ["已暂停" if memory_audio.stream_paused else ("正在聆听" if memory_audio.playing else "回声播放完毕"), position, memory_audio.stream.get_length()]
@@ -908,6 +1055,9 @@ func _finish() -> void:
 	_fade_from_dark()
 
 func _settlement(result: Dictionary, first_clear: bool = false) -> void:
+	if _is_echo():
+		echo_journey.settlement(result,first_clear)
+		return
 	flow = "settlement"
 	_clear()
 	var stars := _label(page, "古建修复 · " + "★".repeat(int(result.stars)), 30, Color("#e4c98a"))
@@ -923,7 +1073,7 @@ func _settlement(result: Dictionary, first_clear: bool = false) -> void:
 	var whisper := str(current_event.story.get("first_clear_whisper",""))
 	if first_clear and not whisper.is_empty() and not bool(story_progress.get_value("whisper",whisper_key,false)):
 		story_progress.set_value("whisper",whisper_key,true)
-		var saved := story_progress.save("user://story-" + str(GameState.player.id) + ".cfg")
+		var saved := story_progress.save(_story_progress_path())
 		if saved != OK: status.text = "呓语阅读标记保存失败。"
 		_play_cues([str(current_event.id) + "_first_clear"], true)
 		var aside := _label(page,"戏楼：" + whisper,21,Color("#c5caba"))
@@ -940,6 +1090,9 @@ func _settlement(result: Dictionary, first_clear: bool = false) -> void:
 
 func _show_memories() -> void:
 	if busy: return
+	if _is_echo():
+		echo_journey.memories()
+		return
 	_pause_event()
 	flow = "memories"
 	_clear()
@@ -990,6 +1143,9 @@ func _compare_memories(old_id: String, new_id: String) -> void:
 	_button(page, "返回抉择", _resume)
 
 func _memory_detail(id: String) -> void:
+	if _is_echo():
+		echo_journey.detail(id)
+		return
 	_pause_event()
 	flow = "memory"
 	_clear()
@@ -1014,6 +1170,9 @@ func _memory_detail(id: String) -> void:
 	if _has_current_event(): _button(page, "返回当前事件", _resume)
 
 func _play_memory(path: String) -> void:
+	if _is_echo() and not echo_journey.can_listen(path):
+		status.text = "记录仍在，这次回声不再随身响起。"
+		return
 	_stop_voice()
 	if memory_audio.playing:
 		memory_audio.stream_paused = not memory_audio.stream_paused
@@ -1030,6 +1189,9 @@ func _play_memory(path: String) -> void:
 
 func _show_ledger() -> void:
 	if busy: return
+	if _is_echo():
+		echo_journey.ledger()
+		return
 	_pause_event()
 	flow = "ledger"
 	_clear()
@@ -1048,7 +1210,7 @@ func _label(parent: Node, text: String, font_size: int = 18, color: Color = Colo
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override("font_size", font_size)
-	label.add_theme_color_override("font_color", Color("#303832") if color != Color("#f4ead3") else color)
+	label.add_theme_color_override("font_color", (Color("#302c28") if _is_echo() else Color("#303832")) if color != Color("#f4ead3") else color)
 	parent.add_child(label)
 	return label
 
@@ -1155,6 +1317,8 @@ func _render_dialogue() -> void:
 		_clear()
 		dialogue_stage = preload("res://scripts/dialogue_stage.gd").new()
 		dialogue_stage.failure = dialogue_mode == "failure"
+		dialogue_stage.echo_style = _is_echo()
+		dialogue_stage.echo_event_id = str(current_event.get("id",""))
 		dialogue_stage.backdrop = load("res://assets/landscape/failure.jpeg") if dialogue_mode == "failure" else _event_background()
 		if dialogue_background != null: dialogue_stage.backdrop = dialogue_background
 		add_child(dialogue_stage)
@@ -1179,7 +1343,7 @@ func _previous_dialogue() -> void:
 
 func _save_dialogue_cursor() -> void:
 	story_progress.set_value("dialogue", dialogue_key, dialogue_index)
-	var error := story_progress.save("user://story-" + str(GameState.player.id) + ".cfg")
+	var error := story_progress.save(_story_progress_path())
 	if error != OK: status.text = "剧情阅读位置未能保存；游戏进度不受影响。"
 
 func _advance_dialogue() -> void:
@@ -1201,6 +1365,9 @@ func _finish_dialogue() -> void:
 	dialogue_done.call()
 
 func _begin_failure() -> void:
+	if _is_echo():
+		echo_journey.failure()
+		return
 	failure_key = "failure:" + session_id + ":" + str(GameState.session.retries)
 	if bool(story_progress.get_value("read",failure_key,false)):
 		_show_failure_actions()
@@ -1226,6 +1393,9 @@ func _show_failure_actions() -> void:
 
 func _show_journal() -> void:
 	if busy: return
+	if _is_echo():
+		echo_journey.journal()
+		return
 	_pause_event()
 	flow = "journal"
 	_clear()
@@ -1317,6 +1487,7 @@ func _voice_next() -> void:
 ## Reparent the active canvas into a wide stage. The right-hand notes scroll
 ## independently, so investigation targets and puzzle input stay visible.
 func _layout_landscape() -> void:
+	if _is_echo() and flow in ["choice", "settlement", "memory"]: return
 	if flow not in ["intro", "puzzle", "battle", "choice", "settlement", "memory"] or page.has_node("LandscapeBody"): return
 	var visual: Control
 	for child in page.get_children():

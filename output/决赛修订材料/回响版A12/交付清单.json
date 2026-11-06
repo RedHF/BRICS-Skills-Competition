@@ -1,0 +1,46 @@
+{
+  "revision": "A12",
+  "archive_sha256": "58c227a3ecf38cf07c04922c1ecba71706d2af987f3ef168df71d521bf70fe05",
+  "files": [
+    {
+      "file": "A12_实机行走检查.mp4",
+      "bytes": 1471884,
+      "sha256": "54e39c5c4228df376e82957ee621893c7a1557349c29f13b3f7049bb483cbd3d"
+    },
+    {
+      "file": "从这里开始.md",
+      "bytes": 3317,
+      "sha256": "f9b9b71fbc2efcf64b1f3d3d5d1581d12ee19a862705432becc3c0812f58a6f6"
+    },
+    {
+      "file": "声音电平与来源.json",
+      "bytes": 3551,
+      "sha256": "a5f8733c6c2a9113cbf295b86eb93d7c5657b63c2c9c03ac7c19287a1df8f0f9"
+    },
+    {
+      "file": "收入心舍-修复后.png",
+      "bytes": 2267661,
+      "sha256": "92e27f587cd1c07c403f1a4accee69bd7680744d24f6b4fd91fb00a8638446bb"
+    },
+    {
+      "file": "旋转后拖曳-实机.png",
+      "bytes": 1155096,
+      "sha256": "8df49ae219d89d80d3a49855c848122e9f247166bee07f99400a2fd6fd63bbb8"
+    },
+    {
+      "file": "白蚀新形象-实机.png",
+      "bytes": 2154604,
+      "sha256": "30afa73a5ce76ea0b50adc3b7abc5c5535141fb9bf233f32eb48c78f7d35cdce"
+    },
+    {
+      "file": "素材与声音制作记录.md",
+      "bytes": 4983,
+      "sha256": "b5bd1a28a08f276cae39a33aef7452c62196eb23036cd0b8169230a1164c00a3"
+    },
+    {
+      "file": "验证摘要.json",
+      "bytes": 758,
+      "sha256": "89da47b5ee5970380b26c75d7a1554aef25911797d2e2482a812a84b367fcfb8"
+    }
+  ]
+}

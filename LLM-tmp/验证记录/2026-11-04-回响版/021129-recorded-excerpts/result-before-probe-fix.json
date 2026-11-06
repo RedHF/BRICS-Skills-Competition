@@ -1,0 +1,13 @@
+{
+  "kind": "recorded-exported-excerpts",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview10-20261104.zip",
+  "archive_sha256": "1c2dad9b32b4a788c212d6bb8a47bdc9ae97b269cbb7f0a3da58592f86de1e85",
+  "human_playtest": false,
+  "input": "automated UI actions",
+  "source_project_used": false,
+  "rendering_override": "[display]\nwindow/size/viewport_width=1920\nwindow/size/viewport_height=1080\nwindow/size/window_width_override=1280\nwindow/size/window_height_override=720\nwindow/stretch/mode=\"viewport\"\n",
+  "manifest_lines_before_override": 8,
+  "exe_sha256": "9793999ffae603522a8b05b6e7a1a5fd5b30a6de5283f58c8ca1b2cf917972ff",
+  "passed": false,
+  "error": "the JSON object must be str, bytes or bytearray, not NoneType"
+}

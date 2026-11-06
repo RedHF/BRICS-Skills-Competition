@@ -1,0 +1,84 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": false,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-04-回响版\\135026-357729-rotation-negative",
+  "passed": false,
+  "client_exit": 98,
+  "script_errors": [],
+  "errors": [
+    "ERROR: Picking up the rotated left piece reset its orientation"
+  ],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "adult-walking.png",
+    "joinery-before.png",
+    "prologue_bridge-kept-response.png",
+    "temple_incense-close-join.png",
+    "temple_incense-close-marks.png",
+    "temple_incense-observe.png"
+  ],
+  "frame_sizes": {
+    "adult-battle-casting.png": [
+      1280,
+      720
+    ],
+    "adult-battle-idle.png": [
+      1280,
+      720
+    ],
+    "adult-investigation.png": [
+      1280,
+      720
+    ],
+    "adult-walking.png": [
+      1280,
+      720
+    ],
+    "joinery-before.png": [
+      1280,
+      720
+    ],
+    "prologue_bridge-kept-response.png": [
+      1280,
+      720
+    ],
+    "temple_incense-close-join.png": [
+      1280,
+      720
+    ],
+    "temple_incense-close-marks.png": [
+      1280,
+      720
+    ],
+    "temple_incense-observe.png": [
+      1280,
+      720
+    ]
+  },
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: d8c00a9d4283) - Compatibility - Using Device: Google Inc. (NVIDIA) - ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6614)",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "ERROR: Picking up the rotated left piece reset its orientation",
+    "   at: push_error (core/variant/variant_utility.cpp:1024)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _check (res://tests/echo_smoke.gd:11)",
+    "       [1] _drag_rotated_piece (res://tests/echo_smoke.gd:302)",
+    "       [2] _pointer (res://tests/echo_smoke.gd:295)",
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "   at: cleanup (core/object/object.cpp:2514)"
+  ]
+}

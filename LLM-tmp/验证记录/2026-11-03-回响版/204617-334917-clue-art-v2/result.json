@@ -1,0 +1,233 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1920,
+    1080
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_cheng_xiang",
+  "full_journey": true,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-03-回响版\\204617-334917-clue-art-v2",
+  "passed": false,
+  "client_exit": 0,
+  "script_errors": [
+    "SCRIPT ERROR: Cannot call method 'get_size' on a null value.",
+    "SCRIPT ERROR: Cannot call method 'get_size' on a null value.",
+    "SCRIPT ERROR: Cannot call method 'get_size' on a null value.",
+    "SCRIPT ERROR: Cannot call method 'get_size' on a null value."
+  ],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "adult-walking.png",
+    "archived-record.png",
+    "archway_craftsman-result.png",
+    "archway_form-result.png",
+    "beam-before-archive.png",
+    "choice-result.png",
+    "choice-retiring.png",
+    "drum-response.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "joinery-detail-after.png",
+    "opera_master-result.png",
+    "opera_opening-result.png",
+    "prologue_bridge-kept-response.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-close-drum.png",
+    "temple_drum-close-rope.png",
+    "temple_drum-observe.png",
+    "temple_guest-close-bowl.png",
+    "temple_guest-close-cape.png",
+    "temple_guest-kept-response.png",
+    "temple_guest-observe.png",
+    "temple_incense-close-join.png",
+    "temple_incense-close-marks.png",
+    "temple_incense-kept-response.png",
+    "temple_incense-observe.png",
+    "tower_ascent-result.png",
+    "tower_ledger-result.png"
+  ],
+  "frame_sizes": {
+    "adult-battle-casting.png": [
+      1920,
+      1080
+    ],
+    "adult-battle-idle.png": [
+      1920,
+      1080
+    ],
+    "adult-investigation.png": [
+      1920,
+      1080
+    ],
+    "adult-walking.png": [
+      1920,
+      1080
+    ],
+    "archived-record.png": [
+      1920,
+      1080
+    ],
+    "archway_craftsman-result.png": [
+      1920,
+      1080
+    ],
+    "archway_form-result.png": [
+      1920,
+      1080
+    ],
+    "beam-before-archive.png": [
+      1920,
+      1080
+    ],
+    "choice-result.png": [
+      1920,
+      1080
+    ],
+    "choice-retiring.png": [
+      1920,
+      1080
+    ],
+    "drum-response.png": [
+      1920,
+      1080
+    ],
+    "first-choice.png": [
+      1920,
+      1080
+    ],
+    "guest-after.png": [
+      1920,
+      1080
+    ],
+    "joinery-after.png": [
+      1920,
+      1080
+    ],
+    "joinery-before.png": [
+      1920,
+      1080
+    ],
+    "joinery-detail-after.png": [
+      1920,
+      1080
+    ],
+    "opera_master-result.png": [
+      1920,
+      1080
+    ],
+    "opera_opening-result.png": [
+      1920,
+      1080
+    ],
+    "prologue_bridge-kept-response.png": [
+      1920,
+      1080
+    ],
+    "rubbing-after.png": [
+      1920,
+      1080
+    ],
+    "rubbing-before.png": [
+      1920,
+      1080
+    ],
+    "rubbing-partial.png": [
+      1920,
+      1080
+    ],
+    "temple_drum-close-drum.png": [
+      1920,
+      1080
+    ],
+    "temple_drum-close-rope.png": [
+      1920,
+      1080
+    ],
+    "temple_drum-observe.png": [
+      1920,
+      1080
+    ],
+    "temple_guest-close-bowl.png": [
+      1920,
+      1080
+    ],
+    "temple_guest-close-cape.png": [
+      1920,
+      1080
+    ],
+    "temple_guest-kept-response.png": [
+      1920,
+      1080
+    ],
+    "temple_guest-observe.png": [
+      1920,
+      1080
+    ],
+    "temple_incense-close-join.png": [
+      1920,
+      1080
+    ],
+    "temple_incense-close-marks.png": [
+      1920,
+      1080
+    ],
+    "temple_incense-kept-response.png": [
+      1920,
+      1080
+    ],
+    "temple_incense-observe.png": [
+      1920,
+      1080
+    ],
+    "tower_ascent-result.png": [
+      1920,
+      1080
+    ],
+    "tower_ledger-result.png": [
+      1920,
+      1080
+    ]
+  },
+  "log_tail": [
+    "       [2] _draw (res://scripts/echo_stage_canvas.gd:111)",
+    "ERROR: Condition \"p_texture.is_null()\" is true.",
+    "   at: draw_texture_rect (scene/main/canvas_item.cpp:864)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_inspection (res://scripts/echo_stage_canvas.gd:177)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:111)",
+    "SCRIPT ERROR: Cannot call method 'get_size' on a null value.",
+    "   at: _fit (res://scripts/echo_stage_canvas.gd:98)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _fit (res://scripts/echo_stage_canvas.gd:98)",
+    "       [1] _draw_inspection (res://scripts/echo_stage_canvas.gd:177)",
+    "       [2] _draw (res://scripts/echo_stage_canvas.gd:111)",
+    "ERROR: Condition \"p_texture.is_null()\" is true.",
+    "   at: draw_texture_rect (scene/main/canvas_item.cpp:864)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_inspection (res://scripts/echo_stage_canvas.gd:177)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:111)",
+    "SCRIPT ERROR: Cannot call method 'get_size' on a null value.",
+    "   at: _fit (res://scripts/echo_stage_canvas.gd:98)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _fit (res://scripts/echo_stage_canvas.gd:98)",
+    "       [1] _draw_inspection (res://scripts/echo_stage_canvas.gd:177)",
+    "       [2] _draw (res://scripts/echo_stage_canvas.gd:111)",
+    "ERROR: Condition \"p_texture.is_null()\" is true.",
+    "   at: draw_texture_rect (scene/main/canvas_item.cpp:864)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _draw_inspection (res://scripts/echo_stage_canvas.gd:177)",
+    "       [1] _draw (res://scripts/echo_stage_canvas.gd:111)",
+    "PASS full echo journey: ten UI event flows, non-slot final page, no stars, five living echoes and persisted completion; later trace/battle use deterministic fixtures",
+    "PASS echo client: temple observations, reversible joinery mistake, both-side assembly, sheltered placement saved, gradual rubbing and held assistance, first three-slot choice, confirmed archive and persistent craft"
+  ]
+}

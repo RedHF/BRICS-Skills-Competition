@@ -1,0 +1,93 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1920,
+    1030
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-04-回响版\\140314-748218-a12-pointer-motion-fixed",
+  "passed": false,
+  "client_exit": 98,
+  "script_errors": [],
+  "errors": [
+    "ERROR: Moving artisan did not advance through distinct walk frames"
+  ],
+  "frames": [
+    "adult-investigation.png",
+    "adult-walking.png",
+    "walk-left-00-frame-3.png",
+    "walk-left-01-frame-5.png",
+    "walk-left-02-frame-7.png",
+    "walk-left-03-frame-1.png",
+    "walk-left-04-frame-3.png",
+    "walk-left-05-frame-5.png",
+    "walk-left-06-frame-7.png",
+    "walk-left-07-frame-1.png",
+    "walk-left-08-frame-3.png"
+  ],
+  "frame_sizes": {
+    "adult-investigation.png": [
+      1920,
+      1030
+    ],
+    "adult-walking.png": [
+      1920,
+      1030
+    ],
+    "walk-left-00-frame-3.png": [
+      1920,
+      1030
+    ],
+    "walk-left-01-frame-5.png": [
+      1920,
+      1030
+    ],
+    "walk-left-02-frame-7.png": [
+      1920,
+      1030
+    ],
+    "walk-left-03-frame-1.png": [
+      1920,
+      1030
+    ],
+    "walk-left-04-frame-3.png": [
+      1920,
+      1030
+    ],
+    "walk-left-05-frame-5.png": [
+      1920,
+      1030
+    ],
+    "walk-left-06-frame-7.png": [
+      1920,
+      1030
+    ],
+    "walk-left-07-frame-1.png": [
+      1920,
+      1030
+    ],
+    "walk-left-08-frame-3.png": [
+      1920,
+      1030
+    ]
+  },
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: d8c00a9d4283) - Compatibility - Using Device: Google Inc. (NVIDIA) - ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6614)",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "ERROR: Moving artisan did not advance through distinct walk frames",
+    "   at: push_error (core/variant/variant_utility.cpp:1024)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _check (res://tests/echo_smoke.gd:12)",
+    "       [1] _check_walking (res://tests/echo_smoke.gd:353)",
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "   at: cleanup (core/object/object.cpp:2514)"
+  ]
+}

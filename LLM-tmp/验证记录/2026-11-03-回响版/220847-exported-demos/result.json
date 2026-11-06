@@ -1,0 +1,12 @@
+{
+  "kind": "exported-demo-check",
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview8-20261103.zip",
+  "archive_sha256": "51ba089ba344ab6ae28e2f990838ed858210639690632200fa6b1a28566ca485",
+  "human_playtest": false,
+  "source_project_used": false,
+  "edition_argument_used": false,
+  "manifest_lines_verified": 8,
+  "runs": [],
+  "passed": false,
+  "error": "Demo failed: 1-repair; ['ERROR: Welcome button is clipped: 开始接梁片段', 'ERROR: Welcome button is clipped: 返回完整旅程', 'ERROR: Welcome button is clipped: 声音设置', 'ERROR: Welcome button is clipped: 退出', 'ERROR: 3 resources still in use at exit.']"
+}

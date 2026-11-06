@@ -1,0 +1,67 @@
+[
+  {
+    "file": "artisan_casting.png",
+    "bytes": 2270561,
+    "sha256": "968307b63e14d0c04b4059c201a323d730aaa5ef221b14e3d37ac5c1b6ec3005"
+  },
+  {
+    "file": "artisan_standing.png",
+    "bytes": 2199609,
+    "sha256": "7759634f972b0cc0eac597295ca9ac8ac5c773ed2150424a0c7728e7c14711cb"
+  },
+  {
+    "file": "artisan_walking.png",
+    "bytes": 2212314,
+    "sha256": "df69f0b3f8c26ad09c09c2f4f3f53c87847e4ed1db54b554209f4b0c992583d8"
+  },
+  {
+    "file": "beam_lifting_hands.png",
+    "bytes": 1956777,
+    "sha256": "8d652d86e6e9c0a9ad3954a8c5001159d8987e4ab450259f4ccf84924d036dab"
+  },
+  {
+    "file": "distant_gong.wav",
+    "bytes": 124844,
+    "sha256": "f98de07879782daaa5a85ddb5ba1f927af88201c5615178cf9ff81e9bdc9aff3"
+  },
+  {
+    "file": "drum_beater_three_knots.png",
+    "bytes": 1190966,
+    "sha256": "803b38aefb66ac7b6a8bd9174379fb8c4f9fc8dfacf3fd3d3499ff95acb98aba"
+  },
+  {
+    "file": "drum_face.png",
+    "bytes": 3766594,
+    "sha256": "7ca63b00c45df07ad55238c93256e15aad7933f228e9dabd4de210182adb8c57"
+  },
+  {
+    "file": "drum_single.wav",
+    "bytes": 67244,
+    "sha256": "b50dfd9b7af88709badd2634d7fa9ff2995c137ba260523632c2db582d33fb4f"
+  },
+  {
+    "file": "empty_bowl.png",
+    "bytes": 1534351,
+    "sha256": "6fbe6df9718ae21a2cb2645f66a2364cc99eff3684f6c5f8243fe5d19a4f993c"
+  },
+  {
+    "file": "guest_bowl_close.png",
+    "bytes": 1923097,
+    "sha256": "b745ea4d11c02d3357642d8369186d634e2a411a9e6e473cdd1b8aead2eee02e"
+  },
+  {
+    "file": "temple_guest_detail_patch.png",
+    "bytes": 2012176,
+    "sha256": "3391723232250add47965045c29ae75eef90d03be719c3df21c126e9ce9d3250"
+  },
+  {
+    "file": "temple_hall_cleanplate.png",
+    "bytes": 2771331,
+    "sha256": "d8514e431d51115b1570f768889ca9005973ef596e209ddf958b72dd2c01cea7"
+  },
+  {
+    "file": "temple_hall_master.png",
+    "bytes": 2837037,
+    "sha256": "a7b42e3753aad1a3d6b5656a2850f906d32088c29ba38a4e6d8c173a583577d4"
+  }
+]

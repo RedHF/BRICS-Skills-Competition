@@ -1,0 +1,20 @@
+{
+  "kind": "release-check-negative-control",
+  "human_playtest": false,
+  "archive_sha256": "6d9d50f7866311d6a6484eebc2ba670fdc70db4a47c03fd0e22b4e06163f672b",
+  "runs": [
+    {
+      "harness": "echo_smoke.gd",
+      "sha256": "da1434caa9560b2dfbe7447319f53f0335abdb1570a49b6888a302c6703c15ff",
+      "exit": 98,
+      "failure_observed": true
+    },
+    {
+      "harness": "echo_demo_smoke.gd",
+      "sha256": "7c8b5b7bd3ba29523a51786197226ff18b6e87374424b468e232ca77c3a829fc",
+      "exit": 98,
+      "failure_observed": true
+    }
+  ],
+  "passed": true
+}
