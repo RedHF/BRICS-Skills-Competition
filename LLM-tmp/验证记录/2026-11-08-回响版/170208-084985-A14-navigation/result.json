@@ -1,0 +1,36 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": false,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-08-回响版\\170208-084985-A14-navigation",
+  "passed": false,
+  "client_exit": 0,
+  "script_errors": [
+    "SCRIPT ERROR: Invalid call. Nonexistent function 'get_viewport_rect' in base 'Node (main.gd)'."
+  ],
+  "errors": [
+    "SCRIPT ERROR: Invalid call. Nonexistent function 'get_viewport_rect' in base 'Node (main.gd)'."
+  ],
+  "frames": [],
+  "frame_sizes": {},
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "SCRIPT ERROR: Invalid call. Nonexistent function 'get_viewport_rect' in base 'Node (main.gd)'.",
+    "   at: _remaining_journey (res://tests/echo_smoke.gd:197)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _remaining_journey (res://tests/echo_smoke.gd:197)",
+    "       [1] _capture (res://tests/echo_smoke.gd:635)",
+    "PASS echo client: temple observations, reversible joinery mistake, both-side assembly, sheltered placement saved, gradual rubbing and held assistance, first three-slot choice, confirmed archive and persistent craft"
+  ]
+}

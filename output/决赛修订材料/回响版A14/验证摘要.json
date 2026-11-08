@@ -1,0 +1,13 @@
+{
+  "version": "A14b",
+  "archive_sha256": "c23bd04b49c4cef6be2a5e12b3ef83c106210b2e61478b03d618126756dc5796",
+  "actual_exe_full_journey_passed": true,
+  "detail_return_and_trace_bounds_checked": true,
+  "visual_size": [
+    1920,
+    1080
+  ],
+  "walk_capture_skipped_in_targeted_visual_run": true,
+  "human_playtest": false,
+  "evidence": "LLM-tmp\\验证记录\\2026-11-08-回响版\\170723-exported-client"
+}

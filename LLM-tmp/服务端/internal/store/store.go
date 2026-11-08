@@ -79,7 +79,14 @@ func (s *Store) persistLocked() error {
 	if err := os.WriteFile(tmp, append(b, '\n'), 0o600); err != nil {
 		return fmt.Errorf("write store temp: %w", err)
 	}
-	if err := os.Rename(tmp, s.path); err != nil {
+	renameErr := os.Rename(tmp, s.path)
+	// Windows scanners can briefly hold the destination. Preserve the old
+	// save and retry the atomic replacement; never delete it as a workaround.
+	for retry := 0; retry < 6 && errors.Is(renameErr, os.ErrPermission); retry++ {
+		time.Sleep(20 * time.Millisecond)
+		renameErr = os.Rename(tmp, s.path)
+	}
+	if err := renameErr; err != nil {
 		if cleanupErr := os.Remove(tmp); cleanupErr != nil {
 			return errors.Join(err, cleanupErr)
 		}

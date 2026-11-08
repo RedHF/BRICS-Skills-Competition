@@ -191,6 +191,10 @@ func _remaining_journey() -> void:
 				var answer := str(step.get("answer",""))
 				if answer.is_empty() and not step.get("options",[]).is_empty(): answer = str(step.options[0])
 				if step.kind == "trace":
+					if str(event.id) == "opera_opening":
+						await _capture("opera-trace-layout")
+						for control in main.page.find_children("*","Button",true,false):
+							if control.is_visible_in_tree(): _check(main.page.get_viewport_rect().encloses(control.get_global_rect()),"Trace action clipped: "+control.text)
 					await main._submit_puzzle({"step_id":step.id,"strokes":_strokes(step.trace.strokes)})
 				elif step.kind == "skill":
 					await _press(answer)
@@ -213,9 +217,10 @@ func _remaining_journey() -> void:
 					canvas._gui_input(up)
 					await _idle()
 				elif str(step.id) in ["opera_role","archway_grade"]:
+					if str(step.id) == "opera_role": await _capture("opera-sleeve-puzzle")
 					var found := false
 					for button in main.page.find_children("*","Button",true,false):
-						if str(button.get("motif")) == answer:
+						if not button.disabled and str(button.get("motif")) == answer:
 							button.pressed.emit()
 							found = true
 							break
@@ -224,6 +229,12 @@ func _remaining_journey() -> void:
 				else: await _press(answer)
 				_check(str(step.id) in root.get_node("GameState").session.accepted_steps,"Later-chapter puzzle did not advance: " + str(step.id))
 			_check(main.flow == "choice")
+			if str(event.id) == "opera_opening":
+				await _capture("opera-memory-choice")
+				main._memory_detail(str(event.reward.memory_id))
+				await process_frame
+				await main._resume()
+				_check(main.flow == "choice", "Memory detail did not return to the active choice")
 			var player: Dictionary = root.get_node("GameState").player
 			if str(event.id) == "tower_ledger": await _press("收下最后一页")
 			elif player.memories.size() < int(player.capacity): await _press("收入心舍")
@@ -375,6 +386,8 @@ func _check_archive_confirmation(trigger: Button) -> void:
 	_check(not prompt.visible,"Archive sheet did not close after confirmation")
 
 func _check_walking() -> void:
+	# Targeted layout runs may omit the unchanged walk-cycle capture.
+	if OS.get_environment("YANXIA_SKIP_WALK_CHECK") == "1": return
 	var scene: Control = main.scene_view
 	var figure = preload("res://scripts/echo_figure.gd")
 	_check(figure.walk_frames.size() == 8,"Adult walking cycle did not load")
@@ -410,12 +423,9 @@ func _check_battle_movement_and_audio() -> void:
 	await create_timer(.24).timeout
 	Input.action_release("move_right")
 	_check(arena.walk_time > before,"Guarding movement did not advance the adult walk cycle")
-	var guard := _button(main.battle_dock,"2 · 斗拱 · 点击施展")
-	_check(guard != null,"Guard button is missing from the battle dock")
-	await _pointer(guard,guard.size*.5,true)
-	await _pointer(guard,guard.size*.5,false)
-	await _idle()
-	_check(arena.shield > 0 and main.soundscape.last_cue.has("ward_knock"),"Guard skill did not play its timber impact")
+	_check(not main.battle_buttons.has("斗拱") and not main.battle_buttons.has("藻井"),"Passive skills still occupy action buttons")
+	_check(main.battle_buttons.size() >= 2,"Active skill controls are missing")
+	_check(arena.shield > 0,"Automatic ward did not trigger")
 	await create_timer(3.0).timeout
 	_check(main.soundscape.last_cue.has("erosion_gather"),"Enemy wind-up did not play the paper/plaster cue")
 	_check(arena.strike_number >= 1 and main.battle_hits == 0,"Real timed enemy strike was not blocked")

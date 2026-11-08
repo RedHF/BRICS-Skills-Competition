@@ -1,0 +1,60 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-08-回响版\\165854-338699-A14-layout",
+  "passed": false,
+  "client_exit": 99,
+  "script_errors": [],
+  "errors": [
+    "ERROR: Echo smoke timed out",
+    "ERROR: 1 resources still in use at exit (run with --verbose for details)."
+  ],
+  "frames": [
+    "adult-investigation.png",
+    "adult-walking.png",
+    "echo-welcome.png",
+    "walk-left-frame-2.png"
+  ],
+  "frame_sizes": {
+    "adult-investigation.png": [
+      1280,
+      720
+    ],
+    "adult-walking.png": [
+      1280,
+      720
+    ],
+    "echo-welcome.png": [
+      1280,
+      720
+    ],
+    "walk-left-frame-2.png": [
+      1280,
+      720
+    ]
+  },
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: d8c00a9d4283) - Compatibility - Using Device: Google Inc. (NVIDIA) - ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6614)",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "ERROR: Echo smoke timed out",
+    "   at: push_error (core/variant/variant_utility.cpp:1024)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] <anonymous lambda> (res://tests/echo_smoke.gd:29)",
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "   at: cleanup (core/object/object.cpp:2514)",
+    "ERROR: 1 resources still in use at exit (run with --verbose for details).",
+    "   at: clear (core/io/resource.cpp:804)"
+  ]
+}

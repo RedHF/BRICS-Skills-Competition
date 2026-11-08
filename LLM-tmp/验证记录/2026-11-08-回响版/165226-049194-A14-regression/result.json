@@ -1,0 +1,20 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": false,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-08-回响版\\165226-049194-A14-regression",
+  "passed": true,
+  "client_exit": 0,
+  "script_errors": [],
+  "errors": [],
+  "frames": [],
+  "frame_sizes": {}
+}

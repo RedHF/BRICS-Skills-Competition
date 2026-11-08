@@ -23,7 +23,7 @@ const CINNABAR = preload("res://assets/puzzles/cinnabar_seal.png")
 const JADE = preload("res://assets/puzzles/jade_seal.png")
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(0, 350)
+	custom_minimum_size = Vector2(0, 220)
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	characters = ceili(float(spec.aspect_ratio) / 1.2)
@@ -39,7 +39,7 @@ func select_stroke(index: int) -> void:
 	stroke_finished.emit()
 
 func _draw() -> void:
-	var height := minf(size.y - 58, (size.x - 54) / (float(spec.aspect_ratio) / characters))
+	var height := minf(size.y - 90, (size.x - 54) / (float(spec.aspect_ratio) / characters))
 	canvas_rect = Rect2((size - Vector2(height * float(spec.aspect_ratio) / characters, height)) / 2, Vector2(height * float(spec.aspect_ratio) / characters, height))
 	draw_style_box(preload("res://scripts/ink_theme.gd").surface("paper"), Rect2(Vector2.ZERO, size))
 	draw_texture_rect(PAPER, canvas_rect, false)

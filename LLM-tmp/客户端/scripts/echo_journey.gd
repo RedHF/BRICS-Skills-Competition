@@ -49,6 +49,7 @@ func choice() -> void:
 		candidate = ""
 	var body := HBoxContainer.new()
 	body.add_theme_constant_override("separation", 28)
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	host.page.add_child(body)
 	var left := VBoxContainer.new()
 	left.custom_minimum_size.x = 300
@@ -98,6 +99,9 @@ func choice() -> void:
 				host._button(description,"看看旧回应，再决定",inspect_choice.bind(candidate))
 			host._button(actions, "确认这次取舍…", confirm.bind("replace", candidate))
 	else:
+		var space := Control.new()
+		space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		description.add_child(space)
 		host._button(description, "收入心舍", host._choose.bind("keep", ""))
 	host._button(description, "只留下这段新回声的记录…", confirm.bind("archive", str(memory.id)))
 
@@ -223,7 +227,7 @@ func _sound_drum() -> void:
 	else: host._stop_voice()
 
 func revisit() -> void:
-	host.flow = "memory"
+	host.flow = "echo_memory"
 	host._clear()
 	var id := str(host.current_event.reward.memory_id)
 	var body := HBoxContainer.new()
@@ -313,7 +317,7 @@ func _record_list(parent: Node, interactive: bool = false) -> void:
 
 func detail(id: String) -> void:
 	host._pause_event()
-	host.flow = "memory"
+	host.flow = "echo_memory"
 	host._clear()
 	var memory: Dictionary = host.data.memory(id)
 	var living := held(id)
@@ -328,7 +332,7 @@ func detail(id: String) -> void:
 		host._label(host.page, "记录仍可查，这次回声不再随身响起。", 19)
 	if not str(memory.skill).is_empty(): host._label(host.page, "已经学会的技艺：" + str(memory.skill), 20)
 	host._button(host.page, "返回收藏", host._show_memories)
-	if host._has_current_event(): host._button(host.page, "返回当前事件", host._resume)
+	if host._has_current_event(): host._button(host.page, "继续当前旅程", host._resume)
 
 func ledger() -> void:
 	host._pause_event()
@@ -341,14 +345,14 @@ func ledger() -> void:
 		host._label(host.page, "%s「%s」 · 在「%s」" % [action, entry.title, trigger.title], 21)
 	if GameState.player.memory_ledger.is_empty(): host._label(host.page, "还没有取舍记录。", 20)
 	host._button(host.page, "返回收藏", host._show_memories)
-	if host._has_current_event(): host._button(host.page, "返回当前事件", host._resume)
+	if host._has_current_event(): host._button(host.page, "继续当前旅程", host._resume)
 
 func failure() -> void:
 	host.flow = "failed"
 	host._clear()
-	host._art_banner(host.page, load("res://assets/landscape/failure.jpeg"), 230)
-	host._label(host.page, "飞鸟山 · 墨迹未尽", 28)
-	host._label(host.page, "这一次，回应还没有接上。", 23)
+	host._art_banner(host.page, host._event_background(), 230)
+	host._label(host.page, "守护暂歇 · 可以再试", 28)
+	host._label(host.page, "本次守护未完成，旅程仍可继续。", 23)
 	host._label(host.page, "修复、已经学会的技艺和确认的取舍都保留。重试从本次守护开始。", 21)
 	host._button(host.page, "免费重试守护", host._rewind)
 	host._button(host.page, "返回关卡", host._show_map)
@@ -365,4 +369,4 @@ func journal() -> void:
 				host._label(host.page, str(event.story.outro), 20)
 				host._button(host.page, "查看记录", host._memory_detail.bind(str(event.reward.memory_id)))
 	host._button(host.page, "返回收藏", host._show_memories)
-	if host._has_current_event(): host._button(host.page, "返回当前事件", host._resume)
+	if host._has_current_event(): host._button(host.page, "继续当前旅程", host._resume)

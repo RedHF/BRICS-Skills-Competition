@@ -64,9 +64,19 @@ func (c *Catalog) ForEdition(edition string) (*Catalog, error) {
 			for ei := range chapter.Events {
 				event := &chapter.Events[ei]
 				event.Puzzle.Practice = true
+				for si := range event.Puzzle.Steps {
+					if event.Puzzle.Steps[si].ID == "opera_role" {
+						event.Puzzle.Steps[si].Prompt = "比对旧戏单的衣袖轮廓，找出能接续纹样的一片。"
+					}
+				}
 				event.Puzzle.MaxAttempts = 0
 				event.Reward.Choices = []string{"keep", "replace", "archive"}
 				event.Reward.CapacityIncrease = 0
+				if event.Battle != nil {
+					event.Battle.RequiredSkills = nil
+					event.Battle.DurationSec = 90
+					event.Battle.MaxHitsTaken = 12
+				}
 				if event.ID == "temple_drum" || event.ID == "archway_craftsman" {
 					event.Reward.CapacityIncrease = 1
 				}

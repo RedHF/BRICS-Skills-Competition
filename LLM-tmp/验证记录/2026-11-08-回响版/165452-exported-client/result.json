@@ -1,0 +1,32 @@
+{
+  "kind": "exported-echo-client-check",
+  "human_playtest": false,
+  "archive": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\dist\\檐下千秋-echo-v1-A-preview14-20261108.zip",
+  "archive_sha256": "aa08295d62f58b98370904ec429a4219edb6fdade6307f54e49f21af03155a8e",
+  "manifest_lines_verified": 8,
+  "release_audit": {
+    "missing": [],
+    "forbidden": [],
+    "extra": []
+  },
+  "edition_argument_used": false,
+  "source_project_used": false,
+  "passed": false,
+  "visual": true,
+  "offscreen_native_render": true,
+  "full_journey": true,
+  "archived_memory": "she_ning_an",
+  "health": {
+    "active_sessions": 0,
+    "build": "echo-v1",
+    "content_version": 10,
+    "edition": "echo-v1",
+    "game_id": "yanxia-qianqiu",
+    "players": 1,
+    "service": "yanxia-server",
+    "status": "ok",
+    "uptime_seconds": 0
+  },
+  "server_auto_started": true,
+  "error": "Command '['C:\\\\Users\\\\Admin\\\\Documents\\\\GitHub\\\\BRICS-Skills-Competition\\\\.review\\\\echo-export\\\\20261108-165452-665544\\\\unpacked\\\\檐下千秋-echo-v1-A-preview14-20261108\\\\檐下千秋.exe', '--verbose', '--audio-driver', 'Dummy', '--script', 'C:\\\\Users\\\\Admin\\\\Documents\\\\GitHub\\\\BRICS-Skills-Competition\\\\LLM-tmp\\\\客户端\\\\tests\\\\echo_smoke.gd', '--log-file', 'C:\\\\Users\\\\Admin\\\\Documents\\\\GitHub\\\\BRICS-Skills-Competition\\\\LLM-tmp\\\\验证记录\\\\2026-11-08-回响版\\\\165452-exported-client\\\\engine.log', '--rendering-driver', 'opengl3_angle', '--position', '12000,12000', '--resolution', '1280x720']' timed out after 110 seconds"
+}

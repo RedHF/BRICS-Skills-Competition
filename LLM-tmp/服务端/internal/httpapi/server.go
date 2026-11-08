@@ -601,7 +601,11 @@ func (s *Server) handlePuzzle(w http.ResponseWriter, r *http.Request, sessionID 
 		}
 		current.Actions = append(current.Actions, evaluation.ActionRecord)
 		if evaluation.ErosionDelta > 0 {
-			player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
+			if s.catalog.IsEcho() {
+				player.Erosion = clamp(evaluation.ErosionDelta, 0, maxErosion)
+			} else {
+				player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
+			}
 		}
 		if player.Erosion >= maxErosion && current.Status != "completed" {
 			current.Status = "failed"
@@ -695,6 +699,9 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 	}
 	input := rules.BattleInput{Skills: s.catalog.Skills, DurationMS: request.DurationMS, WavesCleared: request.WavesCleared, HitsTaken: request.HitsTaken, AllowedSkills: availableSkills, Actions: make([]rules.BattleAction, 0, len(request.Actions))}
 	input.StartErosion = player.Erosion
+	if s.catalog.IsEcho() {
+		input.StartErosion = 0
+	}
 	for _, action := range request.Actions {
 		input.Actions = append(input.Actions, rules.BattleAction{Skill: strings.TrimSpace(action.Skill), AtMS: action.AtMS})
 	}
@@ -718,7 +725,11 @@ func (s *Server) handleBattle(w http.ResponseWriter, r *http.Request, sessionID 
 			current.Status = "failed"
 			current.FailureReason = evaluation.Reason
 		}
-		player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
+		if s.catalog.IsEcho() {
+			player.Erosion = clamp(evaluation.ErosionDelta, 0, maxErosion)
+		} else {
+			player.Erosion = clamp(player.Erosion+evaluation.ErosionDelta, 0, maxErosion)
+		}
 		if player.Erosion >= maxErosion {
 			current.Status = "failed"
 			current.FailureReason = "erosion_limit"

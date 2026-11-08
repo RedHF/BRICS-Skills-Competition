@@ -67,3 +67,6 @@ output/决赛材料核对/本科组_Track01_匿名核对副本.zip
 /output/决赛修订材料/回响版A9/*.pdf
 /output/决赛修订材料/回响版A10/*.pptx
 /output/决赛修订材料/回响版A10/*.mp4
+# Local roadshow delivery includes executable copies and video; never add to Git.
+/output/路演材料包-20261108/
+/output/路演材料包-20261108.zip

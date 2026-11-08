@@ -1,0 +1,42 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": false,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": false,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-08-回响版\\164906-280596-A14-review",
+  "passed": false,
+  "client_exit": 98,
+  "script_errors": [
+    "SCRIPT ERROR: Invalid access to property or key 'size' on a base object of type 'Nil'."
+  ],
+  "errors": [
+    "ERROR: Guard button is missing from the battle dock",
+    "SCRIPT ERROR: Invalid access to property or key 'size' on a base object of type 'Nil'."
+  ],
+  "frames": [],
+  "frame_sizes": {},
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "ERROR: Guard button is missing from the battle dock",
+    "   at: push_error (core/variant/variant_utility.cpp:1024)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _check (res://tests/echo_smoke.gd:12)",
+    "       [1] _check_battle_movement_and_audio (res://tests/echo_smoke.gd:414)",
+    "SCRIPT ERROR: Invalid access to property or key 'size' on a base object of type 'Nil'.",
+    "   at: _check_battle_movement_and_audio (res://tests/echo_smoke.gd:415)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _check_battle_movement_and_audio (res://tests/echo_smoke.gd:415)",
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "   at: cleanup (core/object/object.cpp:2514)"
+  ]
+}

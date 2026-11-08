@@ -201,6 +201,18 @@ func _draw_effect(item: Dictionary) -> void:
 	var direction := (target - source).normalized()
 	var center := source.lerp(target, minf(1, age / .24))
 	var fade := clampf((1.05 - age) / .55, 0, 1)
+	if echo_style and item.kind in ["挥墨", "飞檐", "藻井", "斗拱"]:
+		var impact := source if item.kind == "斗拱" else target
+		for i in range(18):
+			var angle := TAU*i/18.0 + float(item.variant)*.3
+			var ray := Vector2(cos(angle),sin(angle))
+			var radius := 20 + t*145
+			draw_line(impact+ray*radius*.55,impact+ray*radius,Color(.93,.76,.43,fade*.7),2,true)
+		for ring in range(2):
+			draw_arc(impact,30+t*130+ring*12,age+ring*PI,age+ring*PI+PI*1.7,64,Color(.87,.78,.57,fade*.55),2,true)
+		if item.kind == "飞檐":
+			for trail in range(3):
+				_sprite(FLYING_BLADES,source.lerp(target,clampf(age/.35-trail*.13,0,1))+Vector2(0,(trail-1)*22),Vector2(155,105),direction.angle()+PI/4,fade*(.6-trail*.14))
 	match item.kind:
 		"挥墨":
 			_sprite(INK_SLASH, center, Vector2(120, 105) * (1 + .3 * t), direction.angle() + PI / 4 + float(item.variant - 1) * .2, fade)

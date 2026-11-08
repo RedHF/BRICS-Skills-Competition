@@ -1,0 +1,220 @@
+{
+  "kind": "automated-client-check",
+  "human_playtest": false,
+  "size": [
+    1280,
+    720
+  ],
+  "visual": true,
+  "edition": "echo-v1",
+  "archived": "she_ning_an",
+  "full_journey": true,
+  "offscreen_native_render": true,
+  "output": "C:\\Users\\Admin\\Documents\\GitHub\\BRICS-Skills-Competition\\LLM-tmp\\验证记录\\2026-11-08-回响版\\165056-283653-A14-final",
+  "passed": false,
+  "client_exit": 98,
+  "script_errors": [],
+  "errors": [
+    "ERROR: Later-chapter puzzle did not advance: opera_role"
+  ],
+  "frames": [
+    "adult-battle-casting.png",
+    "adult-battle-idle.png",
+    "adult-investigation.png",
+    "adult-walking.png",
+    "archive-confirmation.png",
+    "archive-new-with-room.png",
+    "archived-record.png",
+    "choice-result.png",
+    "choice-retiring.png",
+    "drum-response.png",
+    "echo-welcome.png",
+    "first-choice.png",
+    "guest-after.png",
+    "joinery-after.png",
+    "joinery-before.png",
+    "joinery-detail-after.png",
+    "joinery-rotated-drag.png",
+    "prologue_bridge-kept-response.png",
+    "rubbing-after.png",
+    "rubbing-before.png",
+    "rubbing-partial.png",
+    "temple_drum-close-drum.png",
+    "temple_drum-close-rope.png",
+    "temple_drum-observe.png",
+    "temple_guest-close-bowl.png",
+    "temple_guest-close-cape.png",
+    "temple_guest-kept-response.png",
+    "temple_guest-observe.png",
+    "temple_incense-close-join.png",
+    "temple_incense-close-marks.png",
+    "temple_incense-kept-response.png",
+    "temple_incense-observe.png",
+    "walk-left-frame-2.png",
+    "walk-left-frame-3.png",
+    "walk-left-frame-5.png",
+    "white-erosion-after-timed-strike.png"
+  ],
+  "frame_sizes": {
+    "adult-battle-casting.png": [
+      1280,
+      720
+    ],
+    "adult-battle-idle.png": [
+      1280,
+      720
+    ],
+    "adult-investigation.png": [
+      1280,
+      720
+    ],
+    "adult-walking.png": [
+      1280,
+      720
+    ],
+    "archive-confirmation.png": [
+      1280,
+      720
+    ],
+    "archive-new-with-room.png": [
+      1280,
+      720
+    ],
+    "archived-record.png": [
+      1280,
+      720
+    ],
+    "choice-result.png": [
+      1280,
+      720
+    ],
+    "choice-retiring.png": [
+      1280,
+      720
+    ],
+    "drum-response.png": [
+      1280,
+      720
+    ],
+    "echo-welcome.png": [
+      1280,
+      720
+    ],
+    "first-choice.png": [
+      1280,
+      720
+    ],
+    "guest-after.png": [
+      1280,
+      720
+    ],
+    "joinery-after.png": [
+      1280,
+      720
+    ],
+    "joinery-before.png": [
+      1280,
+      720
+    ],
+    "joinery-detail-after.png": [
+      1280,
+      720
+    ],
+    "joinery-rotated-drag.png": [
+      1280,
+      720
+    ],
+    "prologue_bridge-kept-response.png": [
+      1280,
+      720
+    ],
+    "rubbing-after.png": [
+      1280,
+      720
+    ],
+    "rubbing-before.png": [
+      1280,
+      720
+    ],
+    "rubbing-partial.png": [
+      1280,
+      720
+    ],
+    "temple_drum-close-drum.png": [
+      1280,
+      720
+    ],
+    "temple_drum-close-rope.png": [
+      1280,
+      720
+    ],
+    "temple_drum-observe.png": [
+      1280,
+      720
+    ],
+    "temple_guest-close-bowl.png": [
+      1280,
+      720
+    ],
+    "temple_guest-close-cape.png": [
+      1280,
+      720
+    ],
+    "temple_guest-kept-response.png": [
+      1280,
+      720
+    ],
+    "temple_guest-observe.png": [
+      1280,
+      720
+    ],
+    "temple_incense-close-join.png": [
+      1280,
+      720
+    ],
+    "temple_incense-close-marks.png": [
+      1280,
+      720
+    ],
+    "temple_incense-kept-response.png": [
+      1280,
+      720
+    ],
+    "temple_incense-observe.png": [
+      1280,
+      720
+    ],
+    "walk-left-frame-2.png": [
+      1280,
+      720
+    ],
+    "walk-left-frame-3.png": [
+      1280,
+      720
+    ],
+    "walk-left-frame-5.png": [
+      1280,
+      720
+    ],
+    "white-erosion-after-timed-strike.png": [
+      1280,
+      720
+    ]
+  },
+  "log_tail": [
+    "Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org",
+    "OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: d8c00a9d4283) - Compatibility - Using Device: Google Inc. (NVIDIA) - ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6614)",
+    "",
+    "ERROR: Failed to read the root certificate store.",
+    "   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2558)",
+    "PASS labor overlay visible pixels: 6177",
+    "ERROR: Later-chapter puzzle did not advance: opera_role",
+    "   at: push_error (core/variant/variant_utility.cpp:1024)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] _check (res://tests/echo_smoke.gd:12)",
+    "       [1] _remaining_journey (res://tests/echo_smoke.gd:225)",
+    "       [2] _idle (res://tests/echo_smoke.gd:260)",
+    "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+    "   at: cleanup (core/object/object.cpp:2514)"
+  ]
+}

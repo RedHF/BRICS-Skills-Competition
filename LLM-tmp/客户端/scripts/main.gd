@@ -731,9 +731,7 @@ func _show_puzzle() -> void:
 	if step.kind == "trace": soundscape.cue("ui_page")
 	_label(page, "修复 %d / %d · %s" % [index + 1, current_event.puzzle.steps.size(), current_event.title], 24, Color("#e4c98a"))
 	_label(page, step.prompt, 20)
-	if step.kind == "trace":
-		_memory_art(page, current_event.reward.memory_id, 130)
-	elif step.kind != "skill" and step.id not in ["opera_role", "archway_grade"]:
+	if step.kind != "trace" and step.kind != "skill" and step.id not in ["opera_role", "archway_grade"]:
 		_add_building()
 	if step.kind == "trace":
 		_label(page, "按住拖动：从青印描到朱印。", 17, Color("#d7c69c"))
@@ -744,9 +742,8 @@ func _show_puzzle() -> void:
 		trace_progress = _label(page, "", 16)
 		stroke_buttons = HFlowContainer.new()
 		page.add_child(stroke_buttons)
-		for i in range(step.trace.strokes.size()):
-			var button := _button(stroke_buttons, "%02d" % [i + 1], trace_canvas.select_stroke.bind(i))
-			button.custom_minimum_size = Vector2(48, 42)
+		_button(stroke_buttons, "‹ 上一笔", func(): trace_canvas.select_stroke(maxi(0, trace_canvas.active - 1)))
+		_button(stroke_buttons, "下一笔 ›", func(): trace_canvas.select_stroke(mini(trace_canvas.strokes.size()-1, trace_canvas.active + 1)))
 		trace_canvas.stroke_finished.connect(_trace_feedback)
 		trace_canvas.brush_touched.connect(func(): soundscape.cue("brush_touch"))
 		_trace_feedback()
@@ -776,7 +773,12 @@ func _show_puzzle() -> void:
 				status.text = "已选「%s」，请点击作用构件。" % skill)
 		skill_scene.applied.connect(func(skill, target): _submit_puzzle({"step_id":step.id, "answer":skill, "target":target}))
 	elif step.id in ["opera_role", "archway_grade"]:
-		_label(page, "观察图式，选择相符的一项。", 17)
+		_label(page, "对照旧戏单：两侧长水袖向下垂落。请选择相同的衣袖轮廓。" if step.id == "opera_role" else "观察柱数与开间，选择相同的轮廓。", 19)
+		if step.id == "opera_role":
+			var reference = preload("res://scripts/pattern_option.gd").new()
+			reference.motif = "旦"
+			reference.disabled = true
+			page.add_child(reference)
 		var options := HBoxContainer.new()
 		page.add_child(options)
 		for i in range(step.options.size()):
@@ -804,10 +806,6 @@ func _trace_feedback() -> void:
 	for stroke in trace_canvas.strokes:
 		if not stroke.is_empty(): count += 1
 	trace_progress.text = "落墨 %d/%d · 当前第 %02d 笔%s" % [count, trace_canvas.strokes.size(), trace_canvas.active + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
-	for i in range(stroke_buttons.get_child_count()):
-		var button: Button = stroke_buttons.get_child(i)
-		button.text = "%02d" % [i + 1] + (" ×" if trace_canvas.failed.has(i) else "")
-		button.modulate = Color("#ff8078") if trace_canvas.failed.has(i) else (Color("#e4c98a") if i == trace_canvas.active else Color.WHITE)
 
 func _submit_puzzle(payload: Dictionary) -> void:
 	if busy: return
@@ -923,9 +921,9 @@ func _start_battle() -> void:
 	var boss_name := str(current_event.battle.get("boss_name", ""))
 	_label(page, "首领战 · " + boss_name if not boss_name.is_empty() else "白蚀来袭", 26, Color("#e4c98a"))
 	if not boss_name.is_empty():
-		_label(page, "第三项技艺 · 飞檐已习得。先清除游蚀，再迎战噤声客；首领每 2.4 秒侵袭，记得护盾与闪身。", 17)
+		_label(page, "先清除游蚀，再迎战噤声客。蓄力时可闪身，护盾与净化自动运转。", 17)
 	_play_cues([str(current_event.id) + "_before_battle"])
-	_label(page, "白蚀蓄力时，移动避开，或用斗拱承住。" if _is_echo() else current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
+	_label(page, "受蚀允许容错；达到本场上限或超时才重试，不影响已修复的进度。" if _is_echo() else current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
 	if not _is_echo(): _label(page, "1 挥墨　2 斗拱　3 藻井　4 飞檐　5 闪身\n数字键或点击施展；未习得的技艺暂不可用。", 16)
 	battle_note = _label(page, "", 17)
 	arena = preload("res://scripts/battle_arena.gd").new()
@@ -943,14 +941,24 @@ func _start_battle() -> void:
 		child.queue_free()
 	battle_start = _button(battle_dock, "开始守护 · 准备好再迎战", _begin_battle)
 	battle_controls = GridContainer.new()
-	battle_controls.columns = 5
+	battle_controls.columns = 3 if _is_echo() else 5
 	battle_dock.add_child(battle_controls)
 	for skill in BATTLE_KEYS:
+		if _is_echo() and skill in ["斗拱", "藻井"]:
+			battle_ready[skill] = 0
+			continue
 		if skill not in ["挥墨", "闪身"] and not battle_skills.has(skill): continue
 		battle_ready[skill] = 0
-		battle_buttons[skill] = _button(battle_controls, skill, _battle_skill.bind(skill))
+		if _is_echo():
+			var skill_button = preload("res://scripts/skill_orb.gd").new()
+			skill_button.skill = skill
+			skill_button.pressed.connect(_battle_skill.bind(skill))
+			battle_controls.add_child(skill_button)
+			battle_buttons[skill] = skill_button
+		else:
+			battle_buttons[skill] = _button(battle_controls, skill, _battle_skill.bind(skill))
 		battle_buttons[skill].tooltip_text = data.catalog.skills[skill].description
-	status.text = "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
+	status.text = "斗拱自动护盾 · 藻井自动净化；主动操作：挥墨、飞檐、闪身。" if _is_echo() else "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
 	_battle_update()
 
 func _begin_battle() -> void:
@@ -966,7 +974,7 @@ func _battle_dodge() -> void:
 func _battle_skill(skill: String) -> void:
 	if busy or battle_finished or not battle_running: return
 	var at := int(battle_elapsed * 1000)
-	if at < int(battle_ready[skill]): return
+	if at < int(battle_ready.get(skill, 0)): return
 	var spec: Dictionary = data.catalog.skills[skill]
 	battle_actions.append({"skill": skill, "at_ms": at})
 	battle_ready[skill] = at + int(spec.cooldown_ms)
@@ -993,13 +1001,18 @@ func _battle_skill(skill: String) -> void:
 
 func _process(delta: float) -> void:
 	if _is_echo() and is_instance_valid(status): status.visible = not status.text.is_empty()
-	if flow == "memory" and memory_audio.stream != null:
+	if flow == "memory" and memory_audio.stream != null and is_instance_valid(echo_note) and is_instance_valid(echo_button):
 		var position := memory_audio.get_playback_position()
 		echo_note.text = "%s  %.1f / %.1f 秒" % ["已暂停" if memory_audio.stream_paused else ("正在聆听" if memory_audio.playing else "回声播放完毕"), position, memory_audio.stream.get_length()]
 		echo_button.text = "暂停回声" if memory_audio.playing and not memory_audio.stream_paused else "继续 / 重听回声"
 	if flow != "battle" or battle_finished or not battle_running: return
+	if _is_echo():
+		for passive in ["斗拱", "藻井"]:
+			if battle_skills.has(passive) and int(battle_elapsed*1000) >= int(battle_ready.get(passive, 0)):
+				_battle_skill(passive)
+				if battle_finished: return
 	battle_elapsed = minf(battle_elapsed + delta, float(current_event.battle.duration_sec))
-	while next_attack <= int(battle_elapsed * 1000) and battle_hits <= int(current_event.battle.max_hits_taken) and int(GameState.player.erosion) + battle_hits * 5 < 100:
+	while next_attack <= int(battle_elapsed * 1000) and battle_hits <= int(current_event.battle.max_hits_taken) and (0 if _is_echo() else int(GameState.player.erosion)) + battle_hits * 5 < 100:
 		if arena.shield > 0:
 			arena.shield -= 1
 			arena.enemy_strike(true)
@@ -1011,23 +1024,29 @@ func _process(delta: float) -> void:
 	_battle_update()
 
 func _battle_update() -> void:
-	_refresh_stats(mini(100, int(GameState.player.erosion) + battle_hits * 5))
+	_refresh_stats(mini(100, (0 if _is_echo() else int(GameState.player.erosion)) + battle_hits * 5))
 	arena.hits = battle_hits
 	arena.phase = 1.0 - float(next_attack - int(battle_elapsed * 1000)) / float(_attack_interval())
 	arena.boss_name = str(current_event.battle.get("boss_name", "")) if _boss_wave() else ""
 	battle_note.text = "第 %d/%d 波 · 剩余 %d 秒 · 受蚀 %d/%d" % [mini(battle_wave + 1, int(current_event.battle.waves)), int(current_event.battle.waves), ceili(float(current_event.battle.duration_sec) - battle_elapsed), battle_hits, int(current_event.battle.max_hits_taken) + 1]
-	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or int(GameState.player.erosion) + battle_hits * 5 >= 100 or battle_elapsed >= float(current_event.battle.duration_sec):
+	if battle_wave == int(current_event.battle.waves) or battle_hits > int(current_event.battle.max_hits_taken) or (0 if _is_echo() else int(GameState.player.erosion)) + battle_hits * 5 >= 100 or battle_elapsed >= float(current_event.battle.duration_sec):
 		battle_finished = true
 		arena.active = false
 		arena.defeated = battle_wave == int(current_event.battle.waves)
 		var complete: bool = arena.defeated
-		for skill in current_event.battle.required_skills: complete = complete and wave_skills.has(skill)
+		for skill in current_event.battle.required_skills:
+			if not _is_echo(): complete = complete and wave_skills.has(skill)
 		status.text = "白蚀已驱散。" if complete else ("白蚀已散，但未施展本关要求的技能。" if arena.defeated else "墨线失守，本次战斗失败。")
 		_button(battle_dock, "结算白蚀战斗", _submit_battle)
 		soundscape.cue("win" if complete else "hit")
 	for skill in battle_buttons:
 		var remaining := maxi(0, int(battle_ready[skill]) - int(battle_elapsed * 1000))
-		battle_buttons[skill].text = "%d · %s" % [BATTLE_KEYS.find(skill)+1, skill] + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
+		if _is_echo():
+			battle_buttons[skill].remaining = remaining / 1000.0
+			battle_buttons[skill].cooldown = maxf(.001, float(data.catalog.skills[skill].cooldown_ms)/1000.0)
+			battle_buttons[skill].queue_redraw()
+		else:
+			battle_buttons[skill].text = "%d · %s" % [BATTLE_KEYS.find(skill)+1, skill] + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
 		battle_buttons[skill].disabled = not battle_running or battle_finished or remaining > 0
 
 func _submit_battle() -> void:
@@ -1501,7 +1520,7 @@ func _layout_landscape() -> void:
 	var body := HBoxContainer.new()
 	body.name = "LandscapeBody"
 	body.add_theme_constant_override("separation", 24)
-	body.custom_minimum_size.y = 330 if flow == "battle" else 460
+	body.custom_minimum_size.y = minf(430, maxf(240, scroll.size.y - 12))
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	page.add_child(body)
 	page.remove_child(visual)
@@ -1513,6 +1532,7 @@ func _layout_landscape() -> void:
 	notes_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	notes_scroll.custom_minimum_size.x = 340
 	notes_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	if visual == trace_canvas: notes_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	body.add_child(notes_scroll)
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1520,14 +1540,14 @@ func _layout_landscape() -> void:
 	notes_scroll.add_child(card)
 	var notes := VBoxContainer.new()
 	notes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	notes.add_theme_constant_override("separation", 14)
+	notes.add_theme_constant_override("separation", 8 if visual == trace_canvas else 14)
 	card.add_child(notes)
 	for child in children:
 		if child == visual: continue
 		page.remove_child(child)
 		notes.add_child(child)
 		if child is Label:
-			child.add_theme_font_size_override("font_size", maxi(22, child.get_theme_font_size("font_size")))
+			child.add_theme_font_size_override("font_size", 18 if visual == trace_canvas else maxi(20, child.get_theme_font_size("font_size")))
 	backdrop_art.texture = MENU_BACKGROUND
 
 func _next_event() -> void:

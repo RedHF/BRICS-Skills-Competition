@@ -1,0 +1,19 @@
+{
+  "original_final_file_count": 898,
+  "original_final_byte_identical": true,
+  "new_video_sha256": "2910f1db1493a0391935065331e5bb1d86fc48563edd05f752501c2ca3a26704",
+  "source_video_sha256": "e1853a0d1583def112c23be5513b92d962b837627a365002f5ae00500a533c9d",
+  "video_duration_seconds": 120,
+  "video_codec": "H.264/AAC",
+  "video_resolution": "1920x1080",
+  "video_fps": 30,
+  "video_embedded_bytes_match": true,
+  "video_audio_levels": "[Parsed_volumedetect_0 @ 000001efae3f3f40] mean_volume: -32.9 dB\n[Parsed_volumedetect_0 @ 000001efae3f3f40] max_volume: -7.0 dB",
+  "anonymous_text_metadata_findings": [],
+  "scanned_text_document_files": 46,
+  "native_powerpoint_static_rendered": true,
+  "manual_pages": 8,
+  "actual_video_playback_and_speaker_check": false,
+  "human_rehearsal_timing_completed": false,
+  "original_video_full_visual_anonymity_review_completed": false
+}
