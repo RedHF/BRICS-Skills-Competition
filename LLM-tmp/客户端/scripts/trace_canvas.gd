@@ -14,6 +14,8 @@ var view_x := 0.0
 var characters := 1
 var brush_position := Vector2.ZERO
 var brush_visible := false
+var glyph: Texture2D
+var glyph_strokes: Array[Texture2D] = []
 
 const PAPER = preload("res://assets/puzzles/xuan_paper.png")
 const HINT = preload("res://assets/puzzles/hint_plaque.png")
@@ -28,6 +30,9 @@ func _ready() -> void:
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	characters = ceili(float(spec.aspect_ratio) / 1.2)
+	glyph = load("res://assets/puzzles/glyph_" + step_id + ".png") as Texture2D
+	for i in range(spec.strokes.size()):
+		glyph_strokes.append(load("res://assets/puzzles/glyph_%s_%d.png" % [step_id, i]) as Texture2D)
 	for stroke in spec.strokes: strokes.append([])
 	select_stroke(0)
 
@@ -73,14 +78,17 @@ func _draw() -> void:
 	var plaque := Rect2(Vector2(canvas_rect.position.x, canvas_rect.position.y - 37), Vector2(minf(canvas_rect.size.x, 380), 31))
 	draw_texture_rect(HINT, plaque, false, Color(1, 1, 1, .35))
 	draw_string(preload("res://scripts/ink_theme.gd").font(), plaque.position + Vector2(12, 22), "%s · 第 %d / %d 笔 · 青印起笔，朱印收锋" % [str(spec.get("glyph", "拓印")),active+1,strokes.size()], HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color("#5c5145"))
+	var untouched := completed_strokes() == 0
+	if untouched and glyph != null:
+		_draw_glyph(glyph)
 	for i in range(spec.strokes.size()):
 		if floorf(float(spec.strokes[i][0][0]) * characters) / characters != view_x: continue
-		var guide := PackedVector2Array()
-		for vertex in spec.strokes[i]:
-			guide.append(canvas_rect.position + Vector2((float(vertex[0])-view_x)*characters,float(vertex[1]))*canvas_rect.size)
-		if guide.size() > 1 and strokes[i].is_empty():
-			_draw_guide_stroke(guide, i == active)
-		elif guide.size() > 1 and drawing and i == active:
+		if not untouched and strokes[i].is_empty() and i < glyph_strokes.size() and glyph_strokes[i] != null:
+			_draw_glyph(glyph_strokes[i])
+		if drawing and i == active and not strokes[i].is_empty():
+			var guide := PackedVector2Array()
+			for vertex in spec.strokes[i]:
+				guide.append(canvas_rect.position + Vector2((float(vertex[0])-view_x)*characters,float(vertex[1]))*canvas_rect.size)
 			var last: Array = strokes[i][-1]
 			var tip := canvas_rect.position + Vector2((float(last[0])-view_x)*characters,float(last[1]))*canvas_rect.size
 			var tail := _remaining_guide(guide, tip)
@@ -100,6 +108,10 @@ func _draw() -> void:
 	if brush_visible and canvas_rect.has_point(brush_position):
 		# The tip of the painted brush sits at the pointer's bottom-left corner.
 		draw_texture_rect(BRUSH, Rect2(brush_position + Vector2(-2, -88), Vector2(86, 86)), false)
+
+func _draw_glyph(texture: Texture2D) -> void:
+	var source := Rect2(Vector2(texture.get_width() * view_x, 0), Vector2(texture.get_width() / characters, texture.get_height()))
+	draw_texture_rect_region(texture, canvas_rect, source, Color(1, 1, 1, .63))
 
 func _draw_guide_stroke(points: PackedVector2Array, selected: bool) -> void:
 	draw_polyline(points, Color("#746b60", .16 if selected else .1), 3, true)

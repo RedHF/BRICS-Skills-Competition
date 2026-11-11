@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import math
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,7 +72,11 @@ def stamp_glyphs() -> None:
                 if step["kind"] != "trace":
                     continue
                 art = Image.new("RGBA", (1200, 500))
-                for stroke in step["trace"]["strokes"]:
+                for index, stroke in enumerate(step["trace"]["strokes"]):
+                    stroke_art = Image.new("RGBA", (1200, 500))
+                    ImageDraw.Draw(stroke_art).line(
+                        [(round(x * 1200), round(y * 500)) for x, y in stroke],
+                        fill=(36, 31, 25, 170), width=16, joint="curve")
                     for first, second in zip(stroke, stroke[1:]):
                         x0, y0 = first[0] * 1200, first[1] * 500
                         x1, y1 = second[0] * 1200, second[1] * 500
@@ -84,8 +88,10 @@ def stamp_glyphs() -> None:
                         angle = math.degrees(math.atan2(-dy, dx))
                         brush = brush.rotate(angle, Image.Resampling.BICUBIC, expand=True)
                         mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
-                        art.alpha_composite(brush, (round(mid_x - brush.width / 2),
-                                                    round(mid_y - brush.height / 2)))
+                        stroke_art.alpha_composite(brush, (round(mid_x - brush.width / 2),
+                                                           round(mid_y - brush.height / 2)))
+                    art.alpha_composite(stroke_art)
+                    stroke_art.save(TARGET / f"glyph_{step['id']}_{index}.png", optimize=True)
                 art.save(TARGET / f"glyph_{step['id']}.png", optimize=True)
                 print(f"glyph_{step['id']}: {len(step['trace']['strokes'])} brush paths")
 

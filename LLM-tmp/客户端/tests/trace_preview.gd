@@ -18,6 +18,7 @@ func _run() -> void:
 	var canvas := Control.new()
 	canvas.set_script(load("res://scripts/trace_canvas.gd"))
 	canvas.spec = trace
+	canvas.step_id = "opera_trace"
 	canvas.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(canvas)
 	await process_frame
