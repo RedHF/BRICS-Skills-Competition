@@ -653,6 +653,7 @@ func _capture(name: String) -> void:
 		await main.transition_tween.finished
 	await process_frame
 	await process_frame
+	_check(not main.scroll.get_v_scroll_bar().visible,"Page requires scrolling: "+name)
 	var directory := OS.get_environment("YANXIA_REVIEW_SHOTS")
 	if directory.is_empty() or DisplayServer.get_name() == "headless": return
 	DirAccess.make_dir_recursive_absolute(directory)

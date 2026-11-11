@@ -301,22 +301,25 @@ func revisit() -> void:
 func settlement(result: Dictionary, first_clear: bool = false) -> void:
 	host.flow = "settlement"
 	host._clear()
+	host.page.add_theme_constant_override("separation", 8)
 	if first_clear and str(host.current_event.id) == "temple_drum":
 		var gong := AudioStreamPlayer.new()
 		gong.stream = load("res://assets/echo_v1/distant_gong.wav")
 		gong.volume_db = -19
 		host.page.add_child(gong)
 		gong.play()
-	host._label(host.page, "古建又得到了一次回应", 30)
+	host._label(host.page, "古建又得到了一次回应", 27)
 	var feature := HBoxContainer.new()
 	feature.add_theme_constant_override("separation",18)
 	feature.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	feature.custom_minimum_size.y = minf(280, maxf(170, host.scroll.size.y * .4))
 	host.page.add_child(feature)
 	var scene := TextureRect.new()
 	scene.texture = host._event_background(str(host.current_event.id))
 	scene.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	scene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	scene.custom_minimum_size = Vector2(520,390)
+	scene.custom_minimum_size.x = 480
+	scene.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scene.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scene.size_flags_stretch_ratio = 2.2
 	scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -325,23 +328,26 @@ func settlement(result: Dictionary, first_clear: bool = false) -> void:
 	art_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	art_column.size_flags_stretch_ratio = 1.0
 	feature.add_child(art_column)
-	host._memory_art(art_column, str(host.current_event.reward.memory_id), 390)
-	host._label(host.page, str(host.current_event.story.outro), 22)
+	var art: TextureRect = host._memory_art(art_column, str(host.current_event.reward.memory_id), 0)
+	if art != null: art.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	host._label(host.page, str(host.current_event.story.outro), 19)
 	var action := str(result.get("memory_action", "keep"))
 	var name := str(host.data.memory(host.current_event.reward.memory_id).title)
 	var prefix := "收下终章页：" if bool(host.data.memory(host.current_event.reward.memory_id).get("epilogue",false)) else ("本次只留记录：" if action == "archive" else "本次带走：")
-	host._label(host.page, prefix + name, 22)
+	host._label(host.page, prefix + name, 19)
 	var archived := str(result.get("archived_memory_id", ""))
-	if not archived.is_empty(): host._label(host.page, consequence(archived), 20)
+	if not archived.is_empty(): host._label(host.page, consequence(archived), 18)
 	var answer := str(result.get("narrative_choice", ""))
 	if not answer.is_empty():
-		host._label(host.page, "你把最后一页用于：" + answer, 23)
-		_record_list(host.page)
-		host._label(host.page, host._ending_response(answer), 21)
-	host._button(host.page, "查看这段记录", host._memory_detail.bind(str(host.current_event.reward.memory_id)))
+		host._label(host.page, "你把最后一页用于：" + answer, 19)
+		host._label(host.page, host._ending_response(answer), 18)
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 12)
+	host.page.add_child(actions)
+	host._button(actions, "查看这段记录", host._memory_detail.bind(str(host.current_event.reward.memory_id)))
 	var next_label := {"temple_incense":"前往侧厢 →", "temple_guest":"走向前坪 →", "temple_drum":"去听远处的锣 →"}
-	host._button(host.page, str(next_label.get(str(host.current_event.id), "下一段旅程 →")), host._next_event)
-	host._button(host.page, "返回关卡", host._show_map)
+	host._button(actions, str(next_label.get(str(host.current_event.id), "下一段旅程 →")), host._next_event)
+	host._button(actions, "返回关卡", host._show_map)
 	host.session_id = ""
 
 func memories() -> void:
