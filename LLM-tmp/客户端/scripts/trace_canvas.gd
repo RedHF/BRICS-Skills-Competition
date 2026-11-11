@@ -20,6 +20,7 @@ const HINT = preload("res://assets/puzzles/hint_plaque.png")
 const BRUSH = preload("res://assets/puzzles/brush_cursor.png")
 const CINNABAR = preload("res://assets/puzzles/cinnabar_seal.png")
 const JADE = preload("res://assets/puzzles/jade_seal.png")
+const INK_DAB = preload("res://assets/puzzles/ink_dab.png")
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(0, 220)
@@ -76,27 +77,59 @@ func _draw() -> void:
 		var guide := PackedVector2Array()
 		for vertex in spec.strokes[i]:
 			guide.append(canvas_rect.position + Vector2((float(vertex[0])-view_x)*characters,float(vertex[1]))*canvas_rect.size)
-		if guide.size() > 1:
-			draw_polyline(guide,Color("#fbf2df"),13,true)
-			var guide_color := Color("#5c5145") if i == active else Color("#9b8d78")
-			draw_polyline(guide,guide_color,7,true)
-			for vertex in guide: draw_circle(vertex,3.5,guide_color)
-		if i == active:
+		if guide.size() > 1 and strokes[i].is_empty():
+			var guide_color := Color("#746b60", .58 if i == active else .34)
+			draw_polyline(guide, guide_color, 5 if i == active else 4, true)
+		elif guide.size() > 1 and drawing and i == active:
+			var last: Array = strokes[i][-1]
+			var tip := canvas_rect.position + Vector2((float(last[0])-view_x)*characters,float(last[1]))*canvas_rect.size
+			var tail := _remaining_guide(guide, tip)
+			if tail.size() > 1: draw_polyline(tail, Color("#746b60", .45), 4, true)
+		if i == active and strokes[i].is_empty():
 			var first: Array = spec.strokes[i][0]
 			var last: Array = spec.strokes[i][-1]
 			var start := canvas_rect.position + Vector2((float(first[0]) - view_x) * characters, float(first[1])) * canvas_rect.size
 			var finish := canvas_rect.position + Vector2((float(last[0]) - view_x) * characters, float(last[1])) * canvas_rect.size
-			draw_texture_rect(JADE, Rect2(start - Vector2.ONE * 17, Vector2.ONE * 34), false)
-			draw_texture_rect(CINNABAR, Rect2(finish - Vector2.ONE * 16, Vector2.ONE * 32), false, Color(1, 1, 1, .85))
+			draw_texture_rect(JADE, Rect2(start - Vector2.ONE * 11, Vector2.ONE * 22), false, Color(1, 1, 1, .8))
+			draw_texture_rect(CINNABAR, Rect2(finish - Vector2.ONE * 10, Vector2.ONE * 20), false, Color(1, 1, 1, .75))
 		var ink := PackedVector2Array()
 		for sample in strokes[i]:
 			ink.append(canvas_rect.position + Vector2((float(sample[0]) - view_x) * characters, float(sample[1])) * canvas_rect.size)
 		if ink.size() > 1:
-			draw_polyline(ink, Color(0.05, 0.11, 0.12, 0.18), 8, true)
-			draw_polyline(ink, Color("#a83f3f") if failed.has(i) else Color("#203b3b"), 5, true)
+			_draw_ink_stroke(ink, failed.has(i))
 	if brush_visible and canvas_rect.has_point(brush_position):
 		# The tip of the painted brush sits at the pointer's bottom-left corner.
 		draw_texture_rect(BRUSH, Rect2(brush_position + Vector2(-2, -88), Vector2(86, 86)), false)
+
+func _draw_ink_stroke(points: PackedVector2Array, invalid: bool) -> void:
+	var color := Color("#a83f3f") if invalid else Color("#263735")
+	var distance := 0.0
+	for j in range(1, points.size()):
+		var start := points[j - 1]
+		var finish := points[j]
+		var length := start.distance_to(finish)
+		if length < .1: continue
+		var width := 5.5 + 1.5 * sin(distance * .075)
+		draw_line(start, finish, Color(color, .14), width + 4, true)
+		draw_line(start, finish, color, width, true)
+		if not invalid and int(distance / 18.0) != int((distance + length) / 18.0):
+			draw_texture_rect(INK_DAB, Rect2(finish - Vector2(8, 9), Vector2(16, 18)), false, Color(1, 1, 1, .16))
+		distance += length
+
+func _remaining_guide(guide: PackedVector2Array, tip: Vector2) -> PackedVector2Array:
+	var nearest_segment := 0
+	var nearest_point := guide[0]
+	var nearest_distance := INF
+	for j in range(1, guide.size()):
+		var point := Geometry2D.get_closest_point_to_segment(tip, guide[j - 1], guide[j])
+		var distance := tip.distance_squared_to(point)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_segment = j
+			nearest_point = point
+	var tail := PackedVector2Array([nearest_point])
+	for j in range(nearest_segment, guide.size()): tail.append(guide[j])
+	return tail
 
 func _gui_input(event: InputEvent) -> void:
 	if locked: return

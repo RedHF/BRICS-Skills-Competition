@@ -81,28 +81,22 @@ func choice() -> void:
 	if full and not candidate.is_empty():
 		_comparison_card(comparison,host.data.memory(candidate),"现有回应")
 	else:
-		var placeholder := PanelContainer.new()
+		var placeholder := VBoxContainer.new()
 		placeholder.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		placeholder.size_flags_stretch_ratio = 1
-		placeholder.add_theme_stylebox_override("panel",preload("res://scripts/ink_theme.gd").surface("paper",18))
+		placeholder.add_theme_constant_override("separation", 6)
 		comparison.add_child(placeholder)
-		var note := HBoxContainer.new()
-		note.add_theme_constant_override("separation", 12)
-		placeholder.add_child(note)
+		host._label(placeholder,"现有回声" if full else "檐下留存",21)
 		var scene := TextureRect.new()
 		scene.texture = host._event_background(str(host.current_event.id))
 		scene.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		scene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		scene.custom_minimum_size.x = 160
+		scene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		scene.custom_minimum_size.y = 170
 		scene.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		scene.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		note.add_child(scene)
-		var explanation := VBoxContainer.new()
-		explanation.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		explanation.alignment = BoxContainer.ALIGNMENT_CENTER
-		note.add_child(explanation)
-		host._label(explanation,"现有回声" if full else "留在檐下的记录",21)
-		host._label(explanation,"选一段旧回应比较。" if full else "修复与手艺会保存。",17)
+		placeholder.add_child(scene)
+		host._label(placeholder,"选择一段旧回应，查看它将如何取舍。" if full else "修复记录与手艺将留在檐下。",17)
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation",12)
 	host.page.add_child(actions)
@@ -115,38 +109,22 @@ func choice() -> void:
 	take.tooltip_text = "记录、修复与技艺始终保留；所选旧回声归档后不再随身回应。" if full else "记录、修复与技艺始终保留。"
 
 func _comparison_card(parent: HBoxContainer, memory: Dictionary, heading: String) -> void:
-	var frame := PanelContainer.new()
-	frame.name = "NewResponse" if heading == "新听见" else "HeldResponse"
-	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	frame.size_flags_stretch_ratio = 1
-	frame.add_theme_stylebox_override("panel",preload("res://scripts/ink_theme.gd").surface("paper",14))
-	parent.add_child(frame)
 	var column := VBoxContainer.new()
+	column.name = "NewResponse" if heading == "新听见" else "HeldResponse"
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.size_flags_stretch_ratio = 1
 	column.add_theme_constant_override("separation",6)
-	frame.add_child(column)
+	parent.add_child(column)
 	host._label(column,heading+"  /  「%s」" % memory.title,21)
-	var content := HBoxContainer.new()
-	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_theme_constant_override("separation",10)
-	column.add_child(content)
-	var art: TextureRect = host._memory_art(content,str(memory.id),0)
+	var art: TextureRect = host._memory_art(column,str(memory.id),170)
 	if art != null:
-		art.custom_minimum_size.x = 160
 		art.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		art.size_flags_stretch_ratio = 1.1
 		art.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var details := VBoxContainer.new()
-	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	details.size_flags_stretch_ratio = 1.2
-	details.alignment = BoxContainer.ALIGNMENT_CENTER
-	details.add_theme_constant_override("separation",8)
-	content.add_child(details)
-	host._label(details,"旧物 · "+str(OBJECTS.get(str(memory.id),"留下的旧迹")),16)
-	host._label(details,str(memory.summary),17)
+	host._label(column,"%s  ·  %s" % [str(OBJECTS.get(str(memory.id),"留下的旧迹")),str(memory.summary)],16)
 	if str(memory.id) in ["yan_ping_an","she_cheng_xiang","she_ning_an","she_hui_chun"]:
-		host._button(details,"看与听 · %s" % memory.title,inspect_choice.bind(str(memory.id)))
+		host._button(column,"看与听 · %s" % memory.title,inspect_choice.bind(str(memory.id)))
 	else:
-		host._button(details,"聆听 · %s" % memory.title,host._play_memory.bind(str(memory.echo_audio)))
+		host._button(column,"聆听 · %s" % memory.title,host._play_memory.bind(str(memory.echo_audio)))
 
 func _select(id: String) -> void:
 	candidate = id
