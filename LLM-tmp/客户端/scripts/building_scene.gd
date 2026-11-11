@@ -25,6 +25,7 @@ var character_moving := false
 var character_facing_left := false
 var echo_style := false
 var echo_event_id := ""
+var hover_investigation := -1
 
 const FALLBACK_SCENE = preload("res://assets/ink_ui/background.png")
 const INK_CARD = preload("res://assets/ink_ui/ink.png")
@@ -37,6 +38,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP if interactive else Control.MOUSE_FILTER_IGNORE
 	clip_contents = true
 	if investigations.is_empty(): investigations = [{"label":"古建遗痕", "position":[0.55, 0.50]}]
+	mouse_exited.connect(func(): hover_investigation = -1; queue_redraw())
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree(): return
@@ -87,8 +89,16 @@ func _gui_input(event: InputEvent) -> void:
 			dragging_stick = false
 			joystick = Vector2.ZERO
 		accept_event()
-	elif event is InputEventMouseMotion and dragging_stick:
-		joystick = ((event.position - Vector2(48, size.y - 45)) / 30.0).limit_length()
+	elif event is InputEventMouseMotion:
+		if dragging_stick:
+			joystick = ((event.position - Vector2(48, size.y - 45)) / 30.0).limit_length()
+		else:
+			hover_investigation = -1
+			for i in range(investigations.size()):
+				if event.position.distance_to(size * _investigation_point(i)) < 58:
+					hover_investigation = i
+					break
+		queue_redraw()
 		accept_event()
 
 func _investigation_point(index: int) -> Vector2:
@@ -133,15 +143,38 @@ func _draw() -> void:
 				draw_texture_rect(stamp, Rect2(point - Vector2.ONE * (22 + ripple * 4), Vector2.ONE * (44 + ripple * 8)), false, Color(1, 1, 1, .22))
 			var caption := "已调查 · " if found else "调查 · "
 			var text := caption + str(investigations[i].label)
-			var width := preload("res://scripts/ink_theme.gd").font().get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x + 16
-			var origin := Vector2(clampf(point.x-width/2,4,size.x-width-4),point.y-54)
-			draw_texture_rect(INK_CARD, Rect2(origin, Vector2(width, 30)), false)
-			draw_string(preload("res://scripts/ink_theme.gd").font(),origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
+			var width := preload("res://scripts/ink_theme.gd").font().get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,25).x + 30
+			var origin := Vector2(clampf(point.x-width/2,4,size.x-width-4),point.y-67)
+			draw_texture_rect(INK_CARD, Rect2(origin, Vector2(width, 43)), false)
+			draw_string(preload("res://scripts/ink_theme.gd").font(),origin+Vector2(15,31),text,HORIZONTAL_ALIGNMENT_LEFT,-1,25,Color("#f4e4bc"))
+		if hover_investigation >= 0: _draw_investigation_preview(hover_investigation)
 		if echo_style:
 			preload("res://scripts/echo_figure.gd").paint(self,player*size,.72,walk_time,"walk" if character_moving else "idle",0.0,Color.WHITE,character_facing_left,walk_blend)
 		else: preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, character_time, "walk" if character_moving else "idle", 0.0, Color.WHITE, character_facing_left)
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(14, size.y - 79), Vector2.ONE * 68), false, Color(1, 1, 1, .48))
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(36, size.y - 57) + joystick * 23, Vector2.ONE * 24), false)
+
+func _draw_investigation_preview(index: int) -> void:
+	if background == null: return
+	var focus := _investigation_point(index)
+	var texture_size := Vector2(background.get_size())
+	var source_size := texture_size
+	var target_aspect := size.x / size.y
+	if texture_size.x / texture_size.y > target_aspect:
+		source_size.x = texture_size.y * target_aspect
+	else:
+		source_size.y = texture_size.x / target_aspect
+	var source_origin := (texture_size - source_size) * .5
+	var crop_size := source_size * Vector2(.34,.34)
+	var crop_origin := (source_origin + focus*source_size-crop_size*.5).clamp(source_origin,source_origin+source_size-crop_size)
+	var frame_size := Vector2(minf(390,size.x*.42),minf(280,size.y*.48))
+	var left := 18.0 if focus.x > .5 else size.x-frame_size.x-18
+	var frame := Rect2(Vector2(left,70),frame_size)
+	draw_rect(frame.grow(8),Color("#efe5cd"))
+	draw_rect(frame.grow(8),Color("#9a855c"),false,2)
+	draw_texture_rect_region(background,frame,Rect2(crop_origin,crop_size))
+	draw_rect(Rect2(frame.position+Vector2(0,frame.size.y-46),Vector2(frame.size.x,46)),Color(.10,.12,.12,.83))
+	draw_string(preload("res://scripts/ink_theme.gd").font(),frame.position+Vector2(18,frame.size.y-14),str(investigations[index].label),HORIZONTAL_ALIGNMENT_LEFT,frame.size.x-36,26,Color("#f4ead3"))
 
 func _draw_background(fade: float) -> void:
 	var texture_size := Vector2(background.get_width(), background.get_height())

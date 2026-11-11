@@ -44,12 +44,19 @@ func _draw() -> void:
 	draw_texture_rect(base_art, Rect2(Vector2(12, size.y * .28 - beam_height / 2), Vector2(size.x - 24, beam_height)), false)
 	for i in range(options.size()):
 		var center := _socket_center(i)
+		if stage:
+			var emphasis := (step_id == "stage_step" and str(options[i]) == "梅") or (step_id == "stage_backdrop" and str(options[i]) == "中")
+			if emphasis:
+				draw_circle(center,31*scale,Color("#f8e7ae",.34))
+				draw_arc(center,32*scale,0,TAU,48,Color("#c49a4c"),3,true)
 		draw_texture_rect(marker_art, Rect2(center - Vector2(34, 25) * scale, Vector2(68, 50) * scale), false, Color(1, 1, 1, .62))
 		var caption: String = {"left":"左榫口","center":"中央承重","right":"右榫口"}.get(options[i], options[i])
-		draw_string(preload("res://scripts/ink_theme.gd").font(), center + Vector2(-34, -33) * scale, caption, HORIZONTAL_ALIGNMENT_LEFT, -1, int(16 * scale), Color("#303832"))
+		if step_id == "stage_step": caption = "%s字台步" % options[i]
+		elif step_id == "stage_backdrop": caption = "中央留门" if str(options[i]) == "中" else "%s侧挂点" % options[i]
+		draw_string(preload("res://scripts/ink_theme.gd").font(), center + Vector2(-68, -50) * scale, caption, HORIZONTAL_ALIGNMENT_CENTER, int(136*scale), int(20 * scale), Color("#303832"))
 	draw_texture_rect(piece_art, Rect2(piece - Vector2(54, 45) * scale, Vector2(108, 90) * scale), false, Color("#e2f3df") if snapped else Color.WHITE)
 	draw_texture_rect(HINT, Rect2(Vector2(12, size.y - 35), Vector2(size.x - 24, 30)), false, Color(1, 1, 1, .3))
-	var instruction := "拖动戏台构件到对应位置，松手吸附。" if stage else "拖动木榫到榫口，松手吸附；放到外侧可取消。"
+	var instruction := ("拖到梅字台步点，沿师父留下的第一步起脚。" if step_id == "stage_step" else "将布景的开口对准中央，给后来的人留一扇门。") if stage else "拖动木榫到榫口，松手吸附；放到外侧可取消。"
 	draw_string(preload("res://scripts/ink_theme.gd").font(), Vector2(22, size.y - 15), instruction, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#60564b"))
 
 func _gui_input(event: InputEvent) -> void:
@@ -79,8 +86,9 @@ func _gui_input(event: InputEvent) -> void:
 func _socket_center(index: int) -> Vector2:
 	var name := str(options[index])
 	var x := 0.52
-	if name in ["left", "左"]: x = .34
+	if step_id == "stage_step": x = [.28, .54, .82][mini(index,2)]
+	elif step_id == "stage_backdrop": x = [.16, .45, .68][mini(index,2)]
+	elif name in ["left", "左"]: x = .34
 	elif name in ["right", "右"]: x = .72
 	elif name in ["center", "中"]: x = .53
-	elif options.size() > 1: x = [.25, .52, .78][mini(index, 2)] if step_id == "stage_step" else [.34, .53, .72][mini(index, 2)]
 	return Vector2(size.x * x, size.y * .28)

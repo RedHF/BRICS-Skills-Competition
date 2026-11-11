@@ -78,7 +78,7 @@ var muted := false
 var reduced_motion := false
 var event_audio: AudioStreamPlayer
 var closing := false
-const BATTLE_KEYS := ["挥墨", "斗拱", "藻井", "飞檐", "闪身"]
+const BATTLE_KEYS := ["挥墨", "飞檐", "闪身", "斗拱", "藻井"]
 var voice_index: Dictionary = {}
 var voice_queue: Array[String] = []
 
@@ -626,7 +626,7 @@ func _show_investigation() -> void:
 	_label(page, current_event.scene + " · " + current_event.title, 26, Color("#e4c98a"))
 	var memory: Dictionary = data.memory(current_event.reward.memory_id)
 	_add_building(true)
-	_label(page, "点击金色标记调查 · 也可方向键移动、空格调查", 16)
+	_label(page, "鼠标移到金色调查点，可放大查看；点击调查。WASD / 方向键移动，空格调查。", 18)
 	var details := VBoxContainer.new()
 	page.add_child(details)
 	var investigation_progress := _label(details, "调查进度 0/%d" % scene_view.investigations.size(), 17, Color("#b7d8c8"))
@@ -737,7 +737,7 @@ func _show_puzzle() -> void:
 	if step.kind != "trace" and step.kind != "skill" and step.id not in ["opera_role", "archway_grade"]:
 		_add_building()
 	if step.kind == "trace":
-		_label(page, "按住拖动：从青印描到朱印。", 17, Color("#d7c69c"))
+		_label(page, "描出关键墨线即可；青印起笔、朱印收笔。也可自动书写跳过。", 18, Color("#d7c69c"))
 		trace_canvas = TRACE.new()
 		trace_canvas.spec = step.trace
 		trace_canvas.step_id = str(step.id)
@@ -745,8 +745,8 @@ func _show_puzzle() -> void:
 		trace_progress = _label(page, "", 16)
 		stroke_buttons = HFlowContainer.new()
 		page.add_child(stroke_buttons)
-		_button(stroke_buttons, "‹ 上一笔", func(): trace_canvas.select_stroke(maxi(0, trace_canvas.active - 1)))
-		_button(stroke_buttons, "下一笔 ›", func(): trace_canvas.select_stroke(mini(trace_canvas.strokes.size()-1, trace_canvas.active + 1)))
+		_button(stroke_buttons, "‹ 上一笔", func(): trace_canvas.select_manual(-1))
+		_button(stroke_buttons, "下一笔 ›", func(): trace_canvas.select_manual(1))
 		trace_canvas.stroke_finished.connect(_trace_feedback)
 		trace_canvas.brush_touched.connect(func(): soundscape.cue("brush_touch"))
 		_trace_feedback()
@@ -757,6 +757,11 @@ func _show_puzzle() -> void:
 			trace_canvas.queue_redraw()
 			_trace_feedback())
 		_button(buttons, "核对拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
+		var auto_write := _button(buttons, "自动书写 · 跳过", func():
+			trace_canvas.auto_complete()
+			_trace_feedback()
+			_submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
+		auto_write.tooltip_text = "自动完成本页拓印并继续剧情"
 	elif step.kind == "join":
 		join_canvas = preload("res://scripts/join_canvas.gd").new()
 		join_canvas.step_id = str(step.id)
@@ -805,10 +810,7 @@ func _show_puzzle() -> void:
 		clue_box.hide()
 
 func _trace_feedback() -> void:
-	var count := 0
-	for stroke in trace_canvas.strokes:
-		if not stroke.is_empty(): count += 1
-	trace_progress.text = "落墨 %d/%d · 当前第 %02d 笔%s" % [count, trace_canvas.strokes.size(), trace_canvas.active + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
+	trace_progress.text = "关键笔画 %d/%d · 当前第 %d 笔%s" % [trace_canvas.manual_done(), trace_canvas.manual_indices.size(), trace_canvas.manual_indices.find(trace_canvas.active) + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
 
 func _submit_puzzle(payload: Dictionary) -> void:
 	if busy: return
@@ -942,7 +944,12 @@ func _start_battle() -> void:
 	for child in battle_dock.get_children():
 		battle_dock.remove_child(child)
 		child.queue_free()
-	battle_start = _button(battle_dock, "开始守护 · 准备好再迎战", _begin_battle)
+	if _is_echo(): _label(battle_dock, "WASD / 方向键移动  ·  数字键 1–3 或点击图标施展  ·  鼠标也可移动", 20)
+	battle_start = _button(battle_dock, "开始守护  →", _begin_battle)
+	battle_start.custom_minimum_size = Vector2(0,76)
+	battle_start.add_theme_font_size_override("font_size",27)
+	battle_start.add_theme_stylebox_override("normal",preload("res://scripts/ink_theme.gd").surface("paper",14))
+	battle_start.add_theme_color_override("font_color",Color("#6d3428"))
 	battle_controls = GridContainer.new()
 	battle_controls.columns = 1 if not _is_echo() else 3
 	battle_dock.add_child(battle_controls)
@@ -971,7 +978,7 @@ func _start_battle() -> void:
 			if battle_buttons.has(skill):
 				battle_controls.move_child(battle_buttons[skill], action_index)
 				action_index += 1
-	status.text = "斗拱自动护盾 · 藻井自动净化；主动操作：挥墨、飞檐、闪身。" if _is_echo() else "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
+	status.text = "1 挥墨 · 2 飞檐 · 3 闪身；斗拱自动护盾，藻井自动净化。" if _is_echo() else "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
 	_battle_update()
 
 func _begin_battle() -> void:

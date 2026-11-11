@@ -31,5 +31,5 @@ func _draw() -> void:
 	elif not disabled:
 		draw_arc(center, 41, 0, TAU, 64, Color("#e4c98a"), 2, true)
 	if has_focus(): draw_arc(center,44,0,TAU,64,Color.WHITE,2,true)
-	var key: String = {"挥墨":"1", "飞檐":"4", "闪身":"5"}.get(skill,"")
+	var key: String = {"挥墨":"1", "飞檐":"2", "闪身":"3"}.get(skill,"")
 	draw_string(preload("res://scripts/ink_theme.gd").font(),Vector2(size.x*.5-44,96),key+" · "+skill,HORIZONTAL_ALIGNMENT_CENTER,88,18,Color("#302c28"))

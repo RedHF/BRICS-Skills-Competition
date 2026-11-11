@@ -89,6 +89,13 @@ func choice() -> void:
 		var note := VBoxContainer.new()
 		note.alignment = BoxContainer.ALIGNMENT_CENTER
 		placeholder.add_child(note)
+		var scene := TextureRect.new()
+		scene.texture = host._event_background(str(host.current_event.id))
+		scene.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		scene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		scene.custom_minimum_size.y = 260
+		scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		note.add_child(scene)
 		host._label(note,"现有回声" if full else "留在檐下的记录",22)
 		host._label(note,"从上方选一段，再看见完整的比较。" if full else "修复、手艺与摘要会保存；不带走这次独有的回应。",19)
 	var actions := HBoxContainer.new()
@@ -113,8 +120,8 @@ func _comparison_card(parent: HBoxContainer, memory: Dictionary, heading: String
 	column.add_theme_constant_override("separation",8)
 	frame.add_child(column)
 	host._label(column,heading+"  /  「%s」" % memory.title,22)
-	var art: TextureRect = host._memory_art(column,str(memory.id),190)
-	if art != null: art.custom_minimum_size.y = 190
+	var art: TextureRect = host._memory_art(column,str(memory.id),300)
+	if art != null: art.custom_minimum_size.y = 300
 	host._label(column,"旧物 · "+str(OBJECTS.get(str(memory.id),"留下的旧迹")),17)
 	host._label(column,str(memory.summary),18)
 	if str(memory.id) in ["yan_ping_an","she_cheng_xiang","she_ning_an","she_hui_chun"]:
@@ -212,9 +219,10 @@ func drum_response() -> void:
 	body.add_theme_constant_override("separation",24)
 	host.page.add_child(body)
 	preview = _scene(body,"she_hui_chun",false,true)
+	preview.size_flags_stretch_ratio = 3.0
 	var notes := VBoxContainer.new()
 	notes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	notes.custom_minimum_size.x = 300
+	notes.custom_minimum_size.x = 250
 	notes.add_theme_constant_override("separation",16)
 	body.add_child(notes)
 	host._label(notes,"鼓还在这里",28)
@@ -252,9 +260,10 @@ func revisit() -> void:
 	body.add_theme_constant_override("separation",24)
 	host.page.add_child(body)
 	preview = _scene(body,id,false,id == "she_hui_chun")
+	preview.size_flags_stretch_ratio = 3.0
 	var notes := VBoxContainer.new()
 	notes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	notes.custom_minimum_size.x = 300
+	notes.custom_minimum_size.x = 250
 	notes.add_theme_constant_override("separation",16)
 	body.add_child(notes)
 	host._label(notes,"重访 · " + str(host.current_event.title),28)
@@ -279,9 +288,26 @@ func settlement(result: Dictionary, first_clear: bool = false) -> void:
 		gong.volume_db = -19
 		host.page.add_child(gong)
 		gong.play()
-	host._label(host.page, "古建又得到了一次回应", 28)
-	host._memory_art(host.page, str(host.current_event.reward.memory_id), 200)
-	host._label(host.page, str(host.current_event.story.outro), 23)
+	host._label(host.page, "古建又得到了一次回应", 30)
+	var feature := HBoxContainer.new()
+	feature.add_theme_constant_override("separation",18)
+	feature.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	host.page.add_child(feature)
+	var scene := TextureRect.new()
+	scene.texture = host._event_background(str(host.current_event.id))
+	scene.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	scene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	scene.custom_minimum_size = Vector2(520,390)
+	scene.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scene.size_flags_stretch_ratio = 2.2
+	scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	feature.add_child(scene)
+	var art_column := VBoxContainer.new()
+	art_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	art_column.size_flags_stretch_ratio = 1.0
+	feature.add_child(art_column)
+	host._memory_art(art_column, str(host.current_event.reward.memory_id), 390)
+	host._label(host.page, str(host.current_event.story.outro), 22)
 	var action := str(result.get("memory_action", "keep"))
 	var name := str(host.data.memory(host.current_event.reward.memory_id).title)
 	var prefix := "收下终章页：" if bool(host.data.memory(host.current_event.reward.memory_id).get("epilogue",false)) else ("本次只留记录：" if action == "archive" else "本次带走：")

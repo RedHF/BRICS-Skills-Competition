@@ -149,8 +149,8 @@ func _run() -> void:
 					await click(option)
 				elif step.kind == "trace":
 					# Drive the real drawing canvas through viewport mouse events.
-					for index in range(step.trace.strokes.size()):
-						await click(button("%02d" % [index+1],main.stroke_buttons))
+					for index in main.trace_canvas.manual_indices:
+						main.trace_canvas.select_stroke(index)
 						assert(main.trace_canvas.active == index)
 						main.scroll.ensure_control_visible(main.trace_canvas)
 						await process_frame
@@ -196,15 +196,15 @@ func _run() -> void:
 				await key(KEY_1)
 				assert(main.battle_actions.is_empty(), "Keyboard bypassed ready screen")
 				await click(main.battle_start)
-				await key(KEY_4, true)
+				await key(KEY_2, true)
 				assert(main.battle_actions.is_empty(), "Key repeat fired a skill")
 				if event.id == "opera_opening": assert(main._learned_skills().size() == 3)
-				await key(KEY_KP_5)
+				await key(KEY_KP_3)
 				assert(main.battle_actions.size() == 1 and main.battle_actions[0].skill == "闪身")
-				await key(KEY_5)
+				await key(KEY_3)
 				assert(main.battle_actions.size() == 1, "Cooldown bypassed with another key")
 				if not main.battle_skills.has("飞檐"):
-					await key(KEY_4)
+					await key(KEY_2)
 					assert(main.battle_actions.size() == 1, "Unlearned skill fired")
 				# Every skill must be visible simultaneously without scrolling.
 				for skill in main.battle_buttons:

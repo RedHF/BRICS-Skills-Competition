@@ -102,14 +102,16 @@ func welcome() -> void:
 	box.custom_minimum_size.x = 420
 	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	box.add_theme_constant_override("separation", 16)
-	var title: Label = host._label(box, "一笔留住千秋，一念守住人间", 22, Color("#e4c98a"))
+	var title: Label = host._label(box, "一笔留住千秋，一念守住人间", 25, Color("#e4c98a"))
 	if host._is_echo(): title.text = "回响版 · 让屋檐下的生活得到回应"
 	if not host.demo_mode.is_empty(): title.text = "路演片段 · "+("先稳梁，再接合" if host.demo_mode == "repair" else "第一次满心舍的取舍")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var saved: bool = host._has_current_event() or not GameState.player.completed_events.is_empty()
 	var start_title := "继续旅程" if saved else "开始旅程"
 	if not host.demo_mode.is_empty(): start_title = "开始接梁片段" if host.demo_mode == "repair" else "开始取舍片段"
-	host._button(box, start_title, _continue)
+	var start: Button = host._button(box, start_title, _continue)
+	start.custom_minimum_size.y = 66
+	start.add_theme_font_size_override("font_size", 26)
 	if host._is_echo() and not host.demo_mode.is_empty():
 		host._label(box,"本次操作保存在独立演示旅程，不影响完整旅程。",17,Color("#746b60"))
 		host._button(box,"返回完整旅程",host._launch_demo.bind(""))
@@ -120,6 +122,9 @@ func welcome() -> void:
 			box.add_child(secondary)
 			if saved: host._button(secondary,"选择关卡",host._show_map)
 			host._button(secondary,"旅途收藏",func(): enter_game(); host._show_memories())
+			for button in secondary.get_children():
+				button.custom_minimum_size.y = 56
+				button.add_theme_font_size_override("font_size",22)
 	else:
 		if saved: host._button(box, "选择关卡", host._show_map)
 		host._button(box, "旅途收藏", func(): enter_game(); host._show_memories())
@@ -127,6 +132,10 @@ func welcome() -> void:
 	box.add_child(row)
 	host._button(row, "声音设置", func(): enter_game(); host._show_settings())
 	host._button(row, "退出", host._notification.bind(Node.NOTIFICATION_WM_CLOSE_REQUEST))
+	if host._is_echo():
+		for button in row.get_children():
+			button.custom_minimum_size.y = 56
+			button.add_theme_font_size_override("font_size",22)
 	if host._is_echo():
 		var fit := func():
 			if not is_instance_valid(region) or not is_instance_valid(box): return
