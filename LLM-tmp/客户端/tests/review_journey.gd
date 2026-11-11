@@ -199,21 +199,21 @@ func _run() -> void:
 				await key(KEY_2, true)
 				assert(main.battle_actions.is_empty(), "Key repeat fired a skill")
 				if event.id == "opera_opening": assert(main._learned_skills().size() == 3)
-				await key(KEY_KP_3)
+				await key(KEY_KP_5)
 				assert(main.battle_actions.size() == 1 and main.battle_actions[0].skill == "闪身")
-				await key(KEY_3)
+				await key(KEY_5)
 				assert(main.battle_actions.size() == 1, "Cooldown bypassed with another key")
 				if not main.battle_skills.has("飞檐"):
-					await key(KEY_2)
+					await key(KEY_3)
 					assert(main.battle_actions.size() == 1, "Unlearned skill fired")
 				# Every skill must be visible simultaneously without scrolling.
 				for skill in main.battle_buttons:
 					assert(root.get_visible_rect().encloses(main.battle_buttons[skill].get_global_rect()),"Hidden battle skill")
 				var boss_captured := false
 				while not main.battle_finished:
-					for skill in ["斗拱","藻井","飞檐","挥墨"]:
+					for skill in ["闪身","藻井","飞檐","斗拱","挥墨"]:
 						if main.battle_buttons.has(skill) and not main.battle_buttons[skill].disabled:
-							await key(KEY_1 + main.BATTLE_KEYS.find(skill))
+							await key(KEY_1 + main._battle_key_order().find(skill))
 					if main._boss_wave() and not boss_captured:
 						boss_captured = true
 						assert(main.arena.max_hp == 620 and main._attack_interval() == 2400)

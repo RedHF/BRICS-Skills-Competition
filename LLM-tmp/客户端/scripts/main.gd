@@ -79,6 +79,7 @@ var reduced_motion := false
 var event_audio: AudioStreamPlayer
 var closing := false
 const BATTLE_KEYS := ["挥墨", "飞檐", "闪身", "斗拱", "藻井"]
+const ORIGINAL_BATTLE_KEYS := ["挥墨", "斗拱", "飞檐", "藻井", "闪身"]
 var voice_index: Dictionary = {}
 var voice_queue: Array[String] = []
 
@@ -908,6 +909,9 @@ func _learned_skills() -> Array[String]:
 		if entry.action == "kept" and not skill.is_empty() and not skills.has(skill): skills.append(skill)
 	return skills
 
+func _battle_key_order() -> Array:
+	return BATTLE_KEYS if _is_echo() else ORIGINAL_BATTLE_KEYS
+
 func _start_battle() -> void:
 	flow = "battle"
 	_clear()
@@ -929,7 +933,7 @@ func _start_battle() -> void:
 		_label(page, "先清除游蚀，再迎战噤声客。蓄力时可闪身，护盾与净化自动运转。", 17)
 	_play_cues([str(current_event.id) + "_before_battle"])
 	_label(page, "受蚀允许容错；达到本场上限或超时才重试，不影响已修复的进度。" if _is_echo() else current_event.story.get("before_battle", "守住刚刚显影的记忆。"), 17)
-	if not _is_echo(): _label(page, "1 挥墨　2 斗拱　3 藻井　4 飞檐　5 闪身\n数字键或点击施展；未习得的技艺暂不可用。", 16)
+	if not _is_echo(): _label(page, "1 挥墨　2 斗拱　3 飞檐　4 藻井　5 闪身\nWASD / 方向键移动；数字键或点击施展，未习得的技艺暂不可用。", 16)
 	battle_note = _label(page, "", 17)
 	arena = preload("res://scripts/battle_arena.gd").new()
 	arena.echo_style = _is_echo()
@@ -953,8 +957,7 @@ func _start_battle() -> void:
 	battle_controls = GridContainer.new()
 	battle_controls.columns = 1 if not _is_echo() else 3
 	battle_dock.add_child(battle_controls)
-	for skill in BATTLE_KEYS:
-		if not _is_echo() and skill in ["斗拱", "藻井"]: continue
+	for skill in _battle_key_order():
 		if _is_echo() and skill in ["斗拱", "藻井"]:
 			battle_ready[skill] = 0
 			continue
@@ -974,7 +977,7 @@ func _start_battle() -> void:
 		battle_buttons[skill].tooltip_text = data.catalog.skills[skill].description
 	if not _is_echo():
 		var action_index := 0
-		for skill in ["挥墨", "飞檐", "斗拱", "藻井", "闪身"]:
+		for skill in ORIGINAL_BATTLE_KEYS:
 			if battle_buttons.has(skill):
 				battle_controls.move_child(battle_buttons[skill], action_index)
 				action_index += 1
@@ -1066,7 +1069,7 @@ func _battle_update() -> void:
 			battle_buttons[skill].cooldown = maxf(.001, float(data.catalog.skills[skill].cooldown_ms)/1000.0)
 			battle_buttons[skill].queue_redraw()
 		else:
-			battle_buttons[skill].text = "%d · %s" % [BATTLE_KEYS.find(skill)+1, skill] + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
+			battle_buttons[skill].text = "%d · %s" % [_battle_key_order().find(skill)+1, skill] + (" · %.1f 秒" % (remaining / 1000.0) if remaining > 0 else " · 点击施展")
 		battle_buttons[skill].disabled = not battle_running or battle_finished or remaining > 0
 
 func _submit_battle() -> void:
@@ -1488,7 +1491,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	elif code >= KEY_KP_1 and code <= KEY_KP_5: number = code - KEY_KP_1
 	if number < 0: return
 	get_viewport().set_input_as_handled()
-	var skill: String = BATTLE_KEYS[number]
+	var skill: String = _battle_key_order()[number]
 	if battle_buttons.has(skill): _battle_skill(skill)
 
 func _stop_voice() -> void:
