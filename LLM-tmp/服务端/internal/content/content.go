@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode/utf8"
 )
 
 const CurrentVersion = 10
@@ -105,6 +106,7 @@ type PuzzleSpec struct {
 }
 
 type TraceSpec struct {
+	Glyph       string         `json:"glyph,omitempty"`
 	AspectRatio float64        `json:"aspect_ratio"`
 	Strokes     [][][2]float64 `json:"strokes"`
 	Tolerance   float64        `json:"tolerance"`
@@ -321,7 +323,7 @@ func (c *Catalog) Validate() error {
 					return fmt.Errorf("step %q missing narrative choices", step.ID)
 				}
 				if step.Kind == "trace" {
-					if step.Trace == nil || len(step.Trace.Strokes) == 0 || step.Trace.Tolerance <= 0 || step.Trace.Tolerance > .2 || step.Trace.AspectRatio <= 0 {
+					if step.Trace == nil || utf8.RuneCountInString(step.Trace.Glyph) != 1 || len(step.Trace.Strokes) == 0 || len(step.Trace.Strokes) > 6 || step.Trace.Tolerance <= 0 || step.Trace.Tolerance > .2 || step.Trace.AspectRatio <= 0 {
 						return fmt.Errorf("step %q has invalid trace specification", step.ID)
 					}
 					for _, stroke := range step.Trace.Strokes {

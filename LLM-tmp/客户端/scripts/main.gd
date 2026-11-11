@@ -738,7 +738,7 @@ func _show_puzzle() -> void:
 	if step.kind != "trace" and step.kind != "skill" and step.id not in ["opera_role", "archway_grade"]:
 		_add_building()
 	if step.kind == "trace":
-		_label(page, "描出关键墨线即可；青印起笔、朱印收笔。也可自动书写跳过。", 18, Color("#d7c69c"))
+		_label(page, "描完这个字的每一笔；青印起笔、朱印收笔。也可自动书写跳过。", 18, Color("#d7c69c"))
 		trace_canvas = TRACE.new()
 		trace_canvas.spec = step.trace
 		trace_canvas.step_id = str(step.id)
@@ -746,8 +746,8 @@ func _show_puzzle() -> void:
 		trace_progress = _label(page, "", 16)
 		stroke_buttons = HFlowContainer.new()
 		page.add_child(stroke_buttons)
-		_button(stroke_buttons, "‹ 上一笔", func(): trace_canvas.select_manual(-1))
-		_button(stroke_buttons, "下一笔 ›", func(): trace_canvas.select_manual(1))
+		_button(stroke_buttons, "‹ 上一笔", func(): trace_canvas.select_adjacent(-1))
+		_button(stroke_buttons, "下一笔 ›", func(): trace_canvas.select_adjacent(1))
 		trace_canvas.stroke_finished.connect(_trace_feedback)
 		trace_canvas.brush_touched.connect(func(): soundscape.cue("brush_touch"))
 		_trace_feedback()
@@ -811,7 +811,7 @@ func _show_puzzle() -> void:
 		clue_box.hide()
 
 func _trace_feedback() -> void:
-	trace_progress.text = "关键笔画 %d/%d · 当前第 %d 笔%s" % [trace_canvas.manual_done(), trace_canvas.manual_indices.size(), trace_canvas.manual_indices.find(trace_canvas.active) + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
+	trace_progress.text = "落墨 %d/%d · 当前第 %d 笔%s" % [trace_canvas.completed_strokes(), trace_canvas.strokes.size(), trace_canvas.active + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
 
 func _submit_puzzle(payload: Dictionary) -> void:
 	if busy: return

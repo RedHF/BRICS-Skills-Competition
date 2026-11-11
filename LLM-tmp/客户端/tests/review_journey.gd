@@ -149,7 +149,8 @@ func _run() -> void:
 					await click(option)
 				elif step.kind == "trace":
 					# Drive the real drawing canvas through viewport mouse events.
-					for index in main.trace_canvas.manual_indices:
+					await capture(step.id + "-before")
+					for index in range(main.trace_canvas.strokes.size()):
 						main.trace_canvas.select_stroke(index)
 						assert(main.trace_canvas.active == index)
 						main.scroll.ensure_control_visible(main.trace_canvas)

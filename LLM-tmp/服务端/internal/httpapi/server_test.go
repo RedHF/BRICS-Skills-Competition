@@ -58,7 +58,7 @@ func TestSessionFlowAndIdempotentFinish(t *testing.T) {
 	session := postJSON(t, server.URL+"/api/v1/sessions", map[string]any{"player_id": playerID, "chapter_id": "prologue", "event_id": "prologue_bridge"})
 	sid := session["session_id"].(string)
 	wrong := postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", map[string]any{"step_id": "bridge_trace", "answer": "错"})
-	if wrong["erosion"].(float64) != 0 || len(wrong["failed_strokes"].([]any)) != 11 {
+	if wrong["erosion"].(float64) != 0 || len(wrong["failed_strokes"].([]any)) != len(catalog.Chapters[0].Events[0].Puzzle.Steps[0].Trace.Strokes) {
 		t.Fatalf("trace practice must report missing strokes without erosion: %+v", wrong)
 	}
 	postJSON(t, server.URL+"/api/v1/sessions/"+sid+"/puzzle", traceRequest(catalog.Chapters[0].Events[0].Puzzle.Steps[0]))
