@@ -21,6 +21,7 @@ const BRUSH = preload("res://assets/puzzles/brush_cursor.png")
 const CINNABAR = preload("res://assets/puzzles/cinnabar_seal.png")
 const JADE = preload("res://assets/puzzles/jade_seal.png")
 const INK_DAB = preload("res://assets/puzzles/ink_dab.png")
+const INK_DAB_RED = preload("res://assets/puzzles/ink_dab_red.png")
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(0, 220)
@@ -102,19 +103,27 @@ func _draw() -> void:
 		draw_texture_rect(BRUSH, Rect2(brush_position + Vector2(-2, -88), Vector2(86, 86)), false)
 
 func _draw_ink_stroke(points: PackedVector2Array, invalid: bool) -> void:
-	var color := Color("#a83f3f") if invalid else Color("#263735")
+	var texture := INK_DAB_RED if invalid else INK_DAB
+	var length_total := 0.0
+	for j in range(1, points.size()): length_total += points[j - 1].distance_to(points[j])
 	var distance := 0.0
+	draw_polyline(points, Color("#a83f3f", .24) if invalid else Color("#203b3b", .24), 5, true)
 	for j in range(1, points.size()):
 		var start := points[j - 1]
 		var finish := points[j]
 		var length := start.distance_to(finish)
 		if length < .1: continue
-		var width := 5.5 + 1.5 * sin(distance * .075)
-		draw_line(start, finish, Color(color, .14), width + 4, true)
-		draw_line(start, finish, color, width, true)
-		if not invalid and int(distance / 18.0) != int((distance + length) / 18.0):
-			draw_texture_rect(INK_DAB, Rect2(finish - Vector2(8, 9), Vector2(16, 18)), false, Color(1, 1, 1, .16))
+		var angle := (finish - start).angle() + .95
+		var stamps := maxi(1, ceili(length / 3.0))
+		for k in range(stamps):
+			var along := distance + length * float(k) / float(stamps)
+			var taper := minf(1.0, minf(along / 18.0 + .55, (length_total - along) / 24.0 + .4))
+			var variation := 1.0 + .1 * sin(along * .18)
+			var extent := Vector2(17, 24) * taper * variation
+			draw_set_transform(start.lerp(finish, float(k) / float(stamps)), angle)
+			draw_texture_rect(texture, Rect2(-extent * .5, extent), false, Color(1, 1, 1, .52))
 		distance += length
+	draw_set_transform(Vector2.ZERO)
 
 func _remaining_guide(guide: PackedVector2Array, tip: Vector2) -> PackedVector2Array:
 	var nearest_segment := 0
