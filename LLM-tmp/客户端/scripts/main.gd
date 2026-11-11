@@ -545,6 +545,9 @@ func _has_current_event() -> bool:
 func _clear() -> void:
 	_close_dialogue()
 	if flow not in ["map", "loading", "welcome", "splash"]: front.enter_game()
+	if is_instance_valid(battle_dock) and battle_dock.get_parent() != scroll.get_parent():
+		battle_dock.get_parent().remove_child(battle_dock)
+		scroll.get_parent().add_child(battle_dock)
 	_layout_landscape.call_deferred()
 	if is_instance_valid(battle_dock): battle_dock.visible = flow == "battle"
 	if is_instance_valid(soundscape): soundscape.set_scene("battle" if flow == "battle" else "theme")
@@ -941,9 +944,10 @@ func _start_battle() -> void:
 		child.queue_free()
 	battle_start = _button(battle_dock, "开始守护 · 准备好再迎战", _begin_battle)
 	battle_controls = GridContainer.new()
-	battle_controls.columns = 3 if _is_echo() else 5
+	battle_controls.columns = 1 if not _is_echo() else 3
 	battle_dock.add_child(battle_controls)
 	for skill in BATTLE_KEYS:
+		if not _is_echo() and skill in ["斗拱", "藻井"]: continue
 		if _is_echo() and skill in ["斗拱", "藻井"]:
 			battle_ready[skill] = 0
 			continue
@@ -957,7 +961,16 @@ func _start_battle() -> void:
 			battle_buttons[skill] = skill_button
 		else:
 			battle_buttons[skill] = _button(battle_controls, skill, _battle_skill.bind(skill))
+			battle_buttons[skill].custom_minimum_size = Vector2(0, 66 if skill in ["挥墨", "飞檐"] else 52)
+			if skill in ["挥墨", "飞檐"]:
+				battle_buttons[skill].add_theme_font_size_override("font_size", 22)
 		battle_buttons[skill].tooltip_text = data.catalog.skills[skill].description
+	if not _is_echo():
+		var action_index := 0
+		for skill in ["挥墨", "飞檐", "斗拱", "藻井", "闪身"]:
+			if battle_buttons.has(skill):
+				battle_controls.move_child(battle_buttons[skill], action_index)
+				action_index += 1
 	status.text = "斗拱自动护盾 · 藻井自动净化；主动操作：挥墨、飞檐、闪身。" if _is_echo() else "此战需至少施展一次：" + "、".join(current_event.battle.required_skills)
 	_battle_update()
 
@@ -1542,6 +1555,12 @@ func _layout_landscape() -> void:
 	notes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	notes.add_theme_constant_override("separation", 8 if visual == trace_canvas else 14)
 	card.add_child(notes)
+	if flow == "battle" and is_instance_valid(battle_dock):
+		var actions_title := _label(notes, "主动招式", 23, Color("#806b3f"))
+		actions_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		if battle_dock.get_parent() != null: battle_dock.get_parent().remove_child(battle_dock)
+		battle_dock.add_theme_constant_override("separation", 10)
+		notes.add_child(battle_dock)
 	for child in children:
 		if child == visual: continue
 		page.remove_child(child)

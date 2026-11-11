@@ -1,5 +1,6 @@
 """Record two honest, labelled, automated UI excerpts from a fixed EXE."""
 from __future__ import annotations
+import argparse
 from datetime import datetime
 import json,os,socket,subprocess,sys,zipfile
 from pathlib import Path
@@ -15,9 +16,13 @@ def probe(file):
     return json.loads(p.stdout)
 
 def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--archive',type=Path)
+    parser.add_argument('--output',type=Path)
+    args=parser.parse_args()
     with socket.socket() as connection:
         if connection.connect_ex(('127.0.0.1',8092))==0: raise RuntimeError('An existing demo is running; it will not be interrupted')
-    archive=max((base.ROOT/'dist').glob('*echo-v1*.zip'),key=lambda p:p.stat().st_mtime)
+    archive=args.archive.resolve() if args.archive else max((base.ROOT/'dist').glob('*echo-v1*.zip'),key=lambda p:p.stat().st_mtime)
     stamp=datetime.now()
     work=base.ROOT/'.review/echo-movie'/f'{stamp:%Y%m%d-%H%M%S}'
     work.mkdir(parents=True)
@@ -72,9 +77,8 @@ def main():
             filters.append(f'[{i}:v]trim=start_frame={first}:end_frame={first+count},setpts=PTS-STARTPTS[v{i}]')
             filters.append(f'[{i}:a]atrim=start={first/30:.8f}:duration={count/30:.8f},asetpts=PTS-STARTPTS[a{i}]')
         filters.append('[v0][a0][v1][a1]concat=n=2:v=1:a=1[v][a]')
-        destination=base.ROOT/'output/决赛修订材料/回响版A11'
-        destination.mkdir(parents=True,exist_ok=True)
-        final=destination/'檐下千秋_两分钟实机节选.mp4'
+        final=args.output.resolve() if args.output else base.ROOT/'output/决赛修订材料/回响版A11/檐下千秋_两分钟实机节选.mp4'
+        final.parent.mkdir(parents=True,exist_ok=True)
         if final.exists(): raise RuntimeError('The final video already exists; preserve it and choose a new revision')
         command=[str(FFMPEG),'-hide_banner','-i',records[0]['raw'],'-i',records[1]['raw'],'-filter_complex',';'.join(filters),
                  '-map','[v]','-map','[a]','-c:v','libx264','-preset','medium','-crf','18','-pix_fmt','yuv420p',

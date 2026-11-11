@@ -99,8 +99,9 @@ class ReleaseLayoutTest(FolderTestCase):
 
     def test_expected_entries_include_bundled_font_license(self):
         entries = pr.expected_entries()
-        self.assertEqual(len(entries), 9)
+        self.assertEqual(len(entries), 10)
         self.assertIn('LICENSE-Noto.txt', entries)
+        self.assertIn('LICENSE-Qiji-OFL.txt', entries)
         self.assertEqual(sorted(entries), list(entries))
         self.assertIn('檐下千秋.exe', entries)
         self.assertIn('server/yanxia-server.exe', entries)

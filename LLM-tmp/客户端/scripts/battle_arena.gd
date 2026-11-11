@@ -43,6 +43,7 @@ var character_moving := false
 var character_facing_left := false
 var echo_style := false
 var walk_time := 0.0
+var walk_blend := 0.0
 var erosion_art: Texture2D
 var gathering := false
 
@@ -101,13 +102,14 @@ func _process(delta: float) -> void:
 	effects = effects.filter(func(item): return item.age < 1.15)
 	if active and not defeated:
 		var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down") + joystick
+		if direction.length() < .12: direction = Vector2.ZERO
 		character_moving = direction.length() > 0.0
 		if absf(direction.x) > 0.01: character_facing_left = direction.x < 0
 		if direction.length() > 0:
 			var previous := player_position
 			player_position += Vector2(direction.x, direction.y * 0.72).limit_length() * delta * (0.32 if echo_style else 0.52)
 			player_position = player_position.clamp(Vector2(0.08, 0.38), Vector2(0.92, 0.90))
-			character_moving = player_position.distance_to(previous) > .0001
+			character_moving = ((player_position-previous)*size).length() > .001
 			if character_moving:
 				var old_step := int(walk_time*2.5)
 				walk_time += ((player_position-previous)*size).length()/180.0*.8
@@ -119,6 +121,7 @@ func _process(delta: float) -> void:
 		enemy_position = enemy_position.move_toward(chase_target, delta * 0.13)
 		enemy_position = enemy_position.clamp(Vector2(0.14, 0.18), Vector2(0.86, 0.56))
 		if phase < 0.32: dodge_armed = false
+	walk_blend = move_toward(walk_blend,1.0 if character_moving else 0.0,delta*10.0)
 	effect = maxf(0, effect - delta)
 	queue_redraw()
 
@@ -189,7 +192,7 @@ func _sprite(texture: Texture2D, center: Vector2, dimensions: Vector2, rotation:
 	draw_set_transform(Vector2.ZERO)
 
 func _paint_figure(point: Vector2, scale: float, action: String, strength: float, tint: Color, facing_left: bool = false) -> void:
-	if echo_style: preload("res://scripts/echo_figure.gd").paint(self,point,scale,walk_time if action in ["walk","dash"] else motion_time,action,strength,tint,facing_left)
+	if echo_style: preload("res://scripts/echo_figure.gd").paint(self,point,scale,walk_time if action in ["idle","walk","dash"] else motion_time,action,strength,tint,facing_left,walk_blend if action in ["idle","walk"] else -1.0)
 	else: FIGURE.paint(self,point,scale,motion_time,action,strength,tint,facing_left)
 
 func _draw_effect(item: Dictionary) -> void:

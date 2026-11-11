@@ -2,6 +2,12 @@ extends RefCounted
 
 const INK := Color("#302c28")
 const NOTE := Color("#746b60")
+const OBJECTS := {
+	"yan_ping_an": "廊桥与桥灯",
+	"she_cheng_xiang": "拼合的旧梁",
+	"she_ning_an": "檐下的空碗",
+	"she_hui_chun": "仍能敲响的鼓"
+}
 const EFFECTS := {
 	"yan_ping_an": "桥和斗拱手艺仍在；那一次归人的脚步声不再被你唤回。",
 	"she_cheng_xiang": "屋梁仍然稳固；众人抬梁的手影与号子不再随身显现。",
@@ -47,63 +53,74 @@ func choice() -> void:
 	if choice_event != str(host.current_event.id):
 		choice_event = str(host.current_event.id)
 		candidate = ""
-	var body := HBoxContainer.new()
-	body.add_theme_constant_override("separation", 28)
-	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	host.page.add_child(body)
-	var left := VBoxContainer.new()
-	left.custom_minimum_size.x = 300
-	left.add_theme_constant_override("separation", 12)
-	body.add_child(left)
-	host._label(left, "新听见的回声", 20)
-	host._label(left, str(memory.title), 28)
-	var new_art: TextureRect = host._memory_art(left, memory.id, 230)
-	if new_art != null: new_art.custom_minimum_size.x = 260
-	host._label(left, str(memory.summary), 22)
-	var description := VBoxContainer.new()
-	description.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	description.add_theme_constant_override("separation", 14)
-	body.add_child(description)
 	if bool(memory.get("epilogue", false)):
-		host._label(description, "最后一页记录你的旅途，不占用心舍。", 20)
-		_record_list(description)
-		host._button(description, "收下最后一页", host._choose.bind("keep", ""))
+		host._label(host.page, "最后一页记录你的旅途，不占用心舍。", 20)
+		_record_list(host.page)
+		host._button(host.page, "收下最后一页", host._choose.bind("keep", ""))
 		return
-	host._label(description, "记录与手艺会留下。归档的完整回声不再随身响起。", 20)
-	host._button(left, "重听新回声", host._play_memory.bind(str(memory.echo_audio)))
-	if str(memory.id) in ["yan_ping_an","she_cheng_xiang","she_ning_an","she_hui_chun"]:
-		host._button(left,"看看新回应",inspect_choice.bind(str(memory.id)))
 	var used := 0
 	for item in GameState.player.memories: used += int(item.capacity)
 	var full: bool = used + int(memory.capacity) > int(GameState.player.capacity)
-	host._label(description, "心舍 %d/%d%s" % [used, int(GameState.player.capacity), " · 选择归档候选" if full else " · 还有空位"], 22)
+	host._label(host.page, "回声取舍  /  心舍 %d/%d" % [used, int(GameState.player.capacity)], 26)
+	host._label(host.page, "心舍已满。先选一段旧回声比较，再决定带走新回应或保留现有回应。" if full else "还有空位。新回声可以收入心舍，也可以只留下记录。", 19)
 	if full:
-		var grid := GridContainer.new()
-		grid.columns = 3
-		grid.add_theme_constant_override("h_separation", 18)
-		description.add_child(grid)
+		var choices := HBoxContainer.new()
+		choices.add_theme_constant_override("separation", 10)
+		host.page.add_child(choices)
 		for old in GameState.player.memories:
-			var tile := VBoxContainer.new()
-			tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			grid.add_child(tile)
-			host._memory_art(tile, str(old.id), 90)
-			host._button(tile, ("已选 · " if candidate == str(old.id) else "查看 · ") + str(old.title), _select.bind(str(old.id)))
-		if not candidate.is_empty():
-			var old: Dictionary = host.data.memory(candidate)
-			host._label(description, "带走「%s」；归档「%s」" % [memory.title, old.title], 22)
-			host._label(description, consequence(candidate), 20)
-			var actions := HBoxContainer.new()
-			description.add_child(actions)
-			host._button(actions, "重听旧回声", host._play_memory.bind(str(old.echo_audio)))
-			if candidate in ["yan_ping_an","she_cheng_xiang","she_ning_an","she_hui_chun"]:
-				host._button(description,"看看旧回应，再决定",inspect_choice.bind(candidate))
-			host._button(actions, "确认这次取舍…", confirm.bind("replace", candidate))
+			var select: Button = host._button(choices, ("已选 · " if candidate == str(old.id) else "比较 · ") + str(old.title), _select.bind(str(old.id)))
+			select.custom_minimum_size.y = 50
+			if candidate == str(old.id):
+				select.add_theme_stylebox_override("normal",preload("res://scripts/ink_theme.gd").surface("paper",10))
+				select.add_theme_color_override("font_color",INK)
+	var comparison := HBoxContainer.new()
+	comparison.add_theme_constant_override("separation",16)
+	comparison.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	host.page.add_child(comparison)
+	_comparison_card(comparison,memory,"新听见")
+	if full and not candidate.is_empty():
+		_comparison_card(comparison,host.data.memory(candidate),"现有回应")
 	else:
-		var space := Control.new()
-		space.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		description.add_child(space)
-		host._button(description, "收入心舍", host._choose.bind("keep", ""))
-	host._button(description, "只留下这段新回声的记录…", confirm.bind("archive", str(memory.id)))
+		var placeholder := PanelContainer.new()
+		placeholder.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		placeholder.size_flags_stretch_ratio = 1
+		placeholder.add_theme_stylebox_override("panel",preload("res://scripts/ink_theme.gd").surface("paper",18))
+		comparison.add_child(placeholder)
+		var note := VBoxContainer.new()
+		note.alignment = BoxContainer.ALIGNMENT_CENTER
+		placeholder.add_child(note)
+		host._label(note,"现有回声" if full else "留在檐下的记录",22)
+		host._label(note,"从上方选一段，再看见完整的比较。" if full else "修复、手艺与摘要会保存；不带走这次独有的回应。",19)
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation",16)
+	host.page.add_child(actions)
+	var take_label := "带走「%s」 · 归档所选旧回声…" % memory.title if full else "收入心舍"
+	var take_action: Callable = confirm.bind("replace",candidate) if full else host._choose.bind("keep","")
+	var take: Button = host._button(actions,take_label,take_action)
+	take.disabled = full and candidate.is_empty()
+	var archive_label := "保留现有回声 · 只归档「%s」…" % memory.title if full else "只留下新回声的记录…"
+	host._button(actions,archive_label,confirm.bind("archive",str(memory.id)))
+	host._label(host.page,"记录、修复与技艺始终保留；归档后，这次独有的完整回应不再随身响起。",16)
+
+func _comparison_card(parent: HBoxContainer, memory: Dictionary, heading: String) -> void:
+	var frame := PanelContainer.new()
+	frame.name = "NewResponse" if heading == "新听见" else "HeldResponse"
+	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	frame.size_flags_stretch_ratio = 1
+	frame.add_theme_stylebox_override("panel",preload("res://scripts/ink_theme.gd").surface("paper",14))
+	parent.add_child(frame)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation",8)
+	frame.add_child(column)
+	host._label(column,heading+"  /  「%s」" % memory.title,22)
+	var art: TextureRect = host._memory_art(column,str(memory.id),190)
+	if art != null: art.custom_minimum_size.y = 190
+	host._label(column,"旧物 · "+str(OBJECTS.get(str(memory.id),"留下的旧迹")),17)
+	host._label(column,str(memory.summary),18)
+	if str(memory.id) in ["yan_ping_an","she_cheng_xiang","she_ning_an","she_hui_chun"]:
+		host._button(column,"看与听 · %s" % memory.title,inspect_choice.bind(str(memory.id)))
+	else:
+		host._button(column,"聆听 · %s" % memory.title,host._play_memory.bind(str(memory.echo_audio)))
 
 func _select(id: String) -> void:
 	candidate = id

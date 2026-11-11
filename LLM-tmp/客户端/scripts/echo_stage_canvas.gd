@@ -211,10 +211,17 @@ func _draw_joinery() -> void:
 	_draw_paper(work_rect)
 	_label_at(Rect2(work_rect.position+Vector2(8,8),Vector2(work_rect.size.x-16,32)), "比对旧痕，让凸榫与凹口接住", INK, 21)
 	var width := work_rect.size.x
+	var scene_strip := Rect2(work_rect.position+Vector2(24,54),Vector2(width-48,88))
+	var source := Rect2(background.get_size()*Vector2(.06,.07),background.get_size()*Vector2(.84,.31))
+	draw_texture_rect_region(background,scene_strip,source,Color(1,1,1,.86))
+	draw_rect(scene_strip,INK,false,1)
+	draw_rect(Rect2(scene_strip.position,Vector2(scene_strip.size.x,30)),Color(.12,.10,.08,.68))
+	_label_at(Rect2(scene_strip.position+Vector2(12,2),Vector2(scene_strip.size.x-24,26)),"正殿屋梁  /  眼前这道接合",PAPER,17)
 	var y := work_rect.position.y+work_rect.size.y*.35
 	var span := width*.24
 	var positions := {"SLOT-L":Vector2(work_rect.position.x+width*.22,y), "SLOT-C":Vector2(work_rect.position.x+width*.50,y), "SLOT-R":Vector2(work_rect.position.x+width*.78,y)}
 	var ids := {"SLOT-L":"hall_left", "SLOT-C":"hall_center", "SLOT-R":"hall_right"}
+	draw_line(Vector2(positions["SLOT-L"].x-span*.45,y),Vector2(positions["SLOT-R"].x+span*.45,y),Color("#5c4633",.32),12,true)
 	for slot in positions:
 		var p: Vector2 = positions[slot]
 		var rect := Rect2(p-Vector2(span*.5,44), Vector2(span,88))
@@ -226,9 +233,16 @@ func _draw_joinery() -> void:
 		if filled:
 			_draw_piece(piece, rect.grow(-5), 180 if slot == "SLOT-L" else 0)
 		else:
-			draw_colored_polygon(profile,Color("#b1a38d"))
+			var shadow := PackedVector2Array()
+			for point in profile: shadow.append(point+Vector2(3,5))
+			draw_colored_polygon(shadow,Color(.16,.12,.09,.27))
+			draw_colored_polygon(profile,Color("#ab9980"))
+			if rect.has_point(cursor) and not stage.selected.is_empty():
+				var highlight := profile.duplicate()
+				highlight.append(highlight[0])
+				draw_polyline(highlight,GOLD,4,true)
 			profile.append(profile[0])
-			draw_polyline(profile,INK,2,true)
+			draw_polyline(profile,INK,2.5,true)
 		_label_at(Rect2(rect.position+Vector2(0,-29),Vector2(rect.size.x,26)), sign, RED, 23)
 		_label_at(Rect2(rect.position+Vector2(0,92),Vector2(rect.size.x,26)), "已合拢" if filled else ("中部" if slot == "SLOT-C" else "榫口"), INK, 16)
 	var support_y := y+128
@@ -243,6 +257,8 @@ func _draw_joinery() -> void:
 		return
 	var tile_width := (width-40)/4.0
 	var tray_y := work_rect.end.y-108
+	draw_rect(Rect2(work_rect.position.x+10,tray_y-10,width-20,108),Color("#d4c2a2",.52))
+	draw_line(Vector2(work_rect.position.x+10,tray_y-10),Vector2(work_rect.end.x-10,tray_y-10),Color("#9a855f",.65),2,true)
 	for i in range(stage.spec.pieces.size()):
 		var piece: Dictionary = stage.spec.pieces[i]
 		var rect := Rect2(Vector2(work_rect.position.x+12+i*(tile_width+5),tray_y),Vector2(tile_width,80))
@@ -250,7 +266,9 @@ func _draw_joinery() -> void:
 		var placed: bool = stage.done("hall_left" if i == 0 else ("hall_right" if i == 1 else ("hall_center" if i == 2 else "")))
 		if placed: continue
 		var active: bool = stage.selected == str(piece.id)
-		if active: draw_rect(rect.grow(3), GOLD, false, 2)
+		if active or rect.has_point(cursor):
+			draw_rect(rect.grow(4),Color("#ead7ad",.72))
+			draw_rect(rect.grow(4),GOLD, false,3 if active else 2)
 		_draw_piece(str(piece.id), rect, stage.piece_turn if active else int(stage.piece_turns.get(str(piece.id),piece.initial_rotation)))
 		_label_at(Rect2(rect.position+Vector2(0,80),Vector2(tile_width,24)), str(piece.label), INK, 15)
 	if dragging and stage.selected.begins_with("JOIN-"):

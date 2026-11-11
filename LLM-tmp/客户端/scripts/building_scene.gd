@@ -20,6 +20,7 @@ var dragging_stick := false
 var purification := 0.0
 var character_time := 0.0
 var walk_time := 0.0
+var walk_blend := 0.0
 var character_moving := false
 var character_facing_left := false
 var echo_style := false
@@ -45,22 +46,24 @@ func _process(delta: float) -> void:
 	if interactive:
 		var previous_position := player
 		var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down") + joystick
+		if direction.length() < .12: direction = Vector2.ZERO
 		if direction.length() > 0:
 			pending_investigation = -1
 			player += Vector2(direction.x, direction.y * 0.65).limit_length() * delta * (0.24 if echo_style else 0.5)
-			target = player
 		else: player = player.move_toward(target, delta * (0.24 if echo_style else 0.5))
 		player = player.clamp(Vector2(0.05, 0.16), Vector2(0.95, 0.94))
-		character_moving = player.distance_to(previous_position) > 0.0001
+		if direction != Vector2.ZERO: target = player
+		character_moving = ((player-previous_position)*size).length() > .001
 		if character_moving:
 			var old_step := int(walk_time*2.5)
 			walk_time += ((player-previous_position)*size).length()/129.6*.8
 			if int(walk_time*2.5) != old_step: footstep.emit()
-		if absf(player.x - previous_position.x) > 0.0001:
+		if absf(player.x - previous_position.x)*size.x > .05:
 			character_facing_left = player.x < previous_position.x
 		if pending_investigation >= 0 and player.distance_to(_investigation_point(pending_investigation)) < 0.035:
 			_discover(pending_investigation)
 		if Input.is_action_just_pressed("advance"): _investigate_nearest()
+	walk_blend = move_toward(walk_blend,1.0 if character_moving else 0.0,delta*10.0)
 	queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
@@ -135,7 +138,7 @@ func _draw() -> void:
 			draw_texture_rect(INK_CARD, Rect2(origin, Vector2(width, 30)), false)
 			draw_string(preload("res://scripts/ink_theme.gd").font(),origin+Vector2(8,22),text,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("#f4e4bc"))
 		if echo_style:
-			preload("res://scripts/echo_figure.gd").paint(self,player*size,.72,walk_time if character_moving else character_time,"walk" if character_moving else "idle",0.0,Color.WHITE,character_facing_left)
+			preload("res://scripts/echo_figure.gd").paint(self,player*size,.72,walk_time,"walk" if character_moving else "idle",0.0,Color.WHITE,character_facing_left,walk_blend)
 		else: preload("res://scripts/ink_figure.gd").paint(self, player*size, .72, character_time, "walk" if character_moving else "idle", 0.0, Color.WHITE, character_facing_left)
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(14, size.y - 79), Vector2.ONE * 68), false, Color(1, 1, 1, .48))
 		draw_texture_rect(JADE_SEAL, Rect2(Vector2(36, size.y - 57) + joystick * 23, Vector2.ONE * 24), false)

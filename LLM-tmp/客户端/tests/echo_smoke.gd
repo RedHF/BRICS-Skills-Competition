@@ -85,13 +85,21 @@ func _run() -> void:
 				_check(root.get_node("GameState").player.memories.size() == 3)
 				_check(int(root.get_node("GameState").player.capacity) == 3)
 				if archive != "she_hui_chun": main.echo_journey._select(archive)
+				if archive != "she_hui_chun":
+					var new_card: Control = main.page.find_child("NewResponse",true,false)
+					var old_card: Control = main.page.find_child("HeldResponse",true,false)
+					_check(new_card != null and old_card != null,"The paired response comparison is missing")
+					await process_frame
+					_check(absf(new_card.size.x-old_card.size.x) < 2,"New and old responses have unequal space")
+				else:
+					_check(_button(main.page,"带走「社·回春」 · 归档所选旧回声…").disabled,"Taking a new response requires selecting an old one")
 				if archive == "she_cheng_xiang":
-					await _press("看看旧回应，再决定")
+					await _press("看与听 · 社·承香")
 					_check(main.echo_journey.preview.living)
 					await _capture("beam-before-archive")
 					await _press("返回取舍")
 				await _capture("first-choice")
-				var confirm: Button = _button(main.page,"只留下这段新回声的记录…" if archive == "she_hui_chun" else "确认这次取舍…")
+				var confirm: Button = _button(main.page,"保留现有回声 · 只归档「社·回春」…" if archive == "she_hui_chun" else "带走「社·回春」 · 归档所选旧回声…")
 				_check(confirm != null)
 				confirm.pressed.emit()
 				await _check_archive_confirmation(confirm)
@@ -106,7 +114,7 @@ func _run() -> void:
 				if str(event.id) == "temple_guest":
 					# The user's screenshot archives a new response with room left.
 					var state_before := JSON.stringify(root.get_node("GameState").player)
-					var archive_new := _button(main.page,"只留下这段新回声的记录…")
+					var archive_new := _button(main.page,"只留下新回声的记录…")
 					archive_new.pressed.emit()
 					await _capture("archive-new-with-room")
 					await _pointer(main.archive_prompt.cancel_button,main.archive_prompt.cancel_button.size*.5,true)

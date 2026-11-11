@@ -40,6 +40,7 @@ SHIPPED_FILES = (
     'LICENSE-Godot.txt',
     'COPYRIGHT-Godot.json',
     'LICENSE-Noto.txt',
+    'LICENSE-Qiji-OFL.txt',
 )
 MANIFEST_FILE = 'SHA256.txt'
 
@@ -223,11 +224,15 @@ def copy_go_license(folder: Path) -> Path:
 
 def copy_font_licenses(folder: Path) -> None:
     font_dir = ROOT / CLIENT_PROJECT / 'assets/fonts'
-    licenses = sorted(font_dir.glob('LICENSE-*.txt'))
+    licenses = sorted(font_dir.glob('LICENSE-Noto*.txt'))
     if len(licenses) != 2:
         raise SystemExit('缺少两份随包 Noto 字体许可')
     text = '\n\n'.join(path.name + '\n\n' + path.read_text(encoding='utf-8') for path in licenses)
     (folder / 'LICENSE-Noto.txt').write_text(text, encoding='utf-8')
+    qiji_license = font_dir / 'LICENSE-Qiji-OFL.txt'
+    if not qiji_license.is_file():
+        raise SystemExit('缺少随包齐伋体许可')
+    shutil.copyfile(qiji_license, folder / qiji_license.name)
 
 
 def write_runbook(folder: Path, version: str, date: str, notes_file=None) -> None:

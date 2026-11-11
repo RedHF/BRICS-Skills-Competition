@@ -33,5 +33,18 @@
       "14": "https://scripts.sil.org/OFL"
     },
     "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/OFL.txt"
+  },
+  {
+    "file": "QijiFallback.ttf",
+    "bytes": 38832332,
+    "sha256": "01c1e4fab1e92b27e61a54adfdbf40b242d3e70ca535339ef2eb3a02bd6fd7a4",
+    "font_metadata": {
+      "1": "QIJIFALLBACK",
+      "copyright": "Copyright (c) 2020, Lingdong Huang",
+      "reserved_font_name": "QIJI"
+    },
+    "source": "User-provided archive 黄令东齐伋体.zip; matching author release: https://github.com/LingDong-/qiji-font/releases/tag/0.0.4",
+    "license": "SIL Open Font License 1.1",
+    "license_file": "LICENSE-Qiji-OFL.txt"
   }
 ]

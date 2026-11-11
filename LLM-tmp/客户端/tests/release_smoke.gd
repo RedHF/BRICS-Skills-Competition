@@ -21,9 +21,13 @@ func _run() -> void:
 	if main.navigation.get_child_count() != 2: return fail("Three-page navigation")
 	var chinese_font = main.stats.get_theme_font("font")
 	if chinese_font is not FontVariation or chinese_font.base_font is not FontFile: return fail("Bundled Chinese font in EXE")
-	if not chinese_font.base_font.resource_path.ends_with("NotoSerifSC-Regular.ttf") or chinese_font.base_font.allow_system_fallback: return fail("Chinese font depends on system installation")
+	var bundled_fonts := ["NotoSerifSC-Regular.ttf", "QijiFallback.ttf"]
+	if chinese_font.base_font.resource_path.get_file() not in bundled_fonts or chinese_font.base_font.allow_system_fallback: return fail("Chinese font depends on system installation")
+	var has_chinese_fallback := false
 	for fallback in chinese_font.fallbacks:
 		if fallback is not FontFile or fallback.allow_system_fallback: return fail("Symbol font depends on system installation")
+		if fallback.resource_path.ends_with("NotoSerifSC-Regular.ttf"): has_chinese_fallback = true
+	if chinese_font.base_font.resource_path.ends_with("QijiFallback.ttf") and not has_chinese_fallback: return fail("Display font has missing Chinese glyphs")
 	var canvas_font = preload("res://scripts/ink_theme.gd").font()
 	if canvas_font != chinese_font: return fail("Canvas and UI font mismatch")
 	if AudioServer.get_bus_effect_count(main.echo_bus) != 0: return fail("Speech distortion")
