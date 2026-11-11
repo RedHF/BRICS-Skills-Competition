@@ -80,11 +80,13 @@ func _run() -> void:
 					_check(bool(solved.get("accepted",false)), "Echo puzzle rejected: " + str(solved))
 			await main._resume()
 			_check(main.flow == "choice")
+			await _check_choice_layout()
 			if str(event.id) == "temple_drum":
 				_snapshot_demo("choice")
 				_check(root.get_node("GameState").player.memories.size() == 3)
 				_check(int(root.get_node("GameState").player.capacity) == 3)
 				if archive != "she_hui_chun": main.echo_journey._select(archive)
+				await _check_choice_layout()
 				if archive != "she_hui_chun":
 					var new_card: Control = main.page.find_child("NewResponse",true,false)
 					var old_card: Control = main.page.find_child("HeldResponse",true,false)
@@ -353,9 +355,19 @@ func _check_result_layout() -> void:
 	var notes: Control = result.get_node("ResultNotes")
 	var next: Button = _button(notes,"收起谱页，继续 →")
 	_check(next.size.x <= 360,"Result button stretches across the screen")
+	_check(not main.scroll.get_v_scroll_bar().visible,"Choice result requires vertical scrolling")
 	var bounds := Rect2(Vector2.ZERO,main.get_viewport().get_visible_rect().size)
 	_check(bounds.encloses(next.get_global_rect()),"Result continue button is outside the viewport")
 	_check(absf(notes.get_global_rect().get_center().y-result.get_global_rect().get_center().y) < 4,"Result text is not vertically centred")
+
+func _check_choice_layout() -> void:
+	await process_frame
+	await process_frame
+	var bounds := main.get_viewport().get_visible_rect()
+	_check(not main.scroll.get_v_scroll_bar().visible,"Choice page requires vertical scrolling")
+	for button in main.page.find_children("*","Button",true,false):
+		if button.is_visible_in_tree():
+			_check(bounds.encloses(button.get_global_rect()),"Choice action is outside the viewport: "+button.text)
 
 func _check_archive_confirmation(trigger: Button) -> void:
 	var prompt: Control = main.archive_prompt

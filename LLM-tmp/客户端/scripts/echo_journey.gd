@@ -49,6 +49,7 @@ func consequence(id: String) -> String:
 func choice() -> void:
 	host.flow = "choice"
 	host._clear()
+	host.page.add_theme_constant_override("separation", 8)
 	var memory: Dictionary = host.data.memory(host.current_event.reward.memory_id)
 	if choice_event != str(host.current_event.id):
 		choice_event = str(host.current_event.id)
@@ -62,19 +63,18 @@ func choice() -> void:
 	for item in GameState.player.memories: used += int(item.capacity)
 	var full: bool = used + int(memory.capacity) > int(GameState.player.capacity)
 	host._label(host.page, "回声取舍  /  心舍 %d/%d" % [used, int(GameState.player.capacity)], 26)
-	host._label(host.page, "心舍已满。先选一段旧回声比较，再决定带走新回应或保留现有回应。" if full else "还有空位。新回声可以收入心舍，也可以只留下记录。", 19)
 	if full:
 		var choices := HBoxContainer.new()
-		choices.add_theme_constant_override("separation", 10)
+		choices.add_theme_constant_override("separation", 8)
 		host.page.add_child(choices)
 		for old in GameState.player.memories:
 			var select: Button = host._button(choices, ("已选 · " if candidate == str(old.id) else "比较 · ") + str(old.title), _select.bind(str(old.id)))
-			select.custom_minimum_size.y = 50
+			select.custom_minimum_size.y = 42
 			if candidate == str(old.id):
 				select.add_theme_stylebox_override("normal",preload("res://scripts/ink_theme.gd").surface("paper",10))
 				select.add_theme_color_override("font_color",INK)
 	var comparison := HBoxContainer.new()
-	comparison.add_theme_constant_override("separation",16)
+	comparison.add_theme_constant_override("separation",12)
 	comparison.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	host.page.add_child(comparison)
 	_comparison_card(comparison,memory,"新听见")
@@ -86,20 +86,25 @@ func choice() -> void:
 		placeholder.size_flags_stretch_ratio = 1
 		placeholder.add_theme_stylebox_override("panel",preload("res://scripts/ink_theme.gd").surface("paper",18))
 		comparison.add_child(placeholder)
-		var note := VBoxContainer.new()
-		note.alignment = BoxContainer.ALIGNMENT_CENTER
+		var note := HBoxContainer.new()
+		note.add_theme_constant_override("separation", 12)
 		placeholder.add_child(note)
 		var scene := TextureRect.new()
 		scene.texture = host._event_background(str(host.current_event.id))
 		scene.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		scene.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		scene.custom_minimum_size.y = 260
+		scene.custom_minimum_size.x = 160
+		scene.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		note.add_child(scene)
-		host._label(note,"现有回声" if full else "留在檐下的记录",22)
-		host._label(note,"从上方选一段，再看见完整的比较。" if full else "修复、手艺与摘要会保存；不带走这次独有的回应。",19)
+		var explanation := VBoxContainer.new()
+		explanation.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		explanation.alignment = BoxContainer.ALIGNMENT_CENTER
+		note.add_child(explanation)
+		host._label(explanation,"现有回声" if full else "留在檐下的记录",21)
+		host._label(explanation,"选一段旧回应比较。" if full else "修复与手艺会保存。",17)
 	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation",16)
+	actions.add_theme_constant_override("separation",12)
 	host.page.add_child(actions)
 	var take_label := "带走「%s」 · 归档所选旧回声…" % memory.title if full else "收入心舍"
 	var take_action: Callable = confirm.bind("replace",candidate) if full else host._choose.bind("keep","")
@@ -107,7 +112,7 @@ func choice() -> void:
 	take.disabled = full and candidate.is_empty()
 	var archive_label := "保留现有回声 · 只归档「%s」…" % memory.title if full else "只留下新回声的记录…"
 	host._button(actions,archive_label,confirm.bind("archive",str(memory.id)))
-	host._label(host.page,"记录、修复与技艺始终保留；归档后，这次独有的完整回应不再随身响起。",16)
+	take.tooltip_text = "记录、修复与技艺始终保留；所选旧回声归档后不再随身回应。" if full else "记录、修复与技艺始终保留。"
 
 func _comparison_card(parent: HBoxContainer, memory: Dictionary, heading: String) -> void:
 	var frame := PanelContainer.new()
@@ -117,17 +122,31 @@ func _comparison_card(parent: HBoxContainer, memory: Dictionary, heading: String
 	frame.add_theme_stylebox_override("panel",preload("res://scripts/ink_theme.gd").surface("paper",14))
 	parent.add_child(frame)
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation",8)
+	column.add_theme_constant_override("separation",6)
 	frame.add_child(column)
-	host._label(column,heading+"  /  「%s」" % memory.title,22)
-	var art: TextureRect = host._memory_art(column,str(memory.id),300)
-	if art != null: art.custom_minimum_size.y = 300
-	host._label(column,"旧物 · "+str(OBJECTS.get(str(memory.id),"留下的旧迹")),17)
-	host._label(column,str(memory.summary),18)
+	host._label(column,heading+"  /  「%s」" % memory.title,21)
+	var content := HBoxContainer.new()
+	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation",10)
+	column.add_child(content)
+	var art: TextureRect = host._memory_art(content,str(memory.id),0)
+	if art != null:
+		art.custom_minimum_size.x = 160
+		art.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		art.size_flags_stretch_ratio = 1.1
+		art.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var details := VBoxContainer.new()
+	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	details.size_flags_stretch_ratio = 1.2
+	details.alignment = BoxContainer.ALIGNMENT_CENTER
+	details.add_theme_constant_override("separation",8)
+	content.add_child(details)
+	host._label(details,"旧物 · "+str(OBJECTS.get(str(memory.id),"留下的旧迹")),16)
+	host._label(details,str(memory.summary),17)
 	if str(memory.id) in ["yan_ping_an","she_cheng_xiang","she_ning_an","she_hui_chun"]:
-		host._button(column,"看与听 · %s" % memory.title,inspect_choice.bind(str(memory.id)))
+		host._button(details,"看与听 · %s" % memory.title,inspect_choice.bind(str(memory.id)))
 	else:
-		host._button(column,"聆听 · %s" % memory.title,host._play_memory.bind(str(memory.echo_audio)))
+		host._button(details,"聆听 · %s" % memory.title,host._play_memory.bind(str(memory.echo_audio)))
 
 func _select(id: String) -> void:
 	candidate = id

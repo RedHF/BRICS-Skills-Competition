@@ -545,6 +545,7 @@ func _has_current_event() -> bool:
 
 func _clear() -> void:
 	_close_dialogue()
+	page.add_theme_constant_override("separation", 12)
 	if flow not in ["map", "loading", "welcome", "splash"]: front.enter_game()
 	if is_instance_valid(battle_dock) and battle_dock.get_parent() != scroll.get_parent():
 		battle_dock.get_parent().remove_child(battle_dock)
@@ -553,6 +554,7 @@ func _clear() -> void:
 	if is_instance_valid(battle_dock): battle_dock.visible = flow == "battle"
 	if is_instance_valid(soundscape): soundscape.set_scene("battle" if flow == "battle" else "theme")
 	status.text = ""
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED if _is_echo() and flow == "choice" else ScrollContainer.SCROLL_MODE_AUTO
 	for player in page.find_children("*","AudioStreamPlayer",true,false):
 		player.stop()
 		player.stream = null
