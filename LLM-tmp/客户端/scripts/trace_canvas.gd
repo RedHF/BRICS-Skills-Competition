@@ -79,13 +79,12 @@ func _draw() -> void:
 		for vertex in spec.strokes[i]:
 			guide.append(canvas_rect.position + Vector2((float(vertex[0])-view_x)*characters,float(vertex[1]))*canvas_rect.size)
 		if guide.size() > 1 and strokes[i].is_empty():
-			var guide_color := Color("#746b60", .58 if i == active else .34)
-			draw_polyline(guide, guide_color, 5 if i == active else 4, true)
+			_draw_guide_stroke(guide, i == active)
 		elif guide.size() > 1 and drawing and i == active:
 			var last: Array = strokes[i][-1]
 			var tip := canvas_rect.position + Vector2((float(last[0])-view_x)*characters,float(last[1]))*canvas_rect.size
 			var tail := _remaining_guide(guide, tip)
-			if tail.size() > 1: draw_polyline(tail, Color("#746b60", .45), 4, true)
+			if tail.size() > 1: _draw_guide_stroke(tail, true)
 		if i == active and strokes[i].is_empty():
 			var first: Array = spec.strokes[i][0]
 			var last: Array = spec.strokes[i][-1]
@@ -102,12 +101,19 @@ func _draw() -> void:
 		# The tip of the painted brush sits at the pointer's bottom-left corner.
 		draw_texture_rect(BRUSH, Rect2(brush_position + Vector2(-2, -88), Vector2(86, 86)), false)
 
+func _draw_guide_stroke(points: PackedVector2Array, selected: bool) -> void:
+	draw_polyline(points, Color("#746b60", .16 if selected else .1), 3, true)
+	_draw_brush_marks(points, INK_DAB, .18 if selected else .11, 1.12)
+
 func _draw_ink_stroke(points: PackedVector2Array, invalid: bool) -> void:
 	var texture := INK_DAB_RED if invalid else INK_DAB
+	draw_polyline(points, Color("#a83f3f", .24) if invalid else Color("#203b3b", .24), 5, true)
+	_draw_brush_marks(points, texture, .52, 1.0)
+
+func _draw_brush_marks(points: PackedVector2Array, texture: Texture2D, opacity: float, scale: float) -> void:
 	var length_total := 0.0
 	for j in range(1, points.size()): length_total += points[j - 1].distance_to(points[j])
 	var distance := 0.0
-	draw_polyline(points, Color("#a83f3f", .24) if invalid else Color("#203b3b", .24), 5, true)
 	for j in range(1, points.size()):
 		var start := points[j - 1]
 		var finish := points[j]
@@ -119,9 +125,9 @@ func _draw_ink_stroke(points: PackedVector2Array, invalid: bool) -> void:
 			var along := distance + length * float(k) / float(stamps)
 			var taper := minf(1.0, minf(along / 18.0 + .55, (length_total - along) / 24.0 + .4))
 			var variation := 1.0 + .1 * sin(along * .18)
-			var extent := Vector2(17, 24) * taper * variation
+			var extent := Vector2(17, 24) * taper * variation * scale
 			draw_set_transform(start.lerp(finish, float(k) / float(stamps)), angle)
-			draw_texture_rect(texture, Rect2(-extent * .5, extent), false, Color(1, 1, 1, .52))
+			draw_texture_rect(texture, Rect2(-extent * .5, extent), false, Color(1, 1, 1, opacity))
 		distance += length
 	draw_set_transform(Vector2.ZERO)
 
