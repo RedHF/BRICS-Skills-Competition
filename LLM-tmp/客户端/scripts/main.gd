@@ -1015,6 +1015,7 @@ func _battle_skill(skill: String) -> void:
 	if int(spec.heal) > 0: effect += " 净化"
 	arena.cast(skill, effect, Color(spec.color))
 	soundscape.cue(("brush_sweep" if int(spec.damage) > 0 else ("ward_knock" if skill == "斗拱" else "paper_fold")) if _is_echo() else ("ink" if int(spec.damage) > 0 else "repair"))
+	if _is_echo() and int(spec.damage) > 0: soundscape.cue("battle_strike")
 	if arena.hp <= 0:
 		arena.disperse()
 		battle_wave += 1
@@ -1023,7 +1024,7 @@ func _battle_skill(skill: String) -> void:
 		if _boss_wave():
 			next_attack = at + _attack_interval()
 			arena.flash("噤声客现身", Color("#e9b991"))
-			soundscape.cue("hit")
+			soundscape.cue("boss_arrival" if _is_echo() else "hit")
 	_battle_update()
 
 func _process(delta: float) -> void:

@@ -45,6 +45,7 @@ var echo_style := false
 var walk_time := 0.0
 var walk_blend := 0.0
 var erosion_art: Texture2D
+var boss_art: Texture2D
 var gathering := false
 
 func _ready() -> void:
@@ -54,6 +55,7 @@ func _ready() -> void:
 	if echo_style:
 		preload("res://scripts/echo_figure.gd").prepare()
 		erosion_art = load("res://assets/echo_v1/white_erosion_mask.png")
+		boss_art = load("res://assets/echo_v1/white_erosion_opera_boss.png")
 	else: FIGURE.prepare()
 
 func cast(skill: String, text: String, color: Color) -> void:
@@ -151,13 +153,19 @@ func _draw() -> void:
 		var extent := (126.0 if not boss_name.is_empty() else 76.0) * (1.0 + sin(motion_time * 3.0) * .04)
 		var tint := Color.WHITE if phase < .7 else Color("#ffa78d")
 		tint.a = 1.0 - spawn_time
-		if echo_style and erosion_art != null:
+		if echo_style and not boss_name.is_empty() and boss_art != null:
+			var boss_height := minf(size.y - 72.0, size.x * .58) * (1.0 + sin(motion_time * 3.0) * .025)
+			var boss_size := Vector2(boss_height * boss_art.get_width() / boss_art.get_height(), boss_height)
+			var boss_center := Vector2(enemy.x, 62.0 + boss_height * .5)
+			_sprite(DOUGONG_WARD, boss_center - Vector2(0, boss_height * .12), Vector2.ONE * boss_height * .92, motion_time * .12, .16)
+			draw_texture_rect(boss_art, Rect2(boss_center - boss_size * .5, boss_size), false, tint)
+		elif echo_style and erosion_art != null:
 			var height := extent*1.85
 			var dimensions := Vector2(height*erosion_art.get_width()/erosion_art.get_height(),height)
 			var lunge := (player-enemy).normalized()*maxf(0,phase-.7)*65
 			draw_texture_rect(erosion_art,Rect2(enemy+lunge-dimensions*.5,dimensions),false,tint)
 		else: draw_texture_rect(ENEMY_TEXTURE, Rect2(enemy-Vector2.ONE*extent*.5,Vector2.ONE*extent),false,tint)
-		if not boss_name.is_empty():
+		if not boss_name.is_empty() and not echo_style:
 			_sprite(DOUGONG_WARD, enemy, Vector2.ONE * extent * 1.55, motion_time * .12, .24)
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6, 7)), Color("#394448"))
 		draw_rect(Rect2(Vector2(size.x * 0.2, 16), Vector2(size.x * 0.6 * float(hp) / max_hp, 7)), Color("#e6a275"))

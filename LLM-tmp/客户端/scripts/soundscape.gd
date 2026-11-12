@@ -33,6 +33,8 @@ func _ready() -> void:
 	if echo_style:
 		for name in ["timber_seat","timber_support","ward_knock","pottery_place","paper_rub_1","paper_rub_2","step_wood_1","step_wood_2","step_stone_1","step_stone_2","paper_fold","brush_sweep","erosion_gather","erosion_break","ink_settle"]:
 			sounds[name] = load("res://assets/echo_v1/foley/"+name+".wav")
+		for name in ["boss_arrival", "battle_strike"]:
+			sounds[name] = load("res://assets/audio/" + name + ".wav")
 	for i in range(6):
 		var voice := AudioStreamPlayer.new()
 		voice.volume_db = -12
@@ -79,7 +81,7 @@ func set_scene(mode: String) -> void:
 
 func _music_level(name: String) -> float:
 	var base := -19.0 if name == "battle" else (-23.0 if name == "trace" else -24.0)
-	if echo_style: base -= 6.0
+	if echo_style: base -= 2.0 if name == "battle" else 6.0
 	return base - (8.0 if speech_active else 0.0)
 
 func cue(name: String) -> void:
@@ -99,6 +101,7 @@ func cue(name: String) -> void:
 	cursor += 1
 	player.volume_db = (-22 if speech_active else -12) if echo_style else (-24 if speech_active else -16)
 	if echo_style and name.begins_with("step_"): player.volume_db -= 6
+	if echo_style and name == "boss_arrival": player.volume_db -= 2
 	player.stream = sounds[name]
 	player.play()
 
