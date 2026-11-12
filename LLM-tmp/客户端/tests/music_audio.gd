@@ -13,6 +13,10 @@ func _run() -> void:
 	assert(is_equal_approx(stream.get_length(), 123.0))
 	assert(stream.loop_mode == AudioStreamWAV.LOOP_FORWARD)
 	assert(stream.loop_end == 5424300)
+	var battle_stream := sound.music.stream as AudioStreamWAV
+	assert(is_equal_approx(battle_stream.get_length(), 24.0))
+	assert(battle_stream.loop_mode == AudioStreamWAV.LOOP_FORWARD)
+	assert(battle_stream.loop_end == 24 * battle_stream.mix_rate)
 	await create_timer(.2).timeout
 	assert(sound.ambience.playing and sound.ambience.get_playback_position() > 0)
 	sound.duck(true)
@@ -20,8 +24,10 @@ func _run() -> void:
 	sound.duck(false)
 	assert(sound.ambience.volume_db == -24)
 	sound.set_battle(true)
+	await create_timer(.55).timeout
 	assert(sound.ambience.stream_paused and not sound.music.stream_paused)
 	sound.set_battle(false)
+	await create_timer(.55).timeout
 	assert(not sound.ambience.stream_paused and sound.music.stream_paused)
 	sound.ambience.seek(122.9)
 	await create_timer(.4).timeout
@@ -30,6 +36,7 @@ func _run() -> void:
 	assert(not sound.ambience.playing and not sound.music.playing)
 	sound.queue_free()
 	stream = null
+	battle_stream = null
 	sound = null
 	await create_timer(.3).timeout
 	print("PASS theme: 123s stereo, looping, speech ducking, battle switch, cleanup")
