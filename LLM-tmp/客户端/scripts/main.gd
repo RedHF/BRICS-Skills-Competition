@@ -757,6 +757,7 @@ func _show_puzzle() -> void:
 		page.add_child(buttons)
 		_button(buttons, "重描本笔", func():
 			trace_canvas.strokes[trace_canvas.active] = []
+			trace_canvas.interrupted = false
 			trace_canvas.queue_redraw()
 			_trace_feedback())
 		_button(buttons, "核对拓印", func(): _submit_puzzle({"step_id": step.id, "strokes": trace_canvas.strokes}))
@@ -813,7 +814,8 @@ func _show_puzzle() -> void:
 		clue_box.hide()
 
 func _trace_feedback() -> void:
-	trace_progress.text = "落墨 %d/%d · 当前第 %d 笔%s" % [trace_canvas.completed_strokes(), trace_canvas.strokes.size(), trace_canvas.active + 1, " · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else ""]
+	var hint := " · 这一笔中途断开，请从青印重描" if trace_canvas.interrupted else (" · 朱色笔迹需要重描" if trace_canvas.failed.has(trace_canvas.active) else "")
+	trace_progress.text = "落墨 %d/%d · 当前第 %d 笔%s" % [trace_canvas.completed_strokes(), trace_canvas.strokes.size(), trace_canvas.active + 1, hint]
 
 func _submit_puzzle(payload: Dictionary) -> void:
 	if busy: return

@@ -8,6 +8,7 @@ var strokes: Array = []
 var failed: Array = []
 var active := 0
 var drawing := false
+var interrupted := false
 var locked := false
 var canvas_rect := Rect2()
 var view_x := 0.0
@@ -64,8 +65,10 @@ func select_adjacent(direction: int) -> void:
 	select_stroke(clampi(active+direction,0,strokes.size()-1))
 
 func select_stroke(index: int) -> void:
+	if drawing: strokes[active] = []
 	active = index
 	drawing = false
+	interrupted = false
 	view_x = floorf(float(spec.strokes[index][0][0]) * characters) / characters
 	queue_redraw()
 	stroke_finished.emit()
@@ -83,16 +86,8 @@ func _draw() -> void:
 		_draw_glyph(glyph)
 	for i in range(spec.strokes.size()):
 		if floorf(float(spec.strokes[i][0][0]) * characters) / characters != view_x: continue
-		if not untouched and strokes[i].is_empty() and i < glyph_strokes.size() and glyph_strokes[i] != null:
+		if not untouched and (strokes[i].is_empty() or (drawing and i == active)) and i < glyph_strokes.size() and glyph_strokes[i] != null:
 			_draw_glyph(glyph_strokes[i])
-		if drawing and i == active and not strokes[i].is_empty():
-			var guide := PackedVector2Array()
-			for vertex in spec.strokes[i]:
-				guide.append(canvas_rect.position + Vector2((float(vertex[0])-view_x)*characters,float(vertex[1]))*canvas_rect.size)
-			var last: Array = strokes[i][-1]
-			var tip := canvas_rect.position + Vector2((float(last[0])-view_x)*characters,float(last[1]))*canvas_rect.size
-			var tail := _remaining_guide(guide, tip)
-			if tail.size() > 1: _draw_guide_stroke(tail, true)
 		if i == active and strokes[i].is_empty():
 			var first: Array = spec.strokes[i][0]
 			var last: Array = spec.strokes[i][-1]
@@ -112,10 +107,6 @@ func _draw() -> void:
 func _draw_glyph(texture: Texture2D) -> void:
 	var source := Rect2(Vector2(texture.get_width() * view_x, 0), Vector2(texture.get_width() / characters, texture.get_height()))
 	draw_texture_rect_region(texture, canvas_rect, source, Color(1, 1, 1, .63))
-
-func _draw_guide_stroke(points: PackedVector2Array, selected: bool) -> void:
-	draw_polyline(points, Color("#746b60", .16 if selected else .1), 3, true)
-	_draw_brush_marks(points, INK_DAB, .18 if selected else .11, 1.12)
 
 func _draw_ink_stroke(points: PackedVector2Array, invalid: bool) -> void:
 	var texture := INK_DAB_RED if invalid else INK_DAB
@@ -143,20 +134,30 @@ func _draw_brush_marks(points: PackedVector2Array, texture: Texture2D, opacity: 
 		distance += length
 	draw_set_transform(Vector2.ZERO)
 
-func _remaining_guide(guide: PackedVector2Array, tip: Vector2) -> PackedVector2Array:
-	var nearest_segment := 0
-	var nearest_point := guide[0]
-	var nearest_distance := INF
+func _stroke_reached_end(index: int) -> bool:
+	var ink: Array = strokes[index]
+	if ink.size() < 2: return false
+	var guide: Array = spec.strokes[index]
+	var aspect := float(spec.aspect_ratio)
+	var first := Vector2(float(guide[0][0]) * aspect, float(guide[0][1]))
+	var last := Vector2(float(guide[-1][0]) * aspect, float(guide[-1][1]))
+	var ink_first := Vector2(float(ink[0][0]) * aspect, float(ink[0][1]))
+	var ink_last := Vector2(float(ink[-1][0]) * aspect, float(ink[-1][1]))
+	if ink_first.distance_to(first) > .08 or ink_last.distance_to(last) > .08: return false
+	var guide_length := 0.0
 	for j in range(1, guide.size()):
-		var point := Geometry2D.get_closest_point_to_segment(tip, guide[j - 1], guide[j])
-		var distance := tip.distance_squared_to(point)
-		if distance < nearest_distance:
-			nearest_distance = distance
-			nearest_segment = j
-			nearest_point = point
-	var tail := PackedVector2Array([nearest_point])
-	for j in range(nearest_segment, guide.size()): tail.append(guide[j])
-	return tail
+		guide_length += Vector2(float(guide[j - 1][0]) * aspect, float(guide[j - 1][1])).distance_to(Vector2(float(guide[j][0]) * aspect, float(guide[j][1])))
+	var ink_length := 0.0
+	for j in range(1, ink.size()):
+		ink_length += Vector2(float(ink[j - 1][0]) * aspect, float(ink[j - 1][1])).distance_to(Vector2(float(ink[j][0]) * aspect, float(ink[j][1])))
+	if ink_length < guide_length * .65: return false
+	for vertex in guide.slice(1, -1):
+		var target := Vector2(float(vertex[0]) * aspect, float(vertex[1]))
+		var nearest := INF
+		for point in ink:
+			nearest = minf(nearest, target.distance_to(Vector2(float(point[0]) * aspect, float(point[1]))))
+		if nearest > .08: return false
+	return true
 
 func _gui_input(event: InputEvent) -> void:
 	if locked: return
@@ -165,19 +166,13 @@ func _gui_input(event: InputEvent) -> void:
 		brush_visible = canvas_rect.has_point(event.position)
 		if event.pressed and canvas_rect.has_point(event.position):
 			drawing = true
+			interrupted = false
 			brush_touched.emit()
 			strokes[active] = []
 			failed.erase(active)
 			_sample(event.position)
 		elif not event.pressed and drawing:
-			_sample(event.position)
-			drawing = false
-			for i in range(strokes.size()):
-				if strokes[i].is_empty():
-					select_stroke(i)
-					break
-			stroke_finished.emit()
-			queue_redraw()
+			_finish_stroke(event.position)
 		accept_event()
 	elif event is InputEventMouseMotion:
 		brush_position = event.position
@@ -185,6 +180,27 @@ func _gui_input(event: InputEvent) -> void:
 		if drawing: _sample(event.position)
 		else: queue_redraw()
 		accept_event()
+
+func _input(event: InputEvent) -> void:
+	if not drawing or not event is InputEventMouseButton: return
+	var mouse_event := event as InputEventMouseButton
+	if mouse_event.button_index != MOUSE_BUTTON_LEFT or mouse_event.pressed: return
+	var local: Vector2 = get_global_transform_with_canvas().affine_inverse() * mouse_event.position
+	if not Rect2(Vector2.ZERO, size).has_point(local): _finish_stroke(local)
+
+func _finish_stroke(position: Vector2) -> void:
+	if canvas_rect.has_point(position): _sample(position)
+	drawing = false
+	if not _stroke_reached_end(active):
+		strokes[active] = []
+		interrupted = true
+	else:
+		for i in range(strokes.size()):
+			if strokes[i].is_empty():
+				select_stroke(i)
+				break
+	stroke_finished.emit()
+	queue_redraw()
 
 func _sample(position: Vector2) -> void:
 	var point := (position - canvas_rect.position) / canvas_rect.size
